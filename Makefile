@@ -2,9 +2,9 @@
 
 ANOLIS = anolis
 
-all: Overview.html ../xref/xrefs/dom/presentation.json
+all: index.html ../xref/xrefs/dom/presentation.json
 
-Overview.html: Overview.src.html ../xref Makefile
+index.html: Overview.src.html ../xref Makefile
 	$(ANOLIS) --w3c-compat-substitutions \
 	--omit-optional-tags --quote-attr-values --enable=xspecxref \
 	--xref="../xref" --enable=refs $< $@

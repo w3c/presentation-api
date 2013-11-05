@@ -6,7 +6,8 @@
      [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
    }
   </style>
-  <link href="https://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
+
+  <link href="http://www.w3.org/community/src/css/spec/cg-draft.css" type="text/css" rel="stylesheet">
   <style type="text/css">
     /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
@@ -70,23 +71,22 @@
 <p><a href="http://www.w3.org/"><img width="72" alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home"></a></p>
 <!--end-logo-->
  <h1>Presentation API</h1>
- <h2 class="no-num no-toc" id="editor's-draft-30-october-2013">Editor's Draft 30 October 2013</h2>
+ <!-- <h2 class="no-num no-toc">Editor's Draft 5 November 2013</h2> -->
 
  <dl>
 <!--  <dt>This Version:
-  <dd><!--begin-link http://www.w3.org/TR/2013/ED-presentation-spec-20131030/<!--end-link
+  <dd><!--begin-link http://www.w3.org/TR/2013/ED-presentation-api-20131105/<!--end-link
 -->
 
   <dt>Latest Editor's Draft
-  <dd><!--begin-link--><a href="http://otcshare.github.io/presentation-spec/">http://otcshare.github.io/presentation-spec/</a><!--end-link-->
+  <dd><!--begin-link--><a href="http://webscreens.github.io/presentation-api/">http://webscreens.github.io/presentation-api/</a><!--end-link-->
 
   <dt>Participate:</dt>
-  <dd>Send feedback to
-  <a href="mailto:dominik.rottsches@intel.com">Dominik Röttsches, Intel</a>
-  (<a href="https://github.com/otcshare/presentation-spec/issues">open issues</a>)
+  <dd>Send feedback to the community group's mailing list, or to <a href="mailto:dominik.rottsches@intel.com">Dominik Röttsches, Intel</a>
+  (or <a href="https://github.com/webscreens/presentation-api/issues">browse open issues</a> on GitHub)
 
   <dt>Version History:
-  <dd><!--begin-link--><a href="https://github.com/otcshare/presentation-spec/commits/master">https://github.com/otcshare/presentation-spec/commits/master</a><!--end-link--></dd>
+  <dd><!--begin-link--><a href="https://github.com/webscreens/presentation-api/commits/">https://github.com/webscreens/presentation-api/commits/</a><!--end-link--></dd>
 
   <dt>Editors:
       <dd><a href="mailto:dominik.rottsches@intel.com">Dominik Röttsches</a>, Intel</dd>
@@ -94,10 +94,7 @@
  </dl>
 
 
-
-<!--begin-copyright-->
-<p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2013 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
-<!--end-copyright-->
+<p class="copyright">Copyright © 2013 the contributors to this specification.</p>
 
 <hr>
 
@@ -110,8 +107,8 @@ displays for web applications.
 
 <h2 class="no-num no-toc" id="sotd">Status of this Document</h2>
 
-This document is an draft to collect feedback on the general
-approach. The next step is to create a W3C community group for discussing and evolving this specification.
+This document is a draft to collect feedback on the general
+approach and intended to be published by the yet to be found Second Screen Presentation Community Group.
 
 <!--
 <p><em>This section describes the status of this document at the time of its
@@ -120,7 +117,7 @@ W3C publications and the latest revision of this technical report can be
 found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a>
 at http://www.w3.org/TR/.</em></p>
 
-<p>This is the 30 October 2013 Editor's Draft of Presentation API. The W3C Membership
+<p>This is the 5 November 2013 Editor's Draft of Presentation API. The W3C Membership
 and other interested parties are invited to review the document and send
 comments to <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a>
 (<a href="http://lists.w3.org/Archives/Public/public-webapps/">public archive</a>)
