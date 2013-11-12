@@ -71,11 +71,11 @@
 <p><a href="http://www.w3.org/"><img width="72" alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home"></a></p>
 <!--end-logo-->
  <h1>Presentation API</h1>
- <!-- <h2 class="no-num no-toc">Editor's Draft 11 November 2013</h2> -->
+ <!-- <h2 class="no-num no-toc">Editor's Draft 12 November 2013</h2> -->
 
  <dl>
 <!--  <dt>This Version:
-  <dd><!--begin-link http://www.w3.org/TR/2013/ED-presentation-api-20131111/<!--end-link
+  <dd><!--begin-link http://www.w3.org/TR/2013/ED-presentation-api-20131112/<!--end-link
 -->
 
   <dt>Latest Editor's Draft
@@ -119,7 +119,7 @@ W3C publications and the latest revision of this technical report can be
 found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a>
 at http://www.w3.org/TR/.</em></p>
 
-<p>This is the 11 November 2013 Editor's Draft of Presentation API. The W3C Membership
+<p>This is the 12 November 2013 Editor's Draft of Presentation API. The W3C Membership
 and other interested parties are invited to review the document and send
 comments to <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a>
 (<a href="http://lists.w3.org/Archives/Public/public-webapps/">public archive</a>)
@@ -325,7 +325,7 @@ be performant.)
 
 <p>The term <dfn title="presentation display" id="presentation-display">presentation display</dfn> refers to an external screen connected to the device that the user agent runs on.</p>
 
-<p>The terms <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#top-level-browsing-context" data-anolis-spec="w3c-html" title="top-level browsing context" class="external">top level browsing context</a>
+<p>The terms <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#opener-browsing-context" data-anolis-spec="w3c-html" title="opener-browsing-context" class="external">opener browsing context</a>
     and <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#auxiliary-browsing-context" data-anolis-spec="w3c-html" title="auxiliary browsing context" class="external">auxiliary browsing context</a> are defined
     in <a href="#refsHTML5">[HTML5]</a>.
 
@@ -453,7 +453,7 @@ following <dfn title="presentation-request-algorithm" id="presentation-request-a
     <li>Prompt the user's permission or check that the setting for allowing access to a presentation display enabled. If
         no permission is given, jump to the step labeled <a href="#failure-step" title="failure-step">failure</a> below. If the user never
         responds, this algorithm will never progress beyond this step.</li>
-    <li>If more than one available display is found, present a selection to the user for chosing one of the available
+    <li>If more than one available display is found, present a selection to the user for choosing one of the available
         display.</li>
     <li>If the user cancels the selection, go to the <a href="#failure-step" title="failure-step">failure step</a>.</li>
     <li>Let the display that the user selected be called <dfn title="selected presentation display" id="selected-presentation-display">selected presentation

@@ -300,7 +300,7 @@ be performant.)
 
 <p>The term <dfn title="presentation display">presentation display</dfn> refers to an external screen connected to the device that the user agent runs on.</p>
 
-<p>The terms <span title="top-level browsing context" data-anolis-spec="w3c-html">top level browsing context</span>
+<p>The terms <span title="opener-browsing-context" data-anolis-spec="w3c-html">opener browsing context</span>
     and <span title="auxiliary browsing context" data-anolis-spec="w3c-html">auxiliary browsing context</span> are defined
     in <span data-anolis-ref>HTML5</span>.
 
@@ -431,7 +431,7 @@ following <dfn title="presentation-request-algorithm">algorithm to request acces
     <li>Prompt the user's permission or check that the setting for allowing access to a presentation display enabled. If
         no permission is given, jump to the step labeled <span title="failure-step">failure</span> below. If the user never
         responds, this algorithm will never progress beyond this step.</li>
-    <li>If more than one available display is found, present a selection to the user for chosing one of the available
+    <li>If more than one available display is found, present a selection to the user for choosing one of the available
         display.</li>
     <li>If the user cancels the selection, go to the <span title="failure-step">failure step</span>.</li>
     <li>Let the display that the user selected be called <dfn title="selected presentation display">selected presentation
