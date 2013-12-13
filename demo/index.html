@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>Presentation API Demo</title>
+    <script type="text/javascript" src="js/video-js/video.dev.js"></script>
+    <link href="js/video-js/video-js.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <script type="text/javascript" src="js/presentation_api_shim.js"></script>
+    <script type="text/javascript" src="js/presentation_button.js"></script>
+    <script type="text/javascript" src="js/resize.js"></script>
+  </head>
+  <body>
+    <article>
+      <h1>Presentation API Demo</h1>
+      <p>This demo page provides an example of the video sharing use case of <a href="http://webscreens.github.io/presentation-api/">Presentation API</a> which is being developed in the <a href="http://www.w3.org/community/webscreens/">Second Screen Presentation Community Group</a> in W3C.</p>
+      <p>Downloading the binaries, or building Chromium with the patches listed below applied to your tree allows you to run the demo.</p>
+      <p>Opening this this page in the modified version of Chromium allows you to click on the second screen icon <span class="icon-instructions">s</span> in the right side of the controls bar of the video player and the video will open and continue playing on your secondary screen. Clicking the button again closes the window and playback resumes on your primary screen.</p>
+      <h2>Prerequisites</h2>
+      <p>It's recommended to run this demo on a system with a secondary display connected.</p>
+      <h2>Binaries</h2>
+      <p>Binaries are available for Linux and Mac. Use at your own risk.</p>
+      <ul>
+	<li><a href="releases/Chromium_r240273_PresentationAPIDemo.tar.gz">Chromium_r240273_PresentationAPIDemo.tar.gz</a> - tested on Ubuntu 13.04 and Arch Linux.
+	<li><a href="releases/Chromium_r240273_PresentationAPIDemo.dmg">Chromium_r240273_PresentationAPIDemo.dmg</a>
+      </ul>
+      <h2>Building the Demo / Code</h2>
+      <ul>
+	<li>Checkout and test build Chromium according to the <a href="http://www.chromium.org/developers/how-tos">instructions on the wiki</a>.
+	<li>Apply the Chromium Patch: <a href="https://codereview.chromium.org/98523003/">https://codereview.chromium.org/98523003/</a>
+	<li>Apply the Blink Patch: <a href="https://codereview.chromium.org/108333006/">https://codereview.chromium.org/108333006/</a>
+	<li>Build.
+      </ul>
+      <h2>Implementation Details</h2>
+      <p>The patches to Chromium implement a new feature attribute for the <code>window.open()</code> function called <code>presentation</code> which opens a new full-screen browser window on the first found secondary display.</p>
+      <p>The Presentation API bindings are currently implemented as a <a href="js/presentation_api_shim.js">JavaScript shim</a> on top of the modified <code>window.open()</code> call.</p>
+      <h2>Demo of Video Sharing Use Case</h2>
+      <h3>Instructions</h3>
+      <p>Run your binary, on Linux you may need to append the <code>--no-sandbox</code> command line argument.</p>
+      <p>Play the video and click the second screen icon <span class="icon-instructions">s</span>, click the button again or focus the secondary window and press Escape to close the secondary window.</p>
+      <video id="mainvid" controls preload="auto" class="video-js vjs-default-skin vjs-big-play-centered">
+	<source src="img/FPV_Sunset.mp4" type="video/mp4" />
+	<source src="img/FPV_Sunset.webm" type="video/webm" />
+      </video>
+
+      <script type="text/javascript">
+	mainvid = videojs("mainvid",  { "preload": "auto", "poster" : "img/video_poster.png", plugins: { presentation: {} } });
+      </script>
+
+      <br>
+      <small>Video <a href="http://www.youtube.com/watch?v=VAHIV9FV_9k">"FPV Sunset - Medellin"</a> by YouTube user Bllama under <a href="http://creativecommons.org/licenses/by/3.0/legalcode">CC-BY</a>.<br>Second Screen Icon based on <a href="http://icomoon.io">IcoMoo</a>.</small>
+      <h2>Contact</h2>
+      <p>For feedback on the demo or on the <a href="http://webscreens.github.io/presentation-api/">Presentation API</a> itself, please subscribe and post your feedback to the <a href="http://lists.w3.org/Archives/Public/public-webscreens/">public-webscreens W3C mailing list</a>.</p>
+      <p>This demo is provided by <a href="https://01.org/">Intel's Open Source Technology Center</a>, <a href="mailto:dominik.rottsches@intel.com">Dominik Röttsches</a>.</p>
+      <p><a href="https://01.org/"><img id="otclogo" src="img/otc_logo.svg"></a></p>
+    </article>
+
+  </body>
+
+</html>

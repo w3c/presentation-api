@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script type="text/javascript" src="js/video-js/video.dev.js"></script>
+    <link href="js/video-js/video-js.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <script type="text/javascript" src="js/resize.js"></script>
+
+    <style type="text/css">
+      .vjs-fullscreen-control { opacity: 0; };
+      body { background-color: black; };
+    </style>
+
+    <script type="text/javascript">
+      addEventListener("unload", function() { opener.onPresentationWindowClosing(videojs("mainvid").currentTime()); });
+      
+      function currentTime() {
+          return videojs("mainvid").currentTime();
+      }
+
+      addEventListener("load", function() { videojs("mainvid").ready( function() {
+          playtime = Number(window.location.hash.split("#")[1]);
+          this.currentTime(playtime).play();
+      })});
+    </script>
+  </head>
+  <body>
+    <video id="mainvid" controls preload="auto" class="video-js vjs-default-skin vjs-big-play-centered" width="100%">
+      <source src="FPV_Sunset.mp4" type="video/mp4" />
+      <source src="FPV_Sunset.webm" type="video/webm" />
+    </video>
+
+    <script type="text/javascript">
+      videojs("mainvid",  { "preload": "auto", "poster" : "video poster.png" });
+    </script>
+  </body>
+</html>
