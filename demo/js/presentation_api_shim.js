@@ -6,7 +6,7 @@
         return new Promise(function(resolve, reject) {
             presentationWindow = window.open(url, "", "presentation");
             if (presentationWindow)
-                resolve(presentationWindow);
+                presentationWindow.onload = function() { resolve(presentationWindow); };
             else
                 reject();
         });
