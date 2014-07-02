@@ -446,10 +446,11 @@ function show() {
 </pre>
     <p>
       The availability monitoring for secondary screens begins when the page
-      adds an event listener for the availablechange event on the
-      navigator.presentation object. If there are already available screens
-      when the page adds the first event listener for the event, the UA
-      synthesizes a single availablechange event to signal the availability.
+      adds an event listener for the <code>availablechange</code> event on the
+      <code>navigator.presentation</code> object. If there are already
+      available screens when the page adds the first event listener for the
+      event, the UA synthesizes a single availablechange event to signal the
+      availability.
     </p>
     <p class="open-issue">
       Do we want to fire an event immediately after the page registers for it?
@@ -457,11 +458,11 @@ function show() {
       See below in the <a href="#open-questions">Open Questions</a> section.
     </p>
     <p>
-      The "Show" button's disabled state (initially disabled) informs the user
-      of the availability of secondary screen(s), and the button's state is
-      updated if the availability changes. (The rationale of putting the actual
-      boolean information into a property of the event <code>e.available</code>
-      is to allow the implementation to optimize power consumption for network
+      The "Show" button's state (initially disabled) informs the user of the
+      availability of secondary screen(s), and the button's state is updated if
+      the availability changes. (The rationale of putting the actual boolean
+      information into a property of the event <code>e.available</code> is to
+      allow the implementation to optimize power consumption for network
       discovery of remote wireless screens. If this information was provided in
       a globally accessible flag, the network discovery could never be
       suspended for keeping the flag up to date.)
@@ -484,11 +485,11 @@ function show() {
       channel with this window.
     </p>
     <p>
-      When
-    </p>navigator.presentation.requestSession(url)function is called, the UA
-    immediately returns a session object to the script which represents a
-    handle to the current presentation session, used for communication and
-    state handling.
+      When the <code>navigator.presentation.requestSession(url)</code> function
+      is called, the UA immediately returns a <code>session</code> object to
+      the script which represents a handle to the current presentation session,
+      used for communication and state handling.
+    </p>
     <p>
       If the user has selected a screen, the content is shown and a
       communication channel was established, the state of the session object
@@ -501,8 +502,8 @@ function show() {
     </p>
     <p>
       If the user cancels the screen selection and never selects a screen, no
-      state transition happens and the session object remains in the
-      <code>"disconnected"</code> state.
+      state transition happens and the <code>session</code> object remains in
+      the <code>"disconnected"</code> state.
     </p>
     <h4>
       Open Questions
