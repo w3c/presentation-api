@@ -195,11 +195,11 @@ impact of the presented content.</p>
 
 <p>It is the intention of this specification that the user agent prepares a rendering for the secondary display in a way
     that is adapted to the secondary display's capabilities. The DOM state and the rendering shown on the primary and
-    secondary display are maintained and perfomend by the same user agent. There is no secondary user agent involved
+    secondary display are maintained and performed by the same user agent. There is no secondary user agent involved
     that would run remotely on the secondary display.</p>
 
 <p>The user agent creates two browsing contexts, one on the primary display, one on the selected presentation
-    display. It is responsible for sending the rendered output to the secondary display. For wirelessly connected
+    display. It is responsible for sending the rendered output to the secondary display. For wirelessly-connected
     displays this may mean that the user agent prepares a video stream from the rendering output that is sent over the
     network to the wireless display.</p>
 
@@ -314,7 +314,7 @@ specification. <a href="#refsRFC2119">[RFC2119]</a>
 <p>Requirements phrased in the imperative as part of algorithms
 (such as "strip any leading space characters" or "return false and
 terminate these steps") are to be interpreted with the meaning of the
-key word ("must", "should", "may", etc) used in introducing the
+key word ("must", "should", "may", etc.) used in introducing the
 algorithm.
 
 <p>Conformance requirements phrased as algorithms or specific steps
@@ -398,13 +398,13 @@ for the for the <a href="#use-cases">mentioned use cases</a>.</p>
     system via wired connections (e.g. HDMI, DVI etc.)  as well as via
     wireless technologies (e.g. MiraCast, DLNA or similar) that use a
     local or personal area network as a transport mechanism. The
-    discovery can be performend by using operating system APIs that
-    notifiy the user agent about display configuration changes or by
+    discovery can be performed by using operating system APIs that
+    notify the user agent about display configuration changes or by
     means of network discovery for remote display technologies that
     are not handled by the operating system. In the latter case, the
     user agent or the operating system that the user agent runs on may
     prepare a video stream suitable for being decoded and displayed by
-    the wirelessly connected display.</p>
+    the wirelessly-connected display.</p>
 
 <h3 id="monitoring-for-availability-changes"><span class="secno">6.1 </span>Monitoring for Availability Changes</h3>
 
@@ -467,10 +467,10 @@ following <dfn title="presentation-request-algorithm" id="presentation-request-a
         created <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#auxiliary-browsing-context" data-anolis-spec="w3c-html" title="auxiliary browsing context" class="external">auxiliary browsing context</a> is
         called <dfn title="presentation browsing context" id="presentation-browsing-context">presentation browsing context</dfn>.
     <li><a href="http://www.w3.org/html/wg/drafts/html/master/urls.html#resolve-a-url" data-anolis-spec="w3c-html" title="resolve a url" class="external">Resolve</a> the <code>url</code> to an absolute URL
-            by relative to the <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#entry-script" data-anolis-spec="w3c-html" title="entry script" class="external">entry
+            relative to the <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#entry-script" data-anolis-spec="w3c-html" title="entry script" class="external">entry
             script's</a> <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#script's-base-url" data-anolis-spec="w3c-html" title="script's base url" class="external">base
-            url</a>. Let <em>resolvedUrl</em> be the result of this resolution.
-    <li>If the url resolution failed, go to the <a href="#failure-step" title="failure-step">failure step</a>.
+            URL</a>. Let <em>resolvedUrl</em> be the result of this resolution.
+    <li>If the URL resolution fails, go to the <a href="#failure-step" title="failure-step">failure step</a>.
     <li><a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate" data-anolis-spec="w3c-html" title="navigate" class="external">Navigate</a> the presentation browsing context to <em>resolvedUrl</em> with the <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context" data-anolis-spec="w3c-html" title="browsing context" class="external">browsing context</a> of the
         <span title="incumbent script">incumbent script</span> as the <a href="http://www.w3.org/html/wg/drafts/html/master/history.html#source-browsing-context" data-anolis-spec="w3c-html" title="source browsing context" class="external">source browsing context</a>.
     <li><dfn title="success-step" id="success-step">Success</dfn>: Fulfil <em>promise</em> with
@@ -519,8 +519,8 @@ following <dfn title="presentation-request-algorithm" id="presentation-request-a
 <h3 id="display-availability-changes"><span class="secno">8.3 </span>Display Availability Changes</h3>
 
 <p>If the display configuration of the user agent's host system changes so that the secondary display is not available
-    anymore, or if a display connected via the network becomes unreachable, and the user agent was showing an existing
-    presentation browsing context on the display which is now unavaible, the user agent should follow the regular
+    any more, or if a display connected via the network becomes unreachable, and the user agent was showing an existing
+    presentation browsing context on the display which is now unavailable, the user agent should follow the regular
     algorithm for <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#close-a-browsing-context" data-anolis-spec="w3c-html" title="close-browsing-context" class="external">closing a browsing
     context</a>.</p>
 
@@ -566,7 +566,7 @@ altogether.</p>
 
 </dl></div>
 
-<h2 class="no-num" id="acknowledgments">Acknowledgments</h2>
+<h2 class="no-num" id="acknowledgments">Acknowledgements</h2>
 
 <p>Thanks to Wayne Carr and Anssi Kostiainen for input, thorough reviews and feedback to this draft.</p>
 
