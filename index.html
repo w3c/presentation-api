@@ -94,11 +94,16 @@
 
   <dt>Editors:
       <dd><a href="mailto:dominik.rottsches@intel.com">Dominik Röttsches</a>, Intel</dd>
-      <dd><a href="mailto:hongbo.min@intel.com">闵洪波 (Hongbo Min)</a>, Intel</dd>
+      <dd><a href="mailto:anssi.kostianen@intel.com"></a>Anssi Kostiainen, Intel</dd>
  </dl>
 
 
-<p class="copyright">Copyright © 2013 the contributors to this specification.</p>
+<p class="copyright">
+    <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2014 the Contributors to the
+    Presentation API Specification, published by the <a href="http://www.w3.org/community/webscreens/">Second Screen
+    Presentation Community Group</a> under the
+    <a href="https://www.w3.org/community/about/agreements/final/">W3C Community Final Specification Agreement (CLA)</a>.
+</p>
 
 <hr>
 
@@ -106,13 +111,12 @@
 
 
 <h2 class="no-num no-toc" id="abstract">Abstract</h2>
-This document standardizes access to external presentation type
+This document standardizes access to external presentation-type
 displays for web applications.
 
 <h2 class="no-num no-toc" id="sotd">Status of this Document</h2>
 
-This document is a draft to collect feedback on the general
-approach and intended to be published by the <a href="http://www.w3.org/community/webscreens/">Second Screen Presentation Community Group</a>.
+This document serves as the final report of the Second Screen Presentation community group.
 
 <!--
 <p><em>This section describes the status of this document at the time of its
@@ -158,23 +162,24 @@ document as other than work in progress.</p> -->
     <ol>
      <li><a href="#presentations"><span class="secno">1.1.1 </span>Presentations</a></li>
      <li><a href="#video-and-image-sharing"><span class="secno">1.1.2 </span>Video and Image Sharing</a></li>
-     <li><a href="#gaming"><span class="secno">1.1.3 </span>Gaming</a></ol></li>
-   <li><a href="#example"><span class="secno">1.2 </span>Example</a></ol></li>
- <li><a href="#conformance"><span class="secno">2 </span>Conformance</a></li>
- <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
- <li><a href="#presentation-extension-to-navigator"><span class="secno">4 </span>Presentation Extension to Navigator</a></li>
- <li><a href="#presentation-interface"><span class="secno">5 </span>Presentation Interface</a></li>
- <li><a href="#display-selection-and-availability"><span class="secno">6 </span>Display Selection and Availability</a>
+     <li><a href="#gaming"><span class="secno">1.1.3 </span>Gaming</a></li>
+     <li><a href="#media-flinging-to-multiple-screens"><span class="secno">1.1.4 </span>Media Flinging to Multiple Screens</a></ol></ol></li>
+ <li><a href="#requirements"><span class="secno">2 </span>Requirements</a>
   <ol>
-   <li><a href="#monitoring-for-availability-changes"><span class="secno">6.1 </span>Monitoring for Availability Changes</a></ol></li>
- <li><a href="#requesting-a-presentation-display"><span class="secno">7 </span>Requesting a Presentation Display</a></li>
- <li><a href="#lifecycle-and-visibility-of-the-presentation-window"><span class="secno">8 </span>Lifecycle and Visibility of the Presentation Window</a>
+   <li><a href="#functional-requirements"><span class="secno">2.1 </span>Functional Requirements</a></li>
+   <li><a href="#non-functional-requirements"><span class="secno">2.2 </span><span>Non-Functional Requirements</span></a></li>
+   <li><a href="#example"><span class="secno">2.3 </span>Example</a>
+    <ol>
+     <li><a href="#open-questions"><span class="secno">2.3.1 </span>Open Questions</a></ol></li>
+   <li><a href="#usage-on-remote-screen"><span class="secno">2.4 </span>Usage on Remote Screen</a></ol></li>
+ <li><a href="#conformance"><span class="secno">3 </span>Conformance</a></li>
+ <li><a href="#terminology"><span class="secno">4 </span>Terminology</a></li>
+ <li><a href="#interfaces"><span class="secno">5 </span>Interfaces</a>
   <ol>
-   <li><a href="#user-closing-the-presentation-window"><span class="secno">8.1 </span>User Closing the Presentation Window</a></li>
-   <li><a href="#programmatic-closing-of-the-presentation-window"><span class="secno">8.2 </span>Programmatic Closing of the Presentation Window</a></li>
-   <li><a href="#display-availability-changes"><span class="secno">8.3 </span>Display Availability Changes</a></li>
-   <li><a href="#close-on-unload"><span class="secno">8.4 </span>Close on Unload</a></ol></li>
- <li><a href="#security-considerations"><span class="secno">9 </span>Security Considerations</a></li>
+   <li><a href="#navigatorpresentation"><span class="secno">5.1 </span><code>NavigatorPresentation</code></a></li>
+   <li><a href="#availablechangeevent"><span class="secno">5.2 </span><code>AvailableChangeEvent</code></a></li>
+   <li><a href="#presentevent"><span class="secno">5.3 </span><code>PresentEvent</code></a></li>
+   <li><a href="#presentationsession"><span class="secno">5.4 </span><code>PresentationSession</code></a></ol></li>
  <li><a class="no-num" href="#references">References</a></li>
  <li><a class="no-num" href="#acknowledgements">Acknowledgements</a></ol>
 <!--end-toc-->
@@ -184,8 +189,8 @@ document as other than work in progress.</p> -->
 <em>This section is non-normative.</em>
 
 <p>This specification aims to make secondary displays such as a projector or a connected TV available to the web and
-takes into account displays that are attached using wired (HDMI, DVI or similar) and wireless technologies (MiraCast, DLNA,
-AirPlay or similar).</p>
+takes into account displays that are attached using wired (HDMI, DVI or similar) and wireless technologies (MiraCast,
+    Chromecast, DLNA, AirPlay or similar).</p>
 
 <p>Devices with limited screen size lack the ability to show content
 to a larger audience, for example a group of colleagues in a
@@ -193,114 +198,200 @@ conference room, or friends and family at home. Showing content on an
 external large display helps to improve the perceived quality and
 impact of the presented content.</p>
 
-<p>It is the intention of this specification that the user agent prepares a rendering for the secondary display in a way
-    that is adapted to the secondary display's capabilities. The DOM state and the rendering shown on the primary and
-    secondary display are maintained and perfomend by the same user agent. There is no secondary user agent involved
-    that would run remotely on the secondary display.</p>
-
-<p>The user agent creates two browsing contexts, one on the primary display, one on the selected presentation
-    display. It is responsible for sending the rendered output to the secondary display. For wirelessly connected
-    displays this may mean that the user agent prepares a video stream from the rendering output that is sent over the
-    network to the wireless display.</p>
-
-<p>The trend in user agent implementations has been to avoid opening
-multiple separate windows and containing window management to tabs,
-which helps the user to organize multiple pages. However, the
-following example <a href="#use-cases">use cases</a> fall outside the regular
-management of multiple windows for web pages.</p>
-
 <h3 id="use-cases"><span class="secno">1.1 </span>Use Cases</h3>
 
 <h4 id="presentations"><span class="secno">1.1.1 </span>Presentations</h4>
 
-<p>A user is preparing a set of slides for a talk. Using a web based
-service, she is editing her slides and speaker notes on the primary
-screen, while the secondary larger screen shows a preview of the
-current slide. When the slides are done, her mobile phone allows her
-to access them from an online service while on the go. Coming
-to the conference, using wireless display technology, she would like
-to present her slides on the stage screen from her mobile phone. The
-phone's touch screen helps her to navigate slides and presents a slide
-preview, while the projector shows her slides to
-the audience.</p>
+<p>A user is preparing a set of slides for a talk. Using a web based service, she is editing her slides and speaker
+notes on the primary screen, while the secondary larger screen shows a preview of the current slide. When the slides are
+done, her mobile phone allows her to access them from an online service while on the go. Coming to the conference, using
+wireless display technology, she would like to present her slides on the stage screen from her mobile phone. The phone's
+touch screen helps her to navigate slides and presents a slide preview, while the projector shows her slides to the
+audience.</p>
+<p><b>Requirements:</b> R1, R3, R4, R5, R7</p>
 
 <h4 id="video-and-image-sharing"><span class="secno">1.1.2 </span><a id="video-sharing">Video and Image Sharing</a></h4>
 
 <p>Using an online video or image sharing service, a user would like to show memorable moments to her friends. Using a
-device with a small screen, it is impossible to show the content to a large group of people. Connecting an external TV
-screen or projector to her device - with a cable or wirelessly - the online sharing service now makes use of the
-connected display, allowing a wider audience to enjoy the content.</p>
+    device with a small screen, it is impossible to show the content to a large group of people. Connecting an external
+    TV screen or projector to her device - with a cable or wirelessly - the online sharing service now makes use of the
+    connected display, allowing a wider audience to enjoy the content.</p>
+<p>The web page shows UI elements that allow the user to trigger displaying content on the secondary display (e.g a "send
+    to second screen" ) only if there is at least one secondary screen available.</p>
+<p><b>Requirements:</b> R1, R3, R4, R5, R7</p>
 
 <h4 id="gaming"><span class="secno">1.1.3 </span>Gaming</h4>
 
-<p>Splitting the gaming experience into a near screen controller and a
-large screen visual experience, new gaming experiences can be
-created. Accessing the local display on the small screen device and an
-external larger display allows for richer web-based gaming
-experiences.</p>
+<p>Splitting the gaming experience into a near screen controller and a large screen visual experience, new gaming experiences can be created. Accessing the local display on the small screen device and an external larger display allows for richer web-based gaming experiences.</p>
+<p><b>Requirements:</b> R1, R3, R4, R5, R7</p>
 
-<h3 id="example"><span class="secno">1.2 </span>Example</h3>
+<h4 id="media-flinging-to-multiple-screens"><span class="secno">1.1.4 </span>Media Flinging to Multiple Screens</h4>
+Alice enters a video sharing site using a browser on her tablet. Next, Alice picks her favorite video from the site, and
+the video starts to play on her tablet. While the video is playing Alice clicks a button "Share on different
+screen". The browser provides a user interface that lists all the screens Alice has around her home, asking her to
+select one. The screens are identified by names that are familiar to Alice. Alice picks one screen from the list,
+"Alice's big TV", and the video playback continues seamlessly on the selected screen. Next she decides to switch the
+playback to a different screen. She clicks the same button "Share on different screen" provided by the site, and the
+browser presents the user interface that lists all the screens. Alice picks another screen from the list, "Alice's
+kitchen TV", and the playback resumes on that screen. Video site also provides a feature to see the action (Alice is
+watching a soccer game) from different angle. Alice clicks a button "Select screen for additional angle", and the
+browser asks Alice similarly to select the screen to be used for playback. Alice picks "Alice's Projector" and the
+soccer game is shown on the projector from a different angle, in parallel to the content being played back on "Alice's
+kitchen TV".
+<p><b>Requirements:</b> R1, R3, R4, R5, R6, R7</p>
 
-<p>Running in a compliant user agent, code for playing a video on the presentation display could look like the following:</p>
 
-<pre class="example">/* player.html */
+<h2 id="requirements"><span class="secno">2 </span>Requirements</h2>
 
-&lt;video&gt;
-&lt;script&gt;
-var v = document.querySelector('video');
+<h3 id="functional-requirements"><span class="secno">2.1 </span>Functional Requirements</h3>
+<ul>
+    <li> <b>Discovery / Availability</b>
+        <ul>
+            <li> R1: The UA must provide a way to find out whether at least one secondary screen is available.            </li>
+        </ul>
+    </li>
+</ul>
+<p class="note">Multi-Screen enumeration and named identification removed, after discussion on the mailing list, cmp. <a class="external free" href="http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html" rel="nofollow">http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html</a> :
+<ul>
+    <li> <b>Launching Presentation</b>
+        <ul>
+            <li> R3: The UA must provide a means of start sending content to the secondary screen.</li>
+        </ul>
+    </li>
+    <li> <b>Resuming Presentation</b>
+        <ul>
+            <li> R4: The UA must be able to resume an existing session with content being displayed on the secondary screen. 
+            </li>
+        </ul>
+    </li>
+    <li> <b>Communication</b>
+        <ul>
+            <li> R5: The UA must enable exchanging data between the primary and the secondary screen in order to have a
+            control channel between the primary and secondary page.</li>
+            <li> R6: The UA must not make assumptions about the the execution locality of the user agent of the remote
+            page it communicates with (i.e. the secondary page might run on a remote user agent and thus the link
+            between the two pages' UA must be loosely coupled).</li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li> <b>Signaling Disconnection</b>
+        <ul>
+            <li> R7: The UA must signal disconnection from the presentation page to the primary page and vice versa.
+            </li>
+        </ul>
+    </li>
+</ul>
+<h3 id="non-functional-requirements"><span class="secno">2.2 </span><span id="Non-Functional_Requirements">Non-Functional Requirements</span></h3>
+<ul>
+    <li><b>Power Saving Friendly</b>
+        <ul>
+            <li> All API design decisions must be analyzed from a power efficiency point of view. Especially when using wireless display technologies or querying availability anything over a radio channel, care needs to be taken to design the API in a way that does not pose obstacles to using radio resources in an efficient way. For example, powering up the wireless display detection only when needed.
+            </li>
+        </ul>
+    </li>
+</ul>
 
-window.onmessage = function (event) {
-  v.src = event.data;
-  v.play();
-};
-&lt;/script&gt;
-</pre>
+<h3 id="example"><span class="secno">2.3 </span>Example</h3>
+
+<p>Running in a compliant user agent, code for presenting a page <code>example.html</code> on the presentation display could look like the following:</p>
 
 <pre class="example">/* controller.html */
 
+&lt;button disabled&gt;Show&lt;/button&gt;
+
 &lt;script&gt;
-function playVideo() {
-  if (!navigator.presentation.displayAvailable)
-    return;
-  var p = navigator.presentation.requestShow('player.html');
-  p.then(function (display) { display.postMessage('http://example.org/video.mp4', '/'); },
-         function (error) { console.log('Request to show failed: ' + error.msg); }
-  );
+var presentation = navigator.presentation,
+    showButton = document.querySelector('button');
+ 
+presentation.onavailablechange = function(e) {
+  showButton.disabled = !e.available;
+  showButton.onclick = show;
+};
+ 
+function show() {
+  var session = presentation.requestSession('http://example.org/');
+ 
+  session.onstatechange = function() {
+    switch (session.state) {
+      case 'connected':
+        session.postMessage(/*...*/);
+        session.onmessage = function() { /*...*/ };
+        break;
+      case 'disconnected':
+        console.log('Disconnected.');
+        break;
+    }
+  };
 }
-
-playVideo();
-
 &lt;/script&gt;
 </pre>
 
-<p>In this example of a video player scenario similar to the <a href="#video-sharing">video sharing use case</a>
-    presented above, the opener browsing context loads a document into the presentation browsing context which has a
-    video element in it and communicates with it through <code>postMessage</code>. The document of the presentation
-    browsing context receives the commands and for example sets the <code>src</code> attribute of the video and starts
-    playing it.</p>
+<p>The availability monitoring for secondary screens begins when the page adds an event listener for the availablechange
+    event on the navigator.presentation object. If there are already available screens when the page adds the first
+    event listener for the event, the UA synthesizes a single availablechange event to signal the availability.</p>
+<p class="open-issue">Do we want to fire an event immediately after the page registers for it? What's a best practice
+    method for asynchronous notifications of ths kind? See below in the <a href="#open-questions">Open Questions</a> section.</p>
+<p>The "Show" button's disabled state (initially disabled) informs the user of the availability of secondary screen(s),
+    and the button's state is updated if the availability changes. (The rationale of putting the actual boolean
+    information into a property of the event e.available is to allow the implementation to optimize power consumption
+    for network discovery of remote wireless screens. If this information was provided in a globally accessible flag,
+    the network discovery could never be suspended for keeping the flag up to date.)</p>
+<p>Once the user clicks the "Show" button, the show() function is called.</p>
+<p>By calling navigator.presentation.requestSession(url), the script on the page tries to launch or resume a
+    presentation on a secondary screen. Based on the url argument, the UA looks for existing sessions and available
+    screens, and presents a screen picker user interface to the user. Out of the list of existing sessions or available
+    screens the user selects one item. If an existing session was selected, the session is resumed by establishing a
+    communication channel. If a new screen was selected, the UA connects to the selected screen, brings up a new window
+    on the selected screen, starts to show the content denoted by the url argument, and the UA establishes a
+    communication channel with this window.</p>
+<p>When navigator.presentation.requestSession(url) function is called, the UA immediately returns a session object to
+the script which represents a handle to the current presentation session, used for communication and state handling.</p>
+<p>If the user has selected a screen, the content is shown and a communication channel was established, the state of the
+session object changes from "disconnected" to "connected", which signals the presentation session is up and running, and
+the opener page can communicate with the presentation page. For communication with the presentation page, the session
+object's postMessage() is used to send, and the onmessage event handler to receive messages.</p>
+<p>If the user cancels the screen selection and never selects a screen, no state transition happens and the session
+    object remains in the "disconnected" state.</p>
 
-<p>The example uses <code>postMessage</code> for communication between opener and auxiliary browsing context in order to
-encourage the use of asynchronous, potentially cross-origin communication between the two contexts. Direct access to
-properties of the <code>document</code> object in the auxiliary browsing context is an alternative option in case the
-documents are loaded from the same origin.</p>
+<h4 id="open-questions"><span class="secno">2.3.1 </span>Open Questions</h4>
+<p class="open-issue">Do we need to insert into the description an additional permission prompt to grant the page access to the "one ore more screens are available" Information?</p>
+<p class="open-issue">If there are already connected screens when the page subscribes to the onavailablechange event, we can handle this in two ways: We can synthesize one initial event to notify the page about available screens as soon as the first event handler is installed (as described). Or we can add another message like navigator.presentation.getAvailable(function(available) { } ); to notify the page about available screens using this one-time asynchronous getter. Which way should we go?</p>
+<p class="open-issue">Do we still need to pass an options parameter to the requestSession() call in order to specify continuous playback or would we leave this an implementation detail to the UA? Given that there is a close() function and disconnect notifications through the state property, this should be sufficient to implement the continuous playback use case.</p>
+<p class="open-issue">Do we need an additional state like resumed in order to identify resumed session? It seems that
+    this could be handled on the page level. The opener page could ask the presentation page whether it is "new" or
+    "resumed".</p>
 
-<pre class="example">&lt;script&gt;
+<h3 id="usage-on-remote-screen"><span class="secno">2.4 </span>Usage on Remote Screen</h3>
 
-/* Monitoring availability */
-navigator.presentation.ondisplayavailablechange = function() {
-  /* For example: Enable/Disable UI to show content on presentation display here. */
-  var availability = navigator.presentation.displayAvailable ? "available" : "unavailable";
-  console.log("Presentation display is now " + availability + ".");
-}
+For addressing the requirement of communication between originating page and presentation page/screen, we can now use
+the same <code>session</code> object on the remote side.
 
-&lt;/script&gt;
+<pre class="example">navigator.presentation.onpresent = function(e) {
+  // Communicate with opener page.
+  e.session.postMessage(/*...*/);
+  e.session.onmessage = function() {/*...*/};
+ 
+  e.session.onstatechange = function() {
+    switch (this.state) {
+      case "disconnected":
+        // Handle disconnection from opener page.
+    }
+  };
+};
 </pre>
 
-<p>This example demonstrates the auxiliary use case of monitoring for available secondary displays in order to keep the
-    UI consistent. The <code>displayavailablechange</code> event informs about displays appearing or disappearing and
-    allows the client of the API to update page content accordingly.</p>
+<p>When the content denoted by the url argument in the requestSession() example above is loaded, the page on the
+    presentation screen receives a present event, with a session property representing the session. This session is a
+    similar object as in the first example. Here, its initial state is "connected", which means we can use it to
+    communicate with the opener page using postMessage() and onmessage.</p>
+<p>We can also monitor the connection state by listening for statechange events. When the state changes to "disconnected"</p>
+<p>the page is made aware of the fact that communication with the opener page was lost, but it can continue to display
+    the current content. The communication can be re-established when a new present event fires on the
+    navigator.presentation object.
 
-<h2 id="conformance"><span class="secno">2 </span>Conformance</h2>
+
+<h2 id="conformance"><span class="secno">3 </span>Conformance</h2>
 <p>All diagrams, examples, and notes in this specification are
 non-normative, as are all sections explicitly marked non-normative.
 Everything else in this specification is normative.
@@ -323,7 +414,7 @@ equivalent. (In particular, the algorithms defined in this
 specification are intended to be easy to follow, and not intended to
 be performant.)
 
-<h2 id="terminology"><span class="secno">3 </span>Terminology</h2>
+<h2 id="terminology"><span class="secno">4 </span>Terminology</h2>
 
 <p>The term <dfn id="presentation-display" title="presentation display">presentation display</dfn> refers to an external screen connected to the device that the user agent runs on.</p>
 
@@ -335,227 +426,66 @@ be performant.)
   and <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" data-anolis-spec="w3c-html" title="event handler event type">event handler event types</a> are
   defined in <a href="#refsHTML5">[HTML5]</a>.</p>
 
-<p>The <a class="external" href="http://dom.spec.whatwg.org/#promises" data-anolis-spec="dom" title="concept-promises">Promises model</a> and the <span title="concept-event-fire">concept of event firing</span> are defined in
-    the <a href="#refsDOM">[DOM]</a> living standard.</p>
+<p>This document provides interface definitions using the <a href="#refsWEBIDL">[WEBIDL]</a> standard.</p>
 
-<p>This document provides interface definitions using the <a href="#refsWEBIDL">[WEBIDL]</a> standard.
+<h2 id="interfaces"><span class="secno">5 </span>Interfaces</h2>
 
-<p>The <a class="external" href="http://fetch.spec.whatwg.org/#concept-basic-fetch" data-anolis-spec="fetch" title="concept-basic-fetch">basic fetch algorithm</a> is defined in
-    <a href="#refsFETCH">[FETCH]</a>.
+<h3 id="navigatorpresentation"><span class="secno">5.1 </span><code>NavigatorPresentation</code></h3>
 
-<h2 id="presentation-extension-to-navigator"><span class="secno">4 </span>Presentation Extension to Navigator</h2>
-<pre class="idl">partial interface Navigator {
-  readonly attribute <a href="#presentation-idl" title="presentation-idl">Presentation</a> <dfn id="presentation-property" title="presentation-property">presentation</dfn>;
+<pre class="idl">interface NavigatorPresentation : EventTarget {
+  PresentationSession requestSession(DOMString url);
+  attribute EventHandler onavailablechange;
+  attribute EventHandler onpresent;
+};
 
+partial interface Navigator {
+  readonly attribute NavigatorPresentation presentation;
 };
 </pre>
 
-<h2 id="presentation-interface"><span class="secno">5 </span>Presentation Interface</h2>
+<h3 id="availablechangeevent"><span class="secno">5.2 </span><code>AvailableChangeEvent</code></h3>
 
-<pre class="idl">interface <dfn id="presentation-idl" title="presentation-idl">Presentation</dfn> : <a class="external" href="http://dom.spec.whatwg.org/#eventtarget" data-anolis-spec="dom" title="eventtarget">EventTarget</a> {
-  <a class="external" href="http://dom.spec.whatwg.org/#promises" data-anolis-spec="dom" title="concept-promises">Promise</a> <dfn id="requestshow" title="requestShow">requestShow(optional <span class="external" data-anolis-spec="webidl" title="domstring">DOMString</span> url = "about:blank")</dfn>;
+<p>Fired at the primary screen's <code>NavigatorPresentation</code> object, when screen availability changes.</p>
 
-  readonly attribute boolean <dfn id="displayavailable" title="displayAvailable">displayAvailable</dfn>;
-  attribute <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler" data-anolis-spec="w3c-html" title="eventhandler">EventHandler</a> <dfn id="ondisplayavailablechange" title="ondisplayavailablechange">ondisplayavailablechange</dfn>;
+<pre class="idl">[Constructor(DOMString type, optional AvailableChangeEventInit eventInitDict)]
+interface AvailableChangeEvent : Event {
+  readonly attribute boolean available;
+};
+
+dictionary AvailableChangeEventInit : EventInit {
+  boolean available;
 };
 </pre>
 
-<dl class="interface">
-    <dt><a href="#requestshow"><code>requestShow</code></a></dt>
-    <dd><p>Method to request opening and showing a new <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context" data-anolis-spec="w3c-html" title="browsing context">browsing
-                context</a> on the <span title="selected-presentation-display">selected presentation display</span>.</p>
-        <p><strong>Parameters:</strong></p>
-        <dl>
-            <dt><code>optional DOMString url</code></dt>
-            <dd>URL of the page that is to be loaded in the new browsing context.</dd>
-        </dl>
-        <p><strong>Returns:</strong></p>
-        <dl>
-            <dt><code>Promise</code></dt>
-            <dd><p><a class="external" href="http://dom.spec.whatwg.org/#promises" data-anolis-spec="dom" title="concept-promises">Promise</a> that is fulfilled when the request was successful,
-                    rejected if it failed.</dd>
-        </dl>
-    </dd>
-    <dt><a href="#displayavailable"><code>displayAvailable</code></a></dt>
-    <dd><p>A boolean flag to indicate the secondary display availability in the UA. Updated when the display availability changes.
-           True if there is at least one available secondary display for the <a href="#use-cases">mentioned use
-           cases</a>, false otherwise.</p>
-    </dd>
-</dl>
+<h3 id="presentevent"><span class="secno">5.3 </span><code>PresentEvent</code></h3>
+Fired at the secondary screen's <code>NavigatorPresentation</code> object, when the presentation session is established.
+<pre class="idl">[Constructor(DOMString type, optional PresentEventInit eventInitDict)]
+interface PresentEvent : Event {
+  readonly attribute PresentationSession session;
+};
 
-<h2 id="display-selection-and-availability"><span class="secno">6 </span>Display Selection and Availability</h2>
+dictionary PresentEventInit : EventInit {
+  PresentationSession session;
+};
+</pre>
 
-<p>If at least one event listener is registered to
-the <a href="#ondisplayavailablechange" title="ondisplayavailablechange"><code>ondisplayavailablechange</code></a> event handler the user agent
-should start <a href="#availability-monitoring" title="availability-monitoring">monitoring for the availability of secondary displays</a> suitable
-for the for the <a href="#use-cases">mentioned use cases</a>.</p>
+<h3 id="presentationsession"><span class="secno">5.4 </span><code>PresentationSession</code></h3>
 
-<p>When there are no more event listeners attached to
-    the <a href="#ondisplayavailablechange" title="ondisplayavailablechange"><code>ondisplayavailablechange</code></a> event handler, the user
-    agent may stop such monitoring for the availability of secondary displays.</p>
+<p>An object representing the established presentation session.</p>
 
-<p class="note">This includes displays connected to the user agent's
-    system via wired connections (e.g. HDMI, DVI etc.)  as well as via
-    wireless technologies (e.g. MiraCast, DLNA or similar) that use a
-    local or personal area network as a transport mechanism. The
-    discovery can be performed by using operating system APIs that
-    notifiy the user agent about display configuration changes or by
-    means of network discovery for remote display technologies that
-    are not handled by the operating system. In the latter case, the
-    user agent or the operating system that the user agent runs on may
-    prepare a video stream suitable for being decoded and displayed by
-    the wirelessly-connected display.</p>
+<pre class="idl">enum PresentationSessionState { "connected", "disconnected" /*, "resumed" */ };
 
-<h3 id="monitoring-for-availability-changes"><span class="secno">6.1 </span>Monitoring for Availability Changes</h3>
-
-<p>When a user agent is to <dfn id="availability-monitoring" title="availability-monitoring">monitor for the availability of secondary displays</dfn>,
-    it must execute the following steps.</p>
-
-<ol class="algorithm">
-    <li>Let <em>currentDisplayFound</em> be a boolean representing whether there are one more secondary displays
-        available right now and let <em>currentDisplayFound</em> be false if it was not previously set.</li>
-    <li>Query for available secondary displays that the user agent has access to.<p>
-        <p class="note">An implementation
-  of this API may chose to use operating system screen &amp; display information APIs or start an
-            implementation dependent network discovery process.</p> </li>
-    <li>Set <a href="#displayavailable" title="displayAvailable"><code>displayAvailable</code></a> to true if at least one suitable display was found in step 2, set to false
-  otherwise.</li>
-  <li>If <a href="#displayavailable" title="displayAvailable"><code>displayAvailable</code></a> is different
-  from <em>currentDisplayFound</em>, <a class="external" href="http://dom.spec.whatwg.org/#concept-event-fire" data-anolis-spec="dom" title="concept-event-fire">fire</a> a new event <em>displayavailablechange</em> at
-  the <code>navigator.presentation</code> object.</li>
-    <li>Set <em>currentDisplayFound</em> to <a href="#displayavailable" title="displayAvailable"><code>displayAvailable</code></a>.</li>
-  <li>Continue at step 1.</li>
-</ol>
-
-<p class="note">It is left to the implementation to determine a suitable polling/monitoring frequency or alternatively
-    using notification mechanisms of the host OS for display availability changes.</p>
-
-<h2 id="requesting-a-presentation-display"><span class="secno">7 </span>Requesting a Presentation Display</h2>
-
-<p class="non-normative">When requesting a presentation display, the user agent returns a Promise and asynchronously
-goes through the steps needed to open access to that display. The UA needs to check for availability. If a display is
-available, the user agent asks the user for permission to use and select one. Then it can open a new browsing context
-on that display and fulfils the Promise with the WindowProxy object of the new auxiliary browsing context as the value
-of the Promise, otherwise rejects the Promise with an error.</p>
-
-<p class="non-normative">A user agent shall only open and maintain a maximum of one presentation browsing context per
-    available secondary display. If <a href="#requestshow"><code>requestShow</code></a> is called a second time and the user selects an available
-    display that was previously in use by a previous call to <a href="#requestshow"><code>requestShow</code></a>, the user agent shall close the
-    previous browsing context.</p>
-
-<p>When the <a href="#requestshow"><code><span title="requestShow">requestShow<span></span></span></code></a> method is called, the user agent must execute the
-following <dfn id="presentation-request-algorithm" title="presentation-request-algorithm">algorithm to request access to the presentation display</dfn>:</p>
-
-<ol class="algorithm">
-    <li>Let <em>promise</em> be a new Promise.</li>
-    <li>Return <em>promise</em> and run the following steps asynchronously.</li>
-    <li>Verify that the <a href="#availability-monitoring" title="availability-monitoring">availability monitoring algorithm</a> is running and
-        that the value of <a href="#displayavailable"><code>displayAvailable</code></a> is true. If it is <code>false</code> or the algorithm
-        is not running, jump to the step labeled <a href="#failure-step" title="failure-step">failure</a> below.</li>
-    <li>Prompt the user's permission or check that the setting for allowing access to a presentation display enabled. If
-        no permission is given, jump to the step labeled <a href="#failure-step" title="failure-step">failure</a> below. If the user never
-        responds, this algorithm will never progress beyond this step.</li>
-    <li>If more than one available display is found, present a selection to the user for choosing one of the available
-        display.</li>
-    <li>If the user cancels the selection, go to the <a href="#failure-step" title="failure-step">failure step</a>.</li>
-    <li>Let the display that the user selected be called <dfn id="selected-presentation-display" title="selected presentation display">selected presentation
-            display</dfn>.</li>
-    <li>If there is already a presentation browsing context opened on the <a href="#selected-presentation-display" title="selected presentation
-    display">selected presentation display</a>, <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#close-a-browsing-context" data-anolis-spec="w3c-html" title="close-browsing-context">close the existing presentation browsing context</a>.</li>
-    <li>Open a new <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#auxiliary-browsing-context" data-anolis-spec="w3c-html" title="auxiliary browsing context">auxiliary browsing context</a> and present it
-        fullscreen on the <span title="selected-presentation-display">selected presentation display</span>. The newly
-        created <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#auxiliary-browsing-context" data-anolis-spec="w3c-html" title="auxiliary browsing context">auxiliary browsing context</a> is
-        called <dfn id="presentation-browsing-context" title="presentation browsing context">presentation browsing context</dfn>.
-    <li><a class="external" href="http://www.w3.org/html/wg/drafts/html/master/urls.html#resolve-a-url" data-anolis-spec="w3c-html" title="resolve a url">Resolve</a> the <code>url</code> to an absolute URL
-            by relative to the <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#entry-script" data-anolis-spec="w3c-html" title="entry script">entry
-            script's</a> <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#script's-base-url" data-anolis-spec="w3c-html" title="script's base url">base
-            url</a>. Let <em>resolvedUrl</em> be the result of this resolution.
-    <li>If the url resolution failed, go to the <a href="#failure-step" title="failure-step">failure step</a>.
-    <li><a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate" data-anolis-spec="w3c-html" title="navigate">Navigate</a> the presentation browsing context to <em>resolvedUrl</em> with the <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context" data-anolis-spec="w3c-html" title="browsing context">browsing context</a> of the
-        <span title="incumbent script">incumbent script</span> as the <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/history.html#source-browsing-context" data-anolis-spec="w3c-html" title="source browsing context">source browsing context</a>.
-    <li><dfn id="success-step" title="success-step">Success</dfn>: Fulfil <em>promise</em> with
-        the <span title="windowproxy"><code>WindowProxy</code></span> of the new <a href="#presentation-browsing-context" title="presentation browsing
-                                                                                              context">presentation browsing context</a> as its value.</li>
-    <li>Terminate these steps.</li>
-    <li><dfn id="failure-step" title="failure-step">Failure</dfn>: Let <dfn id="presentation-error" title="presentation-error">error</dfn> be a
-        new <code>DOMError</code>. The user agent must determine the error type in the following order of priority:</li>
-    <ol>
-        <li>If the user has denied permission to open a presentation display, <a href="#presentation-error" title="presentation-error">error</a>
-            must be of type <code>SecurityError</code>.</li>
-        <li><a href="#presentation-error" title="presentation-error">error</a> must be of type <code>NotSupportedError</code>.</li>
-    </ol>
-    <li>Reject <em>promise</em> with <em>error</em> as its value.</li>
-</ol>
-
-<h2 id="lifecycle-and-visibility-of-the-presentation-window"><span class="secno">8 </span>Lifecycle and Visibility of the Presentation Window</h2>
-
-<h3 id="user-closing-the-presentation-window"><span class="secno">8.1 </span>User Closing the Presentation Window</h3>
-
-<p>The user agent should provide a means for the user to close
-    the <a href="#presentation-browsing-context" title="presentation browsing context">presentation browsing context</a>.</p>
-
-<p class="note">In a PC scenario, this could be by means of an overlay on the secondary display with a close icon. In a mobile scenario where the user has no means of using a mouse cursor or other interaction with the secondary display, it could be an icon on the primary display.</p>
-
-<p>If the user closes the <a href="#presentation-browsing-context" title="presentation browsing context">presentation browsing context</a>, the user
-    agent should follow the regular algorithm for <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#close-a-browsing-context" data-anolis-spec="w3c-html" title="close-browsing-context">closing a browsing context</a>.</p>
-
-<p class="note">This means, that the <span title="opener browsing context">opener browsing context</span> can register
-    an <code>onunload</code> <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler" data-anolis-spec="w3c-html" title="eventhandler">EventHandler</a> on
-    the <a href="#presentation-browsing-context" title="presentation browsing context">presentation browsing context</a> to detect when the window gets
-    closed.</p>
-
-<p class="open-issue">There are currently two open issues: A user of this API can subscribe to the <code>onunload</code>
-    event of the <a href="#presentation-browsing-context" title="presentation browsing context">presentation browsing context's</a> <code>Window</code>
-    object but this event only fires if the URL loaded in the <a href="#presentation-browsing-context" title="presentation browsing context">presentation
-    browsing context's</a> is from the same origin. Secondly, there is no such thing as an <code>onerror</code> event
-    if the <a href="#presentation-browsing-context" title="presentation browsing context">presentation browsing context</a> is closed unexpectedly.</p>
-
-<h3 id="programmatic-closing-of-the-presentation-window"><span class="secno">8.2 </span>Programmatic Closing of the Presentation Window</h3>
-
-<p>Similarly, when the <code>close()</code> method of the <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#windowproxy" data-anolis-spec="w3c-html" title="windowproxy"><code>WindowProxy</code></a>
-    is called, the user agent must behave as specified in the <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#dom-window-close" data-anolis-spec="w3c-html" title="dom-window-close">steps for the <code>close()</code> method</a> of
-    the <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#window" data-anolis-spec="w3c-html" title="window"><code>Window</code></a> object.
-
-<h3 id="display-availability-changes"><span class="secno">8.3 </span>Display Availability Changes</h3>
-
-<p>If the display configuration of the user agent's host system changes so that the secondary display is not available
-    anymore, or if a display connected via the network becomes unreachable, and the user agent was showing an existing
-    presentation browsing context on the display which is now unavaible, the user agent should follow the regular
-    algorithm for <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#close-a-browsing-context" data-anolis-spec="w3c-html" title="close-browsing-context">closing a browsing
-    context</a>.</p>
-
-<h3 id="close-on-unload"><span class="secno">8.4 </span>Close on Unload</h3>
-
-<p>When the browsing context from which  one or more <a href="#presentation-browsing-context" title="presentation browsing context">presentation browsing
-        contexts</a> were opened is getting  <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#close-a-browsing-context" data-anolis-spec="w3c-html" title="close-browsing-context">closed</a>, the user agent should <span title="window-close-algorithm">close</span> all presentation browsing contexts that it opened.
-
-<h2 id="security-considerations"><span class="secno">9 </span>Security Considerations</h2>
-
-<p>The widespread use of popup blockers shows that the <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#dom-open" data-anolis-spec="w3c-html" title="dom-open"><code>window.open()</code></a> functionality was often abused to interrupt the user's
-workflow with unsolicited advertising. It is clear that repeating this story should be avoided. Hence, when implementing
-this specification, user agents shall give clear indication to the user that a site is requesting to open a presentation
-display. User agents may prompt the user to give consent to displaying content on the selected presentation display.</p>
-
-<p>User Agents may provide a setting which prevents pages from using
-a <a href="#presentation-display" title="presentation display">presentation display</a>
-altogether.</p>
-
-<p>Opening the <a href="#presentation-browsing-context" title="presentation browsing context">presentation browsing context</a> follows the legacy
-            behavior of <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#dom-open" data-anolis-spec="w3c-html" title="dom-open"><code>window.open()</code></a> and thus
-            allows navigating to URLs that are not at the same origin as the browsing context of the incumbent
-            script. This does not introduce any new security issues in itself. However, it would be desirable to only
-            navigate to URLs in the presentation browsing context using the <a class="external" href="http://fetch.spec.whatwg.org/#concept-basic-fetch" data-anolis-spec="fetch" title="concept-basic-fetch">basic fetch algorithm</a> with the <em>CORS flag</em> flag set to true, but
-            this would require changes to or a local redefinition of the
-        <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate" data-anolis-spec="w3c-html" title="navigate">navigation algorithm</a>.
+interface PresentationSession : EventTarget {
+  readonly attribute PresentationSessionState state;
+  void postMessage(DOMString message);
+  void close();
+  attribute EventHandler onmessage;
+  attribute EventHandler onstatechange;
+};
+</pre>
 
 <h2 class="no-num" id="references">References</h2>
-<div id="anolis-references"><dl><dt id="refsDOM">[DOM]
-<dd><cite><a href="http://dom.spec.whatwg.org/">DOM</a></cite>, Anne van Kesteren, Aryeh Gregor and Ms2ger. WHATWG.
-
-<dt id="refsFETCH">[FETCH]
-<dd><cite><a href="http://fetch.spec.whatwg.org/">Fetch</a></cite>, Anne van Kesteren. WHATWG.
-
-<dt id="refsHTML5">[HTML5]
+<div id="anolis-references"><dl><dt id="refsHTML5">[HTML5]
 <dd><cite><a href="http://www.w3.org/html/wg/drafts/html/CR/">HTML5</a></cite>, Robin Berjon, Steve Faulkner, Travis Leithead et al.. W3C.
 
 <dt id="refsRFC2119">[RFC2119]
@@ -568,7 +498,7 @@ altogether.</p>
 
 <h2 class="no-num" id="acknowledgements">Acknowledgements</h2>
 
-<p>Thanks to Wayne Carr and Anssi Kostiainen for input, thorough reviews and feedback to this draft.</p>
+<p>Thanks to Wayne Carr, Louay Bassbous, Anssi Kostiainen, 闵洪波 (Hongbo Min), Anton Vayvod for help with editing, reviews and feedback to this draft.</p>
 
 
 
