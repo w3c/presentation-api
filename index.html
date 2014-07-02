@@ -121,8 +121,8 @@
           Intel
         </dd>
         <dd>
-          <a href="mailto:anssi.kostianen@intel.com"></a>Anssi Kostiainen,
-          Intel
+          <a href="mailto:anssi.kostianen@intel.com">Anssi Kostiainen,
+          Intel</a>
         </dd>
       </dl>
       <p class="copyright">
@@ -140,8 +140,8 @@
     displays for web applications.
     <h2 class="no-num no-toc" id="sotd">
       Status of this Document
-    </h2>This document serves as the final report of the Second Screen
-    Presentation community group. <!--
+    </h2>This document serves as the final report of the <a href="http://www.w3.org/community/webscreens/">Second Screen Presentation
+    community group.</a> <!--
 <p><em>This section describes the status of this document at the time of its
 publication. Other documents may supersede this document. A list of current
 W3C publications and the latest revision of this technical report can be
@@ -209,16 +209,6 @@ document as other than work in progress.</p> -->
     </a></li>
    <li><a href="#non-functional-requirements"><span class="secno">2.2 </span>
       <span>Non-Functional Requirements</span>
-    </a></li>
-   <li><a href="#example"><span class="secno">2.3 </span>
-      Example
-    </a>
-    <ol>
-     <li><a href="#open-questions"><span class="secno">2.3.1 </span>
-      Open Questions
-    </a></ol></li>
-   <li><a href="#usage-on-remote-screen"><span class="secno">2.4 </span>
-      Usage on Remote Screen
     </a></ol></li>
  <li><a href="#conformance"><span class="secno">3 </span>
       Conformance
@@ -226,20 +216,30 @@ document as other than work in progress.</p> -->
  <li><a href="#terminology"><span class="secno">4 </span>
       Terminology
     </a></li>
- <li><a href="#interfaces"><span class="secno">5 </span>
+ <li><a href="#example"><span class="secno">5 </span>
+      Example
+    </a>
+  <ol>
+   <li><a href="#open-questions"><span class="secno">5.1 </span>
+      Open Questions
+    </a></li>
+   <li><a href="#usage-on-remote-screen"><span class="secno">5.2 </span>
+      Usage on Remote Screen
+    </a></ol></li>
+ <li><a href="#interfaces"><span class="secno">6 </span>
       Interfaces
     </a>
   <ol>
-   <li><a href="#navigatorpresentation"><span class="secno">5.1 </span>
+   <li><a href="#navigatorpresentation"><span class="secno">6.1 </span>
       <code>NavigatorPresentation</code>
     </a></li>
-   <li><a href="#availablechangeevent"><span class="secno">5.2 </span>
+   <li><a href="#availablechangeevent"><span class="secno">6.2 </span>
       <code>AvailableChangeEvent</code>
     </a></li>
-   <li><a href="#presentevent"><span class="secno">5.3 </span>
+   <li><a href="#presentevent"><span class="secno">6.3 </span>
       <code>PresentEvent</code>
     </a></li>
-   <li><a href="#presentationsession"><span class="secno">5.4 </span>
+   <li><a href="#presentationsession"><span class="secno">6.4 </span>
       <code>PresentationSession</code>
     </a></ol></li>
  <li><a class="no-num" href="#references">
@@ -419,169 +419,6 @@ document as other than work in progress.</p> -->
         </ul>
       </li>
     </ul>
-    <h3 id="example"><span class="secno">2.3 </span>
-      Example
-    </h3>
-    <p>
-      Running in a compliant user agent, code for presenting a page
-      <code>example.html</code> on the presentation display could look like the
-      following:
-    </p>
-    <pre class="example">/* controller.html */
-
-&lt;button disabled&gt;Show&lt;/button&gt;
-
-&lt;script&gt;
-var presentation = navigator.presentation,
-    showButton = document.querySelector('button');
- 
-presentation.onavailablechange = function(e) {
-  showButton.disabled = !e.available;
-  showButton.onclick = show;
-};
- 
-function show() {
-  var session = presentation.requestSession('http://example.org/');
- 
-  session.onstatechange = function() {
-    switch (session.state) {
-      case 'connected':
-        session.postMessage(/*...*/);
-        session.onmessage = function() { /*...*/ };
-        break;
-      case 'disconnected':
-        console.log('Disconnected.');
-        break;
-    }
-  };
-}
-&lt;/script&gt;
-</pre>
-    <p>
-      The availability monitoring for secondary screens begins when the page
-      adds an event listener for the availablechange event on the
-      navigator.presentation object. If there are already available screens
-      when the page adds the first event listener for the event, the UA
-      synthesizes a single availablechange event to signal the availability.
-    </p>
-    <p class="open-issue">
-      Do we want to fire an event immediately after the page registers for it?
-      What's a best practice method for asynchronous notifications of ths kind?
-      See below in the <a href="#open-questions">Open Questions</a> section.
-    </p>
-    <p>
-      The "Show" button's disabled state (initially disabled) informs the user
-      of the availability of secondary screen(s), and the button's state is
-      updated if the availability changes. (The rationale of putting the actual
-      boolean information into a property of the event e.available is to allow
-      the implementation to optimize power consumption for network discovery of
-      remote wireless screens. If this information was provided in a globally
-      accessible flag, the network discovery could never be suspended for
-      keeping the flag up to date.)
-    </p>
-    <p>
-      Once the user clicks the "Show" button, the show() function is called.
-    </p>
-    <p>
-      By calling navigator.presentation.requestSession(url), the script on the
-      page tries to launch or resume a presentation on a secondary screen.
-      Based on the url argument, the UA looks for existing sessions and
-      available screens, and presents a screen picker user interface to the
-      user. Out of the list of existing sessions or available screens the user
-      selects one item. If an existing session was selected, the session is
-      resumed by establishing a communication channel. If a new screen was
-      selected, the UA connects to the selected screen, brings up a new window
-      on the selected screen, starts to show the content denoted by the url
-      argument, and the UA establishes a communication channel with this
-      window.
-    </p>
-    <p>
-      When navigator.presentation.requestSession(url) function is called, the
-      UA immediately returns a session object to the script which represents a
-      handle to the current presentation session, used for communication and
-      state handling.
-    </p>
-    <p>
-      If the user has selected a screen, the content is shown and a
-      communication channel was established, the state of the session object
-      changes from "disconnected" to "connected", which signals the
-      presentation session is up and running, and the opener page can
-      communicate with the presentation page. For communication with the
-      presentation page, the session object's postMessage() is used to send,
-      and the onmessage event handler to receive messages.
-    </p>
-    <p>
-      If the user cancels the screen selection and never selects a screen, no
-      state transition happens and the session object remains in the
-      "disconnected" state.
-    </p>
-    <h4 id="open-questions"><span class="secno">2.3.1 </span>
-      Open Questions
-    </h4>
-    <p class="open-issue">
-      Do we need to insert into the description an additional permission prompt
-      to grant the page access to the "one ore more screens are available"
-      Information?
-    </p>
-    <p class="open-issue">
-      If there are already connected screens when the page subscribes to the
-      onavailablechange event, we can handle this in two ways: We can
-      synthesize one initial event to notify the page about available screens
-      as soon as the first event handler is installed (as described). Or we can
-      add another message like
-      navigator.presentation.getAvailable(function(available) { } ); to notify
-      the page about available screens using this one-time asynchronous getter.
-      Which way should we go?
-    </p>
-    <p class="open-issue">
-      Do we still need to pass an options parameter to the requestSession()
-      call in order to specify continuous playback or would we leave this an
-      implementation detail to the UA? Given that there is a close() function
-      and disconnect notifications through the state property, this should be
-      sufficient to implement the continuous playback use case.
-    </p>
-    <p class="open-issue">
-      Do we need an additional state like resumed in order to identify resumed
-      session? It seems that this could be handled on the page level. The
-      opener page could ask the presentation page whether it is "new" or
-      "resumed".
-    </p>
-    <h3 id="usage-on-remote-screen"><span class="secno">2.4 </span>
-      Usage on Remote Screen
-    </h3>For addressing the requirement of communication between originating
-    page and presentation page/screen, we can now use the same
-    <code>session</code> object on the remote side.
-    <pre class="example">navigator.presentation.onpresent = function(e) {
-  // Communicate with opener page.
-  e.session.postMessage(/*...*/);
-  e.session.onmessage = function() {/*...*/};
- 
-  e.session.onstatechange = function() {
-    switch (this.state) {
-      case "disconnected":
-        // Handle disconnection from opener page.
-    }
-  };
-};
-</pre>
-    <p>
-      When the content denoted by the url argument in the requestSession()
-      example above is loaded, the page on the presentation screen receives a
-      present event, with a session property representing the session. This
-      session is a similar object as in the first example. Here, its initial
-      state is "connected", which means we can use it to communicate with the
-      opener page using postMessage() and onmessage.
-    </p>
-    <p>
-      We can also monitor the connection state by listening for statechange
-      events. When the state changes to "disconnected"
-    </p>
-    <p>
-      the page is made aware of the fact that communication with the opener
-      page was lost, but it can continue to display the current content. The
-      communication can be re-established when a new present event fires on the
-      navigator.presentation object.
-    </p>
     <h2 id="conformance"><span class="secno">3 </span>
       Conformance
     </h2>
@@ -630,10 +467,168 @@ function show() {
       This document provides interface definitions using the
       <a href="#refsWEBIDL">[WEBIDL]</a> standard.
     </p>
-    <h2 id="interfaces"><span class="secno">5 </span>
+    <h2 id="example"><span class="secno">5 </span>
+      Example
+    </h2>
+    <p>
+      Running in a compliant user agent, code for presenting a page
+      <code>example.html</code> on the presentation display looks as follows:
+    </p>
+    <pre class="example">/* controller.html */
+
+&lt;button disabled&gt;Show&lt;/button&gt;
+
+&lt;script&gt;
+var presentation = navigator.presentation,
+    showButton = document.querySelector('button');
+ 
+presentation.onavailablechange = function(e) {
+  showButton.disabled = !e.available;
+  showButton.onclick = show;
+};
+ 
+function show() {
+  var session = presentation.requestSession('http://example.org/');
+ 
+  session.onstatechange = function() {
+    switch (session.state) {
+      case 'connected':
+        session.postMessage(/*...*/);
+        session.onmessage = function() { /*...*/ };
+        break;
+      case 'disconnected':
+        console.log('Disconnected.');
+        break;
+    }
+  };
+}
+&lt;/script&gt;
+</pre>
+    <p>
+      The availability monitoring for secondary screens begins when the page
+      adds an event listener for the availablechange event on the
+      navigator.presentation object. If there are already available screens
+      when the page adds the first event listener for the event, the UA
+      synthesizes a single availablechange event to signal the availability.
+    </p>
+    <p class="open-issue">
+      Do we want to fire an event immediately after the page registers for it?
+      What's a best practice method for asynchronous notifications of ths kind?
+      See below in the <a href="#open-questions">Open Questions</a> section.
+    </p>
+    <p>
+      The "Show" button's disabled state (initially disabled) informs the user
+      of the availability of secondary screen(s), and the button's state is
+      updated if the availability changes. (The rationale of putting the actual
+      boolean information into a property of the event <code>e.available</code>
+      is to allow the implementation to optimize power consumption for network
+      discovery of remote wireless screens. If this information was provided in
+      a globally accessible flag, the network discovery could never be
+      suspended for keeping the flag up to date.)
+    </p>
+    <p>
+      Once the user clicks the "Show" button, the <code>show()</code> function
+      is called.
+    </p>
+    <p>
+      By calling <code>navigator.presentation.requestSession(url)</code>, the
+      script on the page tries to launch or resume a presentation on a
+      secondary screen. Based on the <code>url</code> argument, the UA looks
+      for existing sessions and available screens, and presents a screen picker
+      user interface to the user. Out of the list of existing sessions or
+      available screens the user selects one item. If an existing session was
+      selected, the session is resumed by establishing a communication channel.
+      If a new screen was selected, the UA connects to the selected screen,
+      brings up a new window on the selected screen, starts to show the content
+      denoted by the url argument, and the UA establishes a communication
+      channel with this window.
+    </p>
+    <p>
+      When
+    </p>navigator.presentation.requestSession(url)function is called, the UA
+    immediately returns a session object to the script which represents a
+    handle to the current presentation session, used for communication and
+    state handling.
+    <p>
+      If the user has selected a screen, the content is shown and a
+      communication channel was established, the state of the session object
+      changes from <code>"disconnected"</code> to <code>"connected"</code>,
+      which signals the presentation session is up and running, and the opener
+      page can communicate with the presentation page. For communication with
+      the presentation page, the session object's <code>postMessage()</code> is
+      used to send, and the <code>onmessage</code> event handler to receive
+      messages.
+    </p>
+    <p>
+      If the user cancels the screen selection and never selects a screen, no
+      state transition happens and the session object remains in the
+      <code>"disconnected"</code> state.
+    </p>
+    <h4 id="open-questions"><span class="secno">5.1 </span>
+      Open Questions
+    </h4>
+    <p class="open-issue">
+      Do we need to insert into the description an additional permission prompt
+      to grant the page access to the "one ore more screens are available"
+      Information?
+    </p>
+    <p class="open-issue">
+      If there are already connected screens when the page subscribes to the
+      <code>onavailablechange</code> event, we can handle this in two ways: We
+      can synthesize one initial event to notify the page about available
+      screens as soon as the first event handler is installed (as described).
+      Or we can add another message like
+      <code>navigator.presentation.getAvailable(function(available) { }
+      );</code> to notify the page about available screens using this one-time
+      asynchronous getter. Which way should we go?
+    </p>
+    <p class="open-issue">
+      Do we need an additional state like resumed in order to identify resumed
+      session? It seems that this could be handled on the page level. The
+      opener page could ask the presentation page whether it is
+      <code>"new"</code> or <code>"resumed"</code>.
+    </p>
+    <h3 id="usage-on-remote-screen"><span class="secno">5.2 </span>
+      Usage on Remote Screen
+    </h3>For addressing the requirement of communication between originating
+    page and presentation page/screen, we can now use the same
+    <code>session</code> object on the remote side.
+    <pre class="example">navigator.presentation.onpresent = function(e) {
+  // Communicate with opener page.
+  e.session.postMessage(/*...*/);
+  e.session.onmessage = function() {/*...*/};
+
+  e.session.onstatechange = function() {
+    switch (this.state) {
+      case "disconnected":
+        // Handle disconnection from opener page.
+    }
+  };
+};
+</pre>
+    <p>
+      When the content denoted by the url argument in the
+      <code>requestSession()</code> example above is loaded, the page on the
+      presentation screen receives a <code>PresentEvent</code>, with a
+      <code>session</code> property representing the session. This session is a
+      similar object as in the first example. Here, its initial state is
+      <code>"connected"</code>, which means we can use it to communicate with
+      the opener page using <code>postMessage()</code> and
+      <code>onmessage</code>.
+    </p>
+    <p>
+      We can also monitor the connection state by listening for
+      <code>statechange</code> events. When the state changes to
+      <code>"disconnected"</code> the page is made aware of the fact that
+      communication with the opener page was lost, but it can continue to
+      display the current content. The communication can be re-established when
+      a new present event fires on the <code>navigator.presentation</code>
+      object.
+    </p>
+    <h2 id="interfaces"><span class="secno">6 </span>
       Interfaces
     </h2>
-    <h3 id="navigatorpresentation"><span class="secno">5.1 </span>
+    <h3 id="navigatorpresentation"><span class="secno">6.1 </span>
       <code>NavigatorPresentation</code>
     </h3>
     <pre class="idl">interface NavigatorPresentation : EventTarget {
@@ -646,7 +641,7 @@ partial interface Navigator {
   readonly attribute NavigatorPresentation presentation;
 };
 </pre>
-    <h3 id="availablechangeevent"><span class="secno">5.2 </span>
+    <h3 id="availablechangeevent"><span class="secno">6.2 </span>
       <code>AvailableChangeEvent</code>
     </h3>
     <p>
@@ -662,7 +657,7 @@ dictionary AvailableChangeEventInit : EventInit {
   boolean available;
 };
 </pre>
-    <h3 id="presentevent"><span class="secno">5.3 </span>
+    <h3 id="presentevent"><span class="secno">6.3 </span>
       <code>PresentEvent</code>
     </h3>Fired at the secondary screen's <code>NavigatorPresentation</code>
     object, when the presentation session is established.
@@ -675,7 +670,7 @@ dictionary PresentEventInit : EventInit {
   PresentationSession session;
 };
 </pre>
-    <h3 id="presentationsession"><span class="secno">5.4 </span>
+    <h3 id="presentationsession"><span class="secno">6.4 </span>
       <code>PresentationSession</code>
     </h3>
     <p>
