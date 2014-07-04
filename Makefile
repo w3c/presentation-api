@@ -1,8 +1,9 @@
 # http://wiki.whatwg.org/wiki/GitHub#Makefile
 
 ANOLIS = anolis
+TIDY-HTML5 = tidy-html5
 
-all: index.html ../xref/xrefs/dom/presentation.json
+all: tidy index.html ../xref/xrefs/dom/presentation.json
 
 index.html: Overview.src.html ../xref Makefile
 	$(ANOLIS) --w3c-compat-substitutions \
@@ -11,3 +12,6 @@ index.html: Overview.src.html ../xref Makefile
 
 ../xref/xrefs/dom/presentation.json: Overview.src.html Makefile
 	$(ANOLIS) --dump-xrefs=$@ $< /tmp/spec
+
+tidy: Overview.src.html build/tidyconfig.txt
+	$(TIDY-HTML5) -config build/tidyconfig.txt -o $< $<
