@@ -476,6 +476,13 @@ function show() {
       What's a best practice method for asynchronous notifications of ths kind?
       See below in the <a href="#open-questions">Open Questions</a> section.
     </p>
+    <p class="open-issue">
+      With additional information from the page the UA may be able to filter out
+      available screens which cannot support the page's content. For example, the
+      second screen application of domain A, discovered using DIAL, will not be
+      capable of rendering content from domain B. It is an open issue how to provide
+      such information from page to UA.
+    </p>
     <p>
       The "Show" button's state (initially disabled) informs the user of the
       availability of secondary screen(s), and the button's state is updated if
