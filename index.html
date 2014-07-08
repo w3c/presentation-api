@@ -68,13 +68,13 @@
     <div class="head">
       
 <!--begin-logo-->
-<p><a href="http://www.w3.org/"><img alt="W3C" src="https://www.w3.org/Icons/w3c_home" width="72" height="48"></a></p>
+<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"></a></p>
 <!--end-logo-->
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="final-report-3-july-2014">
-        Final Report 3 July 2014
+      <h2 class="no-num no-toc" id="final-report-8-july-2014">
+        Final Report 8 July 2014
       </h2>
       <dl>
         <dt>
@@ -247,6 +247,38 @@
       or friends and family at home. Showing content on an external large
       display helps to improve the perceived quality and impact of the
       presented content.
+    </p>
+    <p>
+      At its core, this specification enables an exchange of messages between a
+      requesting page and a presentation page shown in the secondary display.
+      How those messages are transmitted is left to the UA in order to allow
+      for use of display devices that can be attached in a wide variety of
+      ways. For example, when a display device is attached using HDMI or
+      MiraCast, the UA on the requesting device can render the requested
+      presentation page in that same UA, but instead of displaying in a window
+      on that same device, it can use whatever means the operating system
+      provides for using those external displays. In that case, both the
+      requesting page and the presentation page run on the requesting device
+      and the operating system is used to route the presentation display output
+      to the other display device. The second display device doesn't need to
+      know anything about this spec or that the content involves HTML5.
+    </p>
+    <p>
+      Alternately, some types of external displays may be able to render HTML5
+      themselves and may have defined their own way to send messages to that
+      content. In that case, the UA on the requesting device would not need to
+      render the presentation page itself. Instead, the UA could act as a proxy
+      translating the request to show a page and the messages into the form
+      understood by the display device.
+    </p>
+    <p>
+      This way of attaching to displays could be enhanced in the future through
+      definition of a standard protocol for delivering these types of messages
+      that display devices could choose to implement.
+    </p>
+    <p>
+      The API defined here is intended be used with UAs that attach to display
+      devices through any of the above means.
     </p>
     <h3 id="use-cases"><span class="secno">1.1 </span>
       Use Cases
@@ -445,8 +477,8 @@
     </p>
 -->
     <p>
-      The terms <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html">event handlers</a> and
-      <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" data-anolis-spec="w3c-html" title="event handler event type">event
+      The terms <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a> and
+      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event
       handler event types</a> are defined in <a href="#refsHTML5">[HTML5]</a>.
     </p>
     <p>

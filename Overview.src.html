@@ -185,6 +185,38 @@
       display helps to improve the perceived quality and impact of the
       presented content.
     </p>
+    <p>
+      At its core, this specification enables an exchange of messages between a
+      requesting page and a presentation page shown in the secondary display.
+      How those messages are transmitted is left to the UA in order to allow
+      for use of display devices that can be attached in a wide variety of
+      ways. For example, when a display device is attached using HDMI or
+      MiraCast, the UA on the requesting device can render the requested
+      presentation page in that same UA, but instead of displaying in a window
+      on that same device, it can use whatever means the operating system
+      provides for using those external displays. In that case, both the
+      requesting page and the presentation page run on the requesting device
+      and the operating system is used to route the presentation display output
+      to the other display device. The second display device doesn't need to
+      know anything about this spec or that the content involves HTML5.
+    </p>
+    <p>
+      Alternately, some types of external displays may be able to render HTML5
+      themselves and may have defined their own way to send messages to that
+      content. In that case, the UA on the requesting device would not need to
+      render the presentation page itself. Instead, the UA could act as a proxy
+      translating the request to show a page and the messages into the form
+      understood by the display device.
+    </p>
+    <p>
+      This way of attaching to displays could be enhanced in the future through
+      definition of a standard protocol for delivering these types of messages
+      that display devices could choose to implement.
+    </p>
+    <p>
+      The API defined here is intended be used with UAs that attach to display
+      devices through any of the above means.
+    </p>
     <h3 id="use-cases">
       Use Cases
     </h3>
