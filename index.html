@@ -73,8 +73,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="final-report-8-july-2014">
-        Final Report 8 July 2014
+      <h2 class="no-num no-toc" id="final-report-11-july-2014">
+        Final Report 11 July 2014
       </h2>
       <dl>
         <dt>
@@ -534,6 +534,15 @@ function show() {
       Do we want to fire an event immediately after the page registers for it?
       What's a best practice method for asynchronous notifications of ths kind?
       See below in the <a href="#open-questions">Open Questions</a> section.
+    </p>
+    <p class="open-issue">
+      It is an open issue whether to provide filter information as part of the
+      request for notification of available screens. This could be useful when
+      a particular application or capability is needed in order to display the
+      contents of a presentation. One possible approach to this could be to
+      provide the URL for the presentation and / or required options as part of
+      the request for notification of available screens. If this was supported,
+      only screens that satisfied the filter would trigger a notification.
     </p>
     <p>
       The "Show" button's state (initially disabled) informs the user of the
