@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <title>
       Presentation API
     </title>
@@ -11,7 +11,7 @@
     }
     </style>
     <link rel="stylesheet" href=
-    "http://www.w3.org/community/src/css/spec/cg-final.css" type="text/css"></link>
+    "http://www.w3.org/community/src/css/spec/cg-final.css" type="text/css">
     <style type="text/css">
 /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
@@ -136,7 +136,7 @@
         "http://www.w3.org/community/about/agreements/fsa-deed/">summary</a> is
         available.
       </p>
-      <hr/>
+      <hr>
     </div>
     <h2 class="no-num no-toc">
       Abstract
@@ -504,16 +504,16 @@ function show() {
     </p>
     <p>
       By calling <code>navigator.presentation.requestSession(url)</code>, the
-      script on the page tries to launch or resume a presentation on a secondary
-      screen. Based on the <code>url</code> argument, the UA looks for existing
-      sessions and available screens, and presents a screen picker user
-      interface to the user. Out of the list of existing sessions or available
-      screens the user selects one item. If an existing session was selected,
-      the session is resumed by establishing a communication channel.  If a new
-      screen was selected, the UA connects to the selected screen, brings up a
-      new window on the selected screen, starts to show the content denoted by
-      the <code>url</code> argument, and the UA establishes a communication
-      channel with this window.
+      script on the page tries to launch or resume a presentation on a
+      secondary screen. Based on the <code>url</code> argument, the UA looks
+      for existing sessions and available screens, and presents a screen picker
+      user interface to the user. Out of the list of existing sessions or
+      available screens the user selects one item. If an existing session was
+      selected, the session is resumed by establishing a communication channel.
+      If a new screen was selected, the UA connects to the selected screen,
+      brings up a new window on the selected screen, starts to show the content
+      denoted by the <code>url</code> argument, and the UA establishes a
+      communication channel with this window.
     </p>
     <p>
       When the <code>navigator.presentation.requestSession(url)</code> function
@@ -566,7 +566,7 @@ function show() {
     <p>
       For addressing the requirement of communication between originating page
       and presentation page/screen, the presenting page can now use the same
-      <code>session</code> object.  It accesses this object through the
+      <code>session</code> object. It accesses this object through the
       <code>navigator.presentation.session</code> property, which is only
       non-<code>null</code> for the page on the presentation screen.
     </p>
@@ -589,10 +589,10 @@ if (navigator.presentation.session) {
       When the content denoted by the <code>url</code> argument in the
       <code>requestSession()</code> example above is loaded, the page on the
       presentation screen will have its
-      <code>navigator.presentation.session</code> property set to the
-      session. This session is a similar object as in the first example. Here,
-      its initial state is <code>"connected"</code>, which means we can use it
-      to communicate with the opener page using <code>postMessage()</code> and
+      <code>navigator.presentation.session</code> property set to the session.
+      This session is a similar object as in the first example. Here, its
+      initial state is <code>"connected"</code>, which means we can use it to
+      communicate with the opener page using <code>postMessage()</code> and
       <code>onmessage</code>.
     </p>
     <p>
@@ -649,7 +649,8 @@ interface AvailableChangeEvent : Event {
 dictionary AvailableChangeEventInit : EventInit {
   boolean available;
 };
-    </pre>
+    
+</pre>
     <h3>
       <code>PresentationSession</code>
     </h3>
@@ -666,7 +667,8 @@ interface PresentationSession : EventTarget {
   attribute EventHandler onmessage;
   attribute EventHandler onstatechange;
 };
-    </pre>
+    
+</pre>
     <h2 class="no-num">
       References
     </h2>
@@ -675,8 +677,9 @@ interface PresentationSession : EventTarget {
       Acknowledgements
     </h2>
     <p>
-      Thanks to Wayne Carr, Louay Bassbous, Anssi Kostiainen, 闵洪波 (Hongbo Min),
-      Anton Vayvod for help with editing, reviews and feedback to this draft.
+      Thanks to Wayne Carr, Louay Bassbous, Anssi Kostiainen, 闵洪波 (Hongbo
+      Min), Anton Vayvod, and Mark Foltz for help with editing, reviews and
+      feedback to this draft.
     </p>
   </body>
 </html>
