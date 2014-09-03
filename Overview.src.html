@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>
       Presentation API
     </title>
-    <style>
+    <style type="text/css">
 @media print {
      [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link rel="stylesheet" href=
-    "http://www.w3.org/community/src/css/spec/cg-final.css" type="text/css">
+    "http://www.w3.org/community/src/css/spec/cg-final.css" type="text/css"></link>
     <style type="text/css">
 /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
@@ -59,6 +59,7 @@
     .algorithm li {
         margin-bottom: 0.5em;
     }
+
 
     .interface dd, .parameters dt {
         margin-bottom: 0.5em;
@@ -135,7 +136,7 @@
         "http://www.w3.org/community/about/agreements/fsa-deed/">summary</a> is
         available.
       </p>
-      <hr>
+      <hr/>
     </div>
     <h2 class="no-num no-toc">
       Abstract
@@ -503,15 +504,15 @@ function show() {
     </p>
     <p>
       By calling <code>navigator.presentation.requestSession(url)</code>, the
-      script on the page tries to launch or resume a presentation on a
-      secondary screen. Based on the <code>url</code> argument, the UA looks
-      for existing sessions and available screens, and presents a screen picker
-      user interface to the user. Out of the list of existing sessions or
-      available screens the user selects one item. If an existing session was
-      selected, the session is resumed by establishing a communication channel.
-      If a new screen was selected, the UA connects to the selected screen,
-      brings up a new window on the selected screen, starts to show the content
-      denoted by the url argument, and the UA establishes a communication
+      script on the page tries to launch or resume a presentation on a secondary
+      screen. Based on the <code>url</code> argument, the UA looks for existing
+      sessions and available screens, and presents a screen picker user
+      interface to the user. Out of the list of existing sessions or available
+      screens the user selects one item. If an existing session was selected,
+      the session is resumed by establishing a communication channel.  If a new
+      screen was selected, the UA connects to the selected screen, brings up a
+      new window on the selected screen, starts to show the content denoted by
+      the <code>url</code> argument, and the UA establishes a communication
       channel with this window.
     </p>
     <p>
@@ -561,16 +562,22 @@ function show() {
     </p>
     <h3>
       Usage on Remote Screen
-    </h3>For addressing the requirement of communication between originating
-    page and presentation page/screen, we can now use the same
-    <code>session</code> object on the remote side.
+    </h3>
+    <p>
+      For addressing the requirement of communication between originating page
+      and presentation page/screen, the presenting page can now use the same
+      <code>session</code> object.  It accesses this object through the
+      <code>navigator.presentation.session</code> property, which is only
+      non-<code>null</code> for the page on the presentation screen.
+    </p>
     <pre class="example">
-navigator.presentation.onpresent = function(e) {
+if (navigator.presentation.session) {
+  var session = navigator.presentation.session;
   // Communicate with opener page.
-  e.session.postMessage(/*...*/);
-  e.session.onmessage = function() {/*...*/};
+  session.postMessage(/*...*/);
+  session.onmessage = function() {/*...*/};
 
-  e.session.onstatechange = function() {
+  session.onstatechange = function() {
     switch (this.state) {
       case "disconnected":
         // Handle disconnection from opener page.
@@ -579,23 +586,23 @@ navigator.presentation.onpresent = function(e) {
 };
 </pre>
     <p>
-      When the content denoted by the url argument in the
+      When the content denoted by the <code>url</code> argument in the
       <code>requestSession()</code> example above is loaded, the page on the
-      presentation screen receives a <code>PresentEvent</code>, with a
-      <code>session</code> property representing the session. This session is a
-      similar object as in the first example. Here, its initial state is
-      <code>"connected"</code>, which means we can use it to communicate with
-      the opener page using <code>postMessage()</code> and
+      presentation screen will have its
+      <code>navigator.presentation.session</code> property set to the
+      session. This session is a similar object as in the first example. Here,
+      its initial state is <code>"connected"</code>, which means we can use it
+      to communicate with the opener page using <code>postMessage()</code> and
       <code>onmessage</code>.
     </p>
     <p>
-      We can also monitor the connection state by listening for
-      <code>statechange</code> events. When the state changes to
+      The presentation page can also monitor the connection state by listening
+      for <code>statechange</code> events. When the state changes to
       <code>"disconnected"</code> the page is made aware of the fact that
       communication with the opener page was lost, but it can continue to
       display the current content. The communication can be re-established when
-      a new present event fires on the <code>navigator.presentation</code>
-      object.
+      a <code>statechange</code> event fires with a new state of
+      <code>"connected"</code>.
     </p>
     <h2>
       Interfaces
@@ -617,9 +624,9 @@ navigator.presentation.onpresent = function(e) {
     </h3>
     <pre class="idl">
 interface NavigatorPresentation : EventTarget {
+  readonly attribute PresentationSession? session;
   PresentationSession requestSession(DOMString url);
   attribute EventHandler onavailablechange;
-  attribute EventHandler onpresent;
 };
 
 partial interface Navigator {
@@ -642,21 +649,7 @@ interface AvailableChangeEvent : Event {
 dictionary AvailableChangeEventInit : EventInit {
   boolean available;
 };
-</pre>
-    <h3>
-      <code>PresentEvent</code>
-    </h3>Fired at the secondary screen's <code>NavigatorPresentation</code>
-    object, when the presentation session is established.
-    <pre class="idl">
-[Constructor(DOMString type, optional PresentEventInit eventInitDict)]
-interface PresentEvent : Event {
-  readonly attribute PresentationSession session;
-};
-
-dictionary PresentEventInit : EventInit {
-  PresentationSession session;
-};
-</pre>
+    </pre>
     <h3>
       <code>PresentationSession</code>
     </h3>
@@ -673,7 +666,7 @@ interface PresentationSession : EventTarget {
   attribute EventHandler onmessage;
   attribute EventHandler onstatechange;
 };
-</pre>
+    </pre>
     <h2 class="no-num">
       References
     </h2>

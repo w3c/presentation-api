@@ -1,7 +1,7 @@
 # http://wiki.whatwg.org/wiki/GitHub#Makefile
 
 ANOLIS = anolis
-TIDY-HTML5 = tidy-html5
+TIDY-HTML5 = tidy
 
 all: tidy index.html ../xref/xrefs/dom/presentation.json
 
