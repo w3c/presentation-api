@@ -632,35 +632,31 @@ function setSession(theSession) {
     <p>
       Clicking the "Show" button calls
       <code>navigator.presentation.startSession()</code>, which causes the user
-      agent to request from the user a screen for the presentation. The
+      agent to request from the user a screen to show the presentation. The
       <code>url</code> argument indicates the content to be presented. The
       <code>presentationId</code> argument (optional) allows the page to
       identify this presentation instance, and control which other pages may
       connect to it by setting a hard-to-guess id.
     </p>
     <p>
-      When the opener page calls <code>navigator.presentation.startSession(url,
-      presentationId)</code>, the UA looks for available screens and asks the
-      user to choose one of them (for example by showing a screen picker
-      dialog). If the user selects a screen with an existing presentation
-      showing the same <code>url</code> under the same
-      <code>presentationId</code>, the opener page is connected to that
-      existing presentation. If the user selects a screen without an existing
-      presentation, or a screen with a different <code>url</code> or
-      <code>presentationId</code>, the UA connects to the selected screen,
-      brings up a new presentation window on it, and starts to show the content
-      denoted by the <code>url</code> argument. The UA then connects the opener
-      page to this new presentation and allows the opener page to exchange
-      messages with it.
+      If the user selects a screen with an existing presentation showing the
+      same <code>url</code> under the same <code>presentationId</code>, the
+      opener page is connected to that existing presentation. If the user
+      selects a screen without an existing presentation, or a screen with a
+      different <code>url</code> or <code>presentationId</code>, the UA
+      connects to the selected screen, brings up a new presentation window on
+      it, and starts to show the content denoted by the <code>url</code>
+      argument. The UA then connects the opener page to this new presentation
+      and allows the opener page to exchange messages with it.
     </p>
     <p>
       <code>navigator.presentation.startSession(url, presentationId)</code>
       returns a <code>Promise</code> to the opener page. When the user selects
-      a screen for presentation, the <code>Promise</code> resolves to a
+      a screen, the <code>Promise</code> resolves to a
       <code>PresentationSession</code> object, which acts as a handle to the
       presentation for communication and state handling. Once the presentation
-      content is shown and a communication channel has been established, the
-      state of the <code>PresentationSession</code> changes from
+      page is shown and a communication channel has been established, the state
+      of the <code>PresentationSession</code> changes from
       <code>"disconnected"</code> to <code>"connected"</code>. At this point,
       the opener page can communicate with the presentation page using the
       session's <code>postMessage()</code> to send messages and its
