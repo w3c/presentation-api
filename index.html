@@ -642,8 +642,8 @@ function setSession(theSession) {
       If the user selects a screen with an existing presentation showing the
       same <code>url</code> under the same <code>presentationId</code>, the
       opener page is connected to that existing presentation. If the user
-      selects a screen without an existing presentation, or a screen with a
-      different <code>url</code> or <code>presentationId</code>, the UA
+      selects a screen without an existing presentation, or a screen presenting
+      a different <code>url</code> or <code>presentationId</code>, the UA
       connects to the selected screen, brings up a new presentation window on
       it, and starts to show the content denoted by the <code>url</code>
       argument. The UA then connects the opener page to this new presentation
@@ -661,8 +661,9 @@ function setSession(theSession) {
       the opener page can communicate with the presentation page using the
       session's <code>postMessage()</code> to send messages and its
       <code>onmessage</code> event handler to receive messages. The
-      presentation page will also have a <code>PresentationSession</code> that
-      it can use to send and receive messages with the opener page.
+      presentation page will also have access to
+      <code>PresentationSession</code> that it can use to send and receive
+      messages with the opener page (see <a href="#usage-on-remote-screen">Usage on Remote Screen</a>).
     </p>
     <p>
       If the user cancels screen selection, the <code>Promise</code> returned
@@ -675,7 +676,7 @@ function setSession(theSession) {
       The opener page may wish to reconnect to an existing presentation without
       prompting the user to select a screen. For example, the site could allow
       media items from different pages to be shown on the same presentation
-      page, and does not want to prompt the user on each page to connect to
+      page, and does not want to prompt the user on each page to reconnect to
       that presentation. To reconnect automatically, the page may call
       <code>joinSession(url, presentationId)</code>, which returns a
       <code>Promise</code> that resolves to an existing
@@ -713,8 +714,9 @@ function setSession(theSession) {
     </p>
     <p class="open-issue">
       If more than one presentation session exists with the same
-      <code>url</code> and <code>presentationId</code> then what is the
-      behavior of <code>joinSession(url, presentationId)</code>?
+      <code>url</code> and <code>presentationId</code> (on different screens)
+      then what is the behavior of <code>joinSession(url,
+      presentationId)</code>?
     </p>
     <p class="open-issue">
       If the user agent becomes aware of a presentation session after the page
@@ -836,14 +838,13 @@ interface PresentationSession : EventTarget {
     <p>
       These algorithms are intended to define the behavior of the
       <code>NavigatorPresentation</code> and <code>PresentationSession</code>
-      interfaces defined in the <a href="#interfaces">Interfaces</a> section.
+      interfaces declared in the <a href="#interfaces">Interfaces</a> section.
     </p>
     <h3 id="the-screen-availability-algorithm"><span class="secno">7.1 </span>
       The Screen Availability algorithm
     </h3>
     <p>
-      Run by the when an event handler is added to
-      <code>onavailablechange</code>.
+      Run when an event handler is added to <code>onavailablechange</code>.
     </p>
     <h3 id="the-start-session-algorithm"><span class="secno">7.2 </span>
       The Start Session algorithm
