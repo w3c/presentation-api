@@ -559,17 +559,17 @@ function setSession(theSession) {
     </p>
     <p>
       Based on the <code>url</code> and <code>presentationId</code> arguments,
-      the UA looks for available screens and existing sessions, and presents a
-      screen picker user interface to the user. Out of the list of existing
-      sessions or available screens the user selects one item. If an existing
-      session presenting the same <code>url</code> and having the same
-      <code>presentationId</code> was selected, the existing session is
-      connected to by the establishment of a communication channel. If the user
-      selects a screen without an existing session, or a screen with a
-      different <code>url</code> or <code>presentationId</code>, the UA
-      connects to the selected screen, brings up a new window on it, and starts
-      to show the content denoted by the <code>url</code> argument. The UA
-      establishes a communication channel with this new window and allows the
+      the UA looks for available screens and existing sessions, and asks the
+      user for a screen, for example by showing a screen picker dialog. Out of
+      the list of existing sessions or available screens the user selects one
+      item. If an existing session presenting the same <code>url</code> and
+      having the same <code>presentationId</code> was selected, the existing
+      session is connected to by the establishment of a communication
+      channel. If the user selects a screen without an existing session, or a
+      screen with a different <code>url</code> or <code>presentationId</code>,
+      the UA connects to the selected screen, brings up a new window on it, and
+      starts to show the content denoted by the <code>url</code> argument. The
+      UA establishes a communication channel with this new window and allows the
       opener page to exchange messages to it.
     </p>
     <p>
