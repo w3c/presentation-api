@@ -5,7 +5,7 @@
     </title>
     <style>
 @media print {
-     [data-Anouilh-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
+     [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link href="http://www.w3.org/community/src/css/spec/cg-draft.css" rel="stylesheet" type="text/css">
@@ -726,9 +726,10 @@ function setSession(theSession) {
       the page of its existence. Should we use an event handler instead?
     </p>
     <p class="open-issue">
-      If the page calls <code>startSession(url, presentationId)</code> before
-      <code>joinSession(url, presentationId)</code> has resolved, behavior is
-      not defined.
+      If the page calls <code>startSession(url, presentationId)</code> with the
+      same <code>url</code> and <code>presenationId</code> as
+      <code>joinSession(url, presentationId)</code>, and the latter call has
+      not resolved, behavior is not defined.
     </p>
     <h3 id="usage-on-remote-screen"><span class="secno">5.4 </span>
       Usage on Remote Screen

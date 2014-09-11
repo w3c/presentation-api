@@ -645,9 +645,10 @@ function setSession(theSession) {
       the page of its existence. Should we use an event handler instead?
     </p>
     <p class="open-issue">
-      If the page calls <code>startSession(url, presentationId)</code> before
-      <code>joinSession(url, presentationId)</code> has resolved, behavior is
-      not defined.
+      If the page calls <code>startSession(url, presentationId)</code> with the
+      same <code>url</code> and <code>presenationId</code> as
+      <code>joinSession(url, presentationId)</code>, and the latter call has
+      not resolved, behavior is not defined.
     </p>
     <h3>
       Usage on Remote Screen
