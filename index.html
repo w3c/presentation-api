@@ -631,12 +631,12 @@ function setSession(theSession) {
     </p>
     <p>
       Clicking the "Show" button calls
-      <code>navigator.presentation.startSession()</code>, which launches
-      presentation on a secondary screen. The <code>url</code> argument
-      indicates the content to be presented. The <code>presentationId</code>
-      argument (optional) allows the page to identify this presentation
-      instance, and control which other pages may connect to it by setting a
-      hard-to-guess id.
+      <code>navigator.presentation.startSession()</code>, which causes the user
+      agent to request from the user a screen for the presentation. The
+      <code>url</code> argument indicates the content to be presented. The
+      <code>presentationId</code> argument (optional) allows the page to
+      identify this presentation instance, and control which other pages may
+      connect to it by setting a hard-to-guess id.
     </p>
     <p>
       Based on the <code>url</code> and <code>presentationId</code> arguments,
