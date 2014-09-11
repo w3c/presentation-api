@@ -558,32 +558,34 @@ function setSession(theSession) {
       connect to it by setting a hard-to-guess id.
     </p>
     <p>
-      Based on the <code>url</code> and <code>presentationId</code> arguments,
-      the UA looks for available screens and existing sessions, and asks the
-      user for a screen, for example by showing a screen picker dialog. Out of
-      the list of existing sessions or available screens the user selects one
-      item. If an existing session presenting the same <code>url</code> and
-      having the same <code>presentationId</code> was selected, the existing
-      session is connected to by the establishment of a communication
-      channel. If the user selects a screen without an existing session, or a
-      screen with a different <code>url</code> or <code>presentationId</code>,
-      the UA connects to the selected screen, brings up a new window on it, and
-      starts to show the content denoted by the <code>url</code> argument. The
-      UA establishes a communication channel with this new window and allows the
-      opener page to exchange messages to it.
+      When the opener page calls <code>navigator.presentation.startSession(url,
+      presentationId)</code>, the UA looks for available screens and asks the
+      user to choose one of them (for example by showing a screen picker
+      dialog). If the user selects a screen with an existing presentation
+      showing the same <code>url</code> under the same
+      <code>presentationId</code>, the opener page is connected to that
+      existing presentation. If the user selects a screen without an existing
+      presentation, or a screen with a different <code>url</code> or
+      <code>presentationId</code>, the UA connects to the selected screen,
+      brings up a new presentation window on it, and starts to show the content
+      denoted by the <code>url</code> argument. The UA then connects the opener
+      page to this new presentation and allows the opener page to exchange
+      messages with it.
     </p>
     <p>
-      The <code>navigator.presentation.startSession(url, presentationId)</code>
-      function returns a <code>Promise</code> that resolves to a
-      <code>PresentationSession</code> object if a screen was selected by the
-      user. The <code>PresentationSession</code> represents a handle to that
-      presentation session, used for communication and state handling. Once the
-      presentation content is shown and a communication channel has been
-      established, the state of the <code>PresentationSession</code> changes
-      from <code>"disconnected"</code> to <code>"connected"</code>. At this
-      point, the opener page can communicate with the presentation page using
-      the session's <code>postMessage()</code> to send messages and its
-      <code>onmessage</code> event handler to receive messages.
+      <code>navigator.presentation.startSession(url, presentationId)</code>
+      returns a <code>Promise</code> to the opener page. When the user selects
+      a screen for presentation, the <code>Promise</code> resolves to a
+      <code>PresentationSession</code> object, which acts as a handle to the
+      presentation for communication and state handling. Once the presentation
+      content is shown and a communication channel has been established, the
+      state of the <code>PresentationSession</code> changes from
+      <code>"disconnected"</code> to <code>"connected"</code>. At this point,
+      the opener page can communicate with the presentation page using the
+      session's <code>postMessage()</code> to send messages and its
+      <code>onmessage</code> event handler to receive messages. The
+      presentation page will also have a <code>PresentationSession</code> that
+      it can use to send and receive messages with the opener page.
     </p>
     <p>
       If the user cancels screen selection, the <code>Promise</code> returned
@@ -593,20 +595,20 @@ function setSession(theSession) {
       Automatically reconnecting to existing presentations
     </h4>
     <p>
-      Optionally, the page may wish to reconnect to an existing presentation
-      session without prompting the user to select a screen. This could happen,
-      if the user was browsing a site that allows media items from different
-      pages to be shown in on same presentation page. To reconnect
-      automatically the page may call <code>joinSession(url,
-      presentationId)</code>, which returns a <code>Promise</code> that
-      resolves to an existing <code>PresentationSession</code> if one exists
-      that is <code>"connected"</code>, and is presenting an the same
-      <code>url</code> with the same <code>presentationId</code> as what was
-      originally passed into <code>startSession</code>. The requesting page can
-      then immediately communicate with the presentation session as if the user
-      had manually selected it via <code>startSession</code>. If no such
-      presentation session exists, the <code>Promise</code> is immediately
-      rejected.
+      The opener page may wish to reconnect to an existing presentation without
+      prompting the user to select a screen. For example, the site could allow
+      media items from different pages to be shown on the same presentation
+      page, and does not want to prompt the user on each page to connect to
+      that presentation. To reconnect automatically, the page may call
+      <code>joinSession(url, presentationId)</code>, which returns a
+      <code>Promise</code> that resolves to an existing
+      <code>PresentationSession</code> if one exists that is presenting the
+      same <code>url</code> with the same <code>presentationId</code> as was
+      passed originally into <code>startSession</code>. The requesting page can
+      then communicate with the presentation as if the user had manually
+      connected to it via <code>startSession</code>. If no such
+      <code>PresentationSession</code> exists, the <code>Promise</code> is
+      immediately rejected.
     </p>
     <h4>
       Open Questions
