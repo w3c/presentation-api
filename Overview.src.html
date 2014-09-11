@@ -432,7 +432,8 @@
     </h2>
     <p>
       Running in a compliant user agent, code for presenting a page
-      <code>example.html</code> on the presentation display looks as follows:
+      <code>http://example.org/presentation.html</code> on the presentation
+      display looks as follows:
     </p>
     <pre class="example">
 /* controller.html */
@@ -488,9 +489,11 @@ function startPresent() {
 function stopPresent() {
   if (!session) return;
   session.close();
+  delete localStorage['presentationId'];
 };
 
 function setSession(theSession) {
+  // NOTE: We could instead close the current session.
   if (session) return;
   session = theSession;
   localStorage['presentationId'] = session.id;
@@ -546,12 +549,8 @@ function setSession(theSession) {
       suspended for keeping the flag up to date.)
     </p>
     <p>
-      Once the user clicks the "Show" button, the <code>startPresent()</code>
-      function is called.
-    </p>
-    <p>
-      By calling <code>navigator.presentation.startSession(url,
-      presentationId)</code>, the script on the page tries to launch
+      Clicking the "Show" button calls
+      <code>navigator.presentation.startSession()</code>, which launches
       presentation on a secondary screen. The <code>url</code> argument
       indicates the content to be presented. The <code>presentationId</code>
       argument (optional) allows the page to identify this presentation
