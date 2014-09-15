@@ -590,12 +590,12 @@ function setSession(theSession) {
       by <code>startSession(url, presentationId)</code> remains unresolved.
     </p>
     <p>
-      While there is a pending call to <code>startSession</code> asking the user
-      to select a screen (that the user has not yet accepted or canceled), the
-      browser may choose to reject subsequent calls to <code>startSession</code>
-      from the same page, by returning a <code>Promise</code> that never
-      resolves.  This will prevent the browser from needing to 'queue up'
-      requests to present to the user.
+      While there is a pending call to <code>startSession</code> asking the
+      user to select a screen (that the user has not yet accepted or canceled),
+      the browser may choose to reject subsequent calls to
+      <code>startSession</code> from the same page, by returning a
+      <code>Promise</code> that never resolves. This will prevent the browser
+      from needing to 'queue up' requests to present to the user.
     </p>
     <h4>
       Automatically reconnecting to existing presentations
@@ -608,37 +608,37 @@ function setSession(theSession) {
       that presentation. To reconnect automatically, the page may call
       <code>joinSession(url, presentationId)</code>, which returns a
       <code>Promise</code> that resolves to an existing
-      <code>PresentationSession</code> if one exists that is presenting the same
-      <code>url</code> with the same <code>presentationId</code> as was passed
-      originally into <code>startSession</code>. The requesting page can then
-      communicate with the presentation as if the user had manually connected to
-      it via <code>startSession</code>.
+      <code>PresentationSession</code> if one exists that is presenting the
+      same <code>url</code> with the same <code>presentationId</code> as was
+      passed originally into <code>startSession</code>. The requesting page can
+      then communicate with the presentation as if the user had manually
+      connected to it via <code>startSession</code>.
     </p>
     <p>
       At the time <code>joinSession(url, presentationId)</code> is called, if
       the browser is not aware of any <code>PresentationSession</code> with a
       matching <code>url</code> and <code>presentationId</code>, the
-      <code>Promise</code> should remain unresolved.  The browser may become
+      <code>Promise</code> should remain unresolved. The browser may become
       aware of such a session at a later time (for example, by switching to a
-      WiFi network that has a screen showing that URL).  In this case, the
+      WiFi network that has a screen showing that URL). In this case, the
       browser may resolve the Promise to allow the page to connect to the
       running session.
     </p>
     <p>
       If the browser knows of multiple matching sessions, it should connect the
-      page to the session that was most recently connected to; if that cannot be
-      determined by the browser (for example, if the matching sessions have
+      page to the session that was most recently connected to; if that cannot
+      be determined by the browser (for example, if the matching sessions have
       never been connected), then the <code>Promise</code> should remain
       unresolved.
     </p>
     <p>
-      If the page calls <code>startSession(url, presentationId)</code> and there
-      is a pending <code>Promise</code> from a call to <code>joinSession(url,
-      presentationId)</code> (with the same <code>url</code> and
-      <code>presentationId</code>, and the user selects a screen in response to
-      <code>startSession</code>, then the <code>Promise</code> from
-      <code>startSession</code> will be resolved and the <code>Promise</code>
-      from <code>joinSession</code> will not.
+      If the page calls <code>startSession(url, presentationId)</code> and
+      there is a pending <code>Promise</code> from a call to
+      <code>joinSession(url, presentationId)</code> (with the same
+      <code>url</code> and <code>presentationId</code>, and the user selects a
+      screen in response to <code>startSession</code>, then the
+      <code>Promise</code> from <code>startSession</code> will be resolved and
+      the <code>Promise</code> from <code>joinSession</code> will not.
     </p>
     <h4>
       Open Questions
