@@ -432,37 +432,79 @@
     </h2>
     <p>
       Running in a compliant user agent, code for presenting a page
-      <code>example.html</code> on the presentation display looks as follows:
+      <code>http://example.org/presentation.html</code> on the presentation
+      display looks as follows:
     </p>
     <pre class="example">
 /* controller.html */
 
-&lt;button disabled&gt;Show&lt;/button&gt;
+&lt;button disabled id=show&gt;Show&lt;/button&gt;
+&lt;button disabled id=stop&gt;Stop&lt;/button&gt;
 
 &lt;script&gt;
+
 var presentation = navigator.presentation,
-    showButton = document.querySelector('button');
- 
-presentation.onavailablechange = function(e) {
-  showButton.disabled = !e.available;
-  showButton.onclick = show;
+    showButton = document.getElementById('show'),
+    stopButton = document.getElementById('stop');
+
+var session = null,
+    screenAvailable = false,
+    presentationUrl = 'http://example.org/presentation.html',
+    previousSessionId = localStorage['sessionId'];
+
+presentation.onavailablechange = function (e) {
+    screenAvailable = e.available;
+    updateButtons();
 };
- 
-function show() {
-  var session = presentation.requestSession('http://example.org/');
- 
-  session.onstatechange = function() {
-    switch (session.state) {
-      case 'connected':
-        session.postMessage(/*...*/);
-        session.onmessage = function() { /*...*/ };
-        break;
-      case 'disconnected':
-        console.log('Disconnected.');
-        break;
-    }
-  };
+
+function tryJoin() {
+    if (!previousSessionId) return;
+    // Join an existing presentation if one exists.
+    session = presentation.joinSession(presentationUrl, previousSessionId);
+    console.log(session.state); // "unknown"
+    session.onstatechange = handleSessionState;
 }
+
+function startPresent() {
+    session = presentation.startSession(presentationUrl);
+    console.log(session.state); // "unknown"
+    session.onstatechange = handleSessionState;
+}
+
+function handleSessionState() {
+    switch (session.state) {
+        case 'connected':
+            if (previousSessionId == session.id) {
+                console.log("Joined existing session.");
+            } else {
+                console.log("New session opened.");
+                localStorage['sessionId'] = session.id;
+            }
+            session.postMessage( /*...*/ );
+            session.onmessage = function () { /*...*/
+            };
+            break;
+        case 'disconnected':
+            // Session join/start failed, or session terminated.
+            break;
+    }
+    updateButtons();
+}
+
+function updateButtons() {
+    var sessionConnected = session &amp;&amp; session.state == "connected";
+    stopButton.disabled = !sessionConnected;
+    stopButton.onClick = sessionConnected ? stopPresent : null;
+    var sessionPendingOrConnected = sessionConnected || (session &amp;&amp; session.state == "unknown");
+    showButton.disabled = !screenAvailable || sessionPendingOrConnected;
+    showButton.onclick = screenAvailable &amp;&amp; !sessionPendingOrConnected ? startPresent : null;
+}
+
+function stopPresent() {
+    session.close();
+}
+
+tryJoin();
 &lt;/script&gt;
 </pre>
     <p>
@@ -475,8 +517,9 @@ function show() {
     </p>
     <p class="open-issue">
       Do we want to fire an event immediately after the page registers for it?
-      What's a best practice method for asynchronous notifications of ths kind?
-      See below in the <a href="#open-questions">Open Questions</a> section.
+      What's a best practice method for asynchronous notifications of this
+      kind? See below in the <a href="#open-questions">Open Questions</a>
+      section.
     </p>
     <p class="open-issue">
       It is an open issue whether to provide filter information as part of the
@@ -487,6 +530,9 @@ function show() {
       the request for notification of available screens. If this was supported,
       only screens that satisfied the filter would trigger a notification.
     </p>
+    <h4>
+      Starting New Presentations
+    </h4>
     <p>
       The "Show" button's state (initially disabled) informs the user of the
       availability of secondary screen(s), and the button's state is updated if
@@ -498,42 +544,86 @@ function show() {
       suspended for keeping the flag up to date.)
     </p>
     <p>
-      Once the user clicks the "Show" button, the <code>show()</code> function
-      is called.
+      Clicking the "Show" button calls
+      <code>navigator.presentation.startSession()</code>, which causes the user
+      agent to request from the user a screen to show the presentation. The
+      <code>url</code> argument indicates the content to be presented.
     </p>
     <p>
-      By calling <code>navigator.presentation.requestSession(url)</code>, the
-      script on the page tries to launch or resume a presentation on a
-      secondary screen. Based on the <code>url</code> argument, the UA looks
-      for existing sessions and available screens, and presents a screen picker
-      user interface to the user. Out of the list of existing sessions or
-      available screens the user selects one item. If an existing session was
-      selected, the session is resumed by establishing a communication channel.
-      If a new screen was selected, the UA connects to the selected screen,
-      brings up a new window on the selected screen, starts to show the content
-      denoted by the <code>url</code> argument, and the UA establishes a
-      communication channel with this window.
+      If the user selects a screen with an existing presentation showing the
+      same <code>url</code> under the same <code>presentationId</code>, the
+      opener page is connected to that existing presentation.
     </p>
     <p>
-      When the <code>navigator.presentation.requestSession(url)</code> function
-      is called, the UA immediately returns a <code>session</code> object to
-      the script which represents a handle to the current presentation session,
-      used for communication and state handling.
+      If the user selects a screen without an existing presentation, or a
+      screen presenting a different <code>url</code> or
+      <code>presentationId</code>, the UA connects to the selected screen,
+      brings up a new presentation window on it, and starts to show the content
+      denoted by the <code>url</code> argument. The UA then connects the opener
+      page to this new presentation and allows the opener page to exchange
+      messages with it.
     </p>
     <p>
-      If the user has selected a screen, the content is shown and a
-      communication channel was established, the state of the session object
-      changes from <code>"disconnected"</code> to <code>"connected"</code>,
-      which signals the presentation session is up and running, and the opener
-      page can communicate with the presentation page. For communication with
-      the presentation page, the session object's <code>postMessage()</code> is
-      used to send, and the <code>onmessage</code> event handler to receive
-      messages.
+      <code>navigator.presentation.startSession(url, presentationId)</code>
+      returns a <code>PresentationSession</code> object, initially in
+      <code>"unknown"</code> state. Changes of the <code>state</code> property
+      of the <code>PresentationSession</code> object are signalled through the
+      <code>onstatechange</code> event handler.
     </p>
     <p>
-      If the user cancels the screen selection and never selects a screen, no
-      state transition happens and the <code>session</code> object remains in
-      the <code>"disconnected"</code> state.
+      Once the UA established the connection to the presentation page, the
+      state changes from <code>"unknown"</code> to <code>"connected"</code>. At
+      this point, the opener page can communicate with the presentation page
+      using the session's <code>postMessage()</code> to send messages and its
+      <code>onmessage</code> event handler to receive messages.
+    </p>
+    <p>
+      The presentation page will also have access to
+      <code>PresentationSession</code> that it can use to send and receive
+      messages with the opener page (see <a href=
+      "#usage-on-remote-screen">Usage on Remote Screen</a>).
+    </p>
+    <p>
+      If the user cancels screen selection when the UA brings up the selection
+      dialog, the <code>state</code> property of the
+      <code>PresentationSession</code> object remains at
+      <code>"unknown"</code>. If the UA attempts and for technical reasons
+      fails at establishing a link with the presentation page, the
+      <code>state</code> property transitions to <code>"disconnected"</code>.
+    </p>
+    <h4>
+      Reconnecting to Existing Presentations
+    </h4>
+    <p>
+      The opener page may wish to reconnect to an existing presentation without
+      prompting the user to select a screen. For example, the site could allow
+      media items from different pages to be shown on the same presentation
+      page, and does not want to prompt the user on each page to reconnect to
+      that presentation.
+    </p>
+    <p>
+      To reconnect, the page calls <code>joinSession(url,
+      presentationId)</code>, which returns a <code>PresentationSession</code>,
+      initially in <code>"unknown"</code> state.
+    </p>
+    <p>
+      The <code>presentationId</code> argument in this case is the value of the
+      <code>session.id</code> property of a previously established
+      <code>PresentationSession</code>. This value is generated by the UA once
+      a session is established through <code>startSession</code>.
+    </p>
+    <p>
+      If the UA finds an existing presenting instance that matches the
+      <code>url</code> and <code>presentationId</code> as was passed originally
+      into <code>startSession</code>, the UA then transistions the state of the
+      returned <code>PresentationSession</code> to <code>"connected"</code>.
+      The requesting page can then communicate with the presentation as if the
+      user had manually connected to it via <code>startSession</code>.
+    </p>
+    <p>
+      If no such instance exists, the <code>state</code> of the returned
+      <code>PresentationSession</code> transitions to
+      <code>"disconnected"</code>.
     </p>
     <h4>
       Open Questions
@@ -542,6 +632,10 @@ function show() {
       Do we need to insert into the description an additional permission prompt
       to grant the page access to the "one ore more screens are available"
       Information?
+    </p>
+    <p class="open-issue">
+      Do we reload the presentation page after startSession() if the page was
+      previously already shown on this screen?
     </p>
     <p class="open-issue">
       If there are already connected screens when the page subscribes to the
@@ -558,6 +652,19 @@ function show() {
       session? It seems that this could be handled on the page level. The
       opener page could ask the presentation page whether it is
       <code>"new"</code> or <code>"resumed"</code>.
+    </p>
+    <p class="open-issue">
+      <del>If more than one presentation session exists with the same
+      <code>url</code> and <code>presentationId</code> (on different screens)
+      then what is the behavior of <code>joinSession(url,
+      presentationId)</code>?</del> This can be resolved by having the UA
+      generate different ids on different screens.
+    </p>
+    <p class="open-issue">
+      If the page calls <code>startSession(url)</code> and
+      <code>joinSession(url, presentationId)</code> with the same
+      <code>url</code>, and the latter call has not resolved, behavior is not
+      defined.
     </p>
     <h3>
       Usage on Remote Screen
@@ -614,9 +721,14 @@ if (navigator.presentation.session) {
       "#previous-version">previous version of the Presentation API</a>. This
       section describes the interfaces to the extend discussed in the Second
       Screen Presentation Community Group. Readers are encouraged to consult
-      the <a href="#example">Example</a> section together with this section for
-      a more complete understanding of the technical parts of this
-      specification.
+      the <a href="#example">Example</a> and <a href=
+      "#algorithms">Algorithms</a> sections together with this section for a
+      more complete understanding of the technical parts of this specification.
+    </p>
+    <p class="open-issue">
+      Since we permit multiple opener pages to connect the same presentation
+      page, we need to define how connection and disconnection of these pages
+      is communicated to the presentation page (if at all).
     </p>
     <h3>
       <code>NavigatorPresentation</code>
@@ -624,7 +736,8 @@ if (navigator.presentation.session) {
     <pre class="idl">
 interface NavigatorPresentation : EventTarget {
   readonly attribute PresentationSession? session;
-  PresentationSession requestSession(DOMString url);
+  PresentationSession startSession(DOMString url, DOMString? presentationId);
+  PresentationSession joinSession(DOMString url, DOMString? presentationId);
   attribute EventHandler onavailablechange;
 };
 
@@ -656,9 +769,10 @@ dictionary AvailableChangeEventInit : EventInit {
       An object representing the established presentation session.
     </p>
     <pre class="idl">
-enum PresentationSessionState { "connected", "disconnected" /*, "resumed" */ };
+enum PresentationSessionState { "unknown", "connected", "disconnected" };
 
 interface PresentationSession : EventTarget {
+  readonly DOMString? id;
   readonly attribute PresentationSessionState state;
   void postMessage(DOMString message);
   void close();
@@ -666,12 +780,51 @@ interface PresentationSession : EventTarget {
   attribute EventHandler onstatechange;
 };
 </pre>
+    <h2>
+      Algorithms
+    </h2>
+    <p>
+      These algorithms are intended to define the behavior of the
+      <code>NavigatorPresentation</code> and <code>PresentationSession</code>
+      interfaces declared in the <a href="#interfaces">Interfaces</a> section.
+    </p>
+    <h3>
+      The Screen Availability algorithm
+    </h3>
+    <p>
+      Run when an event handler is added to <code>onavailablechange</code>.
+    </p>
+    <h3>
+      The Start Session algorithm
+    </h3>
+    <p>
+      Run when <code>startSession(url, presentationId)</code> is called.
+    </p>
+    <h3>
+      The Join Session algorithm
+    </h3>
+    <p>
+      Run when <code>joinSession(url, presentationId)</code> is called.
+    </p>
+    <h3>
+      The Close Session algorithm
+    </h3>
+    <p>
+      Run when <code>close()</code> is called on a
+      <code>PresentationSession.</code>
+    </p>
+    <h3>
+      The Presentation Initialization algorithm
+    </h3>
+    <p>
+      Run when a document opened by <code>startSession()</code> is loaded.
+    </p>
     <h2 class="no-num">
       References
     </h2>
     <div id="anolis-references"></div>
     <h2 class="no-num">
-      Acknowledgements
+      Acknowledgments
     </h2>
     <p>
       Thanks to Wayne Carr, Louay Bassbous, Anssi Kostiainen, 闵洪波 (Hongbo Min),
