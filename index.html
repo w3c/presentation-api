@@ -68,13 +68,13 @@
     <div class="head">
       
 <!--begin-logo-->
-<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"></a></p>
+<p><a href="http://www.w3.org/"><img alt="W3C" src="https://www.w3.org/Icons/w3c_home" width="72" height="48"></a></p>
 <!--end-logo-->
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="draft-report-15-september-2014">
-        Draft Report - 15 September 2014
+      <h2 class="no-num no-toc" id="draft-report-21-october-2014">
+        Draft Report - 21 October 2014
       </h2>
       <dl>
         <dt>
@@ -501,8 +501,8 @@
     </p>
 -->
     <p>
-      The terms <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a> and
-      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event
+      The terms <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html">event handlers</a> and
+      <a class="external" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" data-anolis-spec="w3c-html" title="event handler event type">event
       handler event types</a> are defined in <a href="#refsHTML5">[HTML5]</a>.
     </p>
     <p>
@@ -555,7 +555,7 @@ function updateButtons() {
   showButton.disabled = !screenAvailable;
   showButton.onclick = screenAvailable ? startPresent : null;
 };
- 
+
 function startPresent() {
   presentation.startSession(presentationUrl, presentationId).then(
       function(newSession) {
@@ -592,6 +592,10 @@ function setSession(theSession) {
 }
 &lt;/script&gt;
 </pre>
+    <p class="open-issue">
+      We could simplify the example, and perhaps remove UI button state
+      management for the sake of clarity.
+    </p>
     <p>
       The availability monitoring for secondary screens begins when the page
       adds an event listener for the <code>availablechange</code> event on the
@@ -638,6 +642,10 @@ function setSession(theSession) {
       identify this presentation instance, and control which other pages may
       connect to it by setting a hard-to-guess id.
     </p>
+    <p class="open-issue">
+      As previously discussed on the mailing list - we can add convenience here
+      by default-generating an ID.
+    </p>
     <p>
       If the user selects a screen with an existing presentation showing the
       same <code>url</code> under the same <code>presentationId</code>, the
@@ -652,14 +660,13 @@ function setSession(theSession) {
     <p>
       <code>navigator.presentation.startSession(url, presentationId)</code>
       returns a <code>Promise</code> to the opener page. When the user selects
-      a screen, the <code>Promise</code> resolves to a
+      a screen, the presentation page is shown and a communication channel has
+      been established the <code>Promise</code> resolves to a
       <code>PresentationSession</code> object, which acts as a handle to the
-      presentation for communication and state handling. Once the presentation
-      page is shown and a communication channel has been established, the state
-      of the <code>PresentationSession</code> changes from
-      <code>"disconnected"</code> to <code>"connected"</code>. At this point,
-      the opener page can communicate with the presentation page using the
-      session's <code>postMessage()</code> to send messages and its
+      presentation for communication and state handling. Initially, the state
+      of the <code>PresentationSession</code> is <code>"connected"</code>. At
+      this point, the opener page can communicate with the presentation page
+      using the session's <code>postMessage()</code> to send messages and its
       <code>onmessage</code> event handler to receive messages. The
       presentation page will also have access to
       <code>PresentationSession</code> that it can use to send and receive
@@ -703,6 +710,9 @@ function setSession(theSession) {
       WiFi network that has a screen showing that URL). In this case, the
       browser may resolve the Promise to allow the page to connect to the
       running session.
+    </p>
+    <p class="open-issue">
+      Do we want to keep the Promise in pending state?
     </p>
     <p>
       If the browser knows of multiple matching sessions, it should connect the
