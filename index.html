@@ -73,8 +73,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="w3c-editor's-draft-19-november-2014">
-        W3C Editor's Draft 19 November 2014
+      <h2 class="no-num no-toc" id="w3c-editor's-draft-30-december-2014">
+        W3C Editor's Draft 30 December 2014
       </h2>
       <dl>
         <dt>
@@ -259,20 +259,29 @@
       Algorithms
     </a>
   <ol>
-   <li><a href="#the-screen-availability-algorithm"><span class="secno">7.1 </span>
-      The Screen Availability algorithm
+   <li><a href="#screen-availability-listener-added"><span class="secno">7.1 </span>
+      Screen Availability Listener Added
     </a></li>
-   <li><a href="#the-start-session-algorithm"><span class="secno">7.2 </span>
-      The Start Session algorithm
+   <li><a href="#screen-availability-listener-removed"><span class="secno">7.2 </span>
+      Screen Availability Listener Removed
     </a></li>
-   <li><a href="#the-join-session-algorithm"><span class="secno">7.3 </span>
-      The Join Session algorithm
+   <li><a href="#no-screens-available"><span class="secno">7.3 </span>
+      No Screens Available
     </a></li>
-   <li><a href="#the-close-session-algorithm"><span class="secno">7.4 </span>
-      The Close Session algorithm
+   <li><a href="#start-session"><span class="secno">7.4 </span>
+      Start Session
     </a></li>
-   <li><a href="#the-presentation-initialization-algorithm"><span class="secno">7.5 </span>
-      The Presentation Initialization algorithm
+   <li><a href="#join-session"><span class="secno">7.5 </span>
+      Join Session
+    </a></li>
+   <li><a href="#session-close"><span class="secno">7.6 </span>
+      Session Close
+    </a></li>
+   <li><a href="#presentation-connection"><span class="secno">7.7 </span>
+      Presentation Connection
+    </a></li>
+   <li><a href="#todo"><span class="secno">7.8 </span>
+      TODO
     </a></ol></li>
  <li><a class="no-num" href="#references">
       References
@@ -496,7 +505,7 @@
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
       "OPTIONAL" in this document are to be interpreted as described in RFC
       2119. For readability, these words do not appear in all uppercase letters
-      in this specification. <a href="#refsRFC2119">[RFC2119]</a>
+      in this specification. <span data-anolis-ref="">RFC2119</span>
     </p>
     <p>
       Requirements phrased in the imperative as part of algorithms (such as
@@ -526,13 +535,13 @@
     </p>
 -->
     <p>
-      The terms <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a> and
-      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event
-      handler event types</a> are defined in <a href="#refsHTML5">[HTML5]</a>.
+      The terms <span data-anolis-spec="w3c-html">event handlers</span> and
+      <span data-anolis-spec="w3c-html" title="event handler event type">event
+      handler event types</span> are defined in <span data-anolis-ref="">HTML5</span>.
     </p>
     <p>
       This document provides interface definitions using the
-      <a href="#refsWEBIDL">[WEBIDL]</a> standard.
+      <span data-anolis-ref="">WEBIDL</span> standard.
     </p>
     <h2 id="example"><span class="secno">5 </span>
       Example
@@ -891,54 +900,378 @@ interface PresentationSession : EventTarget {
       Algorithms
     </h2>
     <p>
-      These algorithms are intended to define the behavior of the
+      These algorithms define the behavior of the
       <code>NavigatorPresentation</code> and <code>PresentationSession</code>
       interfaces declared in the <a href="#interfaces">Interfaces</a> section.
     </p>
-    <h3 id="the-screen-availability-algorithm"><span class="secno">7.1 </span>
-      The Screen Availability algorithm
-    </h3>
     <p>
-      Run when an event handler is added to <code>onavailablechange</code>.
+      Let <em>D</em> be the set of presentations that are currently known to
+      the user agent (regardles of their state). <em>D</em> is represented as a
+      set of tuples <em>(U, I, S)</em> where <em>U</em> is the URL that is
+      being presented; <em>I</em> is an alphanumeric identifier for the
+      presentation; and <em>S</em> is the user agent's
+      <code>PresentationSession</code> for the presentation. <em>U</em> and
+      <em>I</em> together uniquely identify the
+      <code>PresentationSession</code> of the corresponding presentation.
     </p>
-    <h3 id="the-start-session-algorithm"><span class="secno">7.2 </span>
-      The Start Session algorithm
-    </h3>
-    <p>
-      Run when <code>startSession(url, presentationId)</code> is called.
+    <p class="open-issue">
+      Need to add xrefs to term definitions: promise, task, assert, URL, etc.
     </p>
-    <h3 id="the-join-session-algorithm"><span class="secno">7.3 </span>
-      The Join Session algorithm
+    <h3 id="screen-availability-listener-added"><span class="secno">7.1 </span>
+      Screen Availability Listener Added
     </h3>
     <p>
-      Run when <code>joinSession(url, presentationId)</code> is called.
+      When a new event handler <em>E</em> is added to
+      <code>NavigatorPresentation.onavailablechange</code>, the user agent must
+      run the following steps:
     </p>
-    <h3 id="the-close-session-algorithm"><span class="secno">7.4 </span>
-      The Close Session algorithm
-    </h3>
-    <p>
-      Run when <code>close()</code> is called on a
-      <code>PresentationSession.</code>
+    <ol>
+      <li>If the user agent is not already searching for screens compatible
+      with the Presentation API, then:
+        <ol>
+          <li>Queue a task to search for screens that are compatible with the
+          Presentation API.
+          </li>
+        </ol>
+      </li>
+      <li>If the search for screens discovers at least one compatible screen,
+      then:
+        <ol>
+          <li>Queue a task to fire an event named <code>availablechange</code>
+          at <em>E</em> (and only <em>E</em>) with the event's
+          <code>available</code> property set to <code>true</code>.
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <p class="note">
+      The mechanism used to search for compatible screens is up to the user
+      agent. The user agent may choose search for screens at any time, not just
+      when event handlers are added to
+      <code>NavigatorPresentation.onavailablechange</code>.
     </p>
-    <h3 id="the-presentation-initialization-algorithm"><span class="secno">7.5 </span>
-      The Presentation Initialization algorithm
+    <p class="open-issue">
+      Do we want to fire the event at all handlers, or only the newly added
+      one?
+    </p>
+    <h3 id="screen-availability-listener-removed"><span class="secno">7.2 </span>
+      Screen Availability Listener Removed
     </h3>
     <p>
-      Run when a document opened by <code>startSession()</code> is loaded.
+      When the last event handler is removed from
+      <code>NavigatorPresentation.onavailablechange</code>, the user agent may
+      run the following steps:
+    </p>
+    <ol>
+      <li>Cancel any pending tasks to search for screens that are compatible
+      with the Presentation API.
+      </li>
+    </ol>
+    <h3 id="no-screens-available"><span class="secno">7.3 </span>
+      No Screens Available
+    </h3>
+    <p>
+      When the set of available screens becomes empty (e.g., because the user
+      agent has lost its network connection), the user agent must run the
+      following steps:
+    </p>
+    <ol>
+      <li>If there are no event handlers added to
+      <code>NavigatorPresentation.onavailablechange</code>, then:
+        <ol>
+          <li>Abort these steps.
+          </li>
+        </ol>
+      </li>
+      <li>Queue a task to fire an event named <code>availablechange</code> at
+      all the event handlers added to
+      <code>NavigatorPresentation.onavailablechange</code> with the event's
+      <code>available</code> property set to <code>false</code>.
+      </li>
+    </ol>
+    <h3 id="start-session"><span class="secno">7.4 </span>
+      Start Session
+    </h3>
+    <p>
+      When <code>NaviagatorPresentaton.startSession(presentationUrl,
+      presentationId)</code> is called, the user agent must run the following
+      steps.
+    </p>
+    <dl>
+      <dt>
+        Input
+      </dt>
+      <dd>
+        <code>presentationUrl</code>, the URL of the document to be presented
+      </dd>
+      <dd>
+        <code>presentationId</code>, an optional identifier for the
+        presentation
+      </dd>
+      <dt>
+        Output
+      </dt>
+      <dd>
+        <em>P</em>, a Promise
+      </dd>
+    </dl>
+    <ol>
+      <li>Let <em>P</em> be a new Promise.
+      </li>
+      <li>Return <em>P</em>.
+      </li>
+      <li>If no screens are available that are compatible with the Presentation
+      API, run these steps:
+        <ol>
+          <li>Reject <em>P</em> with a "NoScreensAvailable" exception.
+          </li>
+          <li>Abort all remaining steps.
+          </li>
+        </ol>
+      </li>
+      <li>Queue a task <em>T</em> to request user permission for the use of a
+      presentation screen.
+      </li>
+      <li>If <em>T</em> completes with the user <em>granting permission</em> to
+      use a screen, run the following steps:
+        <ol>
+          <li>If <code>presentationId</code> is not <em>undefined</em>, assign
+          <em>I</em> to that that <code>presentationId</code>.
+          </li>
+          <li>If <code>presentationId</code> is <code>undefined</code>, let
+          <em>I</em> be a random alphanumeric value of at least 16 characters
+          drawn from the characters <code>[A-Za-z0-9]</code>.
+          </li>
+          <li>Create a new <code>PresentationSession</code> <em>S</em>.
+          </li>
+          <li>Set <code>S.url</code> to <code>presentationUrl</code>, set
+          <code>S.id</code> to <em>I</em>, and set <code>S.state</code> to
+          <code>disconnected</code>.
+          </li>
+          <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+          </li>
+          <li>Resolve <em>P</em> with <em>S</em>.
+          </li>
+          <li>Initiate the <em>Presentation Connection</em> algorithm for <em>
+            S</em>.
+          </li>
+        </ol>
+      </li>
+      <li>If <em>T</em> completes with the user <em>denying permission</em>,
+      run the following steps:
+        <ol>
+          <li>Reject <em>P</em> with a "PermissionDenied" exception.
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <p class="note">
+      The implementation of the permission request is up to the user agent; for
+      example it may show the user a dialog and allow the user to select an
+      available screen (granting permission), or cancel the selection (denying
+      permission).
+    </p>
+    <p class="open-issue">
+      Do we want to distinguish the permission-denied outcome from the
+      no-screens-available outcome? Developers would be able to infer it anyway
+      from <code>onavailablechange</code>.
+    </p>
+    <h3 id="join-session"><span class="secno">7.5 </span>
+      Join Session
+    </h3>
+    <p>
+      When <code>NavigatorPresentation.joinSession(presentationUrl,
+      presentationId)</code> is called, the user agent must run the following
+      steps.
+    </p>
+    <dl>
+      <dt>
+        Input
+      </dt>
+      <dd>
+        <code>presentationUrl</code>, the URL of the document being presented
+      </dd>
+      <dd>
+        <code>presentationId</code>, the identifier for the presentation
+      </dd>
+      <dt>
+        Output
+      </dt>
+      <dd>
+        <em>P</em>, a Promise
+      </dd>
+    </dl>
+    <ol>
+      <li>Let <em>P</em> be a new Promise.
+      </li>
+      <li>Return <em>P</em>.
+      </li>
+      <li>Let <em>D</em> be the set of presentations known by the user agent.
+      </li>
+      <li>Queue a task <em>T</em> to run the following steps in order:
+        <ol>
+          <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
+            <ol>
+              <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>I</em>,
+              and <em>s</em> equal <em>S</em>.
+              </li>
+              <li>If <em>u</em> is equal to <code>presentationUrl</code> and
+              <em>i</em> is equal to <code>presentationId</code>, run the
+              following steps:
+                <ol>
+                  <li>Resolve <em>P</em> with <em>S</em>.
+                  </li>
+                  <li>Initiate the <em>Presentation Connection</em> algorithm
+                  for <em>S</em>.
+                  </li>
+                  <li>Abort the remaining steps of <em>T</em>.
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li>Reject <em>P</em> with a "NoPresentationFound" exception.
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <p class="open-issue">
+      If no matching presentation is found, we could leave the Promise pending
+      in case a matching presentation is started in the future.
+    </p>
+    <h3 id="session-close"><span class="secno">7.6 </span>
+      Session Close
+    </h3>
+    <p>
+      When <code>PresentationSession.close()</code> is called on a
+      <code>PresentationSession</code> <em>S</em>, the user agent must run the
+      following steps:
+    </p>
+    <ol>
+      <li>If <em>S.state</em> is not <code>connected</code>, then:
+        <ol>
+          <li>Abort these steps.
+          </li>
+        </ol>
+      </li>
+      <li>Set <em>S.state</em> to <code>disconnected.</code>
+      </li>
+      <li>Let <em>D</em> be the set of presentations known by the user agent.
+      </li>
+      <li>Queue a task <em>T</em> to run the following steps in order:
+        <ol>
+          <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
+            <ol>
+              <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>I</em>,
+              and <em>s</em> equal <em>S'</em>.
+              </li>
+              <li>If <em>u</em> is equal to <em>S.url</em> and <em>i</em> is
+              equal to <em>S.id</em>, run the following steps:
+                <ol>
+                  <li>Queue a task to fire an event named
+                  <code>statechange</code> at <em>s.onstatechange</em>.
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <h3 id="presentation-connection"><span class="secno">7.7 </span>
+      Presentation Connection
+    </h3>
+    <p>
+      When the user agent has created a <code>PresentationSession</code>
+      <em>S</em> to resolve a promise returned from
+      <code>NavigatorPresentation.startSession</code>, or resolved a promise
+      returned from to <code>NavigatorPresentation.joinSession</code> with
+      <em>S</em>, it must run the following steps:
+    </p>
+    <ol>
+      <li>If <em>S.state</em> is <code>connected</code>, then:
+        <ol>
+          <li>Abort all remaining steps.
+          </li>
+        </ol>
+      </li>
+      <li>Queue a task <em>T</em> to connect <em>S</em> to the document that is
+      presenting <em>S.url</em>.
+      </li>
+      <li>If <em>T</em> completes successfully, run the following steps:
+        <ol>
+          <li>Set <em>S.state</em> to <code>connected.</code>
+          </li>
+          <li>Let <em>D</em> be the set of presentations known by the user
+          agent.
+          </li>
+          <li>Queue a task <em>T</em> to run the following steps in order:
+            <ol>
+              <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
+                <ol>
+                  <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal
+                  <em>I</em>, and <em>s</em> equal <em>S'</em>.
+                  </li>
+                  <li>If <em>u</em> is equal to <em>S.url</em> and <em>i</em>
+                  is equal to <em>S.id</em>, run the following steps:
+                    <ol>
+                      <li>Queue a task to fire an event named
+                      <code>statechange</code> at <em>s.onstatechange</em>.
+                      </li>
+                    </ol>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <p class="note">
+      If <em>T</em> does not complete successfully, the user agent may choose
+      to re-execute the Presentation Connection algorithm at a later time.
+    </p>
+    <p class="note">
+      The mechanism that is used to connect the opening document with the
+      presented document is an implementation choice of the user agent. The
+      connection must provide a two-way messaging abstraction capable of
+      carrying <code>DOMString</code> payloads in a reliable and in-order
+      fashion as described in the <em>Send Message</em> and <em>Receive
+      Message</em> steps below.
+    </p>
+    <p class="open-issue">
+      Do we want to notify the caller of a failure to connect, i.e. with an
+      "error" onstatechange?
+    </p>
+    <p class="open-issue">
+      Do we want to pass the new state as a property of the statechange event?
+    </p>
+    <p class="open-issue">
+      Need to further specify the semantics of the messaging channel (using
+      WebSockets or MessagePort as a reference).
+    </p>
+    <h3 id="todo"><span class="secno">7.8 </span>
+      TODO
+    </h3>
+    <p class="open-issue">
+      Need algorithm for send message
+    </p>
+    <p class="open-issue">
+      Need algorithm for receive message
+    </p>
+    <p class="open-issue">
+      Need algorithm for initialization of the presented document
+    </p>
+    <p class="open-issue">
+      We could write this spec in a way that distinguished the state of the
+      presentation (owned by the user agent) from the state of the
+      PresentationSession (owned by a specific document); however these should
+      always be sync and it would likely result in more confusion than clarity.
     </p>
     <h2 class="no-num" id="references">
       References
     </h2>
-    <div id="anolis-references"><dl><dt id="refsHTML5">[HTML5]
-<dd><cite><a href="http://www.w3.org/html/wg/drafts/html/CR/">HTML5</a></cite>, Robin Berjon, Steve Faulkner, Travis Leithead et al.. W3C.
-
-<dt id="refsRFC2119">[RFC2119]
-<dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
-
-<dt id="refsWEBIDL">[WEBIDL]
-<dd><cite><a href="http://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
-
-</dl></div>
+    <div id="anolis-references"></div>
     <h2 class="no-num" id="acknowledgments">
       Acknowledgments
     </h2>
