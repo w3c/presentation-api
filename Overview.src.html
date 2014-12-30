@@ -10,8 +10,8 @@
      [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
-    <link rel="stylesheet" href=
-    "http://www.w3.org/community/src/css/spec/cg-draft.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href=
+    "http://www.w3.org/StyleSheets/TR/W3C-ED">
     <style type="text/css">
 /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
@@ -74,49 +74,49 @@
         Presentation API
       </h1>
       <h2 class="no-num no-toc">
-        Draft Report - [DATE]
+        W3C [LONGSTATUS] [DATE]
       </h2>
       <dl>
         <dt>
           This Version:
         </dt>
         <dd>
-          <!--begin-link-->http://webscreens.github.io/presentation-api/ 
+          <!--begin-link-->http://w3c.github.io/presentation-api/ 
           <!--end-link-->
         </dd>
         <dt>
-          Latest Published Version
+          Latest Published Version:
         </dt>
         <dd>
-          <!--begin-link-->http://webscreens.github.io/presentation-api/ 
+          <!--begin-link-->http://www.w3.org/TR/presentation-api/ 
           <!--end-link-->
         </dd>
         <dt>
-          <a id="previous-version">Previous Version:</a>
+          Latest Editor's Draft:
         </dt>
         <dd>
-          <a href=
-          "http://webscreens.github.io/presentation-api/20131112/">http://webscreens.github.io/presentation-api/20131112/</a>
-        </dd>
-        <dt>
-          Participate:
-        </dt>
-        <dd>
-          Send feedback to the community group's mailing list <a href=
-          "http://lists.w3.org/Archives/Public/public-webscreens/">public-webscreens@w3.org</a>,
-          or <a href=
-          "https://github.com/webscreens/presentation-api/issues">create or
-          browse open issues</a> on GitHub. Also, you may join on the <a href=
-          "irc://irc.w3.org:6665/#webscreens">CG's IRC channel</a>.
+          <!--begin-link-->http://w3c.github.io/presentation-api/ 
+          <!--end-link-->
         </dd>
         <dt>
           Version History:
         </dt>
         <dd>
-          <!--begin-link-->https://github.com/webscreens/presentation-api/commits/<!--end-link-->
+          <!--begin-link-->https://github.com/w3c/presentation-api/commits/ 
+          <!--end-link-->
         </dd>
         <dt>
-          Editors:
+          Participate:
+        </dt>
+        <dd>
+          Send feedback to the Working Group's mailing list <a href=
+          "https://lists.w3.org/Archives/Public/public-secondscreen/">public-secondscreen@w3.org</a>,
+          or <a href="https://github.com/w3c/presentation-api/issues">create or
+          browse open issues</a> on GitHub. Also, you may join on the <a href=
+          "irc://irc.w3.org:6665/#webscreens">WG's IRC channel</a>.
+        </dd>
+        <dt>
+          Editor:
         </dt>
         <dd>
           <a href="mailto:dominik.rottsches@intel.com">Dominik Röttsches</a>,
@@ -126,14 +126,21 @@
       <p class="copyright">
         <a href=
         "http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
-        © 2014 the Contributors to the Presentation API Specification,
-        published by the <a href=
-        "http://www.w3.org/community/webscreens/">Second Screen Presentation
-        Community Group</a> under the <a href=
-        "https://www.w3.org/community/about/agreements/final/">W3C Community
-        Final Specification Agreement (FSA)</a>. A human-readable <a href=
-        "http://www.w3.org/community/about/agreements/fsa-deed/">summary</a> is
-        available.
+        © 2014 <a href="http://www.w3.org/"><abbr title=
+        "World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href=
+        "http://www.csail.mit.edu/"><abbr title=
+        "Massachusetts Institute of Technology">MIT</abbr></a>, <a href=
+        "http://www.ercim.eu/"><abbr title=
+        "European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+        <a href="http://www.keio.ac.jp/">Keio</a>, <a href=
+        "http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved.
+        <abbr title="World Wide Web Consortium">W3C</abbr> <a href=
+        "http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+        <a href=
+        "http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
+        and <a href=
+        "http://www.w3.org/Consortium/Legal/copyright-documents">document
+        use</a> rules apply.
       </p>
       <hr>
     </div>
@@ -146,27 +153,55 @@
       content.
     </p>
     <h2 class="no-num no-toc" id="sotd">
-      Status of this Document
+      Status of This Document
     </h2>
     <p>
-      This specification was published by the <a href=
-      "http://www.w3.org/community/webscreens/">Second Screen Presentation
-      Community Group</a>. It is not a W3C Standard nor is it on the W3C
-      Standards Track. Please note that under the <a href=
-      "http://www.w3.org/community/about/agreements/final/">W3C Community Final
-      Specification Agreement (FSA)</a> other conditions apply. Learn more
-      about <a href="http://www.w3.org/community/">W3C Community and Business
-      Groups</a>.
+      <em>This section describes the status of this document at the time of its
+      publication. Other documents may supersede this document. A list of
+      current W3C publications and the latest revision of this technical report
+      can be found in the <a href="http://www.w3.org/TR/">W3C technical reports
+      index</a> at http://www.w3.org/TR/.</em>
     </p>
     <p>
-      This report documents the use cases, requirements, examples and
-      interfaces needed to enable web pages to display web content on secondary
-      screens. It is an evolved version of the <a href=
-      "http://webscreens.github.io/presentation-api/20131112/">initial
-      Presentation API</a> that represents the result of discussions within the
-      Second Screen Presentation Community Group so far. API semantics still
-      need to be specified. The report may serve as starting point for a
-      possible Working Group chartered to work on the same topic.
+      This document was published by the <a href=
+      "http://www.w3.org/2014/secondscreen/">Second Screen Presentation Working
+      Group</a> as an Editor's Draft. If you wish to make comments regarding
+      this document, please send them to <a href=
+      "mailto:public-secondscreen@w3.org">public-secondscreen@w3.org</a>
+      (<a href=
+      "mailto:public-secondscreen-request@w3.org?subject=subscribe">subscribe</a>,
+      <a href=
+      "http://lists.w3.org/Archives/Public/public-secondscreen/">archives</a>).
+      All comments are welcome.
+    </p>
+    <p>
+      Publication as an Editor's Draft does not imply endorsement by the
+      <abbr title="World Wide Web Consortium">W3C</abbr> Membership. This is a
+      draft document and may be updated, replaced or obsoleted by other
+      documents at any time. It is inappropriate to cite this document as other
+      than work in progress.
+    </p>
+    <p>
+      This document was produced by a group operating under the <a id=
+      "sotd_patent" rel="w3p:patentRules" href=
+      "http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004
+      <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+      <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href=
+      "http://www.w3.org/2004/01/pp-impl/74168/status" rel="disclosure">public
+      list of any patent disclosures</a> made in connection with the
+      deliverables of the group; that page also includes instructions for
+      disclosing a patent. An individual who has actual knowledge of a patent
+      which the individual believes contains <a href=
+      "http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
+      Claim(s)</a> must disclose the information in accordance with <a href=
+      "http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
+      6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent
+      Policy</a>.
+    </p>
+    <p>
+      This document is governed by the <a id="w3c_process_revision" href=
+      "http://www.w3.org/2014/Process-20140801/">1 August 2014 <abbr title=
+      "World Wide Web Consortium">W3C</abbr> Process Document</a>.
     </p>
     <h2 class="no-num no-toc">
       Table of Contents
@@ -474,7 +509,7 @@ function updateButtons() {
   showButton.disabled = !screenAvailable;
   showButton.onclick = screenAvailable ? startPresent : null;
 };
- 
+
 function startPresent() {
   presentation.startSession(presentationUrl, presentationId).then(
       function(newSession) {
@@ -516,8 +551,8 @@ function setSession(theSession) {
       adds an event listener for the <code>availablechange</code> event on the
       <code>navigator.presentation</code> object. If there are already
       available screens when the page adds the first event listener for the
-      event, the UA synthesizes a single availablechange event to signal the
-      availability.
+      event, the UA synthesizes a single <code>availablechange</code> event to
+      signal the availability.
     </p>
     <p class="open-issue">
       Do we want to fire an event immediately after the page registers for it?
@@ -557,6 +592,10 @@ function setSession(theSession) {
       identify this presentation instance, and control which other pages may
       connect to it by setting a hard-to-guess id.
     </p>
+    <p class="open-issue">
+      As previously discussed on the mailing list - we can add convenience here
+      by default-generating an ID.
+    </p>
     <p>
       If the user selects a screen with an existing presentation showing the
       same <code>url</code> under the same <code>presentationId</code>, the
@@ -571,14 +610,13 @@ function setSession(theSession) {
     <p>
       <code>navigator.presentation.startSession(url, presentationId)</code>
       returns a <code>Promise</code> to the opener page. When the user selects
-      a screen, the <code>Promise</code> resolves to a
+      a screen, the presentation page is shown and a communication channel has
+      been established the <code>Promise</code> resolves to a
       <code>PresentationSession</code> object, which acts as a handle to the
-      presentation for communication and state handling. Once the presentation
-      page is shown and a communication channel has been established, the state
-      of the <code>PresentationSession</code> changes from
-      <code>"disconnected"</code> to <code>"connected"</code>. At this point,
-      the opener page can communicate with the presentation page using the
-      session's <code>postMessage()</code> to send messages and its
+      presentation for communication and state handling. Initially, the state
+      of the <code>PresentationSession</code> is <code>"connected"</code>. At
+      this point, the opener page can communicate with the presentation page
+      using the session's <code>postMessage()</code> to send messages and its
       <code>onmessage</code> event handler to receive messages. The
       presentation page will also have access to
       <code>PresentationSession</code> that it can use to send and receive
@@ -623,6 +661,9 @@ function setSession(theSession) {
       WiFi network that has a screen showing that URL). In this case, the
       browser may resolve the Promise to allow the page to connect to the
       running session.
+    </p>
+    <p class="open-issue">
+      Do we want to keep the Promise in pending state?
     </p>
     <p>
       If the browser knows of multiple matching sessions, it should connect the
