@@ -8,7 +8,7 @@
      [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
-    <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">
+    <link href="http://www.w3.org/StyleSheets/TR/W3C-ED.css" type="text/css" rel="stylesheet">
     <style type="text/css">
 /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
@@ -68,13 +68,13 @@
     <div class="head">
       
 <!--begin-logo-->
-<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"></a></p>
+<p><a href="http://www.w3.org/"><img width="72" alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home"></a></p>
 <!--end-logo-->
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="w3c-editor's-draft-19-november-2014">
-        W3C Editor's Draft 19 November 2014
+      <h2 class="no-num no-toc" id="editor's-draft-8-january-2015">
+        Editor's Draft - 8 January 2015
       </h2>
       <dl>
         <dt>
@@ -283,10 +283,10 @@
    <li><a href="#todo"><span class="secno">7.8 </span>
       TODO
     </a></ol></li>
- <li><a class="no-num" href="#references">
+ <li><a href="#references" class="no-num">
       References
     </a></li>
- <li><a class="no-num" href="#acknowledgments">
+ <li><a href="#acknowledgments" class="no-num">
       Acknowledgments
     </a></ol>
 <!--end-toc-->
@@ -430,7 +430,7 @@
     </ul>
     <p class="note">
       Multi-Screen enumeration and named identification removed, after
-      discussion on the mailing list, cmp. <a class="external free" href="http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html" rel="nofollow">
+      discussion on the mailing list, cmp. <a href="http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html" class="external free" rel="nofollow">
       http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html</a> :
     </p>
     <ul>
@@ -523,7 +523,7 @@
       Terminology
     </h2>
     <p>
-      The term <dfn id="presentation-display" title="presentation display">presentation display</dfn>
+      The term <dfn title="presentation display" id="presentation-display">presentation display</dfn>
       refers to an external screen connected to the device that the user agent
       runs on.
     </p><!--    <p>
@@ -535,9 +535,16 @@
     </p>
 -->
     <p>
-      The terms <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a> and
-      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event
-      handler event types</a> are defined in <a href="#refsHTML5">[HTML5]</a>.
+      The terms <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>,
+      <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" data-anolis-spec="w3c-html" title="event handler event type" class="external">event
+      handler event types</a>, <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task" data-anolis-spec="w3c-html" class="external">queing a task</a> are defined in <a href="#refsHTML5">[HTML5]</a>.
+    </p>
+    <p>
+      The term <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects" data-anolis-spec="es6" class="external">Promise</a> is defined in <a href="#refsES6">[ES6]</a>.
+    </p>
+    <p>
+      The term <a href="https://url.spec.whatwg.org/#url" data-anolis-spec="url" class="external">URL</a> is defined in the WHATWG
+      URL standard: <a href="#refsURL">[URL]</a>.
     </p>
     <p>
       This document provides interface definitions using the
@@ -914,9 +921,6 @@ interface PresentationSession : EventTarget {
       <em>I</em> together uniquely identify the
       <code>PresentationSession</code> of the corresponding presentation.
     </p>
-    <p class="open-issue">
-      Need to add xrefs to term definitions: promise, task, assert, URL, etc.
-    </p>
     <h3 id="screen-availability-listener-added"><span class="secno">7.1 </span>
       Screen Availability Listener Added
     </h3>
@@ -1271,11 +1275,17 @@ interface PresentationSession : EventTarget {
     <h2 class="no-num" id="references">
       References
     </h2>
-    <div id="anolis-references"><dl><dt id="refsHTML5">[HTML5]
+    <div id="anolis-references"><dl><dt id="refsES6">[ES6]
+<dd><cite><a href="http://people.mozilla.org/~jorendorff/es6-draft.html">ECMA-262 6th Edition / Draft</a></cite>. ECMA / Jason Orendorff.
+
+<dt id="refsHTML5">[HTML5]
 <dd><cite><a href="http://www.w3.org/html/wg/drafts/html/CR/">HTML5</a></cite>, Robin Berjon, Steve Faulkner, Travis Leithead et al.. W3C.
 
 <dt id="refsRFC2119">[RFC2119]
 <dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
+
+<dt id="refsURL">[URL]
+<dd><cite><a href="https://url.spec.whatwg.org/">URL</a></cite>, Anne van Kesteren. WHATWG.
 
 <dt id="refsWEBIDL">[WEBIDL]
 <dd><cite><a href="http://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
