@@ -442,27 +442,21 @@
     </h2>
     <p>
       The term <dfn title="presentation display">presentation display</dfn>
-      refers to an external screen connected to the device that the user agent
-      runs on.
-    </p><!--    <p>
-      The terms <span title="opener-browsing-context" data-anolis-spec=
-      "w3c-html">opener browsing context</span> and <span title=
-      "auxiliary browsing context" data-anolis-spec="w3c-html">auxiliary
-      browsing context</span> are defined in <span data-anolis-ref=
-      "">HTML5</span>.
+      refers to an external screen available to the opening user agent via an
+      imlementation specific connection technology.
     </p>
--->
     <p>
-      The terms <span data-anolis-spec="w3c-html">event handlers</span>,
-      <span title="event handler event type" data-anolis-spec="w3c-html">event
-      handler event types</span>, <span data-anolis-spec="w3c-html" title=
-      "queue a task">queing a task</span> are defined in <span data-anolis-ref=
-      "">HTML5</span>.
+      The terms <span data-anolis-spec="w3c-html">browsing context</span>,
+      <span data-anolis-spec="w3c-html">event handlers</span>, <span title=
+      "event handler event type" data-anolis-spec="w3c-html">event handler
+      event types</span>, <span data-anolis-spec="w3c-html">navigate</span>,
+      <span data-anolis-spec="w3c-html" title="queue a task">queing a
+      task</span> are defined in <span data-anolis-ref="">HTML5</span>.
     </p>
     <p>
       The term <span data-anolis-spec="es6" title=
       "promise-objects">Promise</span> is defined in <span data-anolis-ref=
-      "es6">ES6</span>.
+      "">ES6</span>.
     </p>
     <p>
       The term <span data-anolis-spec="url">URL</span> is defined in the WHATWG
@@ -879,9 +873,9 @@ interface PresentationSession : EventTarget {
       </li>
     </ol>
     <p class="note">
-      The mechanism used to search for compatible screens is up to the user
-      agent. The user agent may choose search for screens at any time, not just
-      when event handlers are added to
+      The mechanism used to search for compatible screens is to the user agent.
+      The user agent may choose search for screens at any time, not just when
+      event handlers are added to
       <code>NavigatorPresentation.onavailablechange</code>.
     </p>
     <p class="open-issue">
@@ -964,7 +958,8 @@ interface PresentationSession : EventTarget {
         </ol>
       </li>
       <li>Queue a task <em>T</em> to request user permission for the use of a
-      presentation screen.
+      <span data-anolis-ref="presentation">presentation display</span> and
+      selection of one presentation display.
         <ol>
           <li>If <em>T</em> completes with the user <em>granting
           permission</em> to use a screen, run the following steps:
@@ -982,12 +977,33 @@ interface PresentationSession : EventTarget {
               <code>S.id</code> to <em>I</em>, and set <code>S.state</code> to
               <code>disconnected</code>.
               </li>
-              <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
-              </li>
-              <li>Resolve <em>P</em> with <em>S</em>.
-              </li>
-              <li>Initiate the <em>Presentation Connection</em> algorithm for
-              <em>S</em>.
+              <li>
+                <span data-anolis-spec="w3c-html">Queue a task</span>
+                <em>C</em> to create a new <span data-anolis-spec=
+                "w3c-html">browsing context</span> on the user-selected
+                <a href="presentation-display">presentation display</a> and
+                <span data-anolis-spec="w3c-html">navigate</span> to
+                <code>presentationUrl</code> in it.
+                <ol>
+                  <li>If <em>C</em> completes succesfully, run the following
+                  steps:
+                    <ol>
+                      <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+                      </li>
+                      <li>Resolve <em>P</em> with <em>S</em>.
+                      </li>
+                      <li>Initiate the <em>Presentation Connection</em>
+                      algorithm for <em>S</em>.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>If <em>C</em> fails, run the following steps:
+                    <ol>
+                      <li>Reject P with a "failed" exception.
+                      </li>
+                    </ol>
+                  </li>
+                </ol>
               </li>
             </ol>
           </li>
@@ -1002,10 +1018,10 @@ interface PresentationSession : EventTarget {
       </li>
     </ol>
     <p class="note">
-      The implementation of the permission request is up to the user agent; for
-      example it may show the user a dialog and allow the user to select an
-      available screen (granting permission), or cancel the selection (denying
-      permission).
+      The details of implementing the permission request and display selection
+      are left to the user agent; for example it may show the user a dialog and
+      allow the user to select an available screen (granting permission), or
+      cancel the selection (denying permission).
     </p>
     <p class="open-issue">
       Do we want to distinguish the permission-denied outcome from the
@@ -1164,16 +1180,16 @@ interface PresentationSession : EventTarget {
       </li>
     </ol>
     <p class="note">
-      If <em>T</em> does not complete successfully, the user agent may choose
-      to re-execute the Presentation Connection algorithm at a later time.
+      The mechanism that is used to present on the remote display and connect
+      the opening document with the presented document is an implementation
+      choice of the user agent. The connection must provide a two-way messaging
+      abstraction capable of carrying <code>DOMString</code> payloads in a
+      reliable and in-order fashion as described in the <em>Send Message</em>
+      and <em>Receive Message</em> steps below.
     </p>
     <p class="note">
-      The mechanism that is used to connect the opening document with the
-      presented document is an implementation choice of the user agent. The
-      connection must provide a two-way messaging abstraction capable of
-      carrying <code>DOMString</code> payloads in a reliable and in-order
-      fashion as described in the <em>Send Message</em> and <em>Receive
-      Message</em> steps below.
+      If <em>T</em> does not complete successfully, the user agent may choose
+      to re-execute the Presentation Connection algorithm at a later time.
     </p>
     <p class="open-issue">
       Do we want to notify the caller of a failure to connect, i.e. with an
