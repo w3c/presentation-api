@@ -1035,36 +1035,38 @@ interface PresentationSession : EventTarget {
       </li>
       <li>Queue a task <em>T</em> to request user permission for the use of a
       presentation screen.
-      </li>
-      <li>If <em>T</em> completes with the user <em>granting permission</em> to
-      use a screen, run the following steps:
         <ol>
-          <li>If <code>presentationId</code> is not <em>undefined</em>, assign
-          <em>I</em> to that that <code>presentationId</code>.
+          <li>If <em>T</em> completes with the user <em>granting
+          permission</em> to use a screen, run the following steps:
+            <ol>
+              <li>If <code>presentationId</code> is not <em>undefined</em>,
+              assign <em>I</em> to that that <code>presentationId</code>.
+              </li>
+              <li>If <code>presentationId</code> is <code>undefined</code>, let
+              <em>I</em> be a random alphanumeric value of at least 16
+              characters drawn from the characters <code>[A-Za-z0-9]</code>.
+              </li>
+              <li>Create a new <code>PresentationSession</code> <em>S</em>.
+              </li>
+              <li>Set <code>S.url</code> to <code>presentationUrl</code>, set
+              <code>S.id</code> to <em>I</em>, and set <code>S.state</code> to
+              <code>disconnected</code>.
+              </li>
+              <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+              </li>
+              <li>Resolve <em>P</em> with <em>S</em>.
+              </li>
+              <li>Initiate the <em>Presentation Connection</em> algorithm for
+              <em>S</em>.
+              </li>
+            </ol>
           </li>
-          <li>If <code>presentationId</code> is <code>undefined</code>, let
-          <em>I</em> be a random alphanumeric value of at least 16 characters
-          drawn from the characters <code>[A-Za-z0-9]</code>.
-          </li>
-          <li>Create a new <code>PresentationSession</code> <em>S</em>.
-          </li>
-          <li>Set <code>S.url</code> to <code>presentationUrl</code>, set
-          <code>S.id</code> to <em>I</em>, and set <code>S.state</code> to
-          <code>disconnected</code>.
-          </li>
-          <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
-          </li>
-          <li>Resolve <em>P</em> with <em>S</em>.
-          </li>
-          <li>Initiate the <em>Presentation Connection</em> algorithm for <em>
-            S</em>.
-          </li>
-        </ol>
-      </li>
-      <li>If <em>T</em> completes with the user <em>denying permission</em>,
-      run the following steps:
-        <ol>
-          <li>Reject <em>P</em> with a "PermissionDenied" exception.
+          <li>If <em>T</em> completes with the user <em>denying
+          permission</em>, run the following steps:
+            <ol>
+              <li>Reject <em>P</em> with a "PermissionDenied" exception.
+              </li>
+            </ol>
           </li>
         </ol>
       </li>
