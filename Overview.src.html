@@ -443,7 +443,8 @@
     <p>
       The term <dfn title="presentation display">presentation display</dfn>
       refers to an external screen available to the opening user agent via an
-      imlementation specific connection technology.
+      imlementation specific connection technology and compatible with
+      Presentation API for display content on it.
     </p>
     <p>
       The terms <span data-anolis-spec="w3c-html">browsing context</span>,
@@ -853,23 +854,28 @@ interface PresentationSession : EventTarget {
       Screen Availability Listener Added
     </h3>
     <p>
+      Let <a id="availablescreens"><em>availableScreens</em></a> be the list of
+      available screens that are compatible with the Presentation API and that
+      are currently known to the user agent.
+    </p>
+    <p>
       When a new <span data-anolis-spec="w3c-html" title="event handlers">event
       handler</span> <em>E</em> is added to
       <code>NavigatorPresentation.onavailablechange</code>, the user agent must
       run the following steps:
     </p>
     <ol>
-      <li>If the user agent is not already searching for screens compatible
-      with the Presentation API, then:
+      <li>If the user agent is not already discovering for <a href=
+      "#presentation-display">presention displays</a>, then:
         <ol>
           <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> to search for
-            screens that are compatible with the Presentation API.
+            <span data-anolis-spec="w3c-html">Queue a task</span> to discover
+            <a href="#presentation-display">presentation displays</a>.
           </li>
         </ol>
       </li>
-      <li>If the search for screens discovers at least one compatible screen,
-      then:
+      <li>If the <a href="#availablescreens">availableScreens</a> list is not
+      empty, then run the following steps:
         <ol>
           <li>
             <span data-anolis-spec="w3c-html">Queue a task</span> to
@@ -882,9 +888,9 @@ interface PresentationSession : EventTarget {
       </li>
     </ol>
     <p class="note">
-      The mechanism used to search for compatible screens is left to the user
-      agent. The user agent may choose search for screens at any time, not just
-      when event handlers are added to
+      The mechanism used to discover <a href="#presentation-display">presention
+      displays</a> is left to the user agent. The user agent may choose search
+      for screens at any time, not just when event handlers are added to
       <code>NavigatorPresentation.onavailablechange</code>.
     </p>
     <p class="open-issue">
