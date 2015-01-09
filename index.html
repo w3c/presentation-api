@@ -259,28 +259,32 @@
       Algorithms
     </a>
   <ol>
-   <li><a href="#screen-availability-listener-added"><span class="secno">7.1 </span>
-      Screen Availability Listener Added
+   <li><a href="#presentation-display-availability"><span class="secno">7.1 </span>
+      Presentation Display Availability
+    </a>
+    <ol>
+     <li><a href="#availability-listener-added"><span class="secno">7.1.1 </span>
+      Availability Listener Added
     </a></li>
-   <li><a href="#screen-availability-listener-removed"><span class="secno">7.2 </span>
-      Screen Availability Listener Removed
+     <li><a href="#availability-listener-removed"><span class="secno">7.1.2 </span>
+      Availability Listener Removed
     </a></li>
-   <li><a href="#no-screens-available"><span class="secno">7.3 </span>
-      No Screens Available
-    </a></li>
-   <li><a href="#start-session"><span class="secno">7.4 </span>
+     <li><a href="#monitor-availability-algorithm"><span class="secno">7.1.3 </span>
+      Algorithm to Monitor Availability Change
+    </a></ol></li>
+   <li><a href="#start-session"><span class="secno">7.2 </span>
       Start Session
     </a></li>
-   <li><a href="#join-session"><span class="secno">7.5 </span>
+   <li><a href="#join-session"><span class="secno">7.3 </span>
       Join Session
     </a></li>
-   <li><a href="#session-close"><span class="secno">7.6 </span>
+   <li><a href="#session-close"><span class="secno">7.4 </span>
       Session Close
     </a></li>
-   <li><a href="#presentation-connection"><span class="secno">7.7 </span>
+   <li><a href="#presentation-connection"><span class="secno">7.5 </span>
       Presentation Connection
     </a></li>
-   <li><a href="#todo"><span class="secno">7.8 </span>
+   <li><a href="#todo"><span class="secno">7.6 </span>
       TODO
     </a></ol></li>
  <li><a href="#references" class="no-num">
@@ -916,31 +920,65 @@ interface PresentationSession : EventTarget {
       <em>I</em> together uniquely identify the
       <code>PresentationSession</code> of the corresponding presentation.
     </p>
-    <h3 id="screen-availability-listener-added"><span class="secno">7.1 </span>
-      Screen Availability Listener Added
+    <h3 id="presentation-display-availability"><span class="secno">7.1 </span>
+      Presentation Display Availability
     </h3>
     <p>
-      Let <a id="availablescreens"><em>availableScreens</em></a> be the list of
-      available screens that are compatible with the Presentation API and that
-      are currently known to the user agent.
+      Let <a id="availabledisplays"><em>availableDisplays</em></a> be the list
+      of available <a href="presentation-display">presentation displays</a>
+      that are currently known to the user agent.
     </p>
+    <h4 id="availability-listener-added"><span class="secno">7.1.1 </span>
+      Availability Listener Added
+    </h4>
     <p>
       When a new <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers" data-anolis-spec="w3c-html" class="external">event
       handler</a> <em>E</em> is added to
       <code>NavigatorPresentation.onavailablechange</code>, the user agent must
+      run the <a href="monitor-availability-algorithm">algorithm to monitor
+      availability</a>.
+    </p>
+    <p class="note">
+      The mechanism used to monitor <a href="#presentation-display">presention
+      displays</a> availability is left to the user agent. The user agent may
+      choose search for screens at any time, not just when event handlers are
+      added to <code>NavigatorPresentation.onavailablechange</code>.
+    </p>
+    <p class="open-issue">
+      Do we want to fire the event at all handlers, or only the newly added
+      one?
+    </p>
+    <h4 id="availability-listener-removed"><span class="secno">7.1.2 </span>
+      Availability Listener Removed
+    </h4>
+    <p>
+      When the last <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers" data-anolis-spec="w3c-html" class="external">event handler</a> is removed from
+      <code>NavigatorPresentation.onavailablechange</code>, the user agent may
       run the following steps:
     </p>
     <ol>
-      <li>If the user agent is not already discovering for <a href="#presentation-display">presention displays</a>, then:
-        <ol>
-          <li>
-            <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to discover
-            <a href="#presentation-display">presentation displays</a>.
-          </li>
-        </ol>
+      <li>Cancel the <a href="monitor-availability-algorithm">algorithm to
+      monitor availability change.</a>
       </li>
-      <li>If the <a href="#availablescreens">availableScreens</a> list is not
-      empty, then run the following steps:
+    </ol>
+    <h4 id="monitor-availability-algorithm"><span class="secno">7.1.3 </span>
+      Algorithm to Monitor Availability Change
+    </h4>
+    <p>
+      While there are <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>
+      added to NavigatorPresentation.onavailablechange, the user agent must
+      continuously keep track of the available <a href="#presentation-display">presentation displays</a> and repeat the
+      following steps:
+    </p>
+    <ol>
+      <li>
+        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to retrieve the
+        the list of curently available <a href="#presentation-display">presentation displays</a> and let <a id="newdisplays"><em>newDisplays</em></a> be this list.
+      </li>
+      <li>Wait for the completion of that task.
+      </li>
+      <li>If <a href="#availabledisplays">availableDisplays</a> is empty and
+      <a href="#newdisplays">newDisplays</a> is not empty, then
         <ol>
           <li>
             <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
@@ -951,57 +989,21 @@ interface PresentationSession : EventTarget {
           </li>
         </ol>
       </li>
-    </ol>
-    <p class="note">
-      The mechanism used to discover <a href="#presentation-display">presention
-      displays</a> is left to the user agent. The user agent may choose search
-      for screens at any time, not just when event handlers are added to
-      <code>NavigatorPresentation.onavailablechange</code>.
-    </p>
-    <p class="open-issue">
-      Do we want to fire the event at all handlers, or only the newly added
-      one?
-    </p>
-    <h3 id="screen-availability-listener-removed"><span class="secno">7.2 </span>
-      Screen Availability Listener Removed
-    </h3>
-    <p>
-      When the last <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers" data-anolis-spec="w3c-html" class="external">event handler</a> is removed from
-      <code>NavigatorPresentation.onavailablechange</code>, the user agent may
-      run the following steps:
-    </p>
-    <ol>
-      <li>Cancel any pending tasks to search for screens that are compatible
-      with the Presentation API.
+      <li>If <a href="#availabledisplays">availableDisplays</a> is not empty
+      and <a href="#newdisplays">newDisplays</a> is empty, then:
+        <div style="margin-left: 2em">
+          <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
+          <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire an
+          event</a> named <code>availablechange</code> at <em>E</em> (and
+          only <em>E</em>) with the event's <code>available</code> property set
+          to <code>false</code>.
+        </div>
+      </li>
+      <li>Set <a href="#availableDisplays">availableDisplays</a> to the value
+      of <a href="#newDisplays">newDisplays</a>.
       </li>
     </ol>
-    <h3 id="no-screens-available"><span class="secno">7.3 </span>
-      No Screens Available
-    </h3>
-    <p>
-      When the set of available screens becomes empty (e.g., because the user
-      agent has lost its network connection), the user agent must run the
-      following steps:
-    </p>
-    <ol>
-      <li>If there are no <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event
-      handlers</a> added to
-      <code>NavigatorPresentation.onavailablechange</code>, then:
-        <ol>
-          <li>Abort these steps.
-          </li>
-        </ol>
-      </li>
-      <li>
-        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
-        <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire an
-        event</a> named <code>availablechange</code> at all the event
-        handlers added to <code>NavigatorPresentation.onavailablechange</code>
-        with the event's <code>available</code> property set to
-        <code>false</code>.
-      </li>
-    </ol>
-    <h3 id="start-session"><span class="secno">7.4 </span>
+    <h3 id="start-session"><span class="secno">7.2 </span>
       Start Session
     </h3>
     <p>
@@ -1119,7 +1121,7 @@ interface PresentationSession : EventTarget {
       no-screens-available outcome? Developers would be able to infer it anyway
       from <code>onavailablechange</code>.
     </p>
-    <h3 id="join-session"><span class="secno">7.5 </span>
+    <h3 id="join-session"><span class="secno">7.3 </span>
       Join Session
     </h3>
     <p>
@@ -1187,7 +1189,7 @@ interface PresentationSession : EventTarget {
       If no matching presentation is found, we could leave the Promise pending
       in case a matching presentation is started in the future.
     </p>
-    <h3 id="session-close"><span class="secno">7.6 </span>
+    <h3 id="session-close"><span class="secno">7.4 </span>
       Session Close
     </h3>
     <p>
@@ -1230,7 +1232,7 @@ interface PresentationSession : EventTarget {
         </ol>
       </li>
     </ol>
-    <h3 id="presentation-connection"><span class="secno">7.7 </span>
+    <h3 id="presentation-connection"><span class="secno">7.5 </span>
       Presentation Connection
     </h3>
     <p>
@@ -1305,7 +1307,7 @@ interface PresentationSession : EventTarget {
       Need to further specify the semantics of the messaging channel (using
       WebSockets or MessagePort as a reference).
     </p>
-    <h3 id="todo"><span class="secno">7.8 </span>
+    <h3 id="todo"><span class="secno">7.6 </span>
       TODO
     </h3>
     <p class="open-issue">
