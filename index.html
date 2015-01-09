@@ -1034,8 +1034,17 @@ interface PresentationSession : EventTarget {
       </li>
       <li>Return <em>P</em>.
       </li>
-      <li>If no screens are available that are compatible with the Presentation
-      API, run these steps:
+      <li>If the user agent is currently not running the <a href="#monitor-availability-algorithm">presentation display availability
+      monitoring algorithm</a>:
+        <ol>
+          <li>Start the algorithm.
+          </li>
+          <li>Wait until the algorithm completes.
+          </li>
+        </ol>
+      </li>
+      <li>If the <a href="#availabledisplays">availableDisplays</a> list is
+      empty, then:
         <ol>
           <li>
             <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">Reject</a> <em>P</em> with a
