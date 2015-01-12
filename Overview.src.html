@@ -443,8 +443,8 @@
     <p>
       The term <dfn title="presentation display">presentation display</dfn>
       refers to an external screen available to the opening user agent via an
-      imlementation specific connection technology and compatible with
-      Presentation API for display content on it.
+      implementation specific connection technology and compatible with the
+      Presentation API for the display content on it.
     </p>
     <p>
       The terms <span data-anolis-spec="w3c-html">browsing context</span>,
@@ -850,14 +850,14 @@ interface PresentationSession : EventTarget {
       <em>I</em> together uniquely identify the
       <code>PresentationSession</code> of the corresponding presentation.
     </p>
-    <h3>
-      Presentation Display Availability
-    </h3>
     <p>
       Let <a id="availabledisplays"><em>availableDisplays</em></a> be the list
       of available <a href="presentation-display">presentation displays</a>
       that are currently known to the user agent.
     </p>
+    <h3>
+      Presentation Display Availability
+    </h3>
     <h4>
       Availability Listener Added
     </h4>
@@ -893,7 +893,7 @@ interface PresentationSession : EventTarget {
       </li>
     </ol>
     <h4 id="monitor-availability-algorithm">
-      Algorithm to Monitor Availability Change
+      Algorithm to Monitor Presentation Display Availability Change
     </h4>
     <p>
       While there are <span data-anolis-spec="w3c-html">event handlers</span>
@@ -1021,7 +1021,7 @@ interface PresentationSession : EventTarget {
                 <span data-anolis-spec="w3c-html">navigate</span> to
                 <code>presentationUrl</code> in it.
                 <ol>
-                  <li>If <em>C</em> completes succesfully, run the following
+                  <li>If <em>C</em> completes successfully, run the following
                   steps:
                     <ol>
                       <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
