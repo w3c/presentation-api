@@ -8,7 +8,7 @@
      [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
-    <link href="http://www.w3.org/StyleSheets/TR/W3C-ED.css" type="text/css" rel="stylesheet">
+    <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">
     <style type="text/css">
 /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
@@ -68,13 +68,13 @@
     <div class="head">
       
 <!--begin-logo-->
-<p><a href="http://www.w3.org/"><img width="72" alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home"></a></p>
+<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"></a></p>
 <!--end-logo-->
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-12-january-2015">
-        Editor's Draft - 12 January 2015
+      <h2 class="no-num no-toc" id="w3c-editor's-draft-19-january-2015">
+        W3C Editor's Draft 19 January 2015
       </h2>
       <dl>
         <dt>
@@ -287,10 +287,10 @@
    <li><a href="#todo"><span class="secno">7.6 </span>
       TODO
     </a></ol></li>
- <li><a href="#references" class="no-num">
+ <li><a class="no-num" href="#references">
       References
     </a></li>
- <li><a href="#acknowledgments" class="no-num">
+ <li><a class="no-num" href="#acknowledgments">
       Acknowledgments
     </a></ol>
 <!--end-toc-->
@@ -434,7 +434,7 @@
     </ul>
     <p class="note">
       Multi-Screen enumeration and named identification removed, after
-      discussion on the mailing list, cmp. <a href="http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html" class="external free" rel="nofollow">
+      discussion on the mailing list, cmp. <a class="external free" href="http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html" rel="nofollow">
       http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html</a> :
     </p>
     <ul>
@@ -527,22 +527,22 @@
       Terminology
     </h2>
     <p>
-      The term <dfn title="presentation display" id="presentation-display">presentation display</dfn>
+      The term <dfn id="presentation-display" title="presentation display">presentation display</dfn>
       refers to an external screen available to the opening user agent via an
       implementation specific connection technology and compatible with the
       Presentation API for the display content on it.
     </p>
     <p>
-      The terms <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context" data-anolis-spec="w3c-html" class="external">browsing context</a>,
-      <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>, <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" data-anolis-spec="w3c-html" title="event handler event type" class="external">event handler
-      event types</a>, <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">firing an event</a>, <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate" data-anolis-spec="w3c-html" class="external">navigate</a>, <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task" data-anolis-spec="w3c-html" class="external">queing a task</a> are defined in <a href="#refsHTML5">[HTML5]</a>.
+      The terms <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a>,
+      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event handler
+      event types</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">firing an event</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">queing a task</a> are defined in <a href="#refsHTML5">[HTML5]</a>.
     </p>
     <p>
-      The term <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects" data-anolis-spec="es6" class="external">Promise</a> is defined in <a href="#refsES6">[ES6]</a>. The terms <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">resolving a Promise, and rejecting a Promise</a> are
+      The term <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a> is defined in <a href="#refsES6">[ES6]</a>. The terms <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolving a Promise, and rejecting a Promise</a> are
       used as explained in <a href="#refsPROMGUIDE">[PROMGUIDE]</a>.
     </p>
     <p>
-      The term <a href="https://url.spec.whatwg.org/#url" data-anolis-spec="url" class="external">URL</a> is defined in the WHATWG
+      The term <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> is defined in the WHATWG
       URL standard: <a href="#refsURL">[URL]</a>.
     </p>
     <p>
@@ -845,16 +845,6 @@ function setSession(theSession) {
     <h2 id="interfaces"><span class="secno">6 </span>
       Interfaces
     </h2>
-    <p>
-      The interfaces described herein address the requirements outlined in the
-      <a href="#use-cases">Use Cases</a> section, and specifically, also
-      consider the <a href="#media-flinging-to-multiple-screens">Media Flinging
-      to Multiple Screens</a> use case unaddressed by the <a href="#previous-version">previous version of the Presentation API</a>. This
-      section describes the interfaces to the extend discussed in the Second
-      Screen Presentation Community Group. Readers are encouraged to consult
-      the <a href="#example">Example</a> and <a href="#algorithms">Algorithms</a> sections together with this section for a
-      more complete understanding of the technical parts of this specification.
-    </p>
     <h3 id="navigatorpresentation"><span class="secno">6.1 </span>
       <code>NavigatorPresentation</code>
     </h3>
@@ -932,7 +922,7 @@ interface PresentationSession : EventTarget {
       Availability Listener Added
     </h4>
     <p>
-      When a new <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers" data-anolis-spec="w3c-html" class="external">event
+      When a new <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers">event
       handler</a> <em>E</em> is added to
       <code>NavigatorPresentation.onavailablechange</code>, the user agent must
       run the <a href="monitor-availability-algorithm">algorithm to monitor
@@ -952,7 +942,7 @@ interface PresentationSession : EventTarget {
       Availability Listener Removed
     </h4>
     <p>
-      When the last <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers" data-anolis-spec="w3c-html" class="external">event handler</a> is removed from
+      When the last <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers">event handler</a> is removed from
       <code>NavigatorPresentation.onavailablechange</code>, the user agent may
       run the following steps:
     </p>
@@ -965,14 +955,14 @@ interface PresentationSession : EventTarget {
       Algorithm to Monitor Presentation Display Availability Change
     </h4>
     <p>
-      While there are <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>
+      While there are <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a>
       added to NavigatorPresentation.onavailablechange, the user agent must
       continuously keep track of the available <a href="#presentation-display">presentation displays</a> and repeat the
       following steps:
     </p>
     <ol>
       <li>
-        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to retrieve the
+        <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to retrieve the
         the list of curently available <a href="#presentation-display">presentation displays</a> and let <a id="newdisplays"><em>newDisplays</em></a> be this list.
       </li>
       <li>Wait for the completion of that task.
@@ -981,8 +971,8 @@ interface PresentationSession : EventTarget {
       <a href="#newdisplays">newDisplays</a> is not empty, then
         <ol>
           <li>
-            <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
-            <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire
+            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
+            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire
             an event</a> named <code>availablechange</code> at <em>E</em>
             (and only <em>E</em>) with the event's <code>available</code>
             property set to <code>true</code>.
@@ -992,8 +982,8 @@ interface PresentationSession : EventTarget {
       <li>If <a href="#availabledisplays">availableDisplays</a> is not empty
       and <a href="#newdisplays">newDisplays</a> is empty, then:
         <div style="margin-left: 2em">
-          <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
-          <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire an
+          <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
+          <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an
           event</a> named <code>availablechange</code> at <em>E</em> (and
           only <em>E</em>) with the event's <code>available</code> property set
           to <code>false</code>.
@@ -1016,7 +1006,7 @@ interface PresentationSession : EventTarget {
         Input
       </dt>
       <dd>
-        <code>presentationUrl</code>, the <a href="https://url.spec.whatwg.org/#url" data-anolis-spec="url" class="external">URL</a> of the document to be presented
+        <code>presentationUrl</code>, the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> of the document to be presented
       </dd>
       <dd>
         <code>presentationId</code>, an optional identifier for the
@@ -1026,11 +1016,11 @@ interface PresentationSession : EventTarget {
         Output
       </dt>
       <dd>
-        <em>P</em>, a <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects" data-anolis-spec="es6" class="external">Promise</a>
+        <em>P</em>, a <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>
       </dd>
     </dl>
     <ol>
-      <li>Let <em>P</em> be a new <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects" data-anolis-spec="es6" class="external">Promise</a>.
+      <li>Let <em>P</em> be a new <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>.
       </li>
       <li>Return <em>P</em>.
       </li>
@@ -1047,7 +1037,7 @@ interface PresentationSession : EventTarget {
       empty, then:
         <ol>
           <li>
-            <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">Reject</a> <em>P</em> with a
+            <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
             "NoScreensAvailable" exception.
           </li>
           <li>Abort all remaining steps.
@@ -1055,7 +1045,7 @@ interface PresentationSession : EventTarget {
         </ol>
       </li>
       <li>Queue a task <em>T</em> to request user permission for the use of a
-      <a href="#presentation-display" data-anolis-ref="presentation">presentation display</a> and
+      <a data-anolis-ref="presentation" href="#presentation-display">presentation display</a> and
       selection of one presentation display.
         <ol>
           <li>If <em>T</em> completes with the user <em>granting
@@ -1075,10 +1065,10 @@ interface PresentationSession : EventTarget {
               <code>disconnected</code>.
               </li>
               <li>
-                <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a>
-                <em>C</em> to create a new <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context" data-anolis-spec="w3c-html" class="external">browsing context</a> on the user-selected
+                <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
+                <em>C</em> to create a new <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a> on the user-selected
                 <a href="presentation-display">presentation display</a> and
-                <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate" data-anolis-spec="w3c-html" class="external">navigate</a> to
+                <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a> to
                 <code>presentationUrl</code> in it.
                 <ol>
                   <li>If <em>C</em> completes successfully, run the following
@@ -1087,7 +1077,7 @@ interface PresentationSession : EventTarget {
                       <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
                       </li>
                       <li>
-                        <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">Resolve</a> <em>P</em> with
+                        <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <em>P</em> with
                         <em>S</em>.
                       </li>
                       <li>Initiate the <a href="#presentation-connection">Presentation Connection</a>
@@ -1098,7 +1088,7 @@ interface PresentationSession : EventTarget {
                   <li>If <em>C</em> fails, run the following steps:
                     <ol>
                       <li>
-                        <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">Reject</a> P with a "failed"
+                        <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> P with a "failed"
                         exception.
                       </li>
                     </ol>
@@ -1111,7 +1101,7 @@ interface PresentationSession : EventTarget {
           permission</em>, run the following steps:
             <ol>
               <li>
-                <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">Reject</a> <em>P</em> with a
+                <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
                 "PermissionDenied" exception.
               </li>
             </ol>
@@ -1143,7 +1133,7 @@ interface PresentationSession : EventTarget {
         Input
       </dt>
       <dd>
-        <code>presentationUrl</code>, the <a href="https://url.spec.whatwg.org/#url" data-anolis-spec="url" class="external">URL</a> of the document being presented
+        <code>presentationUrl</code>, the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> of the document being presented
       </dd>
       <dd>
         <code>presentationId</code>, the identifier for the presentation
@@ -1152,18 +1142,18 @@ interface PresentationSession : EventTarget {
         Output
       </dt>
       <dd>
-        <em>P</em>, a <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects" data-anolis-spec="es6" class="external">Promise</a>
+        <em>P</em>, a <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>
       </dd>
     </dl>
     <ol>
-      <li>Let <em>P</em> be a new <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects" data-anolis-spec="es6" class="external">Promise</a>.
+      <li>Let <em>P</em> be a new <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>.
       </li>
       <li>Return <em>P</em>.
       </li>
       <li>Let <em>D</em> be the set of presentations known by the user agent.
       </li>
       <li>
-        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> <em>T</em> to run
+        <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em> to run
         the following steps in order:
         <ol>
           <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
@@ -1176,7 +1166,7 @@ interface PresentationSession : EventTarget {
               following steps:
                 <ol>
                   <li>
-                    <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">Resolve</a> <em>P</em> with <em>S</em>.
+                    <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <em>P</em> with <em>S</em>.
                   </li>
                   <li>Initiate the <a href="#presentation-connection">Presentation Connection</a>
                   algorithm for <em>S</em>.
@@ -1188,7 +1178,7 @@ interface PresentationSession : EventTarget {
             </ol>
           </li>
           <li>
-            <a href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject" data-anolis-spec="promguide" class="external">Reject</a> <em>P</em> with a
+            <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
             "NoPresentationFound" exception.
           </li>
         </ol>
@@ -1218,7 +1208,7 @@ interface PresentationSession : EventTarget {
       <li>Let <em>D</em> be the set of presentations known by the user agent.
       </li>
       <li>
-        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> <em>T</em> to run
+        <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em> to run
         the following steps in order:
         <ol>
           <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
@@ -1230,8 +1220,8 @@ interface PresentationSession : EventTarget {
               equal to <em>S.id</em>, run the following steps:
                 <ol>
                   <li>
-                    <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
-                    <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire an event</a> named
+                    <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
+                    <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
                     <code>statechange</code> at <em>s.onstatechange</em>.
                   </li>
                 </ol>
@@ -1259,7 +1249,7 @@ interface PresentationSession : EventTarget {
         </ol>
       </li>
       <li>
-        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> <em>T</em> to
+        <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em> to
         connect <em>S</em> to the document that is presenting <em>S.url</em>.
       </li>
       <li>If <em>T</em> completes successfully, run the following steps:
@@ -1280,8 +1270,8 @@ interface PresentationSession : EventTarget {
                   is equal to <em>S.id</em>, run the following steps:
                     <ol>
                       <li>
-                        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a>
-                        to <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire an event</a> named
+                        <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
+                        to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
                         <code>statechange</code> at <em>s.onstatechange</em>.
                       </li>
                     </ol>
