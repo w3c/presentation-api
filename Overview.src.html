@@ -65,6 +65,11 @@
     }
 
     code { color: orangered; }
+    .XXX { background: white; border: solid #78AB46; padding: 0.5em; margin: 1em 0; }
+    table { border-collapse: collapse; border-style: hidden hidden none hidden; }
+    table thead, table tbody { border-bottom: solid; }
+    table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
+    dfn { font-weight: bolder; font-style: normal; }
     </style>
   </head>
   <body>
@@ -255,7 +260,7 @@
       devices through any of the above means.
     </p>
     <h3 id="use-cases">
-      Use Cases
+      Use cases
     </h3>
     <h4>
       Presentations
@@ -275,7 +280,7 @@
       <b>Requirements:</b> R1, R3, R4, R5, R7
     </p>
     <h4>
-      <a id="video-sharing">Video and Image Sharing</a>
+      <a id="video-sharing">Video and image sharing</a>
     </h4>
     <p>
       Using an online video or image sharing service, a user would like to show
@@ -306,7 +311,7 @@
       <b>Requirements:</b> R1, R3, R4, R5, R7
     </p>
     <h4>
-      Media Flinging to Multiple Screens
+      Media flinging to multiple screens
     </h4>Alice enters a video sharing site using a browser on her tablet. Next,
     Alice picks her favorite video from the site, and the video starts to play
     on her tablet. While the video is playing Alice clicks a button "Share on
@@ -332,7 +337,7 @@
       Requirements
     </h2>
     <h3>
-      Functional Requirements
+      Functional requirements
     </h3>
     <ul>
       <li>
@@ -394,7 +399,7 @@
       </li>
     </ul>
     <h3>
-      <span id="Non-Functional_Requirements">Non-Functional Requirements</span>
+      <span id="non-functional_requirements">Non-functional requirements</span>
     </h3>
     <ul>
       <li>
@@ -440,12 +445,6 @@
     <h2>
       Terminology
     </h2>
-    <p>
-      The term <dfn title="presentation display">presentation display</dfn>
-      refers to an external screen available to the opening user agent via an
-      implementation specific connection technology and compatible with the
-      Presentation API for the display content on it.
-    </p>
     <p>
       The terms <span data-anolis-spec="w3c-html">browsing context</span>,
       <span data-anolis-spec="w3c-html">event handlers</span>, <span title=
@@ -570,7 +569,7 @@ function setSession(theSession) {
     <p class="open-issue">
       Do we want to fire an event immediately after the page registers for it?
       What's a best practice method for asynchronous notifications of this
-      kind? See below in the <a href="#open-questions">Open Questions</a>
+      kind? See below in the <a href="#open-questions">Open questions</a>
       section.
     </p>
     <p class="open-issue">
@@ -634,7 +633,7 @@ function setSession(theSession) {
       presentation page will also have access to
       <code>PresentationSession</code> that it can use to send and receive
       messages with the opener page (see <a href=
-      "#usage-on-remote-screen">Usage on Remote Screen</a>).
+      "#usage-on-remote-screen">Usage on remote screen</a>).
     </p>
     <p>
       If the user cancels screen selection, the <code>Promise</code> returned
@@ -695,7 +694,7 @@ function setSession(theSession) {
       the <code>Promise</code> from <code>joinSession</code> will not.
     </p>
     <h4>
-      Open Questions
+      Open questions
     </h4>
     <p class="open-issue">
       Do we need to insert into the description an additional permission prompt
@@ -719,7 +718,7 @@ function setSession(theSession) {
       <code>"new"</code> or <code>"resumed"</code>.
     </p>
     <h3>
-      Usage on Remote Screen
+      Usage on remote screen
     </h3>
     <p>
       For addressing the requirement of communication between originating page
@@ -768,170 +767,166 @@ if (navigator.presentation.session) {
       is communicated to the presentation page (if at all).
     </p>
     <h2>
-      Interfaces
+      APIs for interacting with presentation sessions
     </h2>
     <h3>
-      <code>NavigatorPresentation</code>
-    </h3>
-    <pre class="idl">
-interface NavigatorPresentation : EventTarget {
-  readonly attribute PresentationSession? session;
-  Promise&lt;PresentationSession&gt; startSession(DOMString url, DOMString? presentationId);
-  Promise&lt;PresentationSession&gt; joinSession(DOMString url, DOMString? presentationId);
-  attribute EventHandler onavailablechange;
-};
-
-partial interface Navigator {
-  readonly attribute NavigatorPresentation presentation;
-};
-</pre>
-    <h3>
-      <code>AvailableChangeEvent</code>
+      Introduction
     </h3>
     <p>
-      Fired at the primary screen's <code>NavigatorPresentation</code> object,
-      when screen availability changes.
+      A <dfn title="presentation display">presentation display</dfn> refers to
+      an external screen available to the user agent via an implementation
+      specific connection technology.
     </p>
-    <pre class="idl">
-[Constructor(DOMString type, optional AvailableChangeEventInit eventInitDict)]
-interface AvailableChangeEvent : Event {
-  readonly attribute boolean available;
-};
-
-dictionary AvailableChangeEventInit : EventInit {
-  boolean available;
-};
-</pre>
-    <h3>
-      <code>PresentationSession</code>
-    </h3>
-    <p>
-      An object representing the established presentation session.
-    </p>
-    <pre class="idl">
-enum PresentationSessionState { "connected", "disconnected" /*, "resumed" */ };
-
-interface PresentationSession : EventTarget {
-  readonly DOMString? id;
-  readonly attribute PresentationSessionState state;
-  void postMessage(DOMString message);
-  void close();
-  attribute EventHandler onmessage;
-  attribute EventHandler onstatechange;
-};
-</pre>
-    <h2>
-      Algorithms
-    </h2>
-    <p>
-      These algorithms define the behavior of the
-      <code>NavigatorPresentation</code> and <code>PresentationSession</code>
-      interfaces declared in the <a href="#interfaces">Interfaces</a> section.
-    </p>
-    <p>
-      Let <em>D</em> be the set of presentations that are currently known to
-      the user agent (regardles of their state). <em>D</em> is represented as a
-      set of tuples <em>(U, I, S)</em> where <em>U</em> is the URL that is
-      being presented; <em>I</em> is an alphanumeric identifier for the
-      presentation; and <em>S</em> is the user agent's
-      <code>PresentationSession</code> for the presentation. <em>U</em> and
-      <em>I</em> together uniquely identify the
-      <code>PresentationSession</code> of the corresponding presentation.
-    </p>
-    <p>
-      Let <a id="availabledisplays"><em>availableDisplays</em></a> be the list
-      of available <a href="presentation-display">presentation displays</a>
-      that are currently known to the user agent.
+    <p class="XXX">
+      A <dfn title="concept-presentation-session">presentation session</dfn> is
+      ... and its relationship to a <span>presentation display</span> is ...
+      Each <span>presentation session</span> has a <dfn>presentation session
+      identifier</dfn> and a <dfn>presentation session state</dfn>.
     </p>
     <h3>
-      Presentation Display Availability
+      Interface <code>PresentationSession</code>
     </h3>
-    <h4>
-      Availability Listener Added
-    </h4>
     <p>
-      When a new <span data-anolis-spec="w3c-html" title="event handlers">event
-      handler</span> <em>E</em> is added to
-      <code>NavigatorPresentation.onavailablechange</code>, the user agent must
-      run the <a href="monitor-availability-algorithm">algorithm to monitor
-      availability</a>.
+      Each <span title="concept-presentation-session">presentation
+      session</span> is represented by a <code>PresentationSession</code>
+      object.
     </p>
-    <p class="note">
-      The mechanism used to monitor <a href="#presentation-display">presention
-      displays</a> availability is left to the user agent. The user agent may
-      choose search for screens at any time, not just when event handlers are
-      added to <code>NavigatorPresentation.onavailablechange</code>.
+    <pre class="idl">
+enum <dfn>PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
+
+interface <dfn>PresentationSession</dfn> : EventTarget {
+  readonly DOMString? <span>id</span>;
+  readonly attribute <span>PresentationSessionState</span> <span>state</span>;
+  void <span>postMessage</span>(DOMString message);
+  void <span>close</span>();
+  attribute <span data-anolis-spec=
+"w3c-html">EventHandler</span> <span>onmessage</span>;
+  attribute <span data-anolis-spec=
+"w3c-html">EventHandler</span> <span>onstatechange</span>;
+};
+</pre>
+    <p class="XXX">
+      The <dfn><code>id</code></dfn> attribute, on getting, must return the
+      <span>presentation session identifier</span>.
     </p>
-    <p class="open-issue">
-      Do we want to fire the event at all handlers, or only the newly added
-      one?
+    <p class="XXX">
+      The <dfn><code>state</code></dfn> attribute represents the
+      <span>presentation session</span>'s current state. On getting, it must
+      return one of the following values: ...
     </p>
-    <h4>
-      Availability Listener Removed
-    </h4>
+    <p class="XXX">
+      The <dfn><code>postMessage</code></dfn>() method, when invoked on a
+      <code>PresentationSesssion</code> object with an argument message, must
+      ...
+    </p>
     <p>
-      When the last <span data-anolis-spec="w3c-html" title=
-      "event handlers">event handler</span> is removed from
-      <code>NavigatorPresentation.onavailablechange</code>, the user agent may
-      run the following steps:
-    </p>
-    <ol>
-      <li>Cancel the <a href="monitor-availability-algorithm">algorithm to
-      monitor availability change.</a>
-      </li>
-    </ol>
-    <h4 id="monitor-availability-algorithm">
-      Algorithm to Monitor Presentation Display Availability Change
-    </h4>
-    <p>
-      While there are <span data-anolis-spec="w3c-html">event handlers</span>
-      added to NavigatorPresentation.onavailablechange, the user agent must
-      continuously keep track of the available <a href=
-      "#presentation-display">presentation displays</a> and repeat the
+      When the <dfn><code>close</code></dfn>() method is called on a
+      <code>PresentationSession</code> <em>S</em>, the user agent must run the
       following steps:
     </p>
     <ol>
-      <li>
-        <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve the
-        the list of curently available <a href=
-        "#presentation-display">presentation displays</a> and let <a id=
-        "newdisplays"><em>newDisplays</em></a> be this list.
-      </li>
-      <li>Wait for the completion of that task.
-      </li>
-      <li>If <a href="#availabledisplays">availableDisplays</a> is empty and
-      <a href="#newdisplays">newDisplays</a> is not empty, then
+      <li>If <em>S.state</em> is not <code>connected</code>, then:
         <ol>
-          <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> to
-            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
-            an event</span> named <code>availablechange</code> at <em>E</em>
-            (and only <em>E</em>) with the event's <code>available</code>
-            property set to <code>true</code>.
+          <li>Abort these steps.
           </li>
         </ol>
       </li>
-      <li>If <a href="#availabledisplays">availableDisplays</a> is not empty
-      and <a href="#newdisplays">newDisplays</a> is empty, then:
-        <div style="margin-left: 2em">
-          <span data-anolis-spec="w3c-html">Queue a task</span> to
-          <span data-anolis-spec="w3c-html" title="concept-event-fire">fire an
-          event</span> named <code>availablechange</code> at <em>E</em> (and
-          only <em>E</em>) with the event's <code>available</code> property set
-          to <code>false</code>.
-        </div>
+      <li>Set <em>S.state</em> to <code>disconnected</code>.
       </li>
-      <li>Set <a href="#availableDisplays">availableDisplays</a> to the value
-      of <a href="#newDisplays">newDisplays</a>.
+      <li>Let <em>D</em> be the set of presentations known by the user agent.
+      </li>
+      <li>
+        <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em> to run
+        the following steps in order:
+        <ol>
+          <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
+            <ol>
+              <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>I</em>,
+              and <em>s</em> equal <em>S'</em>.
+              </li>
+              <li>If <em>u</em> is equal to <em>S.url</em> and <em>i</em> is
+              equal to <em>S.id</em>, run the following steps:
+                <ol>
+                  <li>
+                    <span data-anolis-spec="w3c-html">Queue a task</span> to
+                    <span data-anolis-spec="w3c-html" title=
+                    "concept-event-fire">fire an event</span> named
+                    <code>statechange</code> at <em>s.onstatechange</em>.
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
       </li>
     </ol>
-    <h3>
-      Start Session
-    </h3>
     <p>
-      When <code>NavigatorPresentaton.startSession(presentationUrl,
+      The following are the event handlers (and their corresponding event
+      handler event types) that must be supported, as event handler IDL
+      attributes, by objects implementing the <code>PresentationSession</code>
+      interface:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Event handler
+          </th>
+          <th>
+            Event handler event type
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <dfn><code>onmessage</code></dfn>
+          </td>
+          <td>
+            <code>message</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <dfn><code>onstatechange</code></dfn>
+          </td>
+          <td>
+            <code>statechange</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>
+      Interface <code>NavigatorPresentation</code>
+    </h3>
+    <pre class="idl">
+partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
+  readonly attribute <span>NavigatorPresentation</span> <span>presentation</span>;
+};
+</pre>
+    <p class="XXX">
+      The <dfn><code>presentation</code></dfn> attribute must return the
+      <code>NavigatorPresentation</code> object.
+    </p>
+    <pre class="idl">
+interface <dfn>NavigatorPresentation</dfn> : EventTarget {
+  readonly attribute <span>PresentationSession</span>? <span>session</span>;
+  Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url, DOMString? presentationId);
+  Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString? presentationId);
+  attribute <span data-anolis-spec=
+"w3c-html">EventHandler</span> <span>onavailablechange</span>;
+};
+</pre>
+    <p class="XXX">
+      On getting, the <dfn><code>session</code></dfn> attribute must return ...
+    </p>
+    <h4>
+      Starting a presentation session
+    </h4>
+    <p>
+      When <code><dfn>startSession</dfn>(presentationUrl,
       presentationId)</code> is called, the user agent must run the following
-      steps.
+      steps:
     </p>
     <dl>
       <dt>
@@ -959,11 +954,11 @@ interface PresentationSession : EventTarget {
       </li>
       <li>Return <em>P</em>.
       </li>
-      <li>If the user agent is currently not running the <a href=
-      "#monitor-availability-algorithm">presentation display availability
-      monitoring algorithm</a>:
+      <li>If the user agent does not <span>monitor presentation display
+      availability</span>, run the following steps:
         <ol>
-          <li>Start the algorithm.
+          <li>
+            <span>Monitor presentation display availability</span>.
           </li>
           <li>Wait until the algorithm completes.
           </li>
@@ -1019,9 +1014,9 @@ interface PresentationSession : EventTarget {
                         "resolve-reject">Resolve</span> <em>P</em> with
                         <em>S</em>.
                       </li>
-                      <li>Initiate the <a href=
-                      "#presentation-connection">Presentation Connection</a>
-                      algorithm for <em>S</em>.
+                      <li>
+                        <span>Establish a presentation connection</span> with
+                        <em>S</em>.
                       </li>
                     </ol>
                   </li>
@@ -1062,13 +1057,12 @@ interface PresentationSession : EventTarget {
       no-screens-available outcome? Developers would be able to infer it anyway
       from <code>onavailablechange</code>.
     </p>
-    <h3>
-      Join Session
-    </h3>
+    <h4>
+      Joining a presentation session
+    </h4>
     <p>
-      When <code>NavigatorPresentation.joinSession(presentationUrl,
-      presentationId)</code> is called, the user agent must run the following
-      steps:
+      When <code><dfn>joinSession</dfn>(presentationUrl, presentationId)</code>
+      is called, the user agent must run the following steps:
     </p>
     <dl>
       <dt>
@@ -1114,9 +1108,9 @@ interface PresentationSession : EventTarget {
                     <span data-anolis-spec="promguide" title=
                     "resolve-reject">Resolve</span> <em>P</em> with <em>S</em>.
                   </li>
-                  <li>Initiate the <a href=
-                  "#presentation-connection">Presentation Connection</a>
-                  algorithm for <em>S</em>.
+                  <li>
+                    <span>Establish a presentation connection</span> with
+                    <em>S</em>.
                   </li>
                   <li>Abort the remaining steps of <em>T</em>.
                   </li>
@@ -1136,59 +1130,41 @@ interface PresentationSession : EventTarget {
       If no matching presentation is found, we could leave the Promise pending
       in case a matching presentation is started in the future.
     </p>
-    <h3>
-      Session Close
-    </h3>
     <p>
-      When <code>PresentationSession.close()</code> is called on a
-      <code>PresentationSession</code> <em>S</em>, the user agent must run the
-      following steps:
+      <span>The following are the event handlers (and their corresponding event
+      handler event types) that must be supported, as event handler IDL
+      attributes, by objects implementing the <code>PresentationSession</code>
+      interface:</span>
     </p>
-    <ol>
-      <li>If <em>S.state</em> is not <code>connected</code>, then:
-        <ol>
-          <li>Abort these steps.
-          </li>
-        </ol>
-      </li>
-      <li>Set <em>S.state</em> to <code>disconnected</code>.
-      </li>
-      <li>Let <em>D</em> be the set of presentations known by the user agent.
-      </li>
-      <li>
-        <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em> to run
-        the following steps in order:
-        <ol>
-          <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
-            <ol>
-              <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>I</em>,
-              and <em>s</em> equal <em>S'</em>.
-              </li>
-              <li>If <em>u</em> is equal to <em>S.url</em> and <em>i</em> is
-              equal to <em>S.id</em>, run the following steps:
-                <ol>
-                  <li>
-                    <span data-anolis-spec="w3c-html">Queue a task</span> to
-                    <span data-anolis-spec="w3c-html" title=
-                    "concept-event-fire">fire an event</span> named
-                    <code>statechange</code> at <em>s.onstatechange</em>.
-                  </li>
-                </ol>
-              </li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-    </ol>
-    <h3>
-      Presentation Connection
-    </h3>
-    <p>
-      When the user agent has created a <code>PresentationSession</code>
-      <em>S</em> to resolve a promise returned from
-      <code>NavigatorPresentation.startSession</code>, or resolved a promise
-      returned from to <code>NavigatorPresentation.joinSession</code> with
-      <em>S</em>, it must run the following steps:
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Event handler
+          </th>
+          <th>
+            Event handler event type
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <dfn><code>onavailablechange</code></dfn>
+          </td>
+          <td>
+            <code>availablechange</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>
+      Establishing a presentation connection
+    </h4>
+    <p class="XXX">
+      When the user agent is to <dfn>establish a presentation connection</dfn>
+      using a <span>presentation session</span> <em>S</em>, it must run the
+      following steps:
     </p>
     <ol>
       <li>If <em>S.state</em> is <code>connected</code>, then:
@@ -1256,6 +1232,137 @@ interface PresentationSession : EventTarget {
       Need to further specify the semantics of the messaging channel (using
       WebSockets or MessagePort as a reference).
     </p>
+    <h3>
+      <span>Interface <code>AvailableChangeEvent</code></span>
+    </h3>
+    <pre class="idl">
+<span>[Constructor(DOMString type, optional <span>AvailableChangeEventInit</span> eventInitDict)]
+interface <dfn>AvailableChangeEvent</dfn> : Event {
+  readonly attribute boolean available;
+};
+
+dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
+  boolean available;
+};
+</span>
+</pre>
+    <p class="XXX">
+      When the <dfn>presentation display availability</dfn> changes, the user
+      agent must fire an event with the name <code>availablechange</code> at
+      the <span><code>PresentationSession</code></span> object, using the
+      <code>AvailableChangeEvent</code> interface, with the
+      <code>available</code> attribute initialized to ...
+    </p>
+    <h4>
+      Monitoring presentation display availability
+    </h4>
+    <p class="XXX">
+      Each <code>Document</code> object must have a <dfn>list of available
+      presentation displays</dfn>. Each display in this list is identified by a
+      tuple (U, I, S) as follows:
+    </p>
+    <p>
+      Let <em>D</em> be the set of presentations that are currently known to
+      the user agent (regardles of their state). <em>D</em> is represented as a
+      set of tuples <em>(U, I, S)</em> where <em>U</em> is the URL that is
+      being presented; <em>I</em> is an alphanumeric identifier for the
+      presentation; and <em>S</em> is the user agent's
+      <code>PresentationSession</code> for the presentation. <em>U</em> and
+      <em>I</em> together uniquely identify the
+      <code>PresentationSession</code> of the corresponding presentation.
+    </p>
+    <p class="XXX">
+      When the user agent is to <dfn>update the list of available presentation
+      displays</dfn>, it must run the following steps:
+    </p>
+    <ol>
+      <li>Let <a id="availabledisplays"><em>availableDisplays</em></a> be the
+      <span>list of available presentation displays</span> that are currently
+      known to the user agent.
+      </li>
+    </ol>
+    <p class="XXX">
+      When the user agent is to <dfn>start monitoring for changes to
+      presentation display availability</dfn>, it must run the following steps:
+    </p>
+    <p>
+      When a new <span data-anolis-spec="w3c-html" title="event handlers">event
+      handler</span> <em>E</em> is added to
+      <code><span>NavigatorPresentation</span>.onavailablechange</code>, the
+      user agent must run the <a href=
+      "monitor-availability-algorithm">algorithm to monitor availability</a>.
+    </p>
+    <p class="note">
+      The mechanism used to monitor <a href="#presentation-display">presention
+      displays</a> availability is left to the user agent. The user agent may
+      choose search for screens at any time, not just when event handlers are
+      added to <code>NavigatorPresentation.onavailablechange</code>.
+    </p>
+    <p class="open-issue">
+      Do we want to fire the event at all handlers, or only the newly added
+      one?
+    </p>
+    <p class="XXX">
+      When the user agent is to <dfn>stop monitoring for changes to
+      presentation display availability</dfn>, it must run the following steps:
+    </p>
+    <p>
+      When the last <span data-anolis-spec="w3c-html" title=
+      "event handlers">event handler</span> is removed from
+      <code>NavigatorPresentation.onavailablechange</code>, the user agent may
+      run the following steps:
+    </p>
+    <ol>
+      <li>Cancel the <a href="monitor-availability-algorithm">algorithm to
+      monitor availability change.</a>
+      </li>
+    </ol>
+    <p class="XXX">
+      When the user agent is required to <dfn>monitor presentation display
+      availability</dfn>, it must run the following steps ...
+    </p>
+    <p>
+      While there are <span data-anolis-spec="w3c-html">event handlers</span>
+      added to NavigatorPresentation.onavailablechange, the user agent must
+      continuously keep track of the available <a href=
+      "#presentation-display">presentation displays</a> and repeat the
+      following steps:
+    </p>
+    <ol>
+      <li>
+        <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve the
+        the list of curently available <a href=
+        "#presentation-display">presentation displays</a> and let <a id=
+        "newdisplays"><em>newDisplays</em></a> be this list.
+      </li>
+      <li>Wait for the completion of that task.
+      </li>
+      <li>If <a href="#availabledisplays">availableDisplays</a> is empty and
+      <a href="#newdisplays">newDisplays</a> is not empty, then
+        <ol>
+          <li>
+            <span data-anolis-spec="w3c-html">Queue a task</span> to
+            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
+            an event</span> named <code>availablechange</code> at <em>E</em>
+            (and only <em>E</em>) with the event's <code>available</code>
+            property set to <code>true</code>.
+          </li>
+        </ol>
+      </li>
+      <li>If <a href="#availabledisplays">availableDisplays</a> is not empty
+      and <a href="#newdisplays">newDisplays</a> is empty, then:
+        <div style="margin-left: 2em">
+          <span data-anolis-spec="w3c-html">Queue a task</span> to
+          <span data-anolis-spec="w3c-html" title="concept-event-fire">fire an
+          event</span> named <code>availablechange</code> at <em>E</em> (and
+          only <em>E</em>) with the event's <code>available</code> property set
+          to <code>false</code>.
+        </div>
+      </li>
+      <li>Set <a href="#availableDisplays">availableDisplays</a> to the value
+      of <a href="#newDisplays">newDisplays</a>.
+      </li>
+    </ol>
     <h3>
       TODO
     </h3>
