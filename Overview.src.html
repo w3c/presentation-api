@@ -845,7 +845,13 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
       the following steps:
     </p>
     <p class="open-issue">
-      Need algorithm for send message
+      Needs algorithm for send message and more fine-grained definition of data
+      types for sending. Candidates, similar interfaces, are found in the
+      <a href=
+      "https://html.spec.whatwg.org/multipage/comms.html#the-messageevent-interfaces">
+      WHATWG HTML spec's <code>MessageEvent</code> section</a>, or the <a href=
+      "http://w3c.github.io/webrtc-pc/#rtcdatachannel">WebRTC's spec
+      <code>RPCDataChannel</code>.</a>
     </p>
     <h4>
       Closing a <code>PresentationSession</code>
@@ -937,9 +943,10 @@ partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
   readonly attribute <span>NavigatorPresentation</span> <span>presentation</span>;
 };
 </pre>
-    <p class="XXX">
-      The <dfn><code>presentation</code></dfn> attribute must return the
-      <code>NavigatorPresentation</code> object.
+    <p>
+      The <dfn><code>presentation</code></dfn> attribute is used to retrieve an
+      instance of the <code>NavigatorPresentation</code> interface, the main
+      interface of Presentation API.
     </p>
     <pre class="idl">
 interface <dfn>NavigatorPresentation</dfn> : EventTarget {
@@ -950,8 +957,11 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 "w3c-html">EventHandler</span> <span>onavailablechange</span>;
 };
 </pre>
-    <p class="XXX">
-      On getting, the <dfn><code>session</code></dfn> attribute must return ...
+    <p class="open-issue">
+      <i>(drott)</i> What would be a good definition of the
+      <code>session</code> attribute? Do we want to keep it? It's somewhat hard
+      to define, when it should contain a value, and when it should be empty -
+      and it's not compatible with multiple calls to startSession, for example.
     </p>
     <h4>
       Starting a presentation session
@@ -1279,12 +1289,14 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
 };
 </span>
 </pre>
-    <p class="XXX">
-      When the <dfn>presentation display availability</dfn> changes, the user
-      agent must fire an event with the name <code>availablechange</code> at
-      the <span><code>PresentationSession</code></span> object, using the
-      <code>AvailableChangeEvent</code> interface, with the
-      <code>available</code> attribute initialized to ...
+    <p>
+      An event named <code>availablechange</code> is fired during the execution
+      of the <span>monitoring presentation display availability</span>
+      algorithm when the <dfn>presentation display availability</dfn> changes.
+      It is fired at the <span><code>PresentationSession</code></span> object,
+      using the <code>AvailableChangeEvent</code> interface, with the
+      <code>available</code> attribute set to the boolean value that the
+      algorithm determined.
     </p>
     <h4>
       Monitoring presentation display availability
@@ -1322,15 +1334,15 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
       When a new <span data-anolis-spec="w3c-html" title="event handlers">event
       handler</span> <em>E</em> is added to
       <code><span>NavigatorPresentation</span>.onavailablechange</code>, the
-      user agent must run the <a href=
-      "monitor-availability-algorithm">algorithm to monitor availability</a>.
-    </p>
+      user agent must run the
+    </p><a href="monitor-availability-algorithm">algorithm to monitor
+    availability</a>.
     <p class="note">
-      The mechanism used to monitor <a href="#presentation-display">presention
-      displays</a> availability is left to the user agent. The user agent may
-      choose search for screens at any time, not just when event handlers are
-      added to <code>NavigatorPresentation.onavailablechange</code>.
-    </p>
+      The mechanism used to monitor
+    </p><a href="#presentation-display">presention displays</a> availability is
+    left to the user agent. The user agent may choose search for screens at any
+    time, not just when event handlers are added to
+    <code>NavigatorPresentation.onavailablechange</code>.
     <p class="open-issue">
       Do we want to fire the event at all handlers, or only the newly added
       one?
@@ -1357,10 +1369,9 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
     <p>
       While there are <span data-anolis-spec="w3c-html">event handlers</span>
       added to NavigatorPresentation.onavailablechange, the user agent must
-      continuously keep track of the available <a href=
-      "#presentation-display">presentation displays</a> and repeat the
-      following steps:
-    </p>
+      continuously keep track of the available
+    </p><a href="#presentation-display">presentation displays</a> and repeat
+    the following steps:
     <ol>
       <li>
         <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve the
