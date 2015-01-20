@@ -1,8 +1,10 @@
 {
   "definitions": {
+    "algorithm-post-message": "algorithm-post-message",
     "availablechangeevent": "availablechangeevent",
     "availablechangeeventinit": "availablechangeeventinit",
     "close": "close",
+    "close-algorithm": "close-algorithm",
     "concept-presentation-session": "concept-presentation-session",
     "establish a presentation connection": "establish-a-presentation-connection",
     "id": "id",
@@ -13,6 +15,7 @@
     "onavailablechange": "onavailablechange",
     "onmessage": "onmessage",
     "onstatechange": "onstatechange",
+    "opening browsing context": "opening-browsing-context",
     "postmessage": "postmessage",
     "presentation": "presentation",
     "presentation display": "presentation-display",

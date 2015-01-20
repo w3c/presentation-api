@@ -767,21 +767,29 @@ if (navigator.presentation.session) {
       is communicated to the presentation page (if at all).
     </p>
     <h2>
-      APIs for interacting with presentation sessions
+      API
     </h2>
     <h3>
       Common idioms
     </h3>
     <p>
-      A <dfn title="presentation display">presentation display</dfn> refers to
-      an external screen available to the user agent via an implementation
-      specific connection technology.
+      A <dfn>presentation display</dfn> refers to an external screen available
+      to the user agent via an implementation specific connection technology.
     </p>
-    <p class="XXX">
+    <p>
       A <dfn title="concept-presentation-session">presentation session</dfn> is
-      ... and its relationship to a <span>presentation display</span> is ...
-      Each <span>presentation session</span> has a <dfn>presentation session
-      identifier</dfn> and a <dfn>presentation session state</dfn>.
+      an object refering to the relationship between an <span>opening browsing
+      context</span> and a <span>presentation display</span> with a
+      <dfn>presentation session state</dfn> and a <dfn>presentation session
+      identifier</dfn> to distinguish a set of <span title=
+      "concept-presentation-session">presentation sessions</span>.
+    </p>
+    <p>
+      An <dfn>opening browsing context</dfn> is a <span data-anolis-spec=
+      "w3c-html">browsing context</span> from which calls are made to
+      <span>startSession</span>, <span>joinSession</span>, in other words from
+      which <span title="concept-presentation-session">presentation
+      sessions</span> are initiated.
     </p>
     <h3>
       Interface <code>PresentationSession</code>
@@ -805,24 +813,46 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
 "w3c-html">EventHandler</span> <span>onstatechange</span>;
 };
 </pre>
-    <p class="XXX">
-      The <dfn><code>id</code></dfn> attribute, on getting, must return the
-      <span>presentation session identifier</span>.
+    <p>
+      The <dfn><code>id</code></dfn> attribute holds the <span>presentation
+      session identifier</span>.
     </p>
-    <p class="XXX">
+    <p>
       The <dfn><code>state</code></dfn> attribute represents the
-      <span>presentation session</span>'s current state. On getting, it must
-      return one of the following values: ...
+      <span>presentation session</span>'s current state. It can take one of the
+      values of <span><code>PresentationSessionState</code></span> depending on
+      connection state.
     </p>
-    <p class="XXX">
-      The <dfn><code>postMessage</code></dfn>() method, when invoked on a
-      <code>PresentationSesssion</code> object with an argument message, must
-      ...
+    <p>
+      When the <dfn><code>postMessage</code></dfn>() method is called on a
+      <code>PresentationSession</code> object with a <code>message</code>, the
+      user agent must run the algorithm to <span title=
+      "algorithm-post-message">post a message through a
+      <span><code>PresentationSession</code></span></span>.
     </p>
     <p>
       When the <dfn><code>close</code></dfn>() method is called on a
       <code>PresentationSession</code> <em>S</em>, the user agent must run the
-      following steps:
+      algorithm to <span title="close-algorithm">close a presentation
+      session</span>.
+    </p>
+    <h4>
+      Posting a message through <code>PresentationSession</code>
+    </h4>
+    <p>
+      When the user agent is to <dfn title="algorithm-post-message">post a
+      message through a <code>PresentationSession</code> S</dfn>, it mus run
+      the following steps:
+    </p>
+    <p class="open-issue">
+      Need algorithm for send message
+    </p>
+    <h4>
+      Closing a <code>PresentationSession</code>
+    </h4>
+    <p>
+      When the user agent is to <dfn title="close-algorithm">close a
+      presentation session S</dfn>, it must run the following steps:
     </p>
     <ol>
       <li>If <em>S.state</em> is not <code>connected</code>, then:
@@ -860,6 +890,9 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
         </ol>
       </li>
     </ol>
+    <h4>
+      Event Handlers
+    </h4>
     <p>
       The following are the event handlers (and their corresponding event
       handler event types) that must be supported, as event handler IDL
@@ -1366,9 +1399,6 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
     <h3>
       TODO
     </h3>
-    <p class="open-issue">
-      Need algorithm for send message
-    </p>
     <p class="open-issue">
       Need algorithm for receive message
     </p>
