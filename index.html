@@ -222,7 +222,8 @@
       Functional requirements
     </a></li>
    <li><a href="#non-functional-requirements"><span class="secno">2.2 </span>
-      <span>Non-functional requirements</span>
+      Non-functional
+      requirements
     </a></ol></li>
  <li><a href="#conformance"><span class="secno">3 </span>
       Conformance
@@ -279,14 +280,17 @@
     </a></li>
      <li><a href="#establishing-a-presentation-connection"><span class="secno">6.3.3 </span>
       Establishing a presentation connection
-    </a></ol></li>
+    </a></li>
+     <li><a href="#the-onavailablechange-eventhandler"><span class="secno">6.3.4 </span>
+      The <code>onavailablechange</code> EventHandler
+    </a>
+      <ol>
+       <li><a href="#updating-the-list-of-available-presentation-displays"><span class="secno">6.3.4.1 </span>
+      Updating the list of available presentation displays
+    </a></ol></ol></li>
    <li><a href="#interface-availablechangeevent"><span class="secno">6.4 </span>
       <span>Interface <code>AvailableChangeEvent</code></span>
-    </a>
-    <ol>
-     <li><a href="#monitoring-presentation-display-availability"><span class="secno">6.4.1 </span>
-      Monitoring presentation display availability
-    </a></ol></li>
+    </a></li>
    <li><a href="#todo"><span class="secno">6.5 </span>
       TODO
     </a></ol></li>
@@ -483,7 +487,8 @@
       </li>
     </ul>
     <h3 id="non-functional-requirements"><span class="secno">2.2 </span>
-      <span id="non-functional_requirements">Non-functional requirements</span>
+      <dfn title="non-functional-requirements">Non-functional
+      requirements</dfn>
     </h3>
     <ul>
       <li>
@@ -1227,34 +1232,6 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
       If no matching presentation is found, we could leave the Promise pending
       in case a matching presentation is started in the future.
     </p>
-    <p>
-      <span>The following are the event handlers (and their corresponding event
-      handler event types) that must be supported, as event handler IDL
-      attributes, by objects implementing the <a href="#presentationsession"><code>PresentationSession</code></a>
-      interface:</span>
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th>
-            Event handler
-          </th>
-          <th>
-            Event handler event type
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <dfn id="onavailablechange"><code>onavailablechange</code></dfn>
-          </td>
-          <td>
-            <code>availablechange</code>
-          </td>
-        </tr>
-      </tbody>
-    </table>
     <h4 id="establishing-a-presentation-connection"><span class="secno">6.3.3 </span>
       Establishing a presentation connection
     </h4>
@@ -1328,36 +1305,94 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
       Need to further specify the semantics of the messaging channel (using
       WebSockets or MessagePort as a reference).
     </p>
-    <h3 id="interface-availablechangeevent"><span class="secno">6.4 </span>
-      <span>Interface <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a></span>
-    </h3>
-    <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#availablechangeeventinit">AvailableChangeEventInit</a> eventInitDict)]
-interface <dfn id="availablechangeevent">AvailableChangeEvent</dfn> : Event {
-  readonly attribute boolean available;
-};
-
-dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : EventInit {
-  boolean available;
-};
-</span>
-</pre>
-    <p>
-      An event named <code>availablechange</code> is fired during the execution
-      of the <span>monitoring presentation display availability</span>
-      algorithm when the <dfn id="presentation-display-availability">presentation display availability</dfn> changes.
-      It is fired at the <a href="#presentationsession"><code>PresentationSession</code></a> object,
-      using the <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a> interface, with the
-      <code>available</code> attribute set to the boolean value that the
-      algorithm determined.
-    </p>
-    <h4 id="monitoring-presentation-display-availability"><span class="secno">6.4.1 </span>
-      Monitoring presentation display availability
+    <h4 id="the-onavailablechange-eventhandler"><span class="secno">6.3.4 </span>
+      The <a href="#onavailablechange"><code>onavailablechange</code></a> EventHandler
     </h4>
-    <p class="XXX">
-      Each <code>Document</code> object must have a <dfn id="list-of-available-presentation-displays">list of available
-      presentation displays</dfn>. Each display in this list is identified by a
-      tuple (U, I, S) as follows:
+    <p>
+      <span>The following are the event handlers (and their corresponding event
+      handler event types) that must be supported, as event handler IDL
+      attributes, by objects implementing the <a href="#presentationsession"><code>PresentationSession</code></a>
+      interface:</span>
     </p>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Event handler
+          </th>
+          <th>
+            Event handler event type
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <dfn id="onavailablechange"><code>onavailablechange</code></dfn>
+          </td>
+          <td>
+            <code>availablechange</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      In order to satisfy the <a href="#non-functional-requirements" title="non-functional-requirements">power
+      saving non-functionional requirements</a> the user agent must keep
+      track of the number of <code>EventHandler</code>s registered to the
+      <code>onavailable</code> event. Using this information, implementation
+      specific discovery of <span title="presentation-display">presentation
+      displays</span> can be resumed or suspended, in order to save power. In
+      the following, the user agent behavior, depending on the number of
+      registered <code>EventHandler</code>s, is described.
+    </p>
+    <h5 id="updating-the-list-of-available-presentation-displays"><span class="secno">6.3.4.1 </span>
+      Updating the list of available presentation displays
+    </h5>
+    <p>
+      The user agent must maintain a <dfn id="list-of-available-presentation-displays">list of available presentation
+      displays</dfn>. When the user agent is to <dfn title="algorithm-update-available" id="algorithm-update-available">update the list of available presentation
+      displays</dfn>, it must run the following steps:
+    </p>
+    <p>
+      While there are <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>
+      added to NavigatorPresentation.onavailablechange, the user agent must
+      continuously keep track of the available
+    </p><a href="#presentation-display">presentation displays</a> and repeat
+    the following steps:
+    <ol>
+      <li>
+        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to retrieve the
+        the list of curently available <a href="#presentation-display">presentation displays</a> and let <a id="newdisplays"><em>newDisplays</em></a> be this list.
+      </li>
+      <li>Wait for the completion of that task.
+      </li>
+      <li>If <a href="#availabledisplays">availableDisplays</a> is empty and
+      <a href="#newdisplays">newDisplays</a> is not empty, then
+        <ol>
+          <li>
+            <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
+            <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire
+            an event</a> named <code>availablechange</code> at <em>E</em>
+            (and only <em>E</em>) with the event's <code>available</code>
+            property set to <code>true</code>.
+          </li>
+        </ol>
+      </li>
+      <li>If <a href="#availabledisplays">availableDisplays</a> is not empty
+      and <a href="#newdisplays">newDisplays</a> is empty, then:
+        <div style="margin-left: 2em">
+          <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
+          <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire an
+          event</a> named <code>availablechange</code> at <em>E</em> (and
+          only <em>E</em>) with the event's <code>available</code> property set
+          to <code>false</code>.
+        </div>
+      </li>
+      <li>Set <a href="#availableDisplays">availableDisplays</a> to the value
+      of <a href="#newDisplays">newDisplays</a>.
+      </li>
+    </ol>
     <p>
       Let <em>D</em> be the set of presentations that are currently known to
       the user agent (regardles of their state). <em>D</em> is represented as a
@@ -1417,45 +1452,28 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
       When the user agent is required to <dfn id="monitor-presentation-display-availability">monitor presentation display
       availability</dfn>, it must run the following steps ...
     </p>
+    <h3 id="interface-availablechangeevent"><span class="secno">6.4 </span>
+      <span>Interface <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a></span>
+    </h3>
+    <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#availablechangeeventinit">AvailableChangeEventInit</a> eventInitDict)]
+interface <dfn id="availablechangeevent">AvailableChangeEvent</dfn> : Event {
+  readonly attribute boolean available;
+};
+
+dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : EventInit {
+  boolean available;
+};
+</span>
+</pre>
     <p>
-      While there are <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>
-      added to NavigatorPresentation.onavailablechange, the user agent must
-      continuously keep track of the available
-    </p><a href="#presentation-display">presentation displays</a> and repeat
-    the following steps:
-    <ol>
-      <li>
-        <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to retrieve the
-        the list of curently available <a href="#presentation-display">presentation displays</a> and let <a id="newdisplays"><em>newDisplays</em></a> be this list.
-      </li>
-      <li>Wait for the completion of that task.
-      </li>
-      <li>If <a href="#availabledisplays">availableDisplays</a> is empty and
-      <a href="#newdisplays">newDisplays</a> is not empty, then
-        <ol>
-          <li>
-            <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
-            <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire
-            an event</a> named <code>availablechange</code> at <em>E</em>
-            (and only <em>E</em>) with the event's <code>available</code>
-            property set to <code>true</code>.
-          </li>
-        </ol>
-      </li>
-      <li>If <a href="#availabledisplays">availableDisplays</a> is not empty
-      and <a href="#newdisplays">newDisplays</a> is empty, then:
-        <div style="margin-left: 2em">
-          <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" data-anolis-spec="w3c-html" class="external">Queue a task</a> to
-          <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire" data-anolis-spec="w3c-html" class="external">fire an
-          event</a> named <code>availablechange</code> at <em>E</em> (and
-          only <em>E</em>) with the event's <code>available</code> property set
-          to <code>false</code>.
-        </div>
-      </li>
-      <li>Set <a href="#availableDisplays">availableDisplays</a> to the value
-      of <a href="#newDisplays">newDisplays</a>.
-      </li>
-    </ol>
+      An event named <code>availablechange</code> is fired during the execution
+      of the <span>monitoring presentation display availability</span>
+      algorithm when the <dfn id="presentation-display-availability">presentation display availability</dfn> changes.
+      It is fired at the <a href="#presentationsession"><code>PresentationSession</code></a> object,
+      using the <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a> interface, with the
+      <code>available</code> attribute set to the boolean value that the
+      algorithm determined.
+    </p>
     <h3 id="todo"><span class="secno">6.5 </span>
       TODO
     </h3>
