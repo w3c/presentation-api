@@ -770,11 +770,17 @@ if (navigator.presentation.session) {
       API
     </h2>
     <h3>
-      Common idioms
+      Common Idioms
     </h3>
     <p>
       A <dfn>presentation display</dfn> refers to an external screen available
       to the user agent via an implementation specific connection technology.
+    </p>
+    <p>
+      A <dfn title="concept-presentation">presentation</dfn>, in the context of
+      this specification, is an active connection between a user agent and a
+      <span>presentation display</span> with the intent of displaying web
+      content on the latter.
     </p>
     <p>
       A <dfn title="concept-presentation-session">presentation session</dfn> is
@@ -814,8 +820,8 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
 };
 </pre>
     <p>
-      The <dfn><code>id</code></dfn> attribute holds the <span>presentation
-      session identifier</span>.
+      The <dfn><code>id</code></dfn> attribute holds the alphanumeric
+      <span>presentation session identifier</span>.
     </p>
     <p>
       The <dfn><code>state</code></dfn> attribute represents the
@@ -1338,11 +1344,11 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
     </p><a href="monitor-availability-algorithm">algorithm to monitor
     availability</a>.
     <p class="note">
-      The mechanism used to monitor
-    </p><a href="#presentation-display">presention displays</a> availability is
-    left to the user agent. The user agent may choose search for screens at any
-    time, not just when event handlers are added to
-    <code>NavigatorPresentation.onavailablechange</code>.
+      The mechanism used to monitor <a href="#presentation-display">presention
+      displays</a> availability is left to the user agent. The user agent may
+      choose search for screens at any time, not just when event handlers are
+      added to <code>NavigatorPresentation.onavailablechange</code>.
+    </p>
     <p class="open-issue">
       Do we want to fire the event at all handlers, or only the newly added
       one?

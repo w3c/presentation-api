@@ -252,7 +252,7 @@
     </a>
   <ol>
    <li><a href="#common-idioms"><span class="secno">6.1 </span>
-      Common idioms
+      Common Idioms
     </a></li>
    <li><a href="#interface-presentationsession"><span class="secno">6.2 </span>
       Interface <code>PresentationSession</code>
@@ -843,11 +843,17 @@ function setSession(theSession) {
       API
     </h2>
     <h3 id="common-idioms"><span class="secno">6.1 </span>
-      Common idioms
+      Common Idioms
     </h3>
     <p>
       A <dfn id="presentation-display">presentation display</dfn> refers to an external screen available
       to the user agent via an implementation specific connection technology.
+    </p>
+    <p>
+      A <dfn title="concept-presentation" id="concept-presentation">presentation</dfn>, in the context of
+      this specification, is an active connection between a user agent and a
+      <a href="#presentation-display">presentation display</a> with the intent of displaying web
+      content on the latter.
     </p>
     <p>
       A <dfn title="concept-presentation-session" id="concept-presentation-session">presentation session</dfn> is
@@ -882,8 +888,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
 };
 </pre>
     <p>
-      The <dfn id="id"><code>id</code></dfn> attribute holds the <a href="#presentation-session-identifier">presentation
-      session identifier</a>.
+      The <dfn id="id"><code>id</code></dfn> attribute holds the alphanumeric
+      <a href="#presentation-session-identifier">presentation session identifier</a>.
     </p>
     <p>
       The <dfn id="state"><code>state</code></dfn> attribute represents the
@@ -1384,11 +1390,11 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
     </p><a href="monitor-availability-algorithm">algorithm to monitor
     availability</a>.
     <p class="note">
-      The mechanism used to monitor
-    </p><a href="#presentation-display">presention displays</a> availability is
-    left to the user agent. The user agent may choose search for screens at any
-    time, not just when event handlers are added to
-    <code>NavigatorPresentation.onavailablechange</code>.
+      The mechanism used to monitor <a href="#presentation-display">presention
+      displays</a> availability is left to the user agent. The user agent may
+      choose search for screens at any time, not just when event handlers are
+      added to <code>NavigatorPresentation.onavailablechange</code>.
+    </p>
     <p class="open-issue">
       Do we want to fire the event at all handlers, or only the newly added
       one?
