@@ -1,9 +1,10 @@
 {
   "definitions": {
+    "algorithm-monitor-available": "algorithm-monitor-available",
     "algorithm-post-message": "algorithm-post-message",
-    "algorithm-update-available": "algorithm-update-available",
     "availablechangeevent": "availablechangeevent",
     "availablechangeeventinit": "availablechangeeventinit",
+    "cancel monitoring the list of available presentation displays": "cancel-monitoring-the-list-of-available-presentation-displays",
     "close": "close",
     "close-algorithm": "close-algorithm",
     "concept-presentation": "concept-presentation",
@@ -12,7 +13,6 @@
     "id": "id",
     "joinsession": "joinsession",
     "list of available presentation displays": "list-of-available-presentation-displays",
-    "monitor presentation display availability": "monitor-presentation-display-availability",
     "navigatorpresentation": "navigatorpresentation",
     "non-functional-requirements": "non-functional-requirements",
     "onavailablechange": "onavailablechange",
@@ -27,11 +27,8 @@
     "presentation session state": "presentation-session-state",
     "presentationsession": "presentationsession",
     "presentationsessionstate": "presentationsessionstate",
-    "start monitoring for changes to presentation display availability": "start-monitoring-for-changes-to-presentation-display-availability",
     "startsession": "startsession",
-    "state": "state",
-    "stop monitoring for changes to presentation display availability": "stop-monitoring-for-changes-to-presentation-display-availability",
-    "update the list of available presentation displays": "update-the-list-of-available-presentation-displays"
+    "state": "state"
   },
   "url": "https://w3c.github.io/presentation-api"
 }

@@ -971,6 +971,19 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       and it's not compatible with multiple calls to startSession, for example.
     </p>
     <h4>
+      Common Definitions for this Section
+    </h4>
+    <p>
+      Let <em>D</em> be the set of presentations that are currently known to
+      the user agent (regardles of their state). <em>D</em> is represented as a
+      set of tuples <em>(U, I, S)</em> where <em>U</em> is the
+      <span data-anolis-spec="url">URL</span> that is being presented;
+      <em>I</em> is an alphanumeric identifier for the presentation; and
+      <em>S</em> is the user agent's <code>PresentationSession</code> for the
+      presentation. <em>U</em> and <em>I</em> together uniquely identify the
+      <code>PresentationSession</code> of the corresponding presentation.
+    </p>
+    <h4>
       Starting a presentation session
     </h4>
     <p>
@@ -1183,7 +1196,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
     <h4>
       Establishing a presentation connection
     </h4>
-    <p class="XXX">
+    <p>
       When the user agent is to <dfn>establish a presentation connection</dfn>
       using a <span>presentation session</span> <em>S</em>, it must run the
       following steps:
@@ -1296,20 +1309,43 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       registered <code>EventHandler</code>s, is described.
     </p>
     <h5>
-      Updating the list of available presentation displays
+      Adding an <code>EventHandler</code> to <code>onavailablechange</code>
+    </h5>
+    <p>
+      When an event handler is added to the list of event handlers subscribed
+      to the <code>onavailablechange</code> event, the user agent must run the
+      <span title="algorithm-monitor-available">algorithm to monitor the list
+      of available presentation displays</span>.
+    </p>
+    <h5>
+      Removing an <code>EventHandler</code>
+    </h5>
+    <p>
+      When an event handler is removed from the list of event handlers
+      subscribed to the <code>onavailablechange</code> event, the user agent
+      must run the following steps:
+    </p>
+    <ol>
+      <li>If the removed event handler was the last one in the list,
+      <span>cancel monitoring the list of available presentation
+      displays</span>.
+      </li>
+    </ol>
+    <h5>
+      Monitoring the list of available presentation displays
     </h5>
     <p>
       The user agent must maintain a <dfn>list of available presentation
       displays</dfn>. When the user agent is to <dfn title=
-      "algorithm-update-available">update the list of available presentation
+      "algorithm-monitor-available">monitor the list of available presentation
       displays</dfn>, it must run the following steps:
     </p>
     <p>
       While there are <span data-anolis-spec="w3c-html">event handlers</span>
       added to NavigatorPresentation.onavailablechange, the user agent must
-      continuously keep track of the available
-    </p><a href="#presentation-display">presentation displays</a> and repeat
-    the following steps:
+      continuously keep track the <span>list of available presentation
+      displays</span> and repeat the following steps:
+    </p>
     <ol>
       <li>
         <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve the
@@ -1325,86 +1361,55 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
           <li>
             <span data-anolis-spec="w3c-html">Queue a task</span> to
             <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
-            an event</span> named <code>availablechange</code> at <em>E</em>
-            (and only <em>E</em>) with the event's <code>available</code>
-            property set to <code>true</code>.
+            an event</span> named <code>availablechange</code> at with the
+            event's <code>available</code> property set to <code>true</code>.
           </li>
         </ol>
       </li>
       <li>If <a href="#availabledisplays">availableDisplays</a> is not empty
       and <a href="#newdisplays">newDisplays</a> is empty, then:
-        <div style="margin-left: 2em">
-          <span data-anolis-spec="w3c-html">Queue a task</span> to
-          <span data-anolis-spec="w3c-html" title="concept-event-fire">fire an
-          event</span> named <code>availablechange</code> at <em>E</em> (and
-          only <em>E</em>) with the event's <code>available</code> property set
-          to <code>false</code>.
-        </div>
+        <ol>
+          <li>
+            <span data-anolis-spec="w3c-html">Queue a task</span> to
+            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
+            an event</span> named <code>availablechange</code> with the event's
+            <code>available</code> property set to <code>false</code>.
+          </li>
+        </ol>
       </li>
-      <li>Set <a href="#availableDisplays">availableDisplays</a> to the value
-      of <a href="#newDisplays">newDisplays</a>.
-      </li>
-    </ol>
-    <p>
-      Let <em>D</em> be the set of presentations that are currently known to
-      the user agent (regardles of their state). <em>D</em> is represented as a
-      set of tuples <em>(U, I, S)</em> where <em>U</em> is the URL that is
-      being presented; <em>I</em> is an alphanumeric identifier for the
-      presentation; and <em>S</em> is the user agent's
-      <code>PresentationSession</code> for the presentation. <em>U</em> and
-      <em>I</em> together uniquely identify the
-      <code>PresentationSession</code> of the corresponding presentation.
-    </p>
-    <p class="XXX">
-      When the user agent is to <dfn>update the list of available presentation
-      displays</dfn>, it must run the following steps:
-    </p>
-    <ol>
-      <li>Let <a id="availabledisplays"><em>availableDisplays</em></a> be the
-      <span>list of available presentation displays</span> that are currently
-      known to the user agent.
+      <li>Set the <span>list of available presentation displays</span> to the
+      value of <a href="#newDisplays">newDisplays</a>.
       </li>
     </ol>
-    <p class="XXX">
-      When the user agent is to <dfn>start monitoring for changes to
-      presentation display availability</dfn>, it must run the following steps:
+    <p class="open-issue">
+      Do we want to fire the event at all handlers, or only the newly added
+      one?
     </p>
-    <p>
-      When a new <span data-anolis-spec="w3c-html" title="event handlers">event
-      handler</span> <em>E</em> is added to
-      <code><span>NavigatorPresentation</span>.onavailablechange</code>, the
-      user agent must run the
-    </p><a href="monitor-availability-algorithm">algorithm to monitor
-    availability</a>.
     <p class="note">
       The mechanism used to monitor <a href="#presentation-display">presention
       displays</a> availability is left to the user agent. The user agent may
       choose search for screens at any time, not just when event handlers are
       added to <code>NavigatorPresentation.onavailablechange</code>.
     </p>
-    <p class="open-issue">
-      Do we want to fire the event at all handlers, or only the newly added
-      one?
-    </p>
-    <p class="XXX">
-      When the user agent is to <dfn>stop monitoring for changes to
-      presentation display availability</dfn>, it must run the following steps:
-    </p>
     <p>
-      When the last <span data-anolis-spec="w3c-html" title=
-      "event handlers">event handler</span> is removed from
-      <code>NavigatorPresentation.onavailablechange</code>, the user agent may
-      run the following steps:
+      When the user agent is to <dfn>cancel monitoring the list of available
+      presentation displays</dfn>, it must run the following steps:
     </p>
     <ol>
-      <li>Cancel the <a href="monitor-availability-algorithm">algorithm to
-      monitor availability change.</a>
+      <li>Cancel any tasks to retrieve the list of available <span title=
+      "presentation display">presentation displays</span>.
+      </li>
+      <li>Set the <span>list of available presentation displays</span> to
+      empty.
+      </li>
+      <li>
+        <span data-anolis-spec="w3c-html">Queue a task</span> to
+        <span data-anolis-spec="w3c-html" title="concept-event-fire">fire an
+        event</span> named <code>availablechange</code> at <em>E</em> (and only
+        <em>E</em>) with the event's <code>available</code> property set to
+        <code>false</code>.
       </li>
     </ol>
-    <p class="XXX">
-      When the user agent is required to <dfn>monitor presentation display
-      availability</dfn>, it must run the following steps ...
-    </p>
     <h3>
       <span>Interface <code>AvailableChangeEvent</code></span>
     </h3>
