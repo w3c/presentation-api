@@ -69,6 +69,9 @@
     table thead, table tbody { border-bottom: solid; }
     table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
     dfn { font-weight: bolder; font-style: normal; }
+
+    h2, h3 { padding-top: 1.3em; }
+    h4 { padding-top: 1.2em; }
     </style>
   </head>
   <body>
@@ -802,6 +805,19 @@ if (navigator.presentation.session) {
       sessions</span> are initiated.
     </p>
     <h3>
+      Common Definitions
+    </h3>
+    <p>
+      Let <em>D</em> be the set of presentations that are currently known to
+      the user agent (regardles of their state). <em>D</em> is represented as a
+      set of tuples <em>(U, I, S)</em> where <em>U</em> is the
+      <span data-anolis-spec="url">URL</span> that is being presented;
+      <em>I</em> is an alphanumeric identifier for the presentation; and
+      <em>S</em> is the user agent's <code>PresentationSession</code> for the
+      presentation. <em>U</em> and <em>I</em> together uniquely identify the
+      <code>PresentationSession</code> of the corresponding presentation.
+    </p>
+    <h3>
       Interface <code>PresentationSession</code>
     </h3>
     <p>
@@ -842,16 +858,15 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
     </p>
     <p>
       When the <dfn><code>close</code></dfn>() method is called on a
-      <code>PresentationSession</code> <em>S</em>, the user agent must run the
-      algorithm to <span title="close-algorithm">close a presentation
-      session</span>.
+      <code>PresentationSession</code>, the user agent must run the algorithm
+      to <span title="close-algorithm">close a presentation session</span>.
     </p>
     <h4>
       Posting a message through <code>PresentationSession</code>
     </h4>
     <p>
       When the user agent is to <dfn title="algorithm-post-message">post a
-      message through a <code>PresentationSession</code> S</dfn>, it mus run
+      message through a <code>PresentationSession</code> S</dfn>, it must run
       the following steps:
     </p>
     <p class="open-issue">
@@ -972,19 +987,6 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       <code>session</code> attribute? Do we want to keep it? It's somewhat hard
       to define, when it should contain a value, and when it should be empty -
       and it's not compatible with multiple calls to startSession, for example.
-    </p>
-    <h4>
-      Common Definitions for this Section
-    </h4>
-    <p>
-      Let <em>D</em> be the set of presentations that are currently known to
-      the user agent (regardles of their state). <em>D</em> is represented as a
-      set of tuples <em>(U, I, S)</em> where <em>U</em> is the
-      <span data-anolis-spec="url">URL</span> that is being presented;
-      <em>I</em> is an alphanumeric identifier for the presentation; and
-      <em>S</em> is the user agent's <code>PresentationSession</code> for the
-      presentation. <em>U</em> and <em>I</em> together uniquely identify the
-      <code>PresentationSession</code> of the corresponding presentation.
     </p>
     <h4>
       Starting a presentation session
