@@ -1312,8 +1312,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       Adding an <code>EventHandler</code> to <code>onavailablechange</code>
     </h5>
     <p>
-      When an event handler is added to the list of event handlers subscribed
-      to the <code>onavailablechange</code> event, the user agent must run the
+      When an event handler is added to the list of event handlers registered
+      for the <code>onavailablechange</code> event, the user agent must run the
       <span title="algorithm-monitor-available">algorithm to monitor the list
       of available presentation displays</span>.
     </p>
@@ -1322,7 +1322,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
     </h5>
     <p>
       When an event handler is removed from the list of event handlers
-      subscribed to the <code>onavailablechange</code> event, the user agent
+      registered to the <code>onavailablechange</code> event, the user agent
       must run the following steps:
     </p>
     <ol>
