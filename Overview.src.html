@@ -612,28 +612,30 @@ function setSession(theSession) {
     <p>
       If the user selects a screen with an existing presentation showing the
       same <code>url</code> under the same <code>presentationId</code>, the
-      opener page is connected to that existing presentation. If the user
-      selects a screen without an existing presentation, or a screen presenting
-      a different <code>url</code> or <code>presentationId</code>, the UA
-      connects to the selected screen, brings up a new presentation window on
-      it, and starts to show the content denoted by the <code>url</code>
-      argument. The UA then connects the opener page to this new presentation
-      and allows the opener page to exchange messages with it.
+      <span>opening browsing context</span> is connected to that existing
+      presentation. If the user selects a screen without an existing
+      presentation, or a screen presenting a different <code>url</code> or
+      <code>presentationId</code>, the UA connects to the selected screen,
+      brings up a new presentation window on it, and starts to show the content
+      denoted by the <code>url</code> argument. The UA then connects the
+      <span>opening browsing context</span> to this new presentation and allows
+      the <span>opening browsing context</span> to exchange messages with it.
     </p>
     <p>
       <code>navigator.presentation.startSession(url, presentationId)</code>
-      returns a <code>Promise</code> to the opener page. When the user selects
-      a screen, the presentation page is shown and a communication channel has
-      been established the <code>Promise</code> resolves to a
-      <code>PresentationSession</code> object, which acts as a handle to the
-      presentation for communication and state handling. Initially, the state
-      of the <code>PresentationSession</code> is <code>"connected"</code>. At
-      this point, the opener page can communicate with the presentation page
-      using the session's <code>postMessage()</code> to send messages and its
-      <code>onmessage</code> event handler to receive messages. The
-      presentation page will also have access to
+      returns a <code>Promise</code> to the <span>opening browsing
+      context</span>. When the user selects a screen, the presentation page is
+      shown and a communication channel has been established the
+      <code>Promise</code> resolves to a <code>PresentationSession</code>
+      object, which acts as a handle to the presentation for communication and
+      state handling. Initially, the state of the
+      <code>PresentationSession</code> is <code>"connected"</code>. At this
+      point, the <span>opening browsing context</span> can communicate with the
+      presentation page using the session's <code>postMessage()</code> to send
+      messages and its <code>onmessage</code> event handler to receive
+      messages. The presentation page will also have access to
       <code>PresentationSession</code> that it can use to send and receive
-      messages with the opener page (see <a href=
+      messages with the <span>opening browsing context</span> (see <a href=
       "#usage-on-remote-screen">Usage on remote screen</a>).
     </p>
     <p>
@@ -652,18 +654,19 @@ function setSession(theSession) {
       Automatically reconnecting to existing presentations
     </h4>
     <p>
-      The opener page may wish to reconnect to an existing presentation without
-      prompting the user to select a screen. For example, the site could allow
-      media items from different pages to be shown on the same presentation
-      page, and does not want to prompt the user on each page to reconnect to
-      that presentation. To reconnect automatically, the page may call
-      <code>joinSession(url, presentationId)</code>, which returns a
-      <code>Promise</code> that resolves to an existing
-      <code>PresentationSession</code> if one exists that is presenting the
-      same <code>url</code> with the same <code>presentationId</code> as was
-      passed originally into <code>startSession</code>. The requesting page can
-      then communicate with the presentation as if the user had manually
-      connected to it via <code>startSession</code>.
+      The <span>opening browsing context</span> may wish to reconnect to an
+      existing presentation without prompting the user to select a screen. For
+      example, the site could allow media items from different pages to be
+      shown on the same presentation page, and does not want to prompt the user
+      on each page to reconnect to that presentation. To reconnect
+      automatically, the page may call <code>joinSession(url,
+      presentationId)</code>, which returns a <code>Promise</code> that
+      resolves to an existing <code>PresentationSession</code> if one exists
+      that is presenting the same <code>url</code> with the same
+      <code>presentationId</code> as was passed originally into
+      <code>startSession</code>. The requesting page can then communicate with
+      the presentation as if the user had manually connected to it via
+      <code>startSession</code>.
     </p>
     <p>
       At the time <code>joinSession(url, presentationId)</code> is called, if
@@ -715,8 +718,8 @@ function setSession(theSession) {
     <p class="open-issue">
       Do we need an additional state like resumed in order to identify resumed
       session? It seems that this could be handled on the page level. The
-      opener page could ask the presentation page whether it is
-      <code>"new"</code> or <code>"resumed"</code>.
+      <span>opening browsing context</span> could ask the presentation page
+      whether it is <code>"new"</code> or <code>"resumed"</code>.
     </p>
     <h3>
       Usage on remote screen
@@ -731,14 +734,14 @@ function setSession(theSession) {
     <pre class="example">
 if (navigator.presentation.session) {
   var session = navigator.presentation.session;
-  // Communicate with opener page.
+  // Communicate with opening browsing context
   session.postMessage(/*...*/);
   session.onmessage = function() {/*...*/};
 
   session.onstatechange = function() {
     switch (this.state) {
       case "disconnected":
-        // Handle disconnection from opener page.
+        // Handle disconnection from opening browsing context
     }
   };
 };
@@ -750,22 +753,23 @@ if (navigator.presentation.session) {
       <code>navigator.presentation.session</code> property set to the session.
       This session is a similar object as in the first example. Here, its
       initial state is <code>"connected"</code>, which means we can use it to
-      communicate with the opener page using <code>postMessage()</code> and
-      <code>onmessage</code>.
+      communicate with the <span>opening browsing context</span> using
+      <code>postMessage()</code> and <code>onmessage</code>.
     </p>
     <p>
       The presentation page can also monitor the connection state by listening
       for <code>statechange</code> events. When the state changes to
       <code>"disconnected"</code> the page is made aware of the fact that
-      communication with the opener page was lost, but it can continue to
-      display the current content. The communication can be re-established when
-      a <code>statechange</code> event fires with a new state of
-      <code>"connected"</code>.
+      communication with the <span>opening browsing context</span> was lost,
+      but it can continue to display the current content. The communication can
+      be re-established when a <code>statechange</code> event fires with a new
+      state of <code>"connected"</code>.
     </p>
     <p class="open-issue">
-      Since we permit multiple opener pages to connect the same presentation
-      page, we need to define how connection and disconnection of these pages
-      is communicated to the presentation page (if at all).
+      Since we permit multiple <span title="opening-browsing-context">opening
+      browsing context</span> to connect the same presentation page, we need to
+      define how connection and disconnection of these pages is communicated to
+      the presentation page (if at all).
     </p>
     <h2>
       API
@@ -1246,11 +1250,11 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
     </ol>
     <p class="note">
       The mechanism that is used to present on the remote display and connect
-      the opening document with the presented document is an implementation
-      choice of the user agent. The connection must provide a two-way messaging
-      abstraction capable of carrying <code>DOMString</code> payloads in a
-      reliable and in-order fashion as described in the <em>Send Message</em>
-      and <em>Receive Message</em> steps below.
+      the <span>opening browsing context</span> with the presented document is
+      an implementation choice of the user agent. The connection must provide a
+      two-way messaging abstraction capable of carrying <code>DOMString</code>
+      payloads in a reliable and in-order fashion as described in the <em>Send
+      Message</em> and <em>Receive Message</em> steps below.
     </p>
     <p class="note">
       If <em>T</em> does not complete successfully, the user agent may choose
