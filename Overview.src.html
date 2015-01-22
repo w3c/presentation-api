@@ -666,9 +666,9 @@ function setSession(theSession) {
       resolves to an existing <code>PresentationSession</code> if one exists
       that is presenting the same <code>url</code> with the same
       <code>presentationId</code> as was passed originally into
-      <code>startSession</code>. The requesting page can then communicate with
-      the presentation as if the user had manually connected to it via
-      <code>startSession</code>.
+      <code>startSession</code>. The <span>opening browsing context</span> can
+      then communicate with the presentation as if the user had manually
+      connected to it via <code>startSession</code>.
     </p>
     <p>
       At the time <code>joinSession(url, presentationId)</code> is called, if
@@ -784,25 +784,23 @@ if (navigator.presentation.session) {
       to the user agent via an implementation specific connection technology.
     </p>
     <p>
-      A <dfn title="concept-presentation">presentation</dfn>, in the context of
-      this specification, is an active connection between a user agent and a
-      <span>presentation display</span> with the intent of displaying web
-      content on the latter.
+      A <dfn title="concept-presentation">presentation</dfn>is an active
+      connection between a user agent and a <span>presentation display</span>
+      for displaying web content on the latter at the request of the former.
     </p>
     <p>
       A <dfn title="concept-presentation-session">presentation session</dfn> is
-      an object refering to the relationship between an <span>opening browsing
-      context</span> and a <span>presentation display</span> with a
-      <dfn>presentation session state</dfn> and a <dfn>presentation session
-      identifier</dfn> to distinguish a set of <span title=
-      "concept-presentation-session">presentation sessions</span>.
+      an object relating an <span>opening browsing context</span> to its
+      <span>presentation display</span> and enabling two-way-messaging between
+      them. Each such object has a <dfn>presentation session state</dfn> and a
+      <dfn>presentation session identifier</dfn> to distinguish it from other
+      <span title="concept-presentation-session">presentation sessions</span>.
     </p>
     <p>
       An <dfn>opening browsing context</dfn> is a <span data-anolis-spec=
-      "w3c-html">browsing context</span> from which calls are made to
-      <span>startSession</span>, <span>joinSession</span>, in other words from
-      which <span title="concept-presentation-session">presentation
-      sessions</span> are initiated.
+      "w3c-html">browsing context</span> that has initiated or resumed a
+      <span>presentation session</span> by calling <span>startSession</span> or
+      <span>joinSession</span>.
     </p>
     <h3>
       Common definitions
@@ -983,10 +981,13 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 };
 </pre>
     <p class="open-issue">
-      <i>(drott)</i> What would be a good definition of the
-      <code>session</code> attribute? Do we want to keep it? It's somewhat hard
-      to define, when it should contain a value, and when it should be empty -
-      and it's not compatible with multiple calls to startSession, for example.
+      TODO: Define contents of <code>session</code> attribute. Clarification:
+      The purpose of the session attribute is to provide the presented page
+      with access to the PresentationSession without allowing a potential race
+      condition between the registration of an event handler and the firing of
+      an event, or complicating the browser implementation to fix this case. It
+      should be null in an opening context and non-null in a presented
+      document.
     </p>
     <h4>
       Starting a presentation session
@@ -1309,10 +1310,13 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       track of the number of <code>EventHandler</code>s registered to the
       <code>onavailable</code> event. Using this information, implementation
       specific discovery of <span title="presentation-display">presentation
-      displays</span> can be resumed or suspended, in order to save power. In
-      the following, the user agent behavior, depending on the number of
-      registered <code>EventHandler</code>s, is described.
-    </p>
+      displays</span> can be resumed or suspended, in order to save power.
+    </p>The user agent must keep a list of available presentation displays.
+    According to the number of event handlers for
+    <code>onavailablechange</code>, the user agent must also keep the list up
+    to date by running the algorithm for <span title=
+    "algorithm-monitor-available">monitoring the list of available presentation
+    displays</span>.
     <h5>
       Adding an <code>EventHandler</code> to <code>onavailablechange</code>
     </h5>
@@ -1340,8 +1344,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       Monitoring the list of available presentation displays
     </h5>
     <p>
-      The user agent must maintain a <dfn>list of available presentation
-      displays</dfn>. When the user agent is to <dfn title=
+      When the user agent is to <dfn title=
       "algorithm-monitor-available">monitor the list of available presentation
       displays</dfn>, it must run the following steps:
     </p>

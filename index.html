@@ -80,8 +80,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="w3c-editor's-draft-21-january-2015">
-        W3C Editor's Draft 21 January 2015
+      <h2 class="no-num no-toc" id="w3c-editor's-draft-22-january-2015">
+        W3C Editor's Draft 22 January 2015
       </h2>
       <dl>
         <dt>
@@ -753,9 +753,9 @@ function setSession(theSession) {
       resolves to an existing <a href="#presentationsession"><code>PresentationSession</code></a> if one exists
       that is presenting the same <code>url</code> with the same
       <code>presentationId</code> as was passed originally into
-      <a href="#startsession"><code>startSession</code></a>. The requesting page can then communicate with
-      the presentation as if the user had manually connected to it via
-      <a href="#startsession"><code>startSession</code></a>.
+      <a href="#startsession"><code>startSession</code></a>. The <a href="#opening-browsing-context">opening browsing context</a> can
+      then communicate with the presentation as if the user had manually
+      connected to it via <a href="#startsession"><code>startSession</code></a>.
     </p>
     <p>
       At the time <code>joinSession(url, presentationId)</code> is called, if
@@ -870,23 +870,22 @@ function setSession(theSession) {
       to the user agent via an implementation specific connection technology.
     </p>
     <p>
-      A <dfn title="concept-presentation" id="concept-presentation">presentation</dfn>, in the context of
-      this specification, is an active connection between a user agent and a
-      <a href="#presentation-display">presentation display</a> with the intent of displaying web
-      content on the latter.
+      A <dfn title="concept-presentation" id="concept-presentation">presentation</dfn>is an active
+      connection between a user agent and a <a href="#presentation-display">presentation display</a>
+      for displaying web content on the latter at the request of the former.
     </p>
     <p>
       A <dfn title="concept-presentation-session" id="concept-presentation-session">presentation session</dfn> is
-      an object refering to the relationship between an <a href="#opening-browsing-context">opening browsing
-      context</a> and a <a href="#presentation-display">presentation display</a> with a
-      <dfn id="presentation-session-state">presentation session state</dfn> and a <dfn id="presentation-session-identifier">presentation session
-      identifier</dfn> to distinguish a set of <a href="#concept-presentation-session" title="concept-presentation-session">presentation sessions</a>.
+      an object relating an <a href="#opening-browsing-context">opening browsing context</a> to its
+      <a href="#presentation-display">presentation display</a> and enabling two-way-messaging between
+      them. Each such object has a <dfn id="presentation-session-state">presentation session state</dfn> and a
+      <dfn id="presentation-session-identifier">presentation session identifier</dfn> to distinguish it from other
+      <a href="#concept-presentation-session" title="concept-presentation-session">presentation sessions</a>.
     </p>
     <p>
-      An <dfn id="opening-browsing-context">opening browsing context</dfn> is a <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context" data-anolis-spec="w3c-html" class="external">browsing context</a> from which calls are made to
-      <a href="#startsession">startSession</a>, <a href="#joinsession">joinSession</a>, in other words from
-      which <a href="#concept-presentation-session" title="concept-presentation-session">presentation
-      sessions</a> are initiated.
+      An <dfn id="opening-browsing-context">opening browsing context</dfn> is a <a href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context" data-anolis-spec="w3c-html" class="external">browsing context</a> that has initiated or resumed a
+      <span>presentation session</span> by calling <a href="#startsession">startSession</a> or
+      <a href="#joinsession">joinSession</a>.
     </p>
     <h3 id="common-definitions"><span class="secno">6.2 </span>
       Common definitions
@@ -1057,10 +1056,13 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
 };
 </pre>
     <p class="open-issue">
-      <i>(drott)</i> What would be a good definition of the
-      <code>session</code> attribute? Do we want to keep it? It's somewhat hard
-      to define, when it should contain a value, and when it should be empty -
-      and it's not compatible with multiple calls to startSession, for example.
+      TODO: Define contents of <code>session</code> attribute. Clarification:
+      The purpose of the session attribute is to provide the presented page
+      with access to the PresentationSession without allowing a potential race
+      condition between the registration of an event handler and the firing of
+      an event, or complicating the browser implementation to fix this case. It
+      should be null in an opening context and non-null in a presented
+      document.
     </p>
     <h4 id="starting-a-presentation-session"><span class="secno">6.4.1 </span>
       Starting a presentation session
@@ -1369,10 +1371,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
       track of the number of <code>EventHandler</code>s registered to the
       <code>onavailable</code> event. Using this information, implementation
       specific discovery of <span title="presentation-display">presentation
-      displays</span> can be resumed or suspended, in order to save power. In
-      the following, the user agent behavior, depending on the number of
-      registered <code>EventHandler</code>s, is described.
-    </p>
+      displays</span> can be resumed or suspended, in order to save power.
+    </p>The user agent must keep a list of available presentation displays.
+    According to the number of event handlers for
+    <a href="#onavailablechange"><code>onavailablechange</code></a>, the user agent must also keep the list up
+    to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available presentation
+    displays</a>.
     <h5 id="adding-an-eventhandler-to-onavailablechange"><span class="secno">6.4.4.1 </span>
       Adding an <code>EventHandler</code> to <a href="#onavailablechange"><code>onavailablechange</code></a>
     </h5>
@@ -1400,15 +1404,14 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
       Monitoring the list of available presentation displays
     </h5>
     <p>
-      The user agent must maintain a <dfn id="list-of-available-presentation-displays">list of available presentation
-      displays</dfn>. When the user agent is to <dfn title="algorithm-monitor-available" id="algorithm-monitor-available">monitor the list of available presentation
+      When the user agent is to <dfn title="algorithm-monitor-available" id="algorithm-monitor-available">monitor the list of available presentation
       displays</dfn>, it must run the following steps:
     </p>
     <p>
       While there are <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>
       added to NavigatorPresentation.onavailablechange, the user agent must
-      continuously keep track the <a href="#list-of-available-presentation-displays">list of available presentation
-      displays</a> and repeat the following steps:
+      continuously keep track the <span>list of available presentation
+      displays</span> and repeat the following steps:
     </p>
     <ol>
       <li>
@@ -1439,7 +1442,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </li>
         </ol>
       </li>
-      <li>Set the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> to the
+      <li>Set the <span>list of available presentation displays</span> to the
       value of <a href="#newDisplays">newDisplays</a>.
       </li>
     </ol>
@@ -1460,7 +1463,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
     <ol>
       <li>Cancel any tasks to retrieve the list of available <a href="#presentation-display" title="presentation display">presentation displays</a>.
       </li>
-      <li>Set the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> to
+      <li>Set the <span>list of available presentation displays</span> to
       empty.
       </li>
       <li>
