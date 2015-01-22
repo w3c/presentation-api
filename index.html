@@ -1372,8 +1372,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
       <code>onavailable</code> event. Using this information, implementation
       specific discovery of <span title="presentation-display">presentation
       displays</span> can be resumed or suspended, in order to save power.
-    </p>The user agent must keep a list of available presentation displays.
-    According to the number of event handlers for
+    </p>The user agent must keep a <dfn id="list-of-available-presentation-displays">list of available presentation
+    displays</dfn>. According to the number of event handlers for
     <a href="#onavailablechange"><code>onavailablechange</code></a>, the user agent must also keep the list up
     to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available presentation
     displays</a>.
@@ -1410,8 +1410,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
     <p>
       While there are <a href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" data-anolis-spec="w3c-html" class="external">event handlers</a>
       added to NavigatorPresentation.onavailablechange, the user agent must
-      continuously keep track the <span>list of available presentation
-      displays</span> and repeat the following steps:
+      continuously keep track the <a href="#list-of-available-presentation-displays">list of available presentation
+      displays</a> and repeat the following steps:
     </p>
     <ol>
       <li>
@@ -1442,7 +1442,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </li>
         </ol>
       </li>
-      <li>Set the <span>list of available presentation displays</span> to the
+      <li>Set the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> to the
       value of <a href="#newDisplays">newDisplays</a>.
       </li>
     </ol>
@@ -1463,7 +1463,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
     <ol>
       <li>Cancel any tasks to retrieve the list of available <a href="#presentation-display" title="presentation display">presentation displays</a>.
       </li>
-      <li>Set the <span>list of available presentation displays</span> to
+      <li>Set the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> to
       empty.
       </li>
       <li>

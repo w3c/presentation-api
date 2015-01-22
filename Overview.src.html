@@ -1311,8 +1311,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       <code>onavailable</code> event. Using this information, implementation
       specific discovery of <span title="presentation-display">presentation
       displays</span> can be resumed or suspended, in order to save power.
-    </p>The user agent must keep a list of available presentation displays.
-    According to the number of event handlers for
+    </p>The user agent must keep a <dfn>list of available presentation
+    displays</dfn>. According to the number of event handlers for
     <code>onavailablechange</code>, the user agent must also keep the list up
     to date by running the algorithm for <span title=
     "algorithm-monitor-available">monitoring the list of available presentation
