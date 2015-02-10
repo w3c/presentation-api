@@ -669,8 +669,9 @@ function setSession(theSession) {
       by <code>startSession(url, presentationId)</code> remains unresolved.
     </p>
     <p class="open-issue">
-      See <a href="https://github.com/w3c/presentation-api/issues/20">GitHub
-      Issue 20</a>.
+      <a href="https://github.com/w3c/presentation-api/issues/20">ISSUE 20:
+      Define return value for cancelled/missing session for
+      <code>startSession()</code>/<code>joinSession()</code></a>
     </p>
     <p>
       While there is a pending call to <code>startSession</code> asking the
@@ -681,8 +682,9 @@ function setSession(theSession) {
       from needing to 'queue up' requests to present to the user.
     </p>
     <p class="open-issue">
-      See <a href="https://github.com/w3c/presentation-api/issues/21">GitHub
-      Issue 21</a>.
+      <a href="https://github.com/w3c/presentation-api/issues/21">ISSUE 21:
+      Define whether multiple simultaneous calls are permitted to
+      <code>startSession()</code></a>
     </p>
     <h4>
       Automatically reconnecting to existing presentations
@@ -1009,7 +1011,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 };
 </pre>
     <p class="open-issue">
-      TODO: Define contents of <code>session</code> attribute. Clarification:
+      Define contents of <code>session</code> attribute. Clarification:
       The purpose of the session attribute is to provide the presented page
       with access to the PresentationSession without allowing a potential race
       condition between the registration of an event handler and the firing of
