@@ -276,6 +276,10 @@
       The API defined here is intended be used with UAs that attach to display
       devices through any of the above means.
     </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/42">ISSUE 42:
+      Carve out the Requirements and Example sections</a>
+    </p>
     <h3 id="use-cases">
       Use cases
     </h3>
@@ -316,7 +320,7 @@
       <b>Requirements:</b> R1, R3, R4, R5, R7
     </p>
     <h4>
-      Gaming
+      Multiplayer Gaming
     </h4>
     <p>
       Splitting the gaming experience into a near screen controller and a large
@@ -327,26 +331,38 @@
     <p>
       <b>Requirements:</b> R1, R3, R4, R5, R7
     </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/27">ISSUE 27:
+      Define a Multiplayer Gaming Use Case</a>
+    </p>
     <h4>
       Media flinging to multiple screens
-    </h4>Alice enters a video sharing site using a browser on her tablet. Next,
-    Alice picks her favorite video from the site, and the video starts to play
-    on her tablet. While the video is playing Alice clicks a button "Share on
-    different screen". The browser provides a user interface that lists all the
-    screens Alice has around her home, asking her to select one. The screens
-    are identified by names that are familiar to Alice. Alice picks one screen
-    from the list, "Alice's big TV", and the video playback continues
-    seamlessly on the selected screen. Next she decides to switch the playback
-    to a different screen. She clicks the same button "Share on different
-    screen" provided by the site, and the browser presents the user interface
-    that lists all the screens. Alice picks another screen from the list,
-    "Alice's kitchen TV", and the playback resumes on that screen. Video site
-    also provides a feature to see the action (Alice is watching a soccer game)
-    from different angle. Alice clicks a button "Select screen for additional
-    angle", and the browser asks Alice similarly to select the screen to be
-    used for playback. Alice picks "Alice's Projector" and the soccer game is
-    shown on the projector from a different angle, in parallel to the content
-    being played back on "Alice's kitchen TV".
+    </h4>
+    <p>
+      Alice enters a video sharing site using a browser on her tablet. Next,
+      Alice picks her favorite video from the site, and the video starts to
+      play on her tablet. While the video is playing Alice clicks a button
+      "Share on different screen". The browser provides a user interface that
+      lists all the screens Alice has around her home, asking her to select
+      one. The screens are identified by names that are familiar to Alice.
+      Alice picks one screen from the list, "Alice's big TV", and the video
+      playback continues seamlessly on the selected screen. Next she decides to
+      switch the playback to a different screen. She clicks the same button
+      "Share on different screen" provided by the site, and the browser
+      presents the user interface that lists all the screens. Alice picks
+      another screen from the list, "Alice's kitchen TV", and the playback
+      resumes on that screen. Video site also provides a feature to see the
+      action (Alice is watching a soccer game) from different angle. Alice
+      clicks a button "Select screen for additional angle", and the browser
+      asks Alice similarly to select the screen to be used for playback. Alice
+      picks "Alice's Projector" and the soccer game is shown on the projector
+      from a different angle, in parallel to the content being played back on
+      "Alice's kitchen TV".
+    </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/40">ISSUE 40:
+      Screen availability mechanism for multiple sessions</a>
+    </p>
     <p>
       <b>Requirements:</b> R1, R3, R4, R5, R6, R7
     </p>
@@ -585,19 +601,12 @@ function setSession(theSession) {
       signal the availability.
     </p>
     <p class="open-issue">
-      Do we want to fire an event immediately after the page registers for it?
-      What's a best practice method for asynchronous notifications of this
-      kind? See below in the <a href="#open-questions">Open questions</a>
-      section.
+      <a href="https://github.com/w3c/presentation-api/issues/8">ISSUE 8:
+      Timing of availablechange event to signal screen availability</a>
     </p>
     <p class="open-issue">
-      It is an open issue whether to provide filter information as part of the
-      request for notification of available screens. This could be useful when
-      a particular application or capability is needed in order to display the
-      contents of a presentation. One possible approach to this could be to
-      provide the URL for the presentation and / or required options as part of
-      the request for notification of available screens. If this was supported,
-      only screens that satisfied the filter would trigger a notification.
+      <a href="https://github.com/w3c/presentation-api/issues/9">ISSUE 9: How
+      to filter available screens according to the content being presented</a>
     </p>
     <h4>
       Starting new presentations or manually connecting to existing
@@ -659,6 +668,11 @@ function setSession(theSession) {
       If the user cancels screen selection, the <code>Promise</code> returned
       by <code>startSession(url, presentationId)</code> remains unresolved.
     </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/20">ISSUE 20:
+      Define return value for cancelled/missing session for
+      <code>startSession()</code>/<code>joinSession()</code></a>
+    </p>
     <p>
       While there is a pending call to <code>startSession</code> asking the
       user to select a screen (that the user has not yet accepted or canceled),
@@ -666,6 +680,11 @@ function setSession(theSession) {
       <code>startSession</code> from the same page, by returning a
       <code>Promise</code> that never resolves. This will prevent the browser
       from needing to 'queue up' requests to present to the user.
+    </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/21">ISSUE 21:
+      Define whether multiple simultaneous calls are permitted to
+      <code>startSession()</code></a>
     </p>
     <h4>
       Automatically reconnecting to existing presentations
@@ -695,15 +714,16 @@ function setSession(theSession) {
       browser may resolve the Promise to allow the page to connect to the
       running session.
     </p>
-    <p class="open-issue">
-      Do we want to keep the Promise in pending state?
-    </p>
     <p>
       If the browser knows of multiple matching sessions, it should connect the
       page to the session that was most recently connected to; if that cannot
       be determined by the browser (for example, if the matching sessions have
       never been connected), then the <code>Promise</code> should remain
       unresolved.
+    </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/39">ISSUE 39:
+      Resumption of multiple sessions</a>
     </p>
     <p>
       If the page calls <code>startSession(url, presentationId)</code> and
@@ -718,25 +738,13 @@ function setSession(theSession) {
       Open questions
     </h4>
     <p class="open-issue">
-      Do we need to insert into the description an additional permission prompt
-      to grant the page access to the "one ore more screens are available"
-      Information?
+      <a href="https://github.com/w3c/presentation-api/issues/10">ISSUE 10: Is
+      user permission required to prompt for screen availability
+      information?</a>
     </p>
     <p class="open-issue">
-      If there are already connected screens when the page subscribes to the
-      <code>onavailablechange</code> event, we can handle this in two ways: We
-      can synthesize one initial event to notify the page about available
-      screens as soon as the first event handler is installed (as described).
-      Or we can add another message like
-      <code>navigator.presentation.getAvailable(function(available) { }
-      );</code> to notify the page about available screens using this one-time
-      asynchronous getter. Which way should we go?
-    </p>
-    <p class="open-issue">
-      Do we need an additional state like resumed in order to identify resumed
-      session? It seems that this could be handled on the page level. The
-      <span>opening browsing context</span> could ask the presentation page
-      whether it is <code>"new"</code> or <code>"resumed"</code>.
+      <a href="https://github.com/w3c/presentation-api/issues/12">ISSUE 12:
+      Necessity of an additional state to indicate a session was resumed</a>
     </p>
     <h3>
       Usage on remote screen
@@ -783,10 +791,18 @@ if (navigator.presentation.session) {
       state of <code>"connected"</code>.
     </p>
     <p class="open-issue">
-      Since we permit multiple <span title="opening-browsing-context">opening
-      browsing context</span> to connect the same presentation page, we need to
-      define how connection and disconnection of these pages is communicated to
-      the presentation page (if at all).
+      <a href="https://github.com/w3c/presentation-api/issues/19">ISSUE 19:
+      Specify behavior when multiple controlling pages are connected to the
+      session</a>
+    </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/18">ISSUE 18:
+      Define reconnection for cross-page navigation on presenting user
+      agent</a>
+    </p>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
+      Define user agent context for rendering the presentation</a>
     </p>
     <h2>
       API
@@ -883,13 +899,8 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
       the following steps:
     </p>
     <p class="open-issue">
-      Needs algorithm for send message and more fine-grained definition of data
-      types for sending. Candidates, similar interfaces, are found in the
-      <a href=
-      "https://html.spec.whatwg.org/multipage/comms.html#the-messageevent-interfaces">
-      WHATWG HTML spec's <code>MessageEvent</code> section</a>, or the <a href=
-      "http://w3c.github.io/webrtc-pc/#rtcdatachannel">WebRTC's spec
-      <code>RPCDataChannel</code>.</a>
+      <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE 46:
+      Define postMessage behavior</a>
     </p>
     <h4>
       Closing a <code>PresentationSession</code>
@@ -934,6 +945,10 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
         </ol>
       </li>
     </ol>
+    <p class="open-issue">
+      <a href="https://github.com/w3c/presentation-api/issues/35">ISSUE 35:
+      Refine how to do session teardown/disconnect/closing</a>
+    </p>
     <h4>
       Event Handlers
     </h4>
@@ -996,7 +1011,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 };
 </pre>
     <p class="open-issue">
-      TODO: Define contents of <code>session</code> attribute. Clarification:
+      Define contents of <code>session</code> attribute. Clarification:
       The purpose of the session attribute is to provide the presented page
       with access to the PresentationSession without allowing a potential race
       condition between the registration of an event handler and the firing of
@@ -1284,10 +1299,6 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
     <p class="open-issue">
       Do we want to pass the new state as a property of the statechange event?
     </p>
-    <p class="open-issue">
-      Need to further specify the semantics of the messaging channel (using
-      WebSockets or MessagePort as a reference).
-    </p>
     <h4>
       The <code>onavailablechange</code> EventHandler
     </h4>
@@ -1404,10 +1415,6 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       value of <a href="#newDisplays">newDisplays</a>.
       </li>
     </ol>
-    <p class="open-issue">
-      Do we want to fire the event at all handlers, or only the newly added
-      one?
-    </p>
     <p class="note">
       The mechanism used to monitor <a href="#presentation-display">presention
       displays</a> availability is left to the user agent. The user agent may
@@ -1460,16 +1467,22 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
       TODO
     </h3>
     <p class="open-issue">
-      Need algorithm for receive message
+      <a href="https://github.com/w3c/presentation-api/issues/34">ISSUE 34:
+      Flesh out the algorithms</a>
     </p>
+    <h2 class="no-num">
+      Security Considerations
+    </h2>
     <p class="open-issue">
-      Need algorithm for initialization of the presented document
+      <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
+      Security and privacy considerations section</a>
     </p>
+    <h2 class="no-num">
+      Privacy Considerations
+    </h2>
     <p class="open-issue">
-      We could write this spec in a way that distinguished the state of the
-      presentation (owned by the user agent) from the state of the
-      PresentationSession (owned by a specific document); however these should
-      always be sync and it would likely result in more confusion than clarity.
+      <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
+      Security and privacy considerations section</a>
     </p>
     <h2 class="no-num">
       References
