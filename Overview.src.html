@@ -28,7 +28,6 @@
     span.open-issue { padding: 0 2em; }
     .open-issue p:first-child { margin-top: 0; }
     .open-issue p:last-child { margin-bottom: 0; }
-    p.open-issue:before { content: 'Open issue: '; font-weight: bolder;}
 
     .non-normative { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     p.non-normative:before { content: 'Non-normative: '; font-weight: bolder;}
@@ -320,7 +319,7 @@
       <b>Requirements:</b> R1, R3, R4, R5, R7
     </p>
     <h4>
-      Multiplayer Gaming
+      Multiplayer gaming
     </h4>
     <p>
       Splitting the gaming experience into a near screen controller and a large
@@ -1011,9 +1010,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 };
 </pre>
     <p class="open-issue">
-      Define contents of <code>session</code> attribute. Clarification:
-      The purpose of the session attribute is to provide the presented page
-      with access to the PresentationSession without allowing a potential race
+      Define contents of <code>session</code> attribute. Clarification: The
+      purpose of the session attribute is to provide the presented page with
+      access to the PresentationSession without allowing a potential race
       condition between the registration of an event handler and the firing of
       an event, or complicating the browser implementation to fix this case. It
       should be null in an opening context and non-null in a presented
@@ -1471,14 +1470,7 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
       Flesh out the algorithms</a>
     </p>
     <h2 class="no-num">
-      Security Considerations
-    </h2>
-    <p class="open-issue">
-      <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
-      Security and privacy considerations section</a>
-    </p>
-    <h2 class="no-num">
-      Privacy Considerations
+      Security and Privacy Considerations
     </h2>
     <p class="open-issue">
       <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
