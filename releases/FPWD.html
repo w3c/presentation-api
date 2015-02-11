@@ -81,9 +81,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="w3c-first-public-working-draft-11-february-2015">
-        <!-- W3C Working Draft 11 February 2015 -->
-         W3C First Public Working Draft 11 February 2015
+      <h2 class="no-num no-toc" id="w3c-working-draft-11-february-2015">
+        W3C First Public Working Draft 11 February 2015
       </h2>
       <dl>
         <dt>
@@ -167,8 +166,8 @@
       </p>
       <p>
         This document was published by the <a href="http://www.w3.org/2014/secondscreen/">Second Screen Presentation
-        Working Group</a> as a First Public Working Draft. If you wish to make
-        comments regarding this document, please send them to <a href="mailto:public-secondscreen@w3.org">public-secondscreen@w3.org</a>
+        Working Group</a> as a First Public Working Draft. If you wish to make comments
+        regarding this document, please send them to <a href="mailto:public-secondscreen@w3.org">public-secondscreen@w3.org</a>
         (<a href="mailto:public-secondscreen-request@w3.org?subject=subscribe">subscribe</a>,
         <a href="http://lists.w3.org/Archives/Public/public-secondscreen/">archives</a>).
         All comments are welcome.
@@ -674,10 +673,6 @@ function setSession(theSession) {
 }
 &lt;/script&gt;
 </pre>
-      <p class="open-issue">
-        We could simplify the example, and perhaps remove UI button state
-        management for the sake of clarity.
-      </p>
       <p>
         The availability monitoring for secondary screens begins when the page
         adds an event listener for the <code>availablechange</code> event on
@@ -797,8 +792,8 @@ function setSession(theSession) {
           manually connected to it via <a href="#startsession"><code>startSession</code></a>.
         </p>
         <p>
-          At the time <code>joinSession(url, presentationId)</code> method is
-          called, if the browser is not aware of any
+          At the time the <code>joinSession(url, presentationId)</code> method
+          is called, if the browser is not aware of any
           <a href="#presentationsession"><code>PresentationSession</code></a> with a matching <code>url</code> and
           <code>presentationId</code>, the <code>Promise</code> should remain
           unresolved. The browser may become aware of such a session at a later

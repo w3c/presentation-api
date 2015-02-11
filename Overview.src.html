@@ -82,8 +82,7 @@
         Presentation API
       </h1>
       <h2 class="no-num no-toc">
-        <!-- [LONGSTATUS] [DATE] -->
-         W3C First Public Working Draft [DATE: 01 Jan 1901]
+        [LONGSTATUS] [DATE]
       </h2>
       <dl>
         <dt>
@@ -176,8 +175,8 @@
       <p>
         This document was published by the <a href=
         "http://www.w3.org/2014/secondscreen/">Second Screen Presentation
-        Working Group</a> as a First Public Working Draft. If you wish to make
-        comments regarding this document, please send them to <a href=
+        Working Group</a> as an Editor's Draft. If you wish to make comments
+        regarding this document, please send them to <a href=
         "mailto:public-secondscreen@w3.org">public-secondscreen@w3.org</a>
         (<a href=
         "mailto:public-secondscreen-request@w3.org?subject=subscribe">subscribe</a>,
@@ -600,10 +599,6 @@ function setSession(theSession) {
 }
 &lt;/script&gt;
 </pre>
-      <p class="open-issue">
-        We could simplify the example, and perhaps remove UI button state
-        management for the sake of clarity.
-      </p>
       <p>
         The availability monitoring for secondary screens begins when the page
         adds an event listener for the <code>availablechange</code> event on
@@ -724,8 +719,8 @@ function setSession(theSession) {
           manually connected to it via <code>startSession</code>.
         </p>
         <p>
-          At the time <code>joinSession(url, presentationId)</code> method is
-          called, if the browser is not aware of any
+          At the time the <code>joinSession(url, presentationId)</code> method
+          is called, if the browser is not aware of any
           <code>PresentationSession</code> with a matching <code>url</code> and
           <code>presentationId</code>, the <code>Promise</code> should remain
           unresolved. The browser may become aware of such a session at a later
