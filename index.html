@@ -1420,7 +1420,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               </li>
             </ol>
           </li>
-          <li>If the <a href="#availabledisplays">availableDisplays</a> list is
+          <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
           empty, then:
             <ol>
               <li>
@@ -1754,8 +1754,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </li>
           <li>Wait for the completion of that task.
           </li>
-          <li>If <a href="#availabledisplays">availableDisplays</a> is empty
-          and <a href="#newdisplays">newDisplays</a> is not empty, then
+          <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
+          empty and <a href="#newdisplays">newDisplays</a> is not empty, then
             <ol>
               <li>
                 <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
@@ -1765,8 +1765,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               </li>
             </ol>
           </li>
-          <li>If <a href="#availabledisplays">availableDisplays</a> is not
-          empty and <a href="#newdisplays">newDisplays</a> is empty, then:
+          <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
+          not empty and <a href="#newdisplays">newDisplays</a> is empty, then:
             <ol>
               <li>
                 <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
