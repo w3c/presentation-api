@@ -1023,7 +1023,7 @@ void postMessage (ArrayBufferView data);
           </p>
           <p>
             Let <dfn id="presentation-message-data">presentation message data</dfn> be the data contents of a
-            transmission between two browsing contexts. Let <dfn id="presentaiton-message-format">presentaiton
+            transmission between two browsing contexts. Let <dfn id="presentation-message-format">presentation
             message format</dfn> be the format of that data, one of
             <code>Text</code> and <code>Binary</code>.
           </p>
@@ -1038,11 +1038,14 @@ void postMessage (ArrayBufferView data);
             throw an <code>InvalidStateError</code> exception.
             </li>
             <li>Transmit the contents of the <code>data</code> argument as
-            <a href="#presentation-message-data">presentation message data</a> and <span>presentation
-            message format</span> to the remote side, i.e. from <a href="#opening-browsing-context">opening
-            browsing context</a> to <code>presentation browsing
-            context</code> or vice versa, by means of an implementation
-            specific connection mechanism.
+            <a href="#presentation-message-data">presentation message data</a> and <a href="#presentation-message-format">presentation
+            message format</a> (Set to <code>Binary</code> if
+            <code>data</code> is one of <code>ArrayBuffer</code> or
+            <code>Blob</code>. Set to <code>Text</code> if <code>data</code> is
+            of type <code>DOMString</code>) to the remote side, i.e. from
+            <a href="#opening-browsing-context">opening browsing context</a> to <span>presentation
+            browsing context</span> or vice versa, by means of an
+            implementation specific connection mechanism.
             </li>
           </ol>
         </section>
@@ -1053,7 +1056,7 @@ void postMessage (ArrayBufferView data);
           <p>
             When the user agent has received a transmission from the remote
             side consisting of <a href="#presentation-message-data">presentation message data</a> and
-            <span>presentation message format</span>, it must run the following
+            <a href="#presentation-message-format">presentation message format</a>, it must run the following
             steps:
           </p>
           <ol>
@@ -1071,18 +1074,18 @@ void postMessage (ArrayBufferView data);
             browsing context</a> and the <a href="#presenting-browsing-context"><code>presenting browsing
             context</code></a> have in common.
             </li>
-            <li>If the <span>presentation message format</span> is
+            <li>If the <a href="#presentation-message-format">presentation message format</a> is
             <code>Text</code>, then initialize <em>event's</em>
             <code>data</code> attribute to the contents of <a href="#presentation-message-data">presentation
             message data</a>.
             </li>
-            <li>If the <span>presentation message format</span> is
+            <li>If the <a href="#presentation-message-format">presentation message format</a> is
             <code>Binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
             "<code>blob</code>", then initialise <em>event</em>'s
             <code>data</code> attribute to a new <code>Blob</code> object that
             represents <a href="#presentation-message-data">presentation message data</a> as its raw data.
             </li>
-            <li>If the <span>presentation message format</span> is
+            <li>If the <a href="#presentation-message-format">presentation message format</a> is
             <code>Binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
             "<code>arraybuffer</code>", then initialise <em>event</em>'s <code>
               data</code> attribute to a new <code>ArrayBuffer</code> object

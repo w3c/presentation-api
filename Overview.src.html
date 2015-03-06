@@ -952,7 +952,7 @@ void postMessage (ArrayBufferView data);
           </p>
           <p>
             Let <dfn>presentation message data</dfn> be the data contents of a
-            transmission between two browsing contexts. Let <dfn>presentaiton
+            transmission between two browsing contexts. Let <dfn>presentation
             message format</dfn> be the format of that data, one of
             <code>Text</code> and <code>Binary</code>.
           </p>
@@ -968,10 +968,13 @@ void postMessage (ArrayBufferView data);
             </li>
             <li>Transmit the contents of the <code>data</code> argument as
             <span>presentation message data</span> and <span>presentation
-            message format</span> to the remote side, i.e. from <span>opening
-            browsing context</span> to <code>presentation browsing
-            context</code> or vice versa, by means of an implementation
-            specific connection mechanism.
+            message format</span> (Set to <code>Binary</code> if
+            <code>data</code> is one of <code>ArrayBuffer</code> or
+            <code>Blob</code>. Set to <code>Text</code> if <code>data</code> is
+            of type <code>DOMString</code>) to the remote side, i.e. from
+            <span>opening browsing context</span> to <span>presentation
+            browsing context</span> or vice versa, by means of an
+            implementation specific connection mechanism.
             </li>
           </ol>
         </section>
