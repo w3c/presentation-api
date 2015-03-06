@@ -975,8 +975,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
 
 // Communication
 attribute BinaryType <dfn id="binarytype-attribute" title="binarytype-attribute">binaryType</dfn>;
-"w3c-html"&gt;EventHandler <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
-void <dfn id="postmessage">postMessage</dfn>(DOMString message);
+<a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
+void <dfn id="postmessage">postMessage</dfn> (DOMString message);
 void postMessage (Blob data);
 void postMessage (ArrayBuffer data);
 void postMessage (ArrayBufferView data);
@@ -1011,6 +1011,10 @@ void postMessage (ArrayBufferView data);
           Specify the presentation initialization algorithm</a>
         </p>
         <section>
+          <p class="open-issue">
+            <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
+            46: Define postMessage behavior</a>
+          </p>
           <h4 id="posting-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
             Posting a message through <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
