@@ -503,6 +503,16 @@
         WHATWG URL standard: <span data-anolis-ref="url">URL</span>.
       </p>
       <p>
+        The terms <span data-anolis-spec="typedarray">ArrayBuffer</span>,
+        <span data-anolis-spec="typedarray">ArrayBufferView</span> are defined
+        in the Typed Array specification: <span data-anolis-ref=
+        "typedarray">TYPEDARRAY</span>.
+      </p>
+      <p>
+        The term <span data-anolis-spec="fileapi">Blob</span> is defined in the
+        File API specification: <span data-anolis-ref="fileapi">FILEAPI</span>.
+      </p>
+      <p>
         This document provides interface definitions using the
         <span data-anolis-ref="">WEBIDL</span> standard.
       </p>
@@ -896,20 +906,26 @@ enum <dfn>PresentationSessionState</dfn> { "connected", "disconnected" /*, "resu
 enum <dfn>BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn>PresentationSession</dfn> : EventTarget {
-  readonly DOMString? <span>id</span>;
+  readonly <span data-anolis-spec="webidl">DOMString</span>? <span>id</span>;
   readonly attribute <span>PresentationSessionState</span> <span>state</span>;
   void <span>close</span>();
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>onstatechange</span>;
 
-// Communication
-attribute BinaryType <dfn title="binarytype-attribute">binaryType</dfn>;
-<span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
+  // Communication
+  attribute BinaryType <dfn title="binarytype-attribute">binaryType</dfn>;
+  <span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
 "presentation-onmessage">onmessage</dfn>;
-void <dfn>postMessage</dfn> (DOMString message);
-void postMessage (Blob data);
-void postMessage (ArrayBuffer data);
-void postMessage (ArrayBufferView data);
+  void <dfn>postMessage</dfn> (<span data-anolis-spec=
+"webidl">DOMString</span> message);
+  void <dfn title="postMessage-blob">postMessage</dfn> (<span data-anolis-spec=
+"fileapi">Blob</span> data);
+  void <dfn title=
+"postMessage-arraybuffer">postMessage</dfn> (<span data-anolis-spec=
+"typedarray">ArrayBuffer</span> data);
+  void <dfn title=
+"postMessage-arraybufferview">postMessage</dfn> (<span data-anolis-spec=
+"typedarray">ArrayBufferView</span> data);
 };
 
 </pre>
@@ -956,10 +972,10 @@ void postMessage (ArrayBufferView data);
             that message are delivered to the other end in sequence.
           </p>
           <p>
-            Let <dfn>presentation message data</dfn> be the data contents of a
-            transmission between two browsing contexts. Let <dfn>presentation
-            message format</dfn> be the format of that data, one of
-            <code>Text</code> and <code>Binary</code>.
+            Let <dfn>presentation message data</dfn> be the payload data to be
+            transmitted between two browsing contexts. Let <dfn>presentation
+            message type</dfn> be the type of that data, one of
+            <code>text</code> and <code>binary</code>.
           </p>
           <p>
             When the user agent is to <dfn title="algorithm-post-message">post
@@ -971,15 +987,30 @@ void postMessage (ArrayBufferView data);
             <code>PresentationSession</code> is <code>"disconnected"</code>,
             throw an <code>InvalidStateError</code> exception.
             </li>
-            <li>Transmit the contents of the <code>data</code> argument as
-            <span>presentation message data</span> and <span>presentation
-            message format</span> (Set to <code>Binary</code> if
-            <code>data</code> is one of <code>ArrayBuffer</code> or
-            <code>Blob</code>. Set to <code>Text</code> if <code>data</code> is
-            of type <code>DOMString</code>) to the remote side, i.e. from
-            <span>opening browsing context</span> to <span>presentation
-            browsing context</span> or vice versa, by means of an
-            implementation specific connection mechanism.
+            <li>Let <span>presentation message type</span> <em>messageType</em>
+            be <code>binary</code> if <code>data</code> is one of
+            <code>ArrayBuffer</code> or <code>Blob</code>. Let
+            <em>messageType</em> be <code>text</code> if <code>data</code> is
+            of type <code>DOMString</code>)
+            </li>
+            <li>Assign the <dfn>destination browsing context</dfn> as follows:
+              <ol>
+                <li>Let the the <span>destination browsing context</span> be
+                the <span>opening browsing context</span> if
+                <span>postMessage</span> is called in the <span>presenting
+                browsing context</span>.
+                </li>
+                <li>Let <em>destination browsing context</em> be the
+                <span>presenting browsing context</span> if
+                <span>postMessage</span> is called from the <span>opening
+                browsing context</span>.
+                </li>
+              </ol>
+            </li>
+            <li>Using an implementation specific mechanism, transmit the
+            contents of the <code>data</code> argument as <span>presentation
+            message data</span> and <span>presentation message type</span> to
+            the <span>destination browsing context</span> side.
             </li>
           </ol>
         </section>
@@ -998,32 +1029,49 @@ void postMessage (ArrayBufferView data);
             <code>PresentationSession</code> is <code>"disconnected"</code>,
             abort these steps.
             </li>
-            <li>Let <em>event</em> be a newly created trusted event that uses
-            the <code>MessageEvent</code> interface, with the event type <code>
-              message</code>, which does not bubble, is not cancelable, and has
-              no default action.
+            <li>Let <em>event</em> be a newly created <span data-anolis-spec=
+            "w3c-html" title="concept-events-trusted">trusted event</span> that
+            uses the <code>MessageEvent</code> interface, with the event type
+            <code>message</code>, which does not bubble, is not cancelable, and
+            has no default action.
             </li>
             <li>Initialize <em>event's</em> <code>origin</code> attribute to
             the Unicode serialization of the URL that the <span>opening
             browsing context</span> and the <code>presenting browsing
             context</code> have in common.
+              <p class="open-issue">
+                <a href=
+                "https://github.com/w3c/presentation-api/issues/63">ISSUE 63:
+                Define (cross) origin relationship between opener and
+                presenting page</a>
+              </p>
             </li>
-            <li>If the <span>presentation message format</span> is
-            <code>Text</code>, then initialize <em>event's</em>
-            <code>data</code> attribute to the contents of <span>presentation
-            message data</span>.
+            <li>Initialize the <em>event's</em> data attribute as follows:
+              <ol>
+                <li>If the <span>presentation message format</span> is
+                <code>Text</code>, then initialize <em>event's</em>
+                <code>data</code> attribute to the contents of
+                <span>presentation message data</span> of type
+                <code>DOMString</code>.
+                </li>
+                <li>If the <span>presentation message format</span> is
+                <code>Binary</code>, and <code>binaryType</code> is set to
+                "<code>blob</code>", then initialise <em>event</em>'s
+                <code>data</code> attribute to a new <code>Blob</code> object
+                that represents <span>presentation message data</span> as its
+                raw data.
+                </li>
+                <li>If the <span>presentation message format</span> is
+                <code>Binary</code>, and <code>binaryType</code> is set to
+                "<code>arraybuffer</code>", then initialise <em>event</em>'s
+                <code>data</code> attribute to a new <code>ArrayBuffer</code>
+                object whose contents are <span>presentation message
+                data</span>.
+                </li>
+              </ol>
             </li>
-            <li>If the <span>presentation message format</span> is
-            <code>Binary</code>, and <code>binaryType</code> is set to
-            "<code>blob</code>", then initialise <em>event</em>'s
-            <code>data</code> attribute to a new <code>Blob</code> object that
-            represents <span>presentation message data</span> as its raw data.
-            </li>
-            <li>If the <span>presentation message format</span> is
-            <code>Binary</code>, and <code>binaryType</code> is set to
-            "<code>arraybuffer</code>", then initialise <em>event</em>'s <code>
-              data</code> attribute to a new <code>ArrayBuffer</code> object
-              whose contents are <span>presentation message data</span>.
+            <li>Fire <em>event</em> at the
+            <span><code>PresentationSession</code></span>.
             </li>
           </ol>
         </section>
