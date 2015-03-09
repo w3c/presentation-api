@@ -1070,8 +1070,11 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
                 </li>
               </ol>
             </li>
-            <li>Fire <em>event</em> at the
-            <span><code>PresentationSession</code></span>.
+            <li>
+              <span data-anolis-spec="w3c-html">Queue a task</span> to
+              <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
+              <em>event</em></span> at
+              <span><code>PresentationSession</code></span>.
             </li>
           </ol>
         </section>
