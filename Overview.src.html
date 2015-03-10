@@ -1022,7 +1022,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           <p>
             When the user agent has received a transmission from the remote
             side consisting of <span>presentation message data</span> and
-            <span>presentation message format</span>, it must run the following
+            <span>presentation message type</span>, it must run the following
             steps:
           </p>
           <ol>
@@ -1049,22 +1049,22 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             </li>
             <li>Initialize the <em>event's</em> data attribute as follows:
               <ol>
-                <li>If the <span>presentation message format</span> is
-                <code>Text</code>, then initialize <em>event's</em>
+                <li>If the <span>presentation message type</span> is
+                <code>text</code>, then initialize <em>event's</em>
                 <code>data</code> attribute to the contents of
                 <span>presentation message data</span> of type
                 <code>DOMString</code>.
                 </li>
-                <li>If the <span>presentation message format</span> is
-                <code>Binary</code>, and <code>binaryType</code> is set to
-                "<code>blob</code>", then initialise <em>event</em>'s
+                <li>If the <span>presentation message type</span> is
+                <code>binary</code>, and <code>binaryType</code> is set to
+                <code>blob</code>, then initialise <em>event</em>'s
                 <code>data</code> attribute to a new <code>Blob</code> object
                 that represents <span>presentation message data</span> as its
                 raw data.
                 </li>
-                <li>If the <span>presentation message format</span> is
-                <code>Binary</code>, and <code>binaryType</code> is set to
-                "<code>arraybuffer</code>", then initialise <em>event</em>'s
+                <li>If the <span>presentation message type</span> is
+                <code>binary</code>, and <code>binaryType</code> is set to
+                <code>arraybuffer</code>, then initialise <em>event</em>'s
                 <code>data</code> attribute to a new <code>ArrayBuffer</code>
                 object whose contents are <span>presentation message
                 data</span>.

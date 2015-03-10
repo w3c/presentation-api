@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-9-march-2015">
-        Editor's Draft 9 March 2015
+      <h2 class="no-num no-toc" id="editor's-draft-10-march-2015">
+        Editor's Draft 10 March 2015
       </h2>
       <dl>
         <dt>
@@ -1085,7 +1085,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <p>
             When the user agent has received a transmission from the remote
             side consisting of <a href="#presentation-message-data">presentation message data</a> and
-            <span>presentation message format</span>, it must run the following
+            <a href="#presentation-message-type">presentation message type</a>, it must run the following
             steps:
           </p>
           <ol>
@@ -1110,22 +1110,22 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Initialize the <em>event's</em> data attribute as follows:
               <ol>
-                <li>If the <span>presentation message format</span> is
-                <code>Text</code>, then initialize <em>event's</em>
+                <li>If the <a href="#presentation-message-type">presentation message type</a> is
+                <code>text</code>, then initialize <em>event's</em>
                 <code>data</code> attribute to the contents of
                 <a href="#presentation-message-data">presentation message data</a> of type
                 <code>DOMString</code>.
                 </li>
-                <li>If the <span>presentation message format</span> is
-                <code>Binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
-                "<code>blob</code>", then initialise <em>event</em>'s
+                <li>If the <a href="#presentation-message-type">presentation message type</a> is
+                <code>binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
+                <code>blob</code>, then initialise <em>event</em>'s
                 <code>data</code> attribute to a new <code>Blob</code> object
                 that represents <a href="#presentation-message-data">presentation message data</a> as its
                 raw data.
                 </li>
-                <li>If the <span>presentation message format</span> is
-                <code>Binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
-                "<code>arraybuffer</code>", then initialise <em>event</em>'s
+                <li>If the <a href="#presentation-message-type">presentation message type</a> is
+                <code>binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
+                <code>arraybuffer</code>, then initialise <em>event</em>'s
                 <code>data</code> attribute to a new <code>ArrayBuffer</code>
                 object whose contents are <a href="#presentation-message-data">presentation message
                 data</a>.
