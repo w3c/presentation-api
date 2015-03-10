@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-13-february-2015">
-        Editor's Draft 13 February 2015
+      <h2 class="no-num no-toc" id="editor's-draft-10-march-2015">
+        Editor's Draft 10 March 2015
       </h2>
       <dl>
         <dt>
@@ -269,10 +269,13 @@
      <li><a href="#posting-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
             Posting a message through <code>PresentationSession</code>
           </a></li>
-     <li><a href="#closing-a-presentationsession"><span class="secno">6.3.2 </span>
+     <li><a href="#receiving-a-message-through-presentationsession"><span class="secno">6.3.2 </span>
+            Receiving a message through <code>PresentationSession</code>
+          </a></li>
+     <li><a href="#closing-a-presentationsession"><span class="secno">6.3.3 </span>
             Closing a <code>PresentationSession</code>
           </a></li>
-     <li><a href="#event-handlers"><span class="secno">6.3.3 </span>
+     <li><a href="#event-handlers"><span class="secno">6.3.4 </span>
             Event Handlers
           </a></ol></ol></li>
  <li><a href="#interface-navigatorpresentation"><span class="secno">7 </span>
@@ -576,6 +579,15 @@
       <p>
         The term <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> is defined in the
         WHATWG URL standard: <a href="#refsURL">[URL]</a>.
+      </p>
+      <p>
+        The terms <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#5">ArrayBuffer</a>,
+        <a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> are defined
+        in the Typed Array specification: <a href="#refsTYPEDARRAY">[TYPEDARRAY]</a>.
+      </p>
+      <p>
+        The term <a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> is defined in the
+        File API specification: <a href="#refsFILEAPI">[FILEAPI]</a>.
       </p>
       <p>
         This document provides interface definitions using the
@@ -928,6 +940,13 @@ function setSession(theSession) {
           <code><a href="#startsession">startSession</a>()</code> or
           <code><a href="#joinsession">joinSession</a>()</code>.
         </p>
+        <p>
+          The <dfn id="presenting-browsing-context">presenting browsing context</dfn> is the browsing context
+          responsible for rendering to a <a href="#presentation-display">presentation display</a>. A
+          <a href="#presenting-browsing-context">presenting browsing context</a> can reside in the same user
+          agent as the <a href="#opening-browsing-context">opening browsing context</a> or a different
+          one.
+        </p>
       </section>
       <section>
         <h3 id="common-definitions"><span class="secno">6.2 </span>
@@ -955,15 +974,23 @@ function setSession(theSession) {
           object.
         </p>
         <pre class="idl">enum <dfn id="presentationsessionstate">PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
+enum <dfn id="binarytype">BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget {
-  readonly DOMString? <a href="#id">id</a>;
+  readonly <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
   readonly attribute <a href="#presentationsessionstate">PresentationSessionState</a> <a href="#state">state</a>;
-  void <a href="#postmessage">postMessage</a>(DOMString message);
   void <a href="#close">close</a>();
-  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onmessage">onmessage</a>;
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onstatechange">onstatechange</a>;
+
+  // Communication
+  attribute BinaryType <dfn id="binarytype-attribute" title="binarytype-attribute">binaryType</dfn>;
+  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
+  void <dfn id="postmessage">postMessage</dfn> (<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
+  void <dfn id="postmessage-blob" title="postMessage-blob">postMessage</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
+  void <dfn id="postmessage-arraybuffer" title="postMessage-arraybuffer">postMessage</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#5">ArrayBuffer</a> data);
+  void <dfn id="postmessage-arraybufferview" title="postMessage-arraybufferview">postMessage</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> data);
 };
+
 </pre>
         <p>
           The <dfn id="id"><code>id</code></dfn> attribute holds the alphanumeric
@@ -976,9 +1003,10 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           depending on connection state.
         </p>
         <p>
-          When the <code><dfn id="postmessage">postMessage</dfn>()</code> method is called on a
-          <a href="#presentationsession"><code>PresentationSession</code></a> object with a <code>message</code>,
-          the user agent must run the algorithm to <a href="#algorithm-post-message" title="algorithm-post-message">post a message through a
+          When the <code><a href="#postmessage">postMessage</a>()</code> method is called on
+          a <a href="#presentationsession"><code>PresentationSession</code></a> object with a
+          <code>message</code>, the user agent must run the algorithm to
+          <a href="#algorithm-post-message" title="algorithm-post-message">post a message through a
           <span><code>PresentationSession</code></span></a>.
         </p>
         <p>
@@ -992,21 +1020,128 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           Specify the presentation initialization algorithm</a>
         </p>
         <section>
+          <p class="open-issue">
+            <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
+            46: Define postMessage behavior</a>
+          </p>
           <h4 id="posting-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
             Posting a message through <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
+          <p class="note">
+            Presentation API does not mandate a specific protocol for the
+            connection between the <a href="#opening-browsing-context">opening browsing context</a> and
+            the <a href="#presenting-browsing-context">presenting browsing context</a> except that for
+            multiple calls to <a href="#postmessage"><code>postMessage</code></a> it has to be ensured
+            that messages are delivered to the other end in sequence.
+          </p>
+          <p>
+            Let <dfn id="presentation-message-data">presentation message data</dfn> be the payload data to be
+            transmitted between two browsing contexts. Let <dfn id="presentation-message-type">presentation
+            message type</dfn> be the type of that data, one of
+            <code>text</code> and <code>binary</code>.
+          </p>
           <p>
             When the user agent is to <dfn id="algorithm-post-message" title="algorithm-post-message">post
             a message through a <code>PresentationSession</code> S</dfn>, it
             must run the following steps:
           </p>
-          <p class="open-issue">
-            <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
-            46: Define postMessage behavior</a>
-          </p>
+          <ol>
+            <li>If the <a href="#state"><code>state</code></a> property of
+            <a href="#presentationsession"><code>PresentationSession</code></a> is <code>"disconnected"</code>,
+            throw an <code>InvalidStateError</code> exception.
+            </li>
+            <li>Let <a href="#presentation-message-type">presentation message type</a> <em>messageType</em>
+            be <code>binary</code> if <code>data</code> is one of
+            <code>ArrayBuffer</code> or <code>Blob</code>. Let
+            <em>messageType</em> be <code>text</code> if <code>data</code> is
+            of type <code>DOMString</code>)
+            </li>
+            <li>Assign the <dfn id="destination-browsing-context">destination browsing context</dfn> as follows:
+              <ol>
+                <li>Let the the <a href="#destination-browsing-context">destination browsing context</a> be
+                the <a href="#opening-browsing-context">opening browsing context</a> if
+                <a href="#postmessage">postMessage</a> is called in the <a href="#presenting-browsing-context">presenting
+                browsing context</a>.
+                </li>
+                <li>Let <a href="#destination-browsing-context">destination browsing context</a> be the <a href="#presenting-browsing-context">
+                  presenting browsing context</a> if
+                  <a href="#postmessage">postMessage</a> is called from the <a href="#opening-browsing-context">opening
+                  browsing context</a>.
+                </li>
+              </ol>
+            </li>
+            <li>Using an implementation specific mechanism, transmit the
+            contents of the <code>data</code> argument as <a href="#presentation-message-data">presentation
+            message data</a> and <a href="#presentation-message-type">presentation message type</a> <em>
+              messageType</em> to the <a href="#destination-browsing-context">destination browsing context</a>
+              side.
+            </li>
+          </ol>
         </section>
         <section>
-          <h4 id="closing-a-presentationsession"><span class="secno">6.3.2 </span>
+          <h4 id="receiving-a-message-through-presentationsession"><span class="secno">6.3.2 </span>
+            Receiving a message through <a href="#presentationsession"><code>PresentationSession</code></a>
+          </h4>
+          <p>
+            When the user agent has received a transmission from the remote
+            side consisting of <a href="#presentation-message-data">presentation message data</a> and
+            <a href="#presentation-message-type">presentation message type</a>, it must run the following
+            steps:
+          </p>
+          <ol>
+            <li>If the <a href="#state"><code>state</code></a> property of
+            <a href="#presentationsession"><code>PresentationSession</code></a> is <code>"disconnected"</code>,
+            abort these steps.
+            </li>
+            <li>Let <em>event</em> be a newly created <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-events-trusted" title="concept-events-trusted">trusted event</a> that
+            uses the <code>MessageEvent</code> interface, with the event type
+            <code>message</code>, which does not bubble, is not cancelable, and
+            has no default action.
+            </li>
+            <li>Initialize <em>event's</em> <code>origin</code> attribute to
+            the Unicode serialization of the URL that the <a href="#opening-browsing-context">opening
+            browsing context</a> and the <a href="#presenting-browsing-context"><code>presenting browsing
+            context</code></a> have in common.
+              <p class="open-issue">
+                <a href="https://github.com/w3c/presentation-api/issues/63">ISSUE 63:
+                Define (cross) origin relationship between opener and
+                presenting page</a>
+              </p>
+            </li>
+            <li>Initialize the <em>event's</em> data attribute as follows:
+              <ol>
+                <li>If the <a href="#presentation-message-type">presentation message type</a> is
+                <code>text</code>, then initialize <em>event's</em>
+                <code>data</code> attribute to the contents of
+                <a href="#presentation-message-data">presentation message data</a> of type
+                <code>DOMString</code>.
+                </li>
+                <li>If the <a href="#presentation-message-type">presentation message type</a> is
+                <code>binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
+                <code>blob</code>, then initialise <em>event</em>'s
+                <code>data</code> attribute to a new <code>Blob</code> object
+                that represents <a href="#presentation-message-data">presentation message data</a> as its
+                raw data.
+                </li>
+                <li>If the <a href="#presentation-message-type">presentation message type</a> is
+                <code>binary</code>, and <a href="#binarytype"><code>binaryType</code></a> is set to
+                <code>arraybuffer</code>, then initialise <em>event</em>'s
+                <code>data</code> attribute to a new <code>ArrayBuffer</code>
+                object whose contents are <a href="#presentation-message-data">presentation message
+                data</a>.
+                </li>
+              </ol>
+            </li>
+            <li>
+              <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
+              <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire
+              <em>event</em></a> at
+              <a href="#presentationsession"><code>PresentationSession</code></a>.
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4 id="closing-a-presentationsession"><span class="secno">6.3.3 </span>
             Closing a <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
           <p>
@@ -1055,7 +1190,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
         </section>
         <section>
-          <h4 id="event-handlers"><span class="secno">6.3.3 </span>
+          <h4 id="event-handlers"><span class="secno">6.3.4 </span>
             Event Handlers
           </h4>
           <p>
@@ -1592,6 +1727,9 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
       <div id="anolis-references"><dl><dt id="refsES6">[ES6]
 <dd><cite><a href="http://people.mozilla.org/~jorendorff/es6-draft.html">ECMA-262 6th Edition / Draft</a></cite>. ECMA / Jason Orendorff.
 
+<dt id="refsFILEAPI">[FILEAPI]
+<dd><cite><a href="http://dev.w3.org/2006/webapi/FileAPI/">File API</a></cite>, Arun Ranganathan and Jonas Sicking. W3C.
+
 <dt id="refsHTML5">[HTML5]
 <dd><cite><a href="http://www.w3.org/html/wg/drafts/html/CR/">HTML5</a></cite>, Robin Berjon, Steve Faulkner, Travis Leithead et al.. W3C.
 
@@ -1600,6 +1738,9 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
 
 <dt id="refsRFC2119">[RFC2119]
 <dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
+
+<dt id="refsTYPEDARRAY">[TYPEDARRAY]
+<dd><cite><a href="http://www.khronos.org/registry/typedarray/specs/latest/">Typed Array</a></cite>, David Herman and Kenneth Russel. Khronos.
 
 <dt id="refsURL">[URL]
 <dd><cite><a href="https://url.spec.whatwg.org/">URL</a></cite>, Anne van Kesteren. WHATWG.
