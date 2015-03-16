@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-10-march-2015">
-        Editor's Draft 10 March 2015
+      <h2 class="no-num no-toc" id="editor's-draft-16-march-2015">
+        Editor's Draft 16 March 2015
       </h2>
       <dl>
         <dt>
@@ -235,22 +235,21 @@
  <li><a href="#terminology"><span class="secno">4 </span>
         Terminology
       </a></li>
- <li><a href="#example"><span class="secno">5 </span>
-        Example
+ <li><a href="#examples"><span class="secno">5 </span>
+        Examples
       </a>
   <ol>
-   <li><a href="#starting-new-presentations-or-manually-connecting-to-existing-presentations"><span class="secno">5.1 </span>
-          Starting new presentations or manually connecting to existing
-          presentations
+   <li><a href="#monitor-availability-of-presentation-displays-example"><span class="secno">5.1 </span>
+          Monitor availability of presentation displays example
         </a></li>
-   <li><a href="#automatically-reconnecting-to-existing-presentations"><span class="secno">5.2 </span>
-          Automatically reconnecting to existing presentations
+   <li><a href="#starting-a-new-presentation-session-example"><span class="secno">5.2 </span>
+          Starting a new presentation session example
         </a></li>
-   <li><a href="#open-questions"><span class="secno">5.3 </span>
-          Open questions
+   <li><a href="#joining-a-presentation-session-example"><span class="secno">5.3 </span>
+          Joining a presentation session example
         </a></li>
-   <li><a href="#usage-on-remote-screen"><span class="secno">5.4 </span>
-          Usage on remote screen
+   <li><a href="#monitor-session's-state-and-exchange-data-example"><span class="secno">5.4 </span>
+          Monitor session's state and exchange data example
         </a></ol></li>
  <li><a href="#api"><span class="secno">6 </span>
         API
@@ -595,19 +594,142 @@
       </p>
     </section>
     <section>
-      <h2 id="example"><span class="secno">5 </span>
-        Example
+      <h2 id="examples"><span class="secno">5 </span>
+        Examples
       </h2>
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/42">ISSUE 42:
         Make the Example section more concise</a>
       </p>
       <p>
+        This section shows example codes that highlight the usage of main
+        features of the Presentation API. In these examples,
+        <code>controller.html</code> represents the controlling page that runs
+        in the opener user agent and <code>presentation.html</code> represents
+        the presenting page that runs in the presenting user agent. Both pages
+        are served from the domain <code>http://example.org</code>
+        (<code>http://example.org/controller.html</code> and
+        <code>http://example.org/presentation.html</code>). Please refer to the
+        comments in the code examples for further details.
+      </p>
+      <section>
+        <h3 id="monitor-availability-of-presentation-displays-example"><span class="secno">5.1 </span>
+          Monitor availability of presentation displays example
+        </h3>
+        <pre class="example">&lt;!-- controller.html --&gt;
+&lt;button id="castBtn" style="display: none;"&gt;  &lt;/button&gt;
+&lt;script&gt;
+  // the cast button is visible if at least one presentation display is available
+  var castBtn = document.getElementById("castBtn");
+  // availablechange event is fired when the presentation display availability changes
+  navigator.presentation.onavailablechange = function(evt){
+    // show or hide cast button depending on display availability
+    castBtn.style.display = evt.available? "inline" : "none";
+  }
+&lt;/script&gt;
+        
+</pre>
+      </section>
+      <section>
+        <h3 id="starting-a-new-presentation-session-example"><span class="secno">5.2 </span>
+          Starting a new presentation session example
+        </h3>
+        <pre class="example">&lt;!-- controller.html --&gt;
+&lt;script&gt;
+  // it is also possible to use relative presentation URL e.g. "presentation.html"
+  var presUrl = "http://example.com/presentation.html";
+  // create random presId 
+  var presId = Math.random().toFixed(6).substr(2);
+  navigator.presentation.startSession(presUrl, presId).then(function(newSession){
+    // a new session is started successfully
+    setSession(newSession);
+  },function(){
+    // user cancels the selection dialog or an error is occurred
+    setSession(null);
+  });
+&lt;/script&gt;
+
+        
+</pre>
+      </section>
+      <section>
+        <h3 id="joining-a-presentation-session-example"><span class="secno">5.3 </span>
+          Joining a presentation session example
+        </h3>
+        <pre class="example">&lt;!-- controller.html --&gt;
+&lt;script&gt;
+  // read presId from localStorage if exists 
+  var presId = localStorage &amp;&amp; localStorage["presId"] || null;
+  // presId is mandatory for joinSession
+  presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId).then(function(existingSession){
+    // session with requested presUrl and presId is found and joined successfully
+    setSession(existingSession);
+  },function(){
+    // no session found for presUrl and presId or error is occurred 
+    setSession(null);
+  });
+&lt;/script&gt;
+
+        
+</pre>
+      </section>
+      <section>
+        <h3 id="monitor-session's-state-and-exchange-data-example"><span class="secno">5.4 </span>
+          Monitor session's state and exchange data example
+        </h3>
+        <pre class="example">&lt;!-- controller.html --&gt;
+&lt;script&gt;
+  var session;
+  var setSession = function(theSession){
+    // close old session if exists
+    session &amp;&amp; session.close();
+    // remove old presId from localStorage if exists
+    localStorage &amp;&amp; delete localStorage["presId"];
+    // set the new session
+    session = theSession;
+    if(session){
+      // save presId in localStorage
+      localStorage &amp;&amp; localStorage["presId"] = session.id;
+      // monitor session's state
+      session.onstatechange = function(){
+        if(this == session &amp;&amp; this.state == "disconnected")
+          setSession(null);
+      };
+      // register message handler
+      session.onmessage = function(msg){
+        console.log("receive message",msg);
+      };
+      // send message to presentation page
+      session.postMessage("say hello");
+    }
+  };
+&lt;/script&gt;
+        
+        
+</pre>
+        <pre class="example">&lt;!-- presentation.html --&gt;
+&lt;script&gt;
+  var session = navigator.presentation.session;
+  session.onstatechange = function(){
+    // session.state is either 'connected' or 'disconnected'
+    console.log("session's state is now", session.state);
+  };
+  session.onmessage = function(msg){
+    if(msg == "say hello")
+      session.postMessage("hello");
+  };
+&lt;/script&gt;
+        
+        
+</pre>
+      </section><!--
+      <p>
         Running in a compliant user agent, code for presenting a page
         <code>http://example.org/presentation.html</code> on the presentation
         display looks as follows:
       </p>
-      <pre class="example">/* controller.html */
+      <pre class="example">
+/* controller.html */
 
 &lt;button disabled id=show&gt;Show&lt;/button&gt;
 &lt;button disabled id=stop&gt;Stop&lt;/button&gt;
@@ -700,7 +822,7 @@ function setSession(theSession) {
         presented</a>
       </p>
       <section>
-        <h4 id="starting-new-presentations-or-manually-connecting-to-existing-presentations"><span class="secno">5.1 </span>
+        <h4>
           Starting new presentations or manually connecting to existing
           presentations
         </h4>
@@ -731,31 +853,32 @@ function setSession(theSession) {
         <p>
           If the user selects a screen with an existing presentation showing
           the same <code>url</code> under the same <code>presentationId</code>,
-          the <a href="#opening-browsing-context">opening browsing context</a> is connected to that
+          the <span>opening browsing context</span> is connected to that
           existing presentation. If the user selects a screen without an
           existing presentation, or a screen presenting a different
           <code>url</code> or <code>presentationId</code>, the UA connects to
           the selected screen, brings up a new presentation window on it, and
           starts to show the content denoted by the <code>url</code> argument.
-          The UA then connects the <a href="#opening-browsing-context">opening browsing context</a> to
-          this new presentation and allows the <a href="#opening-browsing-context">opening browsing
-          context</a> to exchange messages with it.
+          The UA then connects the <span>opening browsing context</span> to
+          this new presentation and allows the <span>opening browsing
+          context</span> to exchange messages with it.
         </p>
         <p>
           <code>navigator.presentation.startSession(url, presentationId)</code>
-          returns a <code>Promise</code> to the <a href="#opening-browsing-context">opening browsing
-          context</a>. When the user selects a screen, the presentation page
+          returns a <code>Promise</code> to the <span>opening browsing
+          context</span>. When the user selects a screen, the presentation page
           is shown and a communication channel has been established the
-          <code>Promise</code> resolves to a <a href="#presentationsession"><code>PresentationSession</code></a>
+          <code>Promise</code> resolves to a <code>PresentationSession</code>
           object, which acts as a handle to the presentation for communication
           and state handling. Initially, the state of the
-          <a href="#presentationsession"><code>PresentationSession</code></a> is <code>"connected"</code>. At this
-          point, the <a href="#opening-browsing-context">opening browsing context</a> can communicate with
+          <code>PresentationSession</code> is <code>"connected"</code>. At this
+          point, the <span>opening browsing context</span> can communicate with
           the presentation page using the session's <code>postMessage()</code>
-          to send messages and its <a href="#onmessage"><code>onmessage</code></a> event handler to
+          to send messages and its <code>onmessage</code> event handler to
           receive messages. The presentation page will also have access to
-          <a href="#presentationsession"><code>PresentationSession</code></a> that it can use to send and receive
-          messages with the <a href="#opening-browsing-context">opening browsing context</a> (see <a href="#usage-on-remote-screen">Usage on remote screen</a>).
+          <code>PresentationSession</code> that it can use to send and receive
+          messages with the <span>opening browsing context</span> (see <a href=
+          "#usage-on-remote-screen">Usage on remote screen</a>).
         </p>
         <p>
           If the user cancels screen selection, the <code>Promise</code>
@@ -768,10 +891,10 @@ function setSession(theSession) {
           <code>startSession()</code>/<code>joinSession()</code></a>
         </p>
         <p>
-          While there is a pending call to <a href="#startsession"><code>startSession</code></a> asking the
+          While there is a pending call to <code>startSession</code> asking the
           user to select a screen (that the user has not yet accepted or
           canceled), the browser may choose to reject subsequent calls to
-          <a href="#startsession"><code>startSession</code></a> from the same page, by returning a
+          <code>startSession</code> from the same page, by returning a
           <code>Promise</code> that never resolves. This will prevent the
           browser from needing to 'queue up' requests to present to the user.
         </p>
@@ -782,28 +905,28 @@ function setSession(theSession) {
         </p>
       </section>
       <section>
-        <h4 id="automatically-reconnecting-to-existing-presentations"><span class="secno">5.2 </span>
+        <h4>
           Automatically reconnecting to existing presentations
         </h4>
         <p>
-          The <a href="#opening-browsing-context">opening browsing context</a> may wish to reconnect to an
+          The <span>opening browsing context</span> may wish to reconnect to an
           existing presentation without prompting the user to select a screen.
           For example, the site could allow media items from different pages to
           be shown on the same presentation page, and does not want to prompt
           the user on each page to reconnect to that presentation. To reconnect
           automatically, the page may call <code>joinSession(url,
           presentationId)</code>, which returns a <code>Promise</code> that
-          resolves to an existing <a href="#presentationsession"><code>PresentationSession</code></a> if one
+          resolves to an existing <code>PresentationSession</code> if one
           exists that is presenting the same <code>url</code> with the same
           <code>presentationId</code> as was passed originally into
-          <a href="#startsession"><code>startSession</code></a>. The <a href="#opening-browsing-context">opening browsing context</a>
+          <code>startSession</code>. The <span>opening browsing context</span>
           can then communicate with the presentation as if the user had
-          manually connected to it via <a href="#startsession"><code>startSession</code></a>.
+          manually connected to it via <code>startSession</code>.
         </p>
         <p>
           At the time the <code>joinSession(url, presentationId)</code> method
           is called, if the browser is not aware of any
-          <a href="#presentationsession"><code>PresentationSession</code></a> with a matching <code>url</code> and
+          <code>PresentationSession</code> with a matching <code>url</code> and
           <code>presentationId</code>, the <code>Promise</code> should remain
           unresolved. The browser may become aware of such a session at a later
           time (for example, by switching to a WiFi network that has a screen
@@ -826,13 +949,13 @@ function setSession(theSession) {
           there is a pending <code>Promise</code> from a call to
           <code>joinSession(url, presentationId)</code> (with the same
           <code>url</code> and <code>presentationId</code>, and the user
-          selects a screen in response to <a href="#startsession"><code>startSession</code></a>, then the
-          <code>Promise</code> from <a href="#startsession"><code>startSession</code></a> will be resolved
-          and the <code>Promise</code> from <a href="#joinsession"><code>joinSession</code></a> will not.
+          selects a screen in response to <code>startSession</code>, then the
+          <code>Promise</code> from <code>startSession</code> will be resolved
+          and the <code>Promise</code> from <code>joinSession</code> will not.
         </p>
       </section>
       <section>
-        <h4 id="open-questions"><span class="secno">5.3 </span>
+        <h4>
           Open questions
         </h4>
         <p class="open-issue">
@@ -847,7 +970,7 @@ function setSession(theSession) {
         </p>
       </section>
       <section>
-        <h3 id="usage-on-remote-screen"><span class="secno">5.4 </span>
+        <h3>
           Usage on remote screen
         </h3>
         <p>
@@ -857,7 +980,8 @@ function setSession(theSession) {
           the <code>navigator.presentation.session</code> property, which is
           only non-<code>null</code> for the page on the presentation screen.
         </p>
-        <pre class="example">if (navigator.presentation.session) {
+        <pre class="example">
+if (navigator.presentation.session) {
   var session = navigator.presentation.session;
   // Communicate with opening browsing context
   session.postMessage(/*...*/);
@@ -878,15 +1002,15 @@ function setSession(theSession) {
           <code>navigator.presentation.session</code> property set to the
           session. This session is a similar object as in the first example.
           Here, its initial state is <code>"connected"</code>, which means we
-          can use it to communicate with the <a href="#opening-browsing-context">opening browsing
-          context</a> using <code>postMessage()</code> and
-          <a href="#onmessage"><code>onmessage</code></a>.
+          can use it to communicate with the <span>opening browsing
+          context</span> using <code>postMessage()</code> and
+          <code>onmessage</code>.
         </p>
         <p>
           The presentation page can also monitor the connection state by
           listening for <code>statechange</code> events. When the state changes
           to <code>"disconnected"</code> the page is made aware of the fact
-          that communication with the <a href="#opening-browsing-context">opening browsing context</a> was
+          that communication with the <span>opening browsing context</span> was
           lost, but it can continue to display the current content. The
           communication can be re-established when a <code>statechange</code>
           event fires with a new state of <code>"connected"</code>.
@@ -906,6 +1030,7 @@ function setSession(theSession) {
           Define user agent context for rendering the presentation</a>
         </p>
       </section>
+      -->
     </section>
     <section>
       <h2 id="api"><span class="secno">6 </span>
@@ -1755,7 +1880,7 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
         Acknowledgments
       </h2>
       <p>
-        Thanks to Wayne Carr, Louay Bassbous, Anssi Kostiainen, 闵洪波 (Hongbo
+        Thanks to Wayne Carr, Louay Bassbouss, Anssi Kostiainen, 闵洪波 (Hongbo
         Min), Anton Vayvod, and Mark Foltz for help with editing, reviews and
         feedback to this draft.
       </p>
