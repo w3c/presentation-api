@@ -519,12 +519,128 @@
     </section>
     <section>
       <h2>
-        Example
+        Examples
       </h2>
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/42">ISSUE 42:
         Make the Example section more concise</a>
       </p>
+      <p>
+        This section shows example codes that highlight the usage of main
+        features of the Presentation API. In these examples,
+        <code>controller.html</code> represents the controlling page that runs
+        in the opener user agent and <code>presentation.html</code> represents
+        the presenting page that runs in the presenting user agent. Both pages
+        are served from the domain <code>http://example.org</code>
+        (<code>http://example.org/controller.html</code> and
+        <code>http://example.org/presentation.html</code>). Please refer to the
+        comments in the code examples for further details.
+      </p>
+      <section>
+        <h3>
+          Monitor availability of presentation displays example
+        </h3>
+        <pre class="example">
+&lt;!-- controller.html --&gt;
+&lt;button id="castBtn" style="display: none;"&gt;  &lt;/button&gt;
+&lt;script&gt;
+  // the cast button is visible if at least one presentation display is available
+  var castBtn = document.getElementById("castBtn");
+  // availablechange event is fired when the presentation display availability changes
+  navigator.presentation.onavailablechange = function(evt){
+    // show or hide cast button depending on display availability
+    castBtn.style.display = evt.available? "inline" : "none";
+  }
+&lt;/script&gt;
+        
+</pre>
+      </section>
+      <section>
+        <h3>
+          Starting a new presentation session example
+        </h3>
+        <pre class="example">
+&lt;!-- controller.html --&gt;
+&lt;script&gt;
+  // it is also possible to use relative presentation URL e.g. "presentation.html"
+  var presUrl = "http://example.com/presentation.html";
+  // create random presId 
+  var presId = Math.random().toFixed(6).substr(2);
+  // Start new session. presId is optional.
+  // the new started session will be passed to setSession on success or null on error
+  navigator.presentation.startSession(presUrl, presId).then(setSession).catch(function(e){
+    // user cancels the selection dialog or an error is occurred
+    setSession(null);
+  });
+&lt;/script&gt;
+</pre>
+      </section>
+      <section>
+        <h3>
+          Joining a presentation session example
+        </h3>
+        <pre class="example">
+&lt;!-- controller.html --&gt;
+&lt;script&gt;
+  // read presId from localStorage if exists 
+  var presId = localStorage &amp;&amp; localStorage["presId"] || null;
+  // presId is mandatory for joinSession.
+  // The joined session will be passed to setSession on success or null on error
+  presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId).then(setSession).catch(function(e){
+    // no session found for presUrl and presId or an error is occurred
+    setSession(null);
+  });
+&lt;/script&gt;
+</pre>
+      </section>
+      <section>
+        <h3>
+          Monitor session's state and exchange data example
+        </h3>
+        <pre class="example">
+&lt;!-- controller.html --&gt;
+&lt;script&gt;
+  var session;
+  var setSession = function(theSession){
+    // close old session if exists
+    session &amp;&amp; session.close();
+    // remove old presId from localStorage if exists
+    localStorage &amp;&amp; delete localStorage["presId"];
+    // set the new session
+    session = theSession;
+    if(session){
+      // save presId in localStorage
+      localStorage &amp;&amp; localStorage["presId"] = session.id;
+      // monitor session's state
+      session.onstatechange = function(){
+        if(this == session &amp;&amp; this.state == "disconnected")
+          setSession(null);
+      };
+      // register message handler
+      session.onmessage = function(msg){
+        console.log("receive message",msg);
+      };
+      // send message to presentation page
+      session.postMessage("say hello");
+    }
+  };
+&lt;/script&gt;
+</pre>
+        <pre class="example">
+&lt;!-- presentation.html --&gt;
+&lt;script&gt;
+  var session = navigator.presentation.session;
+  session.onstatechange = function(){
+    // session.state is either 'connected' or 'disconnected'
+    console.log("session's state is now", session.state);
+  };
+  session.onmessage = function(msg){
+    if(msg == "say hello")
+      session.postMessage("hello");
+  };
+&lt;/script&gt;
+</pre>
+      </section><!--
       <p>
         Running in a compliant user agent, code for presenting a page
         <code>http://example.org/presentation.html</code> on the presentation
@@ -832,6 +948,7 @@ if (navigator.presentation.session) {
           Define user agent context for rendering the presentation</a>
         </p>
       </section>
+      -->
     </section>
     <section>
       <h2>
@@ -1699,7 +1816,7 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
         Acknowledgments
       </h2>
       <p>
-        Thanks to Wayne Carr, Louay Bassbous, Anssi Kostiainen, 闵洪波 (Hongbo
+        Thanks to Wayne Carr, Louay Bassbouss, Anssi Kostiainen, 闵洪波 (Hongbo
         Min), Anton Vayvod, and Mark Foltz for help with editing, reviews and
         feedback to this draft.
       </p>
