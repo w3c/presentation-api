@@ -566,16 +566,13 @@
   var presUrl = "http://example.com/presentation.html";
   // create random presId 
   var presId = Math.random().toFixed(6).substr(2);
-  navigator.presentation.startSession(presUrl, presId).then(function(newSession){
-    // a new session is started successfully
-    setSession(newSession);
-  },function(){
+  // Start new session. presId is optional.
+  // the new started session will be passed to setSession on success or null on error
+  navigator.presentation.startSession(presUrl, presId).then(setSession).catch(function(e){
     // user cancels the selection dialog or an error is occurred
     setSession(null);
   });
 &lt;/script&gt;
-
-        
 </pre>
       </section>
       <section>
@@ -587,17 +584,13 @@
 &lt;script&gt;
   // read presId from localStorage if exists 
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
-  // presId is mandatory for joinSession
-  presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId).then(function(existingSession){
-    // session with requested presUrl and presId is found and joined successfully
-    setSession(existingSession);
-  },function(){
-    // no session found for presUrl and presId or error is occurred 
+  // presId is mandatory for joinSession.
+  // The joined session will be passed to setSession on success or null on error
+  presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId).then(setSession).catch(function(e){
+    // no session found for presUrl and presId or an error is occurred
     setSession(null);
   });
 &lt;/script&gt;
-
-        
 </pre>
       </section>
       <section>
@@ -632,8 +625,6 @@
     }
   };
 &lt;/script&gt;
-        
-        
 </pre>
         <pre class="example">
 &lt;!-- presentation.html --&gt;
@@ -648,8 +639,6 @@
       session.postMessage("hello");
   };
 &lt;/script&gt;
-        
-        
 </pre>
       </section><!--
       <p>
