@@ -542,15 +542,15 @@
         </h3>
         <pre class="example">
 &lt;!-- controller.html --&gt;
-&lt;button id="castBtn" style="display: none;"&gt;  &lt;/button&gt;
+&lt;button id="castBtn" style="display: none;"&gt;Cast&lt;/button&gt;
 &lt;script&gt;
   // the cast button is visible if at least one presentation display is available
   var castBtn = document.getElementById("castBtn");
   // availablechange event is fired when the presentation display availability changes
-  navigator.presentation.onavailablechange = function(evt){
+  navigator.presentation.onavailablechange = function (evt) {
     // show or hide cast button depending on display availability
-    castBtn.style.display = evt.available? "inline" : "none";
-  }
+    castBtn.style.display = evt.available ? "inline" : "none";
+  };
 &lt;/script&gt;
         
 </pre>
@@ -567,11 +567,11 @@
   // create random presId 
   var presId = Math.random().toFixed(6).substr(2);
   // Start new session. presId is optional.
-  // the new started session will be passed to setSession on success or null on error
-  navigator.presentation.startSession(presUrl, presId).then(setSession).catch(function(e){
+  navigator.presentation.startSession(presUrl, presId)
+    // the new started session will be passed to setSession on success
+    .then(setSession)
     // user cancels the selection dialog or an error is occurred
-    setSession(null);
-  });
+    .catch(function () { setSession(null); });
 &lt;/script&gt;
 </pre>
       </section>
@@ -585,11 +585,11 @@
   // read presId from localStorage if exists 
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
   // presId is mandatory for joinSession.
-  // The joined session will be passed to setSession on success or null on error
-  presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId).then(setSession).catch(function(e){
+  presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId)
+    // The joined session will be passed to setSession on success
+    .then(setSession)
     // no session found for presUrl and presId or an error is occurred
-    setSession(null);
-  });
+    .catch(function () { setSession(null); });
 &lt;/script&gt;
 </pre>
       </section>
@@ -601,23 +601,23 @@
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
   var session;
-  var setSession = function(theSession){
+  var setSession = function (theSession) {
     // close old session if exists
     session &amp;&amp; session.close();
     // remove old presId from localStorage if exists
     localStorage &amp;&amp; delete localStorage["presId"];
     // set the new session
     session = theSession;
-    if(session){
+    if (session) {
       // save presId in localStorage
       localStorage &amp;&amp; localStorage["presId"] = session.id;
       // monitor session's state
-      session.onstatechange = function(){
-        if(this == session &amp;&amp; this.state == "disconnected")
+      session.onstatechange = function () {
+        if (this == session &amp;&amp; this.state == "disconnected")
           setSession(null);
       };
       // register message handler
-      session.onmessage = function(msg){
+      session.onmessage = function (msg) {
         console.log("receive message",msg);
       };
       // send message to presentation page
@@ -630,12 +630,12 @@
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
   var session = navigator.presentation.session;
-  session.onstatechange = function(){
+  session.onstatechange = function () {
     // session.state is either 'connected' or 'disconnected'
     console.log("session's state is now", session.state);
   };
-  session.onmessage = function(msg){
-    if(msg == "say hello")
+  session.onmessage = function (msg) {
+    if (msg == "say hello")
       session.postMessage("hello");
   };
 &lt;/script&gt;
