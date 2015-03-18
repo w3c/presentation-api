@@ -571,7 +571,7 @@
     // the new started session will be passed to setSession on success
     .then(setSession)
     // user cancels the selection dialog or an error is occurred
-    .catch(function () { setSession(null); });
+    .catch(endSession);
 &lt;/script&gt;
 </pre>
       </section>
@@ -589,7 +589,7 @@
     // The joined session will be passed to setSession on success
     .then(setSession)
     // no session found for presUrl and presId or an error is occurred
-    .catch(function () { setSession(null); });
+    .catch(endSession);
 &lt;/script&gt;
 </pre>
       </section>
@@ -602,10 +602,8 @@
 &lt;script&gt;
   var session;
   var setSession = function (theSession) {
-    // close old session if exists
-    session &amp;&amp; session.close();
-    // remove old presId from localStorage if exists
-    localStorage &amp;&amp; delete localStorage["presId"];
+    // end existing session, if any
+    endSession();
     // set the new session
     session = theSession;
     if (session) {
@@ -614,7 +612,7 @@
       // monitor session's state
       session.onstatechange = function () {
         if (this == session &amp;&amp; this.state == "disconnected")
-          setSession(null);
+          endSession();
       };
       // register message handler
       session.onmessage = function (msg) {
@@ -623,6 +621,12 @@
       // send message to presentation page
       session.postMessage("say hello");
     }
+  };
+  var endSession = function () {
+    // close old session if exists
+    session &amp;&amp; session.close();
+    // remove old presId from localStorage if exists
+    localStorage &amp;&amp; delete localStorage["presId"];
   };
 &lt;/script&gt;
 </pre>
