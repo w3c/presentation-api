@@ -683,7 +683,7 @@
     session = theSession;
     if (session) {
       // save presId in localStorage
-      localStorage &amp;&amp; localStorage["presId"] = session.id;
+      localStorage &amp;&amp; (localStorage["presId"] = session.id);
       // monitor session's state
       session.onstatechange = function () {
         if (this == session &amp;&amp; this.state == "disconnected")
