@@ -1,7 +1,7 @@
 {
   "definitions": {
     "algorithm-monitor-available": "algorithm-monitor-available",
-    "algorithm-post-message": "algorithm-post-message",
+    "algorithm-send": "algorithm-send",
     "availablechangeevent": "availablechangeevent",
     "availablechangeeventinit": "availablechangeeventinit",
     "binarytype": "binarytype",
@@ -21,10 +21,6 @@
     "onmessage": "onmessage",
     "onstatechange": "onstatechange",
     "opening browsing context": "opening-browsing-context",
-    "postmessage": "postmessage",
-    "postmessage-arraybuffer": "postmessage-arraybuffer",
-    "postmessage-arraybufferview": "postmessage-arraybufferview",
-    "postmessage-blob": "postmessage-blob",
     "presentation": "presentation",
     "presentation display": "presentation-display",
     "presentation display availability": "presentation-display-availability",
@@ -36,6 +32,10 @@
     "presentationsession": "presentationsession",
     "presentationsessionstate": "presentationsessionstate",
     "presenting browsing context": "presenting-browsing-context",
+    "send": "send",
+    "send-arraybuffer": "send-arraybuffer",
+    "send-arraybufferview": "send-arraybufferview",
+    "send-blob": "send-blob",
     "startsession": "startsession",
     "state": "state"
   },

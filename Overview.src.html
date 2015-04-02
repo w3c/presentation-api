@@ -555,7 +555,7 @@
     castBtn.style.display = evt.available ? "inline" : "none";
   };
 &lt;/script&gt;
-        
+
 </pre>
       </section>
       <section>
@@ -567,7 +567,7 @@
 &lt;script&gt;
   // it is also possible to use relative presentation URL e.g. "presentation.html"
   var presUrl = "http://example.com/presentation.html";
-  // create random presId 
+  // create random presId
   var presId = Math.random().toFixed(6).substr(2);
   // Start new session. presId is optional.
   navigator.presentation.startSession(presUrl, presId)
@@ -585,7 +585,7 @@
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
-  // read presId from localStorage if exists 
+  // read presId from localStorage if exists
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
   // presId is mandatory for joinSession.
   presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId)
@@ -622,7 +622,7 @@
         console.log("receive message",msg);
       };
       // send message to presentation page
-      session.postMessage("say hello");
+      session.send("say hello");
     }
   };
   var endSession = function () {
@@ -643,7 +643,7 @@
   };
   session.onmessage = function (msg) {
     if (msg == "say hello")
-      session.postMessage("hello");
+      session.send("hello");
   };
 &lt;/script&gt;
 </pre>
@@ -718,7 +718,7 @@ function setSession(theSession) {
   session.onstatechange = function() {
     switch (session.state) {
       case 'connected':
-        session.postMessage(/*...*/);
+        session.send(/*...*/);
         session.onmessage = function() { /*...*/ };
         break;
       case 'disconnected':
@@ -798,7 +798,7 @@ function setSession(theSession) {
           and state handling. Initially, the state of the
           <code>PresentationSession</code> is <code>"connected"</code>. At this
           point, the <span>opening browsing context</span> can communicate with
-          the presentation page using the session's <code>postMessage()</code>
+          the presentation page using the session's <code>send()</code>
           to send messages and its <code>onmessage</code> event handler to
           receive messages. The presentation page will also have access to
           <code>PresentationSession</code> that it can use to send and receive
@@ -909,7 +909,7 @@ function setSession(theSession) {
 if (navigator.presentation.session) {
   var session = navigator.presentation.session;
   // Communicate with opening browsing context
-  session.postMessage(/*...*/);
+  session.send(/*...*/);
   session.onmessage = function() {/*...*/};
 
   session.onstatechange = function() {
@@ -928,7 +928,7 @@ if (navigator.presentation.session) {
           session. This session is a similar object as in the first example.
           Here, its initial state is <code>"connected"</code>, which means we
           can use it to communicate with the <span>opening browsing
-          context</span> using <code>postMessage()</code> and
+          context</span> using <code>send()</code> and
           <code>onmessage</code>.
         </p>
         <p>
@@ -1040,15 +1040,13 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
   attribute BinaryType <dfn title="binarytype-attribute">binaryType</dfn>;
   <span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
 "presentation-onmessage">onmessage</dfn>;
-  void <dfn>postMessage</dfn> (<span data-anolis-spec=
+  void <dfn>send</dfn> (<span data-anolis-spec=
 "webidl">DOMString</span> message);
-  void <dfn title="postMessage-blob">postMessage</dfn> (<span data-anolis-spec=
+  void <dfn title="send-blob">send</dfn> (<span data-anolis-spec=
 "fileapi">Blob</span> data);
-  void <dfn title=
-"postMessage-arraybuffer">postMessage</dfn> (<span data-anolis-spec=
+  void <dfn title="send-arraybuffer">send</dfn> (<span data-anolis-spec=
 "typedarray">ArrayBuffer</span> data);
-  void <dfn title=
-"postMessage-arraybufferview">postMessage</dfn> (<span data-anolis-spec=
+  void <dfn title="send-arraybufferview">send</dfn> (<span data-anolis-spec=
 "typedarray">ArrayBufferView</span> data);
 };
 
@@ -1064,10 +1062,10 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           depending on connection state.
         </p>
         <p>
-          When the <code><span>postMessage</span>()</code> method is called on
-          a <code>PresentationSession</code> object with a
-          <code>message</code>, the user agent must run the algorithm to
-          <span title="algorithm-post-message">post a message through a
+          When the <code><span>send</span>()</code> method is called on a
+          <code>PresentationSession</code> object with a <code>message</code>,
+          the user agent must run the algorithm to <span title=
+          "algorithm-send">send a message through a
           <span><code>PresentationSession</code></span></span>.
         </p>
         <p>
@@ -1083,17 +1081,17 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
         <section>
           <p class="open-issue">
             <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
-            46: Define postMessage behavior</a>
+            46: Define send behavior</a>
           </p>
           <h4>
-            Posting a message through <code>PresentationSession</code>
+            Sending a message through <code>PresentationSession</code>
           </h4>
           <p class="note">
             Presentation API does not mandate a specific protocol for the
             connection between the <span>opening browsing context</span> and
             the <span>presenting browsing context</span> except that for
-            multiple calls to <code>postMessage</code> it has to be ensured
-            that messages are delivered to the other end in sequence.
+            multiple calls to <code>send</code> it has to be ensured that
+            messages are delivered to the other end in sequence.
           </p>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
@@ -1102,9 +1100,9 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             <code>text</code> and <code>binary</code>.
           </p>
           <p>
-            When the user agent is to <dfn title="algorithm-post-message">post
-            a message through a <code>PresentationSession</code> S</dfn>, it
-            must run the following steps:
+            When the user agent is to <dfn title="algorithm-send">send a
+            message through a <code>PresentationSession</code> S</dfn>, it must
+            run the following steps:
           </p>
           <ol>
             <li>If the <code>state</code> property of
@@ -1120,14 +1118,12 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <span>destination browsing context</span> be
-                the <span>opening browsing context</span> if
-                <span>postMessage</span> is called in the <span>presenting
-                browsing context</span>.
+                the <span>opening browsing context</span> if <span>send</span>
+                is called in the <span>presenting browsing context</span>.
                 </li>
                 <li>Let <span>destination browsing context</span> be the <span>
-                  presenting browsing context</span> if
-                  <span>postMessage</span> is called from the <span>opening
-                  browsing context</span>.
+                  presenting browsing context</span> if <span>send</span> is
+                  called from the <span>opening browsing context</span>.
                 </li>
               </ol>
             </li>
