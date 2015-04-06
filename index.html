@@ -4,13 +4,13 @@
       Presentation API
     </title>
     <style>
-@media print {
+    @media print {
      [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">
     <style type="text/css">
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-2-april-2015">
-        Editor's Draft 2 April 2015
+      <h2 class="no-num no-toc" id="editor's-draft-6-april-2015">
+        Editor's Draft 6 April 2015
       </h2>
       <dl>
         <dt>
@@ -187,9 +187,9 @@
       <p>
         Publication as a First Public Working Draft does not imply endorsement
         by the <abbr title="World Wide Web Consortium">W3C</abbr> Membership.
-        This is a draft document and may be updated, replaced or obsoleted by
-        other documents at any time. It is inappropriate to cite this document
-        as other than work in progress.
+        This draft document may be updated, replaced or obsoleted by other
+        documents at any time. It is inappropriate to cite this document as
+        other than work in progress.
       </p>
       <p>
         This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/" id="sotd_patent" rel="w3p:patentRules">5 February 2004
@@ -197,7 +197,7 @@
         <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="http://www.w3.org/2004/01/pp-impl/74168/status" rel="disclosure">public list of any patent disclosures</a> made in
         connection with the deliverables of the group; that page also includes
         instructions for disclosing a patent. An individual who has actual
-        knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
+        knowledge of a patent that the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
         Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
         6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent
         Policy</a>.
@@ -331,7 +331,7 @@
       </p>
       <p>
         Devices with limited screen size lack the ability to show content to a
-        larger audience, for example a group of colleagues in a conference
+        larger audience, for example, a group of colleagues in a conference
         room, or friends and family at home. Showing content on an external
         large display helps to improve the perceived quality and impact of the
         presented content.
@@ -340,11 +340,11 @@
         At its core, this specification enables an exchange of messages between
         a requesting page and a presentation page shown in the secondary
         display. How those messages are transmitted is left to the UA in order
-        to allow for use of display devices that can be attached in a wide
+        to allow for the use of display devices that can be attached to a wide
         variety of ways. For example, when a display device is attached using
         HDMI or MiraCast, the UA on the requesting device can render the
-        requested presentation page in that same UA, but instead of displaying
-        in a window on that same device, it can use whatever means the
+        requested presentation page in that same UA. Instead of displaying in a
+        window on that same device, however, it can use whatever means the
         operating system provides for using those external displays. In that
         case, both the requesting page and the presentation page run on the
         requesting device and the operating system is used to route the
@@ -354,19 +354,19 @@
       </p>
       <p>
         Alternately, some types of external displays may be able to render
-        HTML5 themselves and may have defined their own way to send messages to
+        HTML5 themselves and may have defined their way to send messages to
         that content. In that case, the UA on the requesting device would not
         need to render the presentation page itself. Instead, the UA could act
         as a proxy translating the request to show a page and the messages into
         the form understood by the display device.
       </p>
       <p>
-        This way of attaching to displays could be enhanced in the future
-        through definition of a standard protocol for delivering these types of
-        messages that display devices could choose to implement.
+        This way of attaching to displays could be enhanced in the future by
+        defining a standard protocol for delivering these types of messages
+        that display devices could choose to implement.
       </p>
       <p>
-        The API defined here is intended be used with UAs that attach to
+        The API defined here is intended to be used with UAs that attach to
         display devices through any of the above means.
       </p>
     </section>
@@ -383,15 +383,15 @@
             Presentations
           </dt>
           <dd>
-            A user is preparing a set of slides for a talk. Using a web based
+            A user is preparing a set of slides for a talk. Using a web-based
             service, she is editing her slides and speaker notes on the primary
-            screen, while the secondary larger screen shows a preview of the
+            screen while the secondary larger screen shows a preview of the
             current slide. When the slides are done, her mobile phone allows
             her to access them from an online service while on the go. Coming
             to the conference, using wireless display technology, she would
             like to present her slides on the stage screen from her mobile
             phone. The phone's touch screen helps her to navigate slides and
-            presents a slide preview, while the projector shows her slides to
+            presents a slide preview while the projector shows her slides to
             the audience.
           </dd>
           <dt>
@@ -400,23 +400,23 @@
           <dd>
             Using an online video or image sharing service, a user would like
             to show memorable moments to her friends. Using a device with a
-            small screen, it is impossible to show the content to a large group
-            of people. Connecting an external TV screen or projector to her
-            device - with a cable or wirelessly - the online sharing service
-            now makes use of the connected display, allowing a wider audience
-            to enjoy the content. The web page shows UI elements that allow the
-            user to trigger displaying content on the secondary display (e.g a
-            "send to second screen" ) only if there is at least one secondary
-            screen available.
+            small screen, however, a user cannot show the content to a large
+            group of people. Connecting an external TV screen or projector to
+            her device - with a cable or wirelessly - the online sharing
+            service now makes use of the connected display, allowing a wider
+            audience to enjoy the content. The web page shows UI elements that
+            allow the user to trigger displaying content on the secondary
+            display (e.g., a "send to second screen" ) only if there is at
+            least one secondary screen available.
           </dd>
           <dt>
             Multiplayer gaming
           </dt>
           <dd>
             Splitting the gaming experience into a near screen controller and a
-            large screen visual experience, new gaming experiences can be
-            created. Accessing the local display on the small screen device and
-            an external larger display allows for richer web-based gaming
+            large screen visual experience can create new gaming experiences.
+            Accessing the local display on the small screen device and an
+            external larger display allows for richer web-based gaming
             experiences.
             <p class="open-issue">
               <a href="https://github.com/w3c/presentation-api/issues/27">ISSUE
@@ -431,9 +431,9 @@
             Next, Alice picks her favorite video from the site, and the video
             starts to play on her tablet. While the video is playing Alice
             clicks a button "Share on different screen". The browser provides a
-            user interface that lists all the screens Alice has around her
-            home, asking her to select one. The screens are identified by names
-            that are familiar to Alice. Alice picks one screen from the list,
+            user interface that lists all the screens Alice has at her home,
+            asking her to select one. The screens are identified by names that
+            are familiar to Alice. Alice picks one screen from the list,
             "Alice's big TV", and the video playback continues seamlessly on
             the selected screen. Next she decides to switch the playback to a
             different screen. She clicks the same button "Share on different
@@ -441,12 +441,12 @@
             interface that lists all the screens. Alice picks another screen
             from the list, "Alice's kitchen TV", and the playback resumes on
             that screen. Video site also provides a feature to see the action
-            (Alice is watching a soccer game) from different angle. Alice
+            (Alice is watching a soccer game) from a different angle. Alice
             clicks a button "Select screen for additional angle", and the
-            browser asks Alice similarly to select the screen to be used for
-            playback. Alice picks "Alice's Projector" and the soccer game is
-            shown on the projector from a different angle, in parallel to the
-            content being played back on "Alice's kitchen TV".
+            browser asks Alice similarly to select the screen for playback.
+            Alice picks "Alice's Projector" and the soccer game is shown on the
+            projector from a different angle, in parallel to the content being
+            played back on "Alice's kitchen TV".
             <p class="open-issue">
               <a href="https://github.com/w3c/presentation-api/issues/40">ISSUE
               40: Screen availability mechanism for multiple sessions</a>
@@ -485,8 +485,8 @@
               Resuming presentation
             </dt>
             <dd>
-              The UA must be able to resume an existing session with content
-              being displayed on the secondary screen.
+              The UA must be able to resume an existing session with the
+              content being displayed on the secondary screen.
             </dd>
             <dt>
               Communication
@@ -495,10 +495,10 @@
               The UA must enable exchanging data between the primary and the
               secondary screen in order to have a control channel between the
               primary and secondary page. The UA must not make assumptions
-              about the execution locality of the user agent of the remote page
-              it communicates with (i.e. the secondary page might run on a
-              remote user agent and thus the link between the two pages' UA
-              must be loosely coupled).
+              about the execution locality of the UA of the remote page it
+              communicates with (i.e. the secondary page might run on a remote
+              UA, and thus the link between these two pages must be loosely
+              coupled).
             </dd>
             <dt>
               Signaling disconnection
@@ -559,7 +559,7 @@
       </p>
       <p>
         Conformance requirements phrased as algorithms or specific steps may be
-        implemented in any manner, so long as the end result is equivalent. (In
+        implemented in any manner, so long as the result is equivalent. (In
         particular, the algorithms defined in this specification are intended
         to be easy to follow, and not intended to be performant.)
       </p>
@@ -608,9 +608,9 @@
         This section shows example codes that highlight the usage of main
         features of the Presentation API. In these examples,
         <code>controller.html</code> represents the controlling page that runs
-        in the opener user agent and <code>presentation.html</code> represents
-        the presenting page that runs in the presenting user agent. Both pages
-        are served from the domain <code>http://example.org</code>
+        in the opener UA and <code>presentation.html</code> represents the
+        presenting page that runs in the presenting UA. Both pages are served
+        from the domain <code>http://example.org</code>
         (<code>http://example.org/controller.html</code> and
         <code>http://example.org/presentation.html</code>). Please refer to the
         comments in the code examples for further details.
