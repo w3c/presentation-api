@@ -268,8 +268,8 @@
           Interface <code>PresentationSession</code>
         </a>
     <ol>
-     <li><a href="#posting-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
-            Posting a message through <code>PresentationSession</code>
+     <li><a href="#sending-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
+            Sending a message through <code>PresentationSession</code>
           </a></li>
      <li><a href="#receiving-a-message-through-presentationsession"><span class="secno">6.3.2 </span>
             Receiving a message through <code>PresentationSession</code>
@@ -630,7 +630,7 @@
     castBtn.style.display = evt.available ? "inline" : "none";
   };
 &lt;/script&gt;
-        
+
 </pre>
       </section>
       <section>
@@ -641,7 +641,7 @@
 &lt;script&gt;
   // it is also possible to use relative presentation URL e.g. "presentation.html"
   var presUrl = "http://example.com/presentation.html";
-  // create random presId 
+  // create random presId
   var presId = Math.random().toFixed(6).substr(2);
   // Start new session. presId is optional.
   navigator.presentation.startSession(presUrl, presId)
@@ -658,7 +658,7 @@
         </h3>
         <pre class="example">&lt;!-- controller.html --&gt;
 &lt;script&gt;
-  // read presId from localStorage if exists 
+  // read presId from localStorage if exists
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
   // presId is mandatory for joinSession.
   presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId)
@@ -694,7 +694,7 @@
         console.log("receive message",msg);
       };
       // send message to presentation page
-      session.postMessage("say hello");
+      session.send("say hello");
     }
   };
   var endSession = function () {
@@ -714,7 +714,7 @@
   };
   session.onmessage = function (msg) {
     if (msg == "say hello")
-      session.postMessage("hello");
+      session.send("hello");
   };
 &lt;/script&gt;
 </pre>
@@ -789,7 +789,7 @@ function setSession(theSession) {
   session.onstatechange = function() {
     switch (session.state) {
       case 'connected':
-        session.postMessage(/*...*/);
+        session.send(/*...*/);
         session.onmessage = function() { /*...*/ };
         break;
       case 'disconnected':
@@ -869,7 +869,7 @@ function setSession(theSession) {
           and state handling. Initially, the state of the
           <code>PresentationSession</code> is <code>"connected"</code>. At this
           point, the <span>opening browsing context</span> can communicate with
-          the presentation page using the session's <code>postMessage()</code>
+          the presentation page using the session's <code>send()</code>
           to send messages and its <code>onmessage</code> event handler to
           receive messages. The presentation page will also have access to
           <code>PresentationSession</code> that it can use to send and receive
@@ -980,7 +980,7 @@ function setSession(theSession) {
 if (navigator.presentation.session) {
   var session = navigator.presentation.session;
   // Communicate with opening browsing context
-  session.postMessage(/*...*/);
+  session.send(/*...*/);
   session.onmessage = function() {/*...*/};
 
   session.onstatechange = function() {
@@ -999,7 +999,7 @@ if (navigator.presentation.session) {
           session. This session is a similar object as in the first example.
           Here, its initial state is <code>"connected"</code>, which means we
           can use it to communicate with the <span>opening browsing
-          context</span> using <code>postMessage()</code> and
+          context</span> using <code>send()</code> and
           <code>onmessage</code>.
         </p>
         <p>
@@ -1106,10 +1106,10 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   // Communication
   attribute BinaryType <dfn id="binarytype-attribute" title="binarytype-attribute">binaryType</dfn>;
   <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
-  void <dfn id="postmessage">postMessage</dfn> (<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
-  void <dfn id="postmessage-blob" title="postMessage-blob">postMessage</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
-  void <dfn id="postmessage-arraybuffer" title="postMessage-arraybuffer">postMessage</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#5">ArrayBuffer</a> data);
-  void <dfn id="postmessage-arraybufferview" title="postMessage-arraybufferview">postMessage</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> data);
+  void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
+  void <dfn id="send-blob" title="send-blob">send</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
+  void <dfn id="send-arraybuffer" title="send-arraybuffer">send</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#5">ArrayBuffer</a> data);
+  void <dfn id="send-arraybufferview" title="send-arraybufferview">send</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> data);
 };
 
 </pre>
@@ -1124,10 +1124,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           depending on connection state.
         </p>
         <p>
-          When the <code><a href="#postmessage">postMessage</a>()</code> method is called on
-          a <a href="#presentationsession"><code>PresentationSession</code></a> object with a
-          <code>message</code>, the user agent must run the algorithm to
-          <a href="#algorithm-post-message" title="algorithm-post-message">post a message through a
+          When the <code><a href="#send">send</a>()</code> method is called on a
+          <a href="#presentationsession"><code>PresentationSession</code></a> object with a <code>message</code>,
+          the user agent must run the algorithm to <a href="#algorithm-send" title="algorithm-send">send a message through a
           <span><code>PresentationSession</code></span></a>.
         </p>
         <p>
@@ -1143,17 +1142,17 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         <section>
           <p class="open-issue">
             <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
-            46: Define postMessage behavior</a>
+            46: Define send behavior</a>
           </p>
-          <h4 id="posting-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
-            Posting a message through <a href="#presentationsession"><code>PresentationSession</code></a>
+          <h4 id="sending-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
+            Sending a message through <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
           <p class="note">
             Presentation API does not mandate a specific protocol for the
             connection between the <a href="#opening-browsing-context">opening browsing context</a> and
             the <a href="#presenting-browsing-context">presenting browsing context</a> except that for
-            multiple calls to <a href="#postmessage"><code>postMessage</code></a> it has to be ensured
-            that messages are delivered to the other end in sequence.
+            multiple calls to <a href="#send"><code>send</code></a> it has to be ensured that
+            messages are delivered to the other end in sequence.
           </p>
           <p>
             Let <dfn id="presentation-message-data">presentation message data</dfn> be the payload data to be
@@ -1162,9 +1161,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <code>text</code> and <code>binary</code>.
           </p>
           <p>
-            When the user agent is to <dfn id="algorithm-post-message" title="algorithm-post-message">post
-            a message through a <code>PresentationSession</code> S</dfn>, it
-            must run the following steps:
+            When the user agent is to <dfn id="algorithm-send" title="algorithm-send">send a
+            message through a <code>PresentationSession</code> S</dfn>, it must
+            run the following steps:
           </p>
           <ol>
             <li>If the <a href="#state"><code>state</code></a> property of
@@ -1180,14 +1179,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <li>Assign the <dfn id="destination-browsing-context">destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <a href="#destination-browsing-context">destination browsing context</a> be
-                the <a href="#opening-browsing-context">opening browsing context</a> if
-                <a href="#postmessage">postMessage</a> is called in the <a href="#presenting-browsing-context">presenting
-                browsing context</a>.
+                the <a href="#opening-browsing-context">opening browsing context</a> if <a href="#send">send</a>
+                is called in the <a href="#presenting-browsing-context">presenting browsing context</a>.
                 </li>
                 <li>Let <a href="#destination-browsing-context">destination browsing context</a> be the <a href="#presenting-browsing-context">
-                  presenting browsing context</a> if
-                  <a href="#postmessage">postMessage</a> is called from the <a href="#opening-browsing-context">opening
-                  browsing context</a>.
+                  presenting browsing context</a> if <a href="#send">send</a> is
+                  called from the <a href="#opening-browsing-context">opening browsing context</a>.
                 </li>
               </ol>
             </li>
