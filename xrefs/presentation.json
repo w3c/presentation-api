@@ -11,6 +11,8 @@
     "close-algorithm": "close-algorithm",
     "concept-presentation": "concept-presentation",
     "concept-presentation-session": "concept-presentation-session",
+    "defaultsessionstartevent": "defaultsessionstartevent",
+    "defaultsessionstarteventinit": "defaultsessionstarteventinit",
     "destination browsing context": "destination-browsing-context",
     "establish a presentation connection": "establish-a-presentation-connection",
     "id": "id",

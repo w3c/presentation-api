@@ -250,7 +250,10 @@
    <li><a href="#joining-a-presentation-session-example"><span class="secno">5.3 </span>
           Joining a presentation session example
         </a></li>
-   <li><a href="#monitor-session's-state-and-exchange-data-example"><span class="secno">5.4 </span>
+   <li><a href="#handling-an-event-for-a-ua-initiated-presentation-session-example"><span class="secno">5.4 </span>
+          Handling an event for a UA initiated presentation session example
+        </a></li>
+   <li><a href="#monitor-session's-state-and-exchange-data-example"><span class="secno">5.5 </span>
           Monitor session's state and exchange data example
         </a></ol></li>
  <li><a href="#api"><span class="secno">6 </span>
@@ -308,6 +311,9 @@
             </a></ol></ol></li>
    <li><a href="#interface-availablechangeevent"><span class="secno">6.5 </span>
           <span>Interface <code>AvailableChangeEvent</code></span>
+        </a></li>
+   <li><a href="#interface-defaultsessionstart"><span class="secno">6.6 </span>
+          <span>Interface <code>DefaultSessionStart</code></span>
         </a></ol></li>
  <li><a href="#security-and-privacy-considerations"><span class="secno">7 </span>
         Security and privacy considerations
@@ -479,8 +485,9 @@
               Launching presentation
             </dt>
             <dd>
-              The UA must provide a means of start sending content to the
-              secondary screen.
+              The UA must provide a way to start sending content to the
+              secondary screen. This may occur at the request of the page or at
+              the request of the UA.
             </dd>
             <dt>
               Resuming presentation
@@ -673,7 +680,25 @@
 </pre>
       </section>
       <section>
-        <h3 id="monitor-session's-state-and-exchange-data-example"><span class="secno">5.4 </span>
+        <h3 id="handling-an-event-for-a-ua-initiated-presentation-session-example"><span class="secno">5.4 </span>
+          Handling an event for a UA initiated presentation session example
+        </h3>
+        <pre class="example">&lt;!-- controller.html --&gt;
+&lt;head&gt;
+  &lt;!-- the link element with rel='default-presentation' allows the page to specify --&gt;
+  &lt;!-- the presentation URL and id for when the UA initiates a presentation session --&gt;
+  &lt;link href="http://example.com/presentation.html" rel="default-presentation" id="ABCD1234" &gt;
+&lt;/head&gt;
+&lt;script&gt;
+  navigator.presentation.ondefaultsessionstart = function (evt) {
+    setSession(evt.session);
+  };
+&lt;/script&gt;
+
+</pre>
+      </section>
+      <section>
+        <h3 id="monitor-session's-state-and-exchange-data-example"><span class="secno">5.5 </span>
           Monitor session's state and exchange data example
         </h3>
         <pre class="example">&lt;!-- controller.html --&gt;
@@ -754,7 +779,9 @@
           An <dfn id="opening-browsing-context">opening browsing context</dfn> is a <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a> that has initiated or resumed a
           <span>presentation session</span> by calling
           <code><a href="#startsession">startSession</a>()</code> or
-          <code><a href="#joinsession">joinSession</a>()</code>.
+          <code><a href="#joinsession">joinSession</a>()</code> or received a
+          <span>presentation session</span> via
+          <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
           The <dfn id="presenting-browsing-context">presenting browsing context</dfn> is the browsing context
@@ -1061,6 +1088,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#startsession">startSession</a>(DOMString url, DOMString? presentationId);
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#joinsession">joinSession</a>(DOMString url, DOMString? presentationId);
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onavailablechange">onavailablechange</a>;
+  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <span>ondefaultsessionstart</span>;
 };
 </pre>
         <p class="open-issue">
@@ -1425,12 +1453,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               registered to the <a href="#onavailablechange"><code>onavailablechange</code></a> event, the user
               agent must run the following steps:
             </p>
-            <ol>
+            <ul>
               <li>If the removed event handler was the last one in the list,
               <a href="#cancel-monitoring-the-list-of-available-presentation-displays">cancel monitoring the list of available presentation
               displays</a>.
               </li>
-            </ol>
+            </ul>
           </section>
           <section>
             <h5 id="monitoring-the-list-of-available-presentation-displays"><span class="secno">6.4.4.3 </span>
@@ -1535,6 +1563,32 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
           <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a> interface, with the
           <code>available</code> attribute set to the boolean value that the
           algorithm determined.
+        </p>
+      </section>
+      <section>
+        <h3 id="interface-defaultsessionstart"><span class="secno">6.6 </span>
+          <span>Interface <code>DefaultSessionStart</code></span>
+        </h3>
+        <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#defaultsessionstarteventinit">DefaultSessionStartEventInit</a> eventInitDict)]
+interface <dfn id="defaultsessionstartevent">DefaultSessionStartEvent</dfn> : Event {
+  readonly attribute PresentationSession session;
+};
+
+dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</dfn> : EventInit {
+  PresentationSession session;
+};
+</span>
+
+
+</pre>
+        <p>
+          An event named <code>defaultsessionstart</code> is fired when the UA
+          initiates a presentation on behalf of the page. It is fired at the
+          <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> object, using the
+          <a href="#defaultsessionstartevent"><code>DefaultSessionStartEvent</code></a> interface, with the
+          <code>session</code> attribute set to the
+          <a href="#presentationsession"><code>PresentationSession</code></a> object provided by the
+          UA.
         </p>
       </section>
     </section>

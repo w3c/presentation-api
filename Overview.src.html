@@ -392,8 +392,9 @@
               Launching presentation
             </dt>
             <dd>
-              The UA must provide a means of start sending content to the
-              secondary screen.
+              The UA must provide a way to start sending content to the
+              secondary screen. This may occur at the request of the page or at
+              the request of the UA.
             </dd>
             <dt>
               Resuming presentation
@@ -601,6 +602,25 @@
       </section>
       <section>
         <h3>
+          Handling an event for a UA initiated presentation session example
+        </h3>
+        <pre class="example">
+&lt;!-- controller.html --&gt;
+&lt;head&gt;
+  &lt;!-- the link element with rel='default-presentation' allows the page to specify --&gt;
+  &lt;!-- the presentation URL and id for when the UA initiates a presentation session --&gt;
+  &lt;link href="http://example.com/presentation.html" rel="default-presentation" id="ABCD1234" &gt;
+&lt;/head&gt;
+&lt;script&gt;
+  navigator.presentation.ondefaultsessionstart = function (evt) {
+    setSession(evt.session);
+  };
+&lt;/script&gt;
+
+</pre>
+      </section>
+      <section>
+        <h3>
           Monitor session's state and exchange data example
         </h3>
         <pre class="example">
@@ -685,7 +705,9 @@
           "w3c-html">browsing context</span> that has initiated or resumed a
           <span>presentation session</span> by calling
           <code><span>startSession</span>()</code> or
-          <code><span>joinSession</span>()</code>.
+          <code><span>joinSession</span>()</code> or received a
+          <span>presentation session</span> via
+          <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
           The <dfn>presenting browsing context</dfn> is the browsing context
@@ -1006,6 +1028,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
   Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString? presentationId);
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>onavailablechange</span>;
+  attribute <span data-anolis-spec=
+"w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
 };
 </pre>
         <p class="open-issue">
@@ -1392,12 +1416,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               registered to the <code>onavailablechange</code> event, the user
               agent must run the following steps:
             </p>
-            <ol>
+            <ul>
               <li>If the removed event handler was the last one in the list,
               <span>cancel monitoring the list of available presentation
               displays</span>.
               </li>
-            </ol>
+            </ul>
           </section>
           <section>
             <h5>
@@ -1509,6 +1533,33 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
           <code>AvailableChangeEvent</code> interface, with the
           <code>available</code> attribute set to the boolean value that the
           algorithm determined.
+        </p>
+      </section>
+      <section>
+        <h3>
+          <span>Interface <code>DefaultSessionStart</code></span>
+        </h3>
+        <pre class="idl">
+<span>[Constructor(DOMString type, optional <span>DefaultSessionStartEventInit</span> eventInitDict)]
+interface <dfn>DefaultSessionStartEvent</dfn> : Event {
+  readonly attribute PresentationSession session;
+};
+
+dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
+  PresentationSession session;
+};
+</span>
+
+
+</pre>
+        <p>
+          An event named <code>defaultsessionstart</code> is fired when the UA
+          initiates a presentation on behalf of the page. It is fired at the
+          <span><code>NavigatorPresentation</code></span> object, using the
+          <code>DefaultSessionStartEvent</code> interface, with the
+          <code>session</code> attribute set to the
+          <span><code>PresentationSession</code></span> object provided by the
+          UA.
         </p>
       </section>
     </section>
