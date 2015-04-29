@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-10-april-2015">
-        Editor's Draft 10 April 2015
+      <h2 class="no-num no-toc" id="editor's-draft-29-april-2015">
+        Editor's Draft 29 April 2015
       </h2>
       <dl>
         <dt>
@@ -573,6 +573,9 @@
         <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event handler
         event types</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">firing an event</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">queing a task</a> are defined in
         <a href="#refsHTML5">[HTML5]</a>.
+      </p>
+      <p>
+        The term <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> is defined in <a href="#refsDOM">[DOM]</a>.
       </p>
       <p>
         The term <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a> is defined in <a href="#refsES6">[ES6]</a>. The terms <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolving a Promise, and rejecting a Promise</a>
@@ -1422,7 +1425,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <ol>
               <li>
                 <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
-                "NoScreensAvailable" exception.
+                <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> whose name is
+                <code>"NotFoundError"</code>.
               </li>
               <li>Abort all remaining steps.
               </li>
@@ -1474,8 +1478,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                       <li>If <em>C</em> fails, run the following steps:
                         <ol>
                           <li>
-                            <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> P with a "failed"
-                            exception.
+                            <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> P with a
+                            <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> named
+                            <code>"OperationError"</code>.
                           </li>
                         </ol>
                       </li>
@@ -1488,7 +1493,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <ol>
                   <li>
                     <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
-                    "PermissionDenied" exception.
+                    <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> named
+                    <code>"AbortError"</code>.
                   </li>
                 </ol>
               </li>
@@ -1570,7 +1576,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               </li>
               <li>
                 <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
-                "NoPresentationFound" exception.
+                <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> named
+                <code>"NotFoundError"</code>.
               </li>
             </ol>
           </li>
@@ -1842,7 +1849,10 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
       <h2 class="no-num" id="references">
         References
       </h2>
-      <div id="anolis-references"><dl><dt id="refsES6">[ES6]
+      <div id="anolis-references"><dl><dt id="refsDOM">[DOM]
+<dd><cite><a href="https://dom.spec.whatwg.org/">DOM</a></cite>, Anne van Kesteren, Aryeh Gregor and Ms2ger. WHATWG.
+
+<dt id="refsES6">[ES6]
 <dd><cite><a href="http://people.mozilla.org/~jorendorff/es6-draft.html">ECMA-262 6th Edition / Draft</a></cite>. ECMA / Jason Orendorff.
 
 <dt id="refsFILEAPI">[FILEAPI]
