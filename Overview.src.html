@@ -495,6 +495,11 @@
         <span data-anolis-ref="">HTML5</span>.
       </p>
       <p>
+        The term <span data-anolis-spec="dom" title=
+        "domexception">DOMException</span> is defined in <span data-anolis-ref=
+        "dom">DOM</span>.
+      </p>
+      <p>
         The term <span data-anolis-spec="es6" title=
         "promise-objects">Promise</span> is defined in <span data-anolis-ref=
         "">ES6</span>. The terms <span data-anolis-spec="promguide" title=
@@ -517,7 +522,7 @@
       </p>
       <p>
         This document provides interface definitions using the
-        <span data-anolis-ref="">WEBIDL</span> standard.
+        <span data-anolis-ref="webidl">WEBIDL</span> standard.
       </p>
     </section>
     <section>
@@ -1371,7 +1376,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               <li>
                 <span data-anolis-spec="promguide" title=
                 "resolve-reject">Reject</span> <em>P</em> with a
-                "NoScreensAvailable" exception.
+                <span data-anolis-spec="dom" title=
+                "domexception">DOMException</span> named
+                <code>"NotFoundError"</code>.
               </li>
               <li>Abort all remaining steps.
               </li>
@@ -1426,8 +1433,10 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                         <ol>
                           <li>
                             <span data-anolis-spec="promguide" title=
-                            "resolve-reject">Reject</span> P with a "failed"
-                            exception.
+                            "resolve-reject">Reject</span> P with a
+                            <span data-anolis-spec="dom" title=
+                            "domexception">DOMException</span> named
+                            <code>"OperationError"</code>.
                           </li>
                         </ol>
                       </li>
@@ -1441,7 +1450,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                   <li>
                     <span data-anolis-spec="promguide" title=
                     "resolve-reject">Reject</span> <em>P</em> with a
-                    "PermissionDenied" exception.
+                    <span data-anolis-spec="dom" title=
+                    "domexception">DOMException</span> named
+                    <code>"AbortError"</code>.
                   </li>
                 </ol>
               </li>
@@ -1528,7 +1539,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               <li>
                 <span data-anolis-spec="promguide" title=
                 "resolve-reject">Reject</span> <em>P</em> with a
-                "NoPresentationFound" exception.
+                <span data-anolis-spec="dom" title=
+                "domexception">DOMException</span> named
+                <code>"NotFoundError"</code>.
               </li>
             </ol>
           </li>
