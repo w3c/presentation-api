@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-30-april-2015">
-        Editor's Draft 30 April 2015
+      <h2 class="no-num no-toc" id="editor's-draft-11-may-2015">
+        Editor's Draft 11 May 2015
       </h2>
       <dl>
         <dt>
@@ -692,8 +692,8 @@
           endSession();
       };
       // register message handler
-      session.onmessage = function (msg) {
-        console.log("receive message",msg);
+      session.onmessage = function (evt) {
+        console.log("receive message", evt.data);
       };
       // send message to presentation page
       session.send("say hello");
@@ -714,8 +714,8 @@
     // session.state is either 'connected' or 'disconnected'
     console.log("session's state is now", session.state);
   };
-  session.onmessage = function (msg) {
-    if (msg == "say hello")
+  session.onmessage = function (evt) {
+    if (evt.data == "say hello")
       session.send("hello");
   };
 &lt;/script&gt;
@@ -1220,8 +1220,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Initialize <em>event's</em> <code>origin</code> attribute to
             the Unicode serialization of the URL that the <a href="#opening-browsing-context">opening
-            browsing context</a> and the <a href="#presenting-browsing-context"><code>presenting browsing
-            context</code></a> have in common.
+            browsing context</a> and the <a href="#presenting-browsing-context">presenting browsing
+            context</a> have in common.
               <p class="open-issue">
                 <a href="https://github.com/w3c/presentation-api/issues/63">ISSUE 63:
                 Define (cross) origin relationship between opener and
