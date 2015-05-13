@@ -6,14 +6,14 @@
       Presentation API
     </title>
     <style>
-@media print {
-     [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
+    @media print {
+      [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link rel="stylesheet" type="text/css" href=
     "http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
     <style type="text/css">
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -559,7 +559,6 @@
     castBtn.style.display = evt.available ? "inline" : "none";
   };
 &lt;/script&gt;
-
 </pre>
       </section>
       <section>
@@ -651,315 +650,7 @@
   };
 &lt;/script&gt;
 </pre>
-      </section><!--
-      <p>
-        Running in a compliant user agent, code for presenting a page
-        <code>http://example.org/presentation.html</code> on the presentation
-        display looks as follows:
-      </p>
-      <pre class="example">
-/* controller.html */
-
-&lt;button disabled id=show&gt;Show&lt;/button&gt;
-&lt;button disabled id=stop&gt;Stop&lt;/button&gt;
-
-&lt;script&gt;
-
-var presentation = navigator.presentation,
-    showButton = document.getElementById('show'),
-    stopButton = document.getElementById('stop');
-
-var session = null;
-var screenAvailable = false;
-var presentationUrl = 'http://example.org/presentation.html';
-var presentationId = localStorage['presentationId'] ||
-    new String((Math.random() * 10000).toFixed(0));
-
-// Join an existing presentation if one exists.
-presentation.joinSession(presentationUrl, presentationId).then(
-    function(existingSession) {
-      setSession(existingSession);
-      updateButtons();
-    },
-    function() {
-      // No session to join.
-    });
-
-presentation.onavailablechange = function(e) {
-  screenAvailable = e.available;
-  updateButtons();
-};
-
-function updateButtons() {
-  stopButton.disabled = !session;
-  stopButton.onClick = session ? stopPresent : null;
-  showButton.disabled = !screenAvailable;
-  showButton.onclick = screenAvailable ? startPresent : null;
-};
-
-function startPresent() {
-  presentation.startSession(presentationUrl, presentationId).then(
-      function(newSession) {
-        setSession(newSession);
-        updateButtons();
-      },
-      function() {
-        // User cancelled, etc.
-      });
-};
-
-function stopPresent() {
-  if (!session) return;
-  session.close();
-  delete localStorage['presentationId'];
-};
-
-function setSession(theSession) {
-  // NOTE: We could instead close the current session.
-  if (session) return;
-  session = theSession;
-  localStorage['presentationId'] = session.id;
-  session.onstatechange = function() {
-    switch (session.state) {
-      case 'connected':
-        session.send(/*...*/);
-        session.onmessage = function() { /*...*/ };
-        break;
-      case 'disconnected':
-        console.log('Disconnected.');
-        break;
-    }
-  };
-}
-&lt;/script&gt;
-</pre>
-      <p>
-        The availability monitoring for secondary screens begins when the page
-        adds an event listener for the <code>availablechange</code> event on
-        the <code>navigator.presentation</code> object. If there are already
-        available screens when the page adds the first event listener for the
-        event, the UA synthesizes a single <code>availablechange</code> event
-        to signal the availability.
-      </p>
-      <p class="open-issue">
-        <a href="https://github.com/w3c/presentation-api/issues/8">ISSUE 8:
-        Timing of availablechange event to signal screen availability</a>
-      </p>
-      <p class="open-issue">
-        <a href="https://github.com/w3c/presentation-api/issues/9">ISSUE 9: How
-        to filter available screens according to the content being
-        presented</a>
-      </p>
-      <section>
-        <h4>
-          Starting new presentations or manually connecting to existing
-          presentations
-        </h4>
-        <p>
-          The "Show" button's state (initially disabled) informs the user of
-          the availability of secondary screen(s), and the button's state is
-          updated if the availability changes. (The rationale of putting the
-          actual boolean information into a property of the event
-          <code>e.available</code> is to allow the implementation to optimize
-          power consumption for network discovery of remote wireless screens.
-          If this information was provided in a globally accessible flag, the
-          network discovery could never be suspended for keeping the flag up to
-          date.)
-        </p>
-        <p>
-          Clicking the "Show" button calls
-          <code>navigator.presentation.startSession()</code>, which causes the
-          user agent to request from the user a screen to show the
-          presentation. The <code>url</code> argument indicates the content to
-          be presented. The <code>presentationId</code> argument (optional)
-          allows the page to identify this presentation instance, and control
-          which other pages may connect to it by setting a hard-to-guess id.
-        </p>
-        <p class="open-issue">
-          As previously discussed on the mailing list - we can add convenience
-          here by default-generating an ID.
-        </p>
-        <p>
-          If the user selects a screen with an existing presentation showing
-          the same <code>url</code> under the same <code>presentationId</code>,
-          the <span>opening browsing context</span> is connected to that
-          existing presentation. If the user selects a screen without an
-          existing presentation, or a screen presenting a different
-          <code>url</code> or <code>presentationId</code>, the UA connects to
-          the selected screen, brings up a new presentation window on it, and
-          starts to show the content denoted by the <code>url</code> argument.
-          The UA then connects the <span>opening browsing context</span> to
-          this new presentation and allows the <span>opening browsing
-          context</span> to exchange messages with it.
-        </p>
-        <p>
-          <code>navigator.presentation.startSession(url, presentationId)</code>
-          returns a <code>Promise</code> to the <span>opening browsing
-          context</span>. When the user selects a screen, the presentation page
-          is shown and a communication channel has been established the
-          <code>Promise</code> resolves to a <code>PresentationSession</code>
-          object, which acts as a handle to the presentation for communication
-          and state handling. Initially, the state of the
-          <code>PresentationSession</code> is <code>"connected"</code>. At this
-          point, the <span>opening browsing context</span> can communicate with
-          the presentation page using the session's <code>send()</code>
-          to send messages and its <code>onmessage</code> event handler to
-          receive messages. The presentation page will also have access to
-          <code>PresentationSession</code> that it can use to send and receive
-          messages with the <span>opening browsing context</span> (see <a href=
-          "#usage-on-remote-screen">Usage on remote screen</a>).
-        </p>
-        <p>
-          If the user cancels screen selection, the <code>Promise</code>
-          returned by <code>startSession(url, presentationId)</code> remains
-          unresolved.
-        </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/20">ISSUE 20:
-          Define return value for cancelled/missing session for
-          <code>startSession()</code>/<code>joinSession()</code></a>
-        </p>
-        <p>
-          While there is a pending call to <code>startSession</code> asking the
-          user to select a screen (that the user has not yet accepted or
-          canceled), the browser may choose to reject subsequent calls to
-          <code>startSession</code> from the same page, by returning a
-          <code>Promise</code> that never resolves. This will prevent the
-          browser from needing to 'queue up' requests to present to the user.
-        </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/21">ISSUE 21:
-          Define whether multiple simultaneous calls are permitted to
-          <code>startSession()</code></a>
-        </p>
       </section>
-      <section>
-        <h4>
-          Automatically reconnecting to existing presentations
-        </h4>
-        <p>
-          The <span>opening browsing context</span> may wish to reconnect to an
-          existing presentation without prompting the user to select a screen.
-          For example, the site could allow media items from different pages to
-          be shown on the same presentation page, and does not want to prompt
-          the user on each page to reconnect to that presentation. To reconnect
-          automatically, the page may call <code>joinSession(url,
-          presentationId)</code>, which returns a <code>Promise</code> that
-          resolves to an existing <code>PresentationSession</code> if one
-          exists that is presenting the same <code>url</code> with the same
-          <code>presentationId</code> as was passed originally into
-          <code>startSession</code>. The <span>opening browsing context</span>
-          can then communicate with the presentation as if the user had
-          manually connected to it via <code>startSession</code>.
-        </p>
-        <p>
-          At the time the <code>joinSession(url, presentationId)</code> method
-          is called, if the browser is not aware of any
-          <code>PresentationSession</code> with a matching <code>url</code> and
-          <code>presentationId</code>, the <code>Promise</code> should remain
-          unresolved. The browser may become aware of such a session at a later
-          time (for example, by switching to a WiFi network that has a screen
-          showing that URL). In this case, the browser may resolve the Promise
-          to allow the page to connect to the running session.
-        </p>
-        <p>
-          If the browser knows of multiple matching sessions, it should connect
-          the page to the session that was most recently connected to; if that
-          cannot be determined by the browser (for example, if the matching
-          sessions have never been connected), then the <code>Promise</code>
-          should remain unresolved.
-        </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/39">ISSUE 39:
-          Resumption of multiple sessions</a>
-        </p>
-        <p>
-          If the page calls <code>startSession(url, presentationId)</code> and
-          there is a pending <code>Promise</code> from a call to
-          <code>joinSession(url, presentationId)</code> (with the same
-          <code>url</code> and <code>presentationId</code>, and the user
-          selects a screen in response to <code>startSession</code>, then the
-          <code>Promise</code> from <code>startSession</code> will be resolved
-          and the <code>Promise</code> from <code>joinSession</code> will not.
-        </p>
-      </section>
-      <section>
-        <h4>
-          Open questions
-        </h4>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/10">ISSUE 10:
-          Is user permission required to prompt for screen availability
-          information?</a>
-        </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/12">ISSUE 12:
-          Necessity of an additional state to indicate a session was
-          resumed</a>
-        </p>
-      </section>
-      <section>
-        <h3>
-          Usage on remote screen
-        </h3>
-        <p>
-          For addressing the requirement of communication between originating
-          page and presentation page/screen, the presenting page can now use
-          the same <code>session</code> object. It accesses this object through
-          the <code>navigator.presentation.session</code> property, which is
-          only non-<code>null</code> for the page on the presentation screen.
-        </p>
-        <pre class="example">
-if (navigator.presentation.session) {
-  var session = navigator.presentation.session;
-  // Communicate with opening browsing context
-  session.send(/*...*/);
-  session.onmessage = function() {/*...*/};
-
-  session.onstatechange = function() {
-    switch (this.state) {
-      case "disconnected":
-        // Handle disconnection from opening browsing context
-    }
-  };
-};
-</pre>
-        <p>
-          When the content denoted by the <code>url</code> argument in the
-          <code>startSession()</code> example above is loaded, the page on the
-          presentation screen will have its
-          <code>navigator.presentation.session</code> property set to the
-          session. This session is a similar object as in the first example.
-          Here, its initial state is <code>"connected"</code>, which means we
-          can use it to communicate with the <span>opening browsing
-          context</span> using <code>send()</code> and
-          <code>onmessage</code>.
-        </p>
-        <p>
-          The presentation page can also monitor the connection state by
-          listening for <code>statechange</code> events. When the state changes
-          to <code>"disconnected"</code> the page is made aware of the fact
-          that communication with the <span>opening browsing context</span> was
-          lost, but it can continue to display the current content. The
-          communication can be re-established when a <code>statechange</code>
-          event fires with a new state of <code>"connected"</code>.
-        </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/19">ISSUE 19:
-          Specify behavior when multiple controlling pages are connected to the
-          session</a>
-        </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/18">ISSUE 18:
-          Define reconnection for cross-page navigation on presenting user
-          agent</a>
-        </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
-          Define user agent context for rendering the presentation</a>
-        </p>
-      </section>
-      -->
     </section>
     <section>
       <h2>
@@ -1053,7 +744,6 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
   void <dfn title="send-arraybufferview">send</dfn> (<span data-anolis-spec=
 "typedarray">ArrayBufferView</span> data);
 };
-
 </pre>
         <p>
           The <dfn><code>id</code></dfn> attribute holds the alphanumeric
@@ -1295,22 +985,21 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           </table>
         </section>
       </section>
-    </section>
-    <section>
-      <h3>
-        Interface <code>NavigatorPresentation</code>
-      </h3>
-      <pre class="idl">
+      <section>
+        <h3>
+          Interface <code>NavigatorPresentation</code>
+        </h3>
+        <pre class="idl">
 partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
   readonly attribute <span>NavigatorPresentation</span> <span>presentation</span>;
 };
 </pre>
-      <p>
-        The <dfn><code>presentation</code></dfn> attribute is used to retrieve
-        an instance of the <code>NavigatorPresentation</code> interface, the
-        main interface of Presentation API.
-      </p>
-      <pre class="idl">
+        <p>
+          The <dfn><code>presentation</code></dfn> attribute is used to
+          retrieve an instance of the <code>NavigatorPresentation</code>
+          interface, the main interface of Presentation API.
+        </p>
+        <pre class="idl">
 interface <dfn>NavigatorPresentation</dfn> : EventTarget {
   readonly attribute <span>PresentationSession</span>? <span>session</span>;
   Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url, DOMString? presentationId);
@@ -1319,477 +1008,488 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 "w3c-html">EventHandler</span> <span>onavailablechange</span>;
 };
 </pre>
-      <p class="open-issue">
-        <a href="https://github.com/w3c/presentation-api/issues/52">ISSUE 52:
-        Specify the NavigatorPresentation.session attribute and its related
-        algorithms</a>
-      </p>
-      <section>
-        <h4>
-          Starting a presentation session
-        </h4>
-        <p>
-          When the <code><dfn>startSession</dfn>(presentationUrl,
-          presentationId)</code> method is called, the user agent must run the
-          following steps:
+        <p class="open-issue">
+          <a href="https://github.com/w3c/presentation-api/issues/52">ISSUE 52:
+          Specify the NavigatorPresentation.session attribute and its related
+          algorithms</a>
         </p>
-        <dl>
-          <dt>
-            Input
-          </dt>
-          <dd>
-            <code>presentationUrl</code>, the <span data-anolis-spec=
-            "url">URL</span> of the document to be presented
-          </dd>
-          <dd>
-            <code>presentationId</code>, an optional identifier for the
-            presentation
-          </dd>
-          <dt>
-            Output
-          </dt>
-          <dd>
-            <em>P</em>, a <span data-anolis-spec="es6" title=
-            "promise-objects">Promise</span>
-          </dd>
-        </dl>
-        <ol>
-          <li>Let <em>P</em> be a new <span data-anolis-spec="es6" title=
-          "promise-objects">Promise</span>.
-          </li>
-          <li>Return <em>P</em>.
-          </li>
-          <li>If the user agent does not <span>monitor presentation display
-          availability</span>, run the following steps:
+        <section>
+          <h4>
+            Starting a presentation session
+          </h4>
+          <p>
+            When the <code><dfn>startSession</dfn>(presentationUrl,
+            presentationId)</code> method is called, the user agent must run
+            the following steps:
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>presentationUrl</code>, the <span data-anolis-spec=
+              "url">URL</span> of the document to be presented
+            </dd>
+            <dd>
+              <code>presentationId</code>, an optional identifier for the
+              presentation
+            </dd>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              <em>P</em>, a <span data-anolis-spec="es6" title=
+              "promise-objects">Promise</span>
+            </dd>
+          </dl>
+          <ol>
+            <li>Let <em>P</em> be a new <span data-anolis-spec="es6" title=
+            "promise-objects">Promise</span>.
+            </li>
+            <li>Return <em>P</em>.
+            </li>
+            <li>If the user agent does not <span>monitor presentation display
+            availability</span>, run the following steps:
+              <ol>
+                <li>
+                  <span>Monitor presentation display availability</span>.
+                </li>
+                <li>Wait until the algorithm completes.
+                </li>
+              </ol>
+            </li>
+            <li>If the <span>list of available presentation displays</span> is
+            empty, then:
+              <ol>
+                <li>
+                  <span data-anolis-spec="promguide" title=
+                  "resolve-reject">Reject</span> <em>P</em> with a
+                  <span data-anolis-spec="dom" title=
+                  "domexception">DOMException</span> named
+                  <code>"NotFoundError"</code>.
+                </li>
+                <li>Abort all remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>Queue a task <em>T</em> to request user permission for the use
+            of a <span data-anolis-ref="presentation">presentation
+            display</span> and selection of one presentation display.
+              <ol>
+                <li>If <em>T</em> completes with the user <em>granting
+                permission</em> to use a screen, run the following steps:
+                  <ol>
+                    <li>If <code>presentationId</code> is not
+                    <em>undefined</em>, assign <em>I</em> to that that
+                    <code>presentationId</code>.
+                    </li>
+                    <li>If <code>presentationId</code> is
+                    <code>undefined</code>, let <em>I</em> be a random
+                    alphanumeric value of at least 16 characters drawn from the
+                    characters <code>[A-Za-z0-9]</code>.
+                    </li>
+                    <li>Create a new <code>PresentationSession</code>
+                    <em>S</em>.
+                    </li>
+                    <li>Set <code>S.url</code> to <code>presentationUrl</code>,
+                    set <code>S.id</code> to <em>I</em>, and set
+                    <code>S.state</code> to <code>disconnected</code>.
+                    </li>
+                    <li>
+                      <span data-anolis-spec="w3c-html">Queue a task</span>
+                      <em>C</em> to create a new <span data-anolis-spec=
+                      "w3c-html">browsing context</span> on the user-selected
+                      <span>presentation display</span> and
+                      <span data-anolis-spec="w3c-html">navigate</span> to
+                      <code>presentationUrl</code> in it.
+                      <ol>
+                        <li>If <em>C</em> completes successfully, run the
+                        following steps:
+                          <ol>
+                            <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+                            </li>
+                            <li>
+                              <span data-anolis-spec="promguide" title=
+                              "resolve-reject">Resolve</span> <em>P</em> with
+                              <em>S</em>.
+                            </li>
+                            <li>
+                              <span>Establish a presentation connection</span>
+                              with <em>S</em>.
+                            </li>
+                          </ol>
+                        </li>
+                        <li>If <em>C</em> fails, run the following steps:
+                          <ol>
+                            <li>
+                              <span data-anolis-spec="promguide" title=
+                              "resolve-reject">Reject</span> P with a
+                              <span data-anolis-spec="dom" title=
+                              "domexception">DOMException</span> named
+                              <code>"OperationError"</code>.
+                            </li>
+                          </ol>
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li>If <em>T</em> completes with the user <em>denying
+                permission</em>, run the following steps:
+                  <ol>
+                    <li>
+                      <span data-anolis-spec="promguide" title=
+                      "resolve-reject">Reject</span> <em>P</em> with a
+                      <span data-anolis-spec="dom" title=
+                      "domexception">DOMException</span> named
+                      <code>"AbortError"</code>.
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+          <p class="note">
+            The details of implementing the permission request and display
+            selection are left to the user agent; for example it may show the
+            user a dialog and allow the user to select an available screen
+            (granting permission), or cancel the selection (denying
+            permission).
+          </p>
+          <p class="open-issue">
+            ISSUE: Do we want to distinguish the permission-denied outcome from
+            the no-screens-available outcome? Developers would be able to infer
+            it anyway from <code>onavailablechange</code>.
+          </p>
+        </section>
+        <section>
+          <h4>
+            Joining a presentation session
+          </h4>
+          <p>
+            When the <code><dfn>joinSession</dfn>(presentationUrl,
+            presentationId)</code> method is called, the user agent must run
+            the following steps:
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>presentationUrl</code>, the <span data-anolis-spec=
+              "url">URL</span> of the document being presented
+            </dd>
+            <dd>
+              <code>presentationId</code>, the identifier for the presentation
+            </dd>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              <em>P</em>, a <span data-anolis-spec="es6" title=
+              "promise-objects">Promise</span>
+            </dd>
+          </dl>
+          <ol>
+            <li>Let <em>P</em> be a new <span data-anolis-spec="es6" title=
+            "promise-objects">Promise</span>.
+            </li>
+            <li>Return <em>P</em>.
+            </li>
+            <li>Let <em>D</em> be the set of presentations known by the user
+            agent.
+            </li>
+            <li>
+              <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
+              to run the following steps in order:
+              <ol>
+                <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
+                  <ol>
+                    <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>
+                      I</em>, and <em>s</em> equal <em>S</em>.
+                    </li>
+                    <li>If <em>u</em> is equal to <code>presentationUrl</code>
+                    and <em>i</em> is equal to <code>presentationId</code>, run
+                    the following steps:
+                      <ol>
+                        <li>
+                          <span data-anolis-spec="promguide" title=
+                          "resolve-reject">Resolve</span> <em>P</em> with
+                          <em>S</em>.
+                        </li>
+                        <li>
+                          <span>Establish a presentation connection</span> with
+                          <em>S</em>.
+                        </li>
+                        <li>Abort the remaining steps of <em>T</em>.
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  <span data-anolis-spec="promguide" title=
+                  "resolve-reject">Reject</span> <em>P</em> with a
+                  <span data-anolis-spec="dom" title=
+                  "domexception">DOMException</span> named
+                  <code>"NotFoundError"</code>.
+                </li>
+              </ol>
+            </li>
+          </ol>
+          <p class="open-issue">
+            ISSUE: If no matching presentation is found, we could leave the
+            Promise pending in case a matching presentation is started in the
+            future.
+          </p>
+        </section>
+        <section>
+          <h4>
+            Establishing a presentation connection
+          </h4>
+          <p>
+            When the user agent is to <dfn>establish a presentation
+            connection</dfn> using a <span>presentation session</span>
+            <em>S</em>, it must run the following steps:
+          </p>
+          <ol>
+            <li>If <em>S.state</em> is <code>connected</code>, then:
+              <ol>
+                <li>Abort all remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>
+              <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
+              to connect <em>S</em> to the document that is presenting
+              <em>S.url</em>.
+            </li>
+            <li>If <em>T</em> completes successfully, run the following steps:
+              <ol>
+                <li>Set <em>S.state</em> to <code>connected.</code>
+                </li>
+                <li>Let <em>D</em> be the set of presentations known by the
+                user agent.
+                </li>
+                <li>Queue a task <em>T</em> to run the following steps in
+                order:
+                  <ol>
+                    <li>For each presentation <em>(U, I, S')</em> in
+                    <em>D</em>,
+                      <ol>
+                        <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal
+                        <em>I</em>, and <em>s</em> equal <em>S'</em>.
+                        </li>
+                        <li>If <em>u</em> is equal to <em>S.url</em> and
+                        <em>i</em> is equal to <em>S.id</em>, run the following
+                        steps:
+                          <ol>
+                            <li>
+                              <span data-anolis-spec="w3c-html">Queue a
+                              task</span> to <span data-anolis-spec="w3c-html"
+                              title="concept-event-fire">fire an event</span>
+                              named <code>statechange</code> at
+                              <em>s.onstatechange</em>.
+                            </li>
+                          </ol>
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+          <p class="note">
+            The mechanism that is used to present on the remote display and
+            connect the <span>opening browsing context</span> with the
+            presented document is an implementation choice of the user agent.
+            The connection must provide a two-way messaging abstraction capable
+            of carrying <code>DOMString</code> payloads in a reliable and
+            in-order fashion as described in the <em>Send Message</em> and
+            <em>Receive Message</em> steps below.
+          </p>
+          <p class="note">
+            If <em>T</em> does not complete successfully, the user agent may
+            choose to re-execute the Presentation Connection algorithm at a
+            later time.
+          </p>
+          <p class="open-issue">
+            ISSUE: Do we want to notify the caller of a failure to connect,
+            i.e. with an "error" onstatechange?
+          </p>
+          <p class="open-issue">
+            ISSUE: Do we want to pass the new state as a property of the
+            statechange event?
+          </p>
+        </section>
+        <section>
+          <h4>
+            The <code>onavailablechange</code> EventHandler
+          </h4>
+          <p>
+            <span>The following are the event handlers (and their corresponding
+            event handler event types) that must be supported, as event handler
+            IDL attributes, by objects implementing the
+            <code>PresentationSession</code> interface:</span>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Event handler
+                </th>
+                <th>
+                  Event handler event type
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <dfn><code>onavailablechange</code></dfn>
+                </td>
+                <td>
+                  <code>availablechange</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            In order to satisfy the <span title=
+            "non-functional-requirements">power saving non-functionional
+            requirements</span> the user agent must keep track of the number of
+            <code>EventHandler</code>s registered to the
+            <code>onavailable</code> event. Using this information,
+            implementation specific discovery of <span title=
+            "presentation-display">presentation displays</span> can be resumed
+            or suspended, in order to save power.
+          </p>The user agent must keep a <dfn>list of available presentation
+          displays</dfn>. According to the number of event handlers for
+          <code>onavailablechange</code>, the user agent must also keep the
+          list up to date by running the algorithm for <span title=
+          "algorithm-monitor-available">monitoring the list of available
+          presentation displays</span>.
+          <section>
+            <h5>
+              Adding an <code>EventHandler</code> to
+              <code>onavailablechange</code>
+            </h5>
+            <p>
+              When an event handler is added to the list of event handlers
+              registered for the <code>onavailablechange</code> event, the user
+              agent must run the <span title=
+              "algorithm-monitor-available">algorithm to monitor the list of
+              available presentation displays</span>.
+            </p>
+          </section>
+          <section>
+            <h5>
+              Removing an <code>EventHandler</code>
+            </h5>
+            <p>
+              When an event handler is removed from the list of event handlers
+              registered to the <code>onavailablechange</code> event, the user
+              agent must run the following steps:
+            </p>
             <ol>
-              <li>
-                <span>Monitor presentation display availability</span>.
-              </li>
-              <li>Wait until the algorithm completes.
+              <li>If the removed event handler was the last one in the list,
+              <span>cancel monitoring the list of available presentation
+              displays</span>.
               </li>
             </ol>
-          </li>
-          <li>If the <span>list of available presentation displays</span> is
-          empty, then:
+          </section>
+          <section>
+            <h5>
+              Monitoring the list of available presentation displays
+            </h5>
+            <p>
+              When the user agent is to <dfn title=
+              "algorithm-monitor-available">monitor the list of available
+              presentation displays</dfn>, it must run the following steps:
+            </p>
+            <p>
+              While there are <span data-anolis-spec="w3c-html">event
+              handlers</span> added to NavigatorPresentation.onavailablechange,
+              the user agent must continuously keep track the <span>list of
+              available presentation displays</span> and repeat the following
+              steps:
+            </p>
             <ol>
               <li>
-                <span data-anolis-spec="promguide" title=
-                "resolve-reject">Reject</span> <em>P</em> with a
-                <span data-anolis-spec="dom" title=
-                "domexception">DOMException</span> named
-                <code>"NotFoundError"</code>.
+                <span data-anolis-spec="w3c-html">Queue a task</span> to
+                retrieve the list of curently available <a href=
+                "#presentation-display">presentation displays</a> and let
+                <a id="newdisplays"><em>newDisplays</em></a> be this list.
               </li>
-              <li>Abort all remaining steps.
+              <li>Wait for the completion of that task.
               </li>
-            </ol>
-          </li>
-          <li>Queue a task <em>T</em> to request user permission for the use of
-          a <span data-anolis-ref="presentation">presentation display</span>
-          and selection of one presentation display.
-            <ol>
-              <li>If <em>T</em> completes with the user <em>granting
-              permission</em> to use a screen, run the following steps:
+              <li>If the <span>list of available presentation displays</span>
+              is empty and <a href="#newdisplays">newDisplays</a> is not empty,
+              then
                 <ol>
-                  <li>If <code>presentationId</code> is not <em>undefined</em>,
-                  assign <em>I</em> to that that <code>presentationId</code>.
-                  </li>
-                  <li>If <code>presentationId</code> is <code>undefined</code>,
-                  let <em>I</em> be a random alphanumeric value of at least 16
-                  characters drawn from the characters
-                  <code>[A-Za-z0-9]</code>.
-                  </li>
-                  <li>Create a new <code>PresentationSession</code> <em>S</em>.
-                  </li>
-                  <li>Set <code>S.url</code> to <code>presentationUrl</code>,
-                  set <code>S.id</code> to <em>I</em>, and set
-                  <code>S.state</code> to <code>disconnected</code>.
-                  </li>
                   <li>
-                    <span data-anolis-spec="w3c-html">Queue a task</span>
-                    <em>C</em> to create a new <span data-anolis-spec=
-                    "w3c-html">browsing context</span> on the user-selected
-                    <span>presentation display</span> and
-                    <span data-anolis-spec="w3c-html">navigate</span> to
-                    <code>presentationUrl</code> in it.
-                    <ol>
-                      <li>If <em>C</em> completes successfully, run the
-                      following steps:
-                        <ol>
-                          <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
-                          </li>
-                          <li>
-                            <span data-anolis-spec="promguide" title=
-                            "resolve-reject">Resolve</span> <em>P</em> with
-                            <em>S</em>.
-                          </li>
-                          <li>
-                            <span>Establish a presentation connection</span>
-                            with <em>S</em>.
-                          </li>
-                        </ol>
-                      </li>
-                      <li>If <em>C</em> fails, run the following steps:
-                        <ol>
-                          <li>
-                            <span data-anolis-spec="promguide" title=
-                            "resolve-reject">Reject</span> P with a
-                            <span data-anolis-spec="dom" title=
-                            "domexception">DOMException</span> named
-                            <code>"OperationError"</code>.
-                          </li>
-                        </ol>
-                      </li>
-                    </ol>
+                    <span data-anolis-spec="w3c-html">Queue a task</span> to
+                    <span data-anolis-spec="w3c-html" title=
+                    "concept-event-fire">fire an event</span> named
+                    <code>availablechange</code> at with the event's
+                    <code>available</code> property set to <code>true</code>.
                   </li>
                 </ol>
               </li>
-              <li>If <em>T</em> completes with the user <em>denying
-              permission</em>, run the following steps:
+              <li>If the <span>list of available presentation displays</span>
+              is not empty and <a href="#newdisplays">newDisplays</a> is empty,
+              then:
                 <ol>
                   <li>
-                    <span data-anolis-spec="promguide" title=
-                    "resolve-reject">Reject</span> <em>P</em> with a
-                    <span data-anolis-spec="dom" title=
-                    "domexception">DOMException</span> named
-                    <code>"AbortError"</code>.
+                    <span data-anolis-spec="w3c-html">Queue a task</span> to
+                    <span data-anolis-spec="w3c-html" title=
+                    "concept-event-fire">fire an event</span> named
+                    <code>availablechange</code> with the event's
+                    <code>available</code> property set to <code>false</code>.
                   </li>
                 </ol>
               </li>
-            </ol>
-          </li>
-        </ol>
-        <p class="note">
-          The details of implementing the permission request and display
-          selection are left to the user agent; for example it may show the
-          user a dialog and allow the user to select an available screen
-          (granting permission), or cancel the selection (denying permission).
-        </p>
-        <p class="open-issue">
-          ISSUE: Do we want to distinguish the permission-denied outcome from
-          the no-screens-available outcome? Developers would be able to infer
-          it anyway from <code>onavailablechange</code>.
-        </p>
-      </section>
-      <section>
-        <h4>
-          Joining a presentation session
-        </h4>
-        <p>
-          When the <code><dfn>joinSession</dfn>(presentationUrl,
-          presentationId)</code> method is called, the user agent must run the
-          following steps:
-        </p>
-        <dl>
-          <dt>
-            Input
-          </dt>
-          <dd>
-            <code>presentationUrl</code>, the <span data-anolis-spec=
-            "url">URL</span> of the document being presented
-          </dd>
-          <dd>
-            <code>presentationId</code>, the identifier for the presentation
-          </dd>
-          <dt>
-            Output
-          </dt>
-          <dd>
-            <em>P</em>, a <span data-anolis-spec="es6" title=
-            "promise-objects">Promise</span>
-          </dd>
-        </dl>
-        <ol>
-          <li>Let <em>P</em> be a new <span data-anolis-spec="es6" title=
-          "promise-objects">Promise</span>.
-          </li>
-          <li>Return <em>P</em>.
-          </li>
-          <li>Let <em>D</em> be the set of presentations known by the user
-          agent.
-          </li>
-          <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em> to
-            run the following steps in order:
-            <ol>
-              <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
-                <ol>
-                  <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal
-                  <em>I</em>, and <em>s</em> equal <em>S</em>.
-                  </li>
-                  <li>If <em>u</em> is equal to <code>presentationUrl</code>
-                  and <em>i</em> is equal to <code>presentationId</code>, run
-                  the following steps:
-                    <ol>
-                      <li>
-                        <span data-anolis-spec="promguide" title=
-                        "resolve-reject">Resolve</span> <em>P</em> with
-                        <em>S</em>.
-                      </li>
-                      <li>
-                        <span>Establish a presentation connection</span> with
-                        <em>S</em>.
-                      </li>
-                      <li>Abort the remaining steps of <em>T</em>.
-                      </li>
-                    </ol>
-                  </li>
-                </ol>
-              </li>
-              <li>
-                <span data-anolis-spec="promguide" title=
-                "resolve-reject">Reject</span> <em>P</em> with a
-                <span data-anolis-spec="dom" title=
-                "domexception">DOMException</span> named
-                <code>"NotFoundError"</code>.
+              <li>Set the <span>list of available presentation displays</span>
+              to the value of <a href="#newdisplays">newDisplays</a>.
               </li>
             </ol>
-          </li>
-        </ol>
-        <p class="open-issue">
-          ISSUE: If no matching presentation is found, we could leave the
-          Promise pending in case a matching presentation is started in the
-          future.
-        </p>
-      </section>
-      <section>
-        <h4>
-          Establishing a presentation connection
-        </h4>
-        <p>
-          When the user agent is to <dfn>establish a presentation
-          connection</dfn> using a <span>presentation session</span>
-          <em>S</em>, it must run the following steps:
-        </p>
-        <ol>
-          <li>If <em>S.state</em> is <code>connected</code>, then:
+            <p class="note">
+              The mechanism used to monitor <a href=
+              "#presentation-display">presention displays</a> availability is
+              left to the user agent. The user agent may choose search for
+              screens at any time, not just when event handlers are added to
+              <code>NavigatorPresentation.onavailablechange</code>.
+            </p>
+            <p>
+              When the user agent is to <dfn>cancel monitoring the list of
+              available presentation displays</dfn>, it must run the following
+              steps:
+            </p>
             <ol>
-              <li>Abort all remaining steps.
+              <li>Cancel any tasks to retrieve the list of available
+              <span title="presentation display">presentation displays</span>.
               </li>
-            </ol>
-          </li>
-          <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em> to
-            connect <em>S</em> to the document that is presenting
-            <em>S.url</em>.
-          </li>
-          <li>If <em>T</em> completes successfully, run the following steps:
-            <ol>
-              <li>Set <em>S.state</em> to <code>connected.</code>
+              <li>Set the <span>list of available presentation displays</span>
+              to empty.
               </li>
-              <li>Let <em>D</em> be the set of presentations known by the user
-              agent.
-              </li>
-              <li>Queue a task <em>T</em> to run the following steps in order:
-                <ol>
-                  <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
-                    <ol>
-                      <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal
-                      <em>I</em>, and <em>s</em> equal <em>S'</em>.
-                      </li>
-                      <li>If <em>u</em> is equal to <em>S.url</em> and
-                      <em>i</em> is equal to <em>S.id</em>, run the following
-                      steps:
-                        <ol>
-                          <li>
-                            <span data-anolis-spec="w3c-html">Queue a
-                            task</span> to <span data-anolis-spec="w3c-html"
-                            title="concept-event-fire">fire an event</span>
-                            named <code>statechange</code> at
-                            <em>s.onstatechange</em>.
-                          </li>
-                        </ol>
-                      </li>
-                    </ol>
-                  </li>
-                </ol>
-              </li>
-            </ol>
-          </li>
-        </ol>
-        <p class="note">
-          The mechanism that is used to present on the remote display and
-          connect the <span>opening browsing context</span> with the presented
-          document is an implementation choice of the user agent. The
-          connection must provide a two-way messaging abstraction capable of
-          carrying <code>DOMString</code> payloads in a reliable and in-order
-          fashion as described in the <em>Send Message</em> and <em>Receive
-          Message</em> steps below.
-        </p>
-        <p class="note">
-          If <em>T</em> does not complete successfully, the user agent may
-          choose to re-execute the Presentation Connection algorithm at a later
-          time.
-        </p>
-        <p class="open-issue">
-          ISSUE: Do we want to notify the caller of a failure to connect, i.e.
-          with an "error" onstatechange?
-        </p>
-        <p class="open-issue">
-          ISSUE: Do we want to pass the new state as a property of the
-          statechange event?
-        </p>
-      </section>
-      <section>
-        <h4>
-          The <code>onavailablechange</code> EventHandler
-        </h4>
-        <p>
-          <span>The following are the event handlers (and their corresponding
-          event handler event types) that must be supported, as event handler
-          IDL attributes, by objects implementing the
-          <code>PresentationSession</code> interface:</span>
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>
-                Event handler
-              </th>
-              <th>
-                Event handler event type
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <dfn><code>onavailablechange</code></dfn>
-              </td>
-              <td>
-                <code>availablechange</code>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <p>
-          In order to satisfy the <span title=
-          "non-functional-requirements">power saving non-functionional
-          requirements</span> the user agent must keep track of the number of
-          <code>EventHandler</code>s registered to the <code>onavailable</code>
-          event. Using this information, implementation specific discovery of
-          <span title="presentation-display">presentation displays</span> can
-          be resumed or suspended, in order to save power.
-        </p>The user agent must keep a <dfn>list of available presentation
-        displays</dfn>. According to the number of event handlers for
-        <code>onavailablechange</code>, the user agent must also keep the list
-        up to date by running the algorithm for <span title=
-        "algorithm-monitor-available">monitoring the list of available
-        presentation displays</span>.
-      </section>
-      <section>
-        <h5>
-          Adding an <code>EventHandler</code> to <code>onavailablechange</code>
-        </h5>
-        <p>
-          When an event handler is added to the list of event handlers
-          registered for the <code>onavailablechange</code> event, the user
-          agent must run the <span title=
-          "algorithm-monitor-available">algorithm to monitor the list of
-          available presentation displays</span>.
-        </p>
-      </section>
-      <section>
-        <h5>
-          Removing an <code>EventHandler</code>
-        </h5>
-        <p>
-          When an event handler is removed from the list of event handlers
-          registered to the <code>onavailablechange</code> event, the user
-          agent must run the following steps:
-        </p>
-        <ol>
-          <li>If the removed event handler was the last one in the list, <span>
-            cancel monitoring the list of available presentation
-            displays</span>.
-          </li>
-        </ol>
-      </section>
-      <section>
-        <h5>
-          Monitoring the list of available presentation displays
-        </h5>
-        <p>
-          When the user agent is to <dfn title=
-          "algorithm-monitor-available">monitor the list of available
-          presentation displays</dfn>, it must run the following steps:
-        </p>
-        <p>
-          While there are <span data-anolis-spec="w3c-html">event
-          handlers</span> added to NavigatorPresentation.onavailablechange, the
-          user agent must continuously keep track the <span>list of available
-          presentation displays</span> and repeat the following steps:
-        </p>
-        <ol>
-          <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve
-            the list of curently available <a href=
-            "#presentation-display">presentation displays</a> and let <a id=
-            "newdisplays"><em>newDisplays</em></a> be this list.
-          </li>
-          <li>Wait for the completion of that task.
-          </li>
-          <li>If the <span>list of available presentation displays</span> is
-          empty and <a href="#newdisplays">newDisplays</a> is not empty, then
-            <ol>
               <li>
                 <span data-anolis-spec="w3c-html">Queue a task</span> to
                 <span data-anolis-spec="w3c-html" title=
                 "concept-event-fire">fire an event</span> named
-                <code>availablechange</code> at with the event's
-                <code>available</code> property set to <code>true</code>.
+                <code>availablechange</code> at <em>E</em> (and only
+                <em>E</em>) with the event's <code>available</code> property
+                set to <code>false</code>.
               </li>
             </ol>
-          </li>
-          <li>If the <span>list of available presentation displays</span> is
-          not empty and <a href="#newdisplays">newDisplays</a> is empty, then:
-            <ol>
-              <li>
-                <span data-anolis-spec="w3c-html">Queue a task</span> to
-                <span data-anolis-spec="w3c-html" title=
-                "concept-event-fire">fire an event</span> named
-                <code>availablechange</code> with the event's
-                <code>available</code> property set to <code>false</code>.
-              </li>
-            </ol>
-          </li>
-          <li>Set the <span>list of available presentation displays</span> to
-          the value of <a href="#newdisplays">newDisplays</a>.
-          </li>
-        </ol>
-        <p class="note">
-          The mechanism used to monitor <a href=
-          "#presentation-display">presention displays</a> availability is left
-          to the user agent. The user agent may choose search for screens at
-          any time, not just when event handlers are added to
-          <code>NavigatorPresentation.onavailablechange</code>.
-        </p>
-        <p>
-          When the user agent is to <dfn>cancel monitoring the list of
-          available presentation displays</dfn>, it must run the following
-          steps:
-        </p>
-        <ol>
-          <li>Cancel any tasks to retrieve the list of available <span title=
-          "presentation display">presentation displays</span>.
-          </li>
-          <li>Set the <span>list of available presentation displays</span> to
-          empty.
-          </li>
-          <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> to
-            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
-            an event</span> named <code>availablechange</code> at <em>E</em>
-            (and only <em>E</em>) with the event's <code>available</code>
-            property set to <code>false</code>.
-          </li>
-        </ol>
+          </section>
+        </section>
       </section>
-    </section>
-    <section>
-      <h3>
-        <span>Interface <code>AvailableChangeEvent</code></span>
-      </h3>
-      <pre class="idl">
+      <section>
+        <h3>
+          <span>Interface <code>AvailableChangeEvent</code></span>
+        </h3>
+        <pre class="idl">
 <span>[Constructor(DOMString type, optional <span>AvailableChangeEventInit</span> eventInitDict)]
 interface <dfn>AvailableChangeEvent</dfn> : Event {
   readonly attribute boolean available;
@@ -1800,19 +1500,20 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
 };
 </span>
 </pre>
-      <p>
-        An event named <code>availablechange</code> is fired during the
-        execution of the <span>monitoring presentation display
-        availability</span> algorithm when the <dfn>presentation display
-        availability</dfn> changes. It is fired at the
-        <span><code>PresentationSession</code></span> object, using the
-        <code>AvailableChangeEvent</code> interface, with the
-        <code>available</code> attribute set to the boolean value that the
-        algorithm determined.
-      </p>
+        <p>
+          An event named <code>availablechange</code> is fired during the
+          execution of the <span>monitoring presentation display
+          availability</span> algorithm when the <dfn>presentation display
+          availability</dfn> changes. It is fired at the
+          <span><code>PresentationSession</code></span> object, using the
+          <code>AvailableChangeEvent</code> interface, with the
+          <code>available</code> attribute set to the boolean value that the
+          algorithm determined.
+        </p>
+      </section>
     </section>
     <section>
-      <h2 class="no-num">
+      <h2>
         Security and privacy considerations
       </h2>
       <p class="open-issue">
@@ -1821,13 +1522,13 @@ dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
       </p>
     </section>
     <section>
-      <h2 class="no-num">
+      <h2>
         References
       </h2>
       <div id="anolis-references"></div>
     </section>
     <section>
-      <h2 class="no-num">
+      <h2>
         Acknowledgments
       </h2>
       <p>
