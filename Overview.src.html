@@ -491,8 +491,8 @@
         event types</span>, <span data-anolis-spec="w3c-html" title=
         "concept-event-fire">firing an event</span>, <span data-anolis-spec=
         "w3c-html">navigate</span>, <span data-anolis-spec="w3c-html" title=
-        "queue a task">queing a task</span> are defined in
-        <span data-anolis-ref="">HTML5</span>.
+        "queue a task">queing a task</span>, <span>link elements</span> are
+        defined in <span data-anolis-ref="">HTML5</span>.
       </p>
       <p>
         The term <span data-anolis-spec="dom" title=
@@ -671,6 +671,73 @@
 &lt;/script&gt;
 </pre>
       </section>
+    </section>
+    <section>
+      <h2>
+        Specifying the default presentation URL and id.
+      </h2>
+      <p>
+        The <code>default-presentation</code> keyword can be used with a
+        <span data-anolis-ref="">HTML5</span> <span data-anolis-spec="w3c-html"
+        title="link">link element</span>. This keyword allows to specify the
+        URL to use by the UA when the UA initiates a <span title=
+        "concept-presentation">presentation</span>. An optional <code>id</code>
+        attribute also allows specifying a <span>presentation session
+        identifier</span> to use for the UA initiated <span title=
+        "concept-presentation">presentation</span>.
+      </p>
+      <table border="1">
+        <tr>
+          <th rowspan="2">
+            Link type
+          </th>
+          <th colspan="2">
+            Effect on...
+          </th>
+          <th rowspan="2">
+            Brief description
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <code>link</code>
+          </th>
+          <th>
+            <code><a title="a element">a</a></code> and <code><a title=
+            "area element">area</a></code>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <code><dfn title="rel-default-presentation" id=
+            "rel-default-presentation">default-presentation</dfn></code>
+          </td>
+          <td>
+            <a title="external resource link">External Resource</a>
+          </td>
+          <td>
+            not allowed
+          </td>
+          <td>
+            Links to a <span>presentation url</span>.
+          </td>
+        </tr>
+      </table>
+      <p class="note">
+        In cases where more than one <a><code>link</code> element</a> with a
+        <code>default-presentation</code> link type appears in a
+        <code>Document</code>, the user agent uses the first
+        <a><code>link</code> element</a> in tree order and ignores all
+        subsequent <span data-anolis-spec="w3c-html" title="link">link
+        element</span> with a <code>default-presentation</code> link type (even
+        if the first element was erroneous).
+      </p>
+      <p>
+        The <span>default presentation URL</span> may be used by the UA to
+        filter the available screens while <span title=
+        "algorithm-monitor-available">monitoring the list of available
+        presentation displays</span>.
+      </p>
     </section>
     <section>
       <h2>
@@ -1188,6 +1255,116 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
         </section>
         <section>
           <h4>
+            Initiating the presentation session by the user agent
+          </h4>
+          <p>
+            When the user agent starts a presentation session, it must run the
+            following steps:
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>defaultPresentationURL</code>, the <span data-anolis-spec=
+              "url">URL</span> of the document to be presented, specified via
+              the <span>default presentation</span> <span data-anolis-spec=
+              "w3c-html" title="link">link element</span>.
+            </dd>
+            <dd>
+              <code>defaultPresentationId</code>, an optional identifier for
+              the presentation, specified via the <code>id</code> attribute of
+              the <code>default-presentation</code> <span data-anolis-spec=
+              "w3c-html" title="link">link element</span>.
+            </dd>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              <em>S</em>, a <span title="presentation-session">presentation
+              session</span>
+            </dd>
+          </dl>
+          <ol>
+            <li>If the user agent does not <span>monitor presentation display
+            availability</span>, run the following steps:
+              <ol>
+                <li>
+                  <span>Monitor presentation display availability</span>.
+                </li>
+                <li>Wait until the algorithm completes.
+                </li>
+              </ol>
+            </li>
+            <li>If the <span>list of available presentation displays</span> is
+            empty, then abort all remaining steps.
+            </li>
+            <li>Queue a task <em>T</em> to request user permission for the use
+            of a <span data-anolis-ref="presentation">presentation
+            display</span> and selection of one presentation display.
+              <ol>
+                <li>If <em>T</em> completes with the user <em>granting
+                permission</em> to use a screen, run the following steps:
+                  <ol>
+                    <li>If <code>defaultPresentationId</code> is not
+                    <em>undefined</em>, assign <em>I</em> to that that
+                    <code>defaultPresentationId</code>.
+                    </li>
+                    <li>If <code>defaultPresentationId</code> is
+                    <code>undefined</code>, let <em>I</em> be a random
+                    alphanumeric value of at least 16 characters drawn from the
+                    characters <code>[A-Za-z0-9]</code>.
+                    </li>
+                    <li>Create a new <code>PresentationSession</code>
+                    <em>S</em>.
+                    </li>
+                    <li>Set <code>S.url</code> to
+                    <code>defaultPresentationUrl</code>, set <code>S.id</code>
+                    to <em>I</em>, and set <code>S.state</code> to
+                    <code>disconnected</code>.
+                    </li>
+                    <li>
+                      <span data-anolis-spec="w3c-html">Queue a task</span>
+                      <em>C</em> to create a new <span data-anolis-spec=
+                      "w3c-html">browsing context</span> on the user-selected
+                      <span>presentation display</span> and
+                      <span data-anolis-spec="w3c-html">navigate</span> to
+                      <code>defaultPresentationUrl</code> in it.
+                      <ol>
+                        <li>If <em>C</em> completes successfully, run the
+                        following steps:
+                          <ol>
+                            <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+                            </li>
+                            <li>
+                              <span data-anolis-spec="w3c-html">Queue a
+                              task</span> to <span data-anolis-spec="w3c-html"
+                              title="concept-event-fire">fire an event</span>
+                              named <code>defaultsessionstart</code> at
+                              <em>navigator.presentation.ondefaultsessionstart</em>
+                              with <em>S</em>.
+                            </li>
+                            <li>
+                              <span>Establish a presentation connection</span>
+                              with <em>S</em>.
+                            </li>
+                          </ol>
+                        </li>
+                        <li>If <em>C</em> fails, abort all the remaining steps.
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li>If <em>T</em> completes with the user <em>denying
+                permission</em>, abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
             Joining a presentation session
           </h4>
           <p>
@@ -1484,6 +1661,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               left to the user agent. The user agent may choose search for
               screens at any time, not just when event handlers are added to
               <code>NavigatorPresentation.onavailablechange</code>.
+            </p>
+            <p class="note">
+              The user agent may use the <span>default presentation URL</span>
+              specified by the main frame of the page to filter the available
+              <a href="#presentation-display">presention displays</a> if the
+              mechanism of monitoring allows filtering.
             </p>
             <p>
               When the user agent is to <dfn>cancel monitoring the list of
