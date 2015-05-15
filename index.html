@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-14-may-2015">
-        Editor's Draft 14 May 2015
+      <h2 class="no-num no-toc" id="editor's-draft-15-may-2015">
+        Editor's Draft 15 May 2015
       </h2>
       <dl>
         <dt>
@@ -256,72 +256,78 @@
    <li><a href="#monitor-session's-state-and-exchange-data-example"><span class="secno">5.5 </span>
           Monitor session's state and exchange data example
         </a></ol></li>
- <li><a href="#api"><span class="secno">6 </span>
+ <li><a href="#specifying-the-default-presentation-url-and-id."><span class="secno">6 </span>
+        Specifying the default presentation URL and id.
+      </a></li>
+ <li><a href="#api"><span class="secno">7 </span>
         API
       </a>
   <ol>
-   <li><a href="#common-idioms"><span class="secno">6.1 </span>
+   <li><a href="#common-idioms"><span class="secno">7.1 </span>
           Common idioms
         </a></li>
-   <li><a href="#common-definitions"><span class="secno">6.2 </span>
+   <li><a href="#common-definitions"><span class="secno">7.2 </span>
           Common definitions
         </a></li>
-   <li><a href="#interface-presentationsession"><span class="secno">6.3 </span>
+   <li><a href="#interface-presentationsession"><span class="secno">7.3 </span>
           Interface <code>PresentationSession</code>
         </a>
     <ol>
-     <li><a href="#sending-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
+     <li><a href="#sending-a-message-through-presentationsession"><span class="secno">7.3.1 </span>
             Sending a message through <code>PresentationSession</code>
           </a></li>
-     <li><a href="#receiving-a-message-through-presentationsession"><span class="secno">6.3.2 </span>
+     <li><a href="#receiving-a-message-through-presentationsession"><span class="secno">7.3.2 </span>
             Receiving a message through <code>PresentationSession</code>
           </a></li>
-     <li><a href="#closing-a-presentationsession"><span class="secno">6.3.3 </span>
+     <li><a href="#closing-a-presentationsession"><span class="secno">7.3.3 </span>
             Closing a <code>PresentationSession</code>
           </a></li>
-     <li><a href="#event-handlers"><span class="secno">6.3.4 </span>
+     <li><a href="#event-handlers"><span class="secno">7.3.4 </span>
             Event Handlers
           </a></ol></li>
-   <li><a href="#interface-navigatorpresentation"><span class="secno">6.4 </span>
+   <li><a href="#interface-navigatorpresentation"><span class="secno">7.4 </span>
           Interface <code>NavigatorPresentation</code>
         </a>
     <ol>
-     <li><a href="#starting-a-presentation-session"><span class="secno">6.4.1 </span>
+     <li><a href="#starting-a-presentation-session"><span class="secno">7.4.1 </span>
             Starting a presentation session
           </a></li>
-     <li><a href="#joining-a-presentation-session"><span class="secno">6.4.2 </span>
+     <li><a href="#initiating-the-presentation-session-by-the-user-agent"><span class="secno">7.4.2 </span>
+            Initiating the presentation session by the user agent
+          </a></li>
+     <li><a href="#joining-a-presentation-session"><span class="secno">7.4.3 </span>
             Joining a presentation session
           </a></li>
-     <li><a href="#establishing-a-presentation-connection"><span class="secno">6.4.3 </span>
+     <li><a href="#establishing-a-presentation-connection"><span class="secno">7.4.4 </span>
             Establishing a presentation connection
           </a></li>
-     <li><a href="#the-onavailablechange-eventhandler"><span class="secno">6.4.4 </span>
+     <li><a href="#the-onavailablechange-eventhandler"><span class="secno">7.4.5 </span>
             The <code>onavailablechange</code> EventHandler
           </a>
       <ol>
-       <li><a href="#adding-an-eventhandler-to-onavailablechange"><span class="secno">6.4.4.1 </span>
+       <li><a href="#adding-an-eventhandler-to-onavailablechange"><span class="secno">7.4.5.1 </span>
               Adding an <code>EventHandler</code> to
               <code>onavailablechange</code>
             </a></li>
-       <li><a href="#removing-an-eventhandler"><span class="secno">6.4.4.2 </span>
+       <li><a href="#removing-an-eventhandler"><span class="secno">7.4.5.2 </span>
               Removing an <code>EventHandler</code>
             </a></li>
-       <li><a href="#monitoring-the-list-of-available-presentation-displays"><span class="secno">6.4.4.3 </span>
+       <li><a href="#monitoring-the-list-of-available-presentation-displays"><span class="secno">7.4.5.3 </span>
               Monitoring the list of available presentation displays
             </a></ol></ol></li>
-   <li><a href="#interface-availablechangeevent"><span class="secno">6.5 </span>
+   <li><a href="#interface-availablechangeevent"><span class="secno">7.5 </span>
           <span>Interface <code>AvailableChangeEvent</code></span>
         </a></li>
-   <li><a href="#interface-defaultsessionstart"><span class="secno">6.6 </span>
+   <li><a href="#interface-defaultsessionstart"><span class="secno">7.6 </span>
           <span>Interface <code>DefaultSessionStart</code></span>
         </a></ol></li>
- <li><a href="#security-and-privacy-considerations"><span class="secno">7 </span>
+ <li><a href="#security-and-privacy-considerations"><span class="secno">8 </span>
         Security and privacy considerations
       </a></li>
- <li><a href="#references"><span class="secno">8 </span>
+ <li><a href="#references"><span class="secno">9 </span>
         References
       </a></li>
- <li><a href="#acknowledgments"><span class="secno">9 </span>
+ <li><a href="#acknowledgments"><span class="secno">10 </span>
         Acknowledgments
       </a></ol>
 <!--end-toc-->
@@ -579,8 +585,8 @@
       <p>
         The terms <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a>,
         <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event handler
-        event types</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">firing an event</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">queing a task</a> are defined in
-        <a href="#refsHTML5">[HTML5]</a>.
+        event types</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">firing an event</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">queing a task</a>, <span>link elements</span> are
+        defined in <a href="#refsHTML5">[HTML5]</a>.
       </p>
       <p>
         The term <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> is defined in <a href="#refsDOM">[DOM]</a>.
@@ -749,11 +755,72 @@
       </section>
     </section>
     <section>
-      <h2 id="api"><span class="secno">6 </span>
+      <h2 id="specifying-the-default-presentation-url-and-id."><span class="secno">6 </span>
+        Specifying the default presentation URL and id.
+      </h2>
+      <p>
+        The <code>default-presentation</code> keyword can be used with a
+        <a href="#refsHTML5">[HTML5]</a> <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/semantics.html#the-link-element" title="link">link element</a>. This keyword allows to specify the
+        URL to use by the UA when the UA initiates a <a href="#concept-presentation" title="concept-presentation">presentation</a>. An optional <a href="#id"><code>id</code></a>
+        attribute also allows specifying a <a href="#presentation-session-identifier">presentation session
+        identifier</a> to use for the UA initiated <a href="#concept-presentation" title="concept-presentation">presentation</a>.
+      </p>
+      <table border="1">
+        <tr>
+          <th rowspan="2">
+            Link type
+          </th>
+          <th colspan="2">
+            Effect on...
+          </th>
+          <th rowspan="2">
+            Brief description
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <code>link</code>
+          </th>
+          <th>
+            <code><a title="a element">a</a></code> and <code><a title="area element">area</a></code>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <code><dfn id="rel-default-presentation" title="rel-default-presentation">default-presentation</dfn></code>
+          </td>
+          <td>
+            <a title="external resource link">External Resource</a>
+          </td>
+          <td>
+            not allowed
+          </td>
+          <td>
+            Links to a <span>presentation url</span>.
+          </td>
+        </tr>
+      </table>
+      <p class="note">
+        In cases where more than one <a><code>link</code> element</a> with a
+        <code>default-presentation</code> link type appears in a
+        <code>Document</code>, the user agent uses the first
+        <a><code>link</code> element</a> in tree order and ignores all
+        subsequent <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/semantics.html#the-link-element" title="link">link
+        element</a> with a <code>default-presentation</code> link type (even
+        if the first element was erroneous).
+      </p>
+      <p>
+        The <span>default presentation URL</span> may be used by the UA to
+        filter the available screens while <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available
+        presentation displays</a>.
+      </p>
+    </section>
+    <section>
+      <h2 id="api"><span class="secno">7 </span>
         API
       </h2>
       <section>
-        <h3 id="common-idioms"><span class="secno">6.1 </span>
+        <h3 id="common-idioms"><span class="secno">7.1 </span>
           Common idioms
         </h3>
         <p>
@@ -792,7 +859,7 @@
         </p>
       </section>
       <section>
-        <h3 id="common-definitions"><span class="secno">6.2 </span>
+        <h3 id="common-definitions"><span class="secno">7.2 </span>
           Common definitions
         </h3>
         <p>
@@ -808,7 +875,7 @@
         </p>
       </section>
       <section>
-        <h3 id="interface-presentationsession"><span class="secno">6.3 </span>
+        <h3 id="interface-presentationsession"><span class="secno">7.3 </span>
           Interface <a href="#presentationsession"><code>PresentationSession</code></a>
         </h3>
         <p>
@@ -865,7 +932,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
             46: Define send behavior</a>
           </p>
-          <h4 id="sending-a-message-through-presentationsession"><span class="secno">6.3.1 </span>
+          <h4 id="sending-a-message-through-presentationsession"><span class="secno">7.3.1 </span>
             Sending a message through <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
           <p class="note">
@@ -918,7 +985,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </ol>
         </section>
         <section>
-          <h4 id="receiving-a-message-through-presentationsession"><span class="secno">6.3.2 </span>
+          <h4 id="receiving-a-message-through-presentationsession"><span class="secno">7.3.2 </span>
             Receiving a message through <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
           <p>
@@ -980,7 +1047,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </ol>
         </section>
         <section>
-          <h4 id="closing-a-presentationsession"><span class="secno">6.3.3 </span>
+          <h4 id="closing-a-presentationsession"><span class="secno">7.3.3 </span>
             Closing a <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
           <p>
@@ -1029,7 +1096,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
         </section>
         <section>
-          <h4 id="event-handlers"><span class="secno">6.3.4 </span>
+          <h4 id="event-handlers"><span class="secno">7.3.4 </span>
             Event Handlers
           </h4>
           <p>
@@ -1071,7 +1138,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </section>
       </section>
       <section>
-        <h3 id="interface-navigatorpresentation"><span class="secno">6.4 </span>
+        <h3 id="interface-navigatorpresentation"><span class="secno">7.4 </span>
           Interface <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a>
         </h3>
         <pre class="idl">partial interface <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#navigator">Navigator</a> {
@@ -1097,7 +1164,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           algorithms</a>
         </p>
         <section>
-          <h4 id="starting-a-presentation-session"><span class="secno">6.4.1 </span>
+          <h4 id="starting-a-presentation-session"><span class="secno">7.4.1 </span>
             Starting a presentation session
           </h4>
           <p>
@@ -1235,7 +1302,112 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
         </section>
         <section>
-          <h4 id="joining-a-presentation-session"><span class="secno">6.4.2 </span>
+          <h4 id="initiating-the-presentation-session-by-the-user-agent"><span class="secno">7.4.2 </span>
+            Initiating the presentation session by the user agent
+          </h4>
+          <p>
+            When the user agent starts a presentation session, it must run the
+            following steps:
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>defaultPresentationURL</code>, the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> of the document to be presented, specified via
+              the <span>default presentation</span> <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/semantics.html#the-link-element" title="link">link element</a>.
+            </dd>
+            <dd>
+              <code>defaultPresentationId</code>, an optional identifier for
+              the presentation, specified via the <a href="#id"><code>id</code></a> attribute of
+              the <code>default-presentation</code> <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/semantics.html#the-link-element" title="link">link element</a>.
+            </dd>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              <em>S</em>, a <span title="presentation-session">presentation
+              session</span>
+            </dd>
+          </dl>
+          <ol>
+            <li>If the user agent does not <span>monitor presentation display
+            availability</span>, run the following steps:
+              <ol>
+                <li>
+                  <span>Monitor presentation display availability</span>.
+                </li>
+                <li>Wait until the algorithm completes.
+                </li>
+              </ol>
+            </li>
+            <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
+            empty, then abort all remaining steps.
+            </li>
+            <li>Queue a task <em>T</em> to request user permission for the use
+            of a <a data-anolis-ref="presentation" href="#presentation-display">presentation
+            display</a> and selection of one presentation display.
+              <ol>
+                <li>If <em>T</em> completes with the user <em>granting
+                permission</em> to use a screen, run the following steps:
+                  <ol>
+                    <li>If <code>defaultPresentationId</code> is not
+                    <em>undefined</em>, assign <em>I</em> to that that
+                    <code>defaultPresentationId</code>.
+                    </li>
+                    <li>If <code>defaultPresentationId</code> is
+                    <code>undefined</code>, let <em>I</em> be a random
+                    alphanumeric value of at least 16 characters drawn from the
+                    characters <code>[A-Za-z0-9]</code>.
+                    </li>
+                    <li>Create a new <a href="#presentationsession"><code>PresentationSession</code></a>
+                    <em>S</em>.
+                    </li>
+                    <li>Set <code>S.url</code> to
+                    <code>defaultPresentationUrl</code>, set <code>S.id</code>
+                    to <em>I</em>, and set <code>S.state</code> to
+                    <code>disconnected</code>.
+                    </li>
+                    <li>
+                      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
+                      <em>C</em> to create a new <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a> on the user-selected
+                      <a href="#presentation-display">presentation display</a> and
+                      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a> to
+                      <code>defaultPresentationUrl</code> in it.
+                      <ol>
+                        <li>If <em>C</em> completes successfully, run the
+                        following steps:
+                          <ol>
+                            <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+                            </li>
+                            <li>
+                              <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a
+                              task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a>
+                              named <code>defaultsessionstart</code> at
+                              <em>navigator.presentation.ondefaultsessionstart</em>
+                              with <em>S</em>.
+                            </li>
+                            <li>
+                              <a href="#establish-a-presentation-connection">Establish a presentation connection</a>
+                              with <em>S</em>.
+                            </li>
+                          </ol>
+                        </li>
+                        <li>If <em>C</em> fails, abort all the remaining steps.
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li>If <em>T</em> completes with the user <em>denying
+                permission</em>, abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4 id="joining-a-presentation-session"><span class="secno">7.4.3 </span>
             Joining a presentation session
           </h4>
           <p>
@@ -1310,7 +1482,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
         </section>
         <section>
-          <h4 id="establishing-a-presentation-connection"><span class="secno">6.4.3 </span>
+          <h4 id="establishing-a-presentation-connection"><span class="secno">7.4.4 </span>
             Establishing a presentation connection
           </h4>
           <p>
@@ -1389,7 +1561,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
         </section>
         <section>
-          <h4 id="the-onavailablechange-eventhandler"><span class="secno">6.4.4 </span>
+          <h4 id="the-onavailablechange-eventhandler"><span class="secno">7.4.5 </span>
             The <a href="#onavailablechange"><code>onavailablechange</code></a> EventHandler
           </h4>
           <p>
@@ -1433,7 +1605,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           list up to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available
           presentation displays</a>.
           <section>
-            <h5 id="adding-an-eventhandler-to-onavailablechange"><span class="secno">6.4.4.1 </span>
+            <h5 id="adding-an-eventhandler-to-onavailablechange"><span class="secno">7.4.5.1 </span>
               Adding an <code>EventHandler</code> to
               <a href="#onavailablechange"><code>onavailablechange</code></a>
             </h5>
@@ -1445,7 +1617,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </p>
           </section>
           <section>
-            <h5 id="removing-an-eventhandler"><span class="secno">6.4.4.2 </span>
+            <h5 id="removing-an-eventhandler"><span class="secno">7.4.5.2 </span>
               Removing an <code>EventHandler</code>
             </h5>
             <p>
@@ -1461,7 +1633,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </ul>
           </section>
           <section>
-            <h5 id="monitoring-the-list-of-available-presentation-displays"><span class="secno">6.4.4.3 </span>
+            <h5 id="monitoring-the-list-of-available-presentation-displays"><span class="secno">7.4.5.3 </span>
               Monitoring the list of available presentation displays
             </h5>
             <p>
@@ -1517,6 +1689,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               screens at any time, not just when event handlers are added to
               <code>NavigatorPresentation.onavailablechange</code>.
             </p>
+            <p class="note">
+              The user agent may use the <span>default presentation URL</span>
+              specified by the main frame of the page to filter the available
+              <a href="#presentation-display">presention displays</a> if the
+              mechanism of monitoring allows filtering.
+            </p>
             <p>
               When the user agent is to <dfn id="cancel-monitoring-the-list-of-available-presentation-displays">cancel monitoring the list of
               available presentation displays</dfn>, it must run the following
@@ -1541,7 +1719,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </section>
       </section>
       <section>
-        <h3 id="interface-availablechangeevent"><span class="secno">6.5 </span>
+        <h3 id="interface-availablechangeevent"><span class="secno">7.5 </span>
           <span>Interface <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a></span>
         </h3>
         <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#availablechangeeventinit">AvailableChangeEventInit</a> eventInitDict)]
@@ -1566,7 +1744,7 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
         </p>
       </section>
       <section>
-        <h3 id="interface-defaultsessionstart"><span class="secno">6.6 </span>
+        <h3 id="interface-defaultsessionstart"><span class="secno">7.6 </span>
           <span>Interface <code>DefaultSessionStart</code></span>
         </h3>
         <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#defaultsessionstarteventinit">DefaultSessionStartEventInit</a> eventInitDict)]
@@ -1593,7 +1771,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
       </section>
     </section>
     <section>
-      <h2 id="security-and-privacy-considerations"><span class="secno">7 </span>
+      <h2 id="security-and-privacy-considerations"><span class="secno">8 </span>
         Security and privacy considerations
       </h2>
       <p class="open-issue">
@@ -1602,7 +1780,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
       </p>
     </section>
     <section>
-      <h2 id="references"><span class="secno">8 </span>
+      <h2 id="references"><span class="secno">9 </span>
         References
       </h2>
       <div id="anolis-references"><dl><dt id="refsDOM">[DOM]
@@ -1635,7 +1813,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
 </dl></div>
     </section>
     <section>
-      <h2 id="acknowledgments"><span class="secno">9 </span>
+      <h2 id="acknowledgments"><span class="secno">10 </span>
         Acknowledgments
       </h2>
       <p>
