@@ -6,14 +6,14 @@
       Presentation API
     </title>
     <style>
-@media print {
+    @media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link rel="stylesheet" type="text/css" href=
     "http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
     <style type="text/css">
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -321,7 +321,7 @@
             audience to enjoy the content. The web page shows UI elements that
             allow the user to trigger displaying content on the secondary
             display (e.g., a "send to second screen" ) only if there is at
-            least one secondary screen available.
+            least one presentation display available.
           </dd>
           <dt>
             Multiplayer gaming
@@ -386,49 +386,70 @@
             </dt>
             <dd>
               The UA must provide a way to find out whether at least one
-              secondary screen is available.
+              <a href="#presentation-display">presentation display</a> is available.
             </dd>
             <dt>
               Launching presentation
             </dt>
             <dd>
-              The UA must provide a way to start sending content to the
-              secondary screen. This may occur at the request of the page or at
-              the request of the UA.
+              The UA must provide a way to start sending content to a
+              presentation display or displays from
+              a <a href="#presentation-controller">presentation controller</a>,
+              which creates a new <a href="#presentation">presentation</a>.
+              This may occur at the request of the controller or at the request
+              of the UA.  A single controller may be able to send content to
+              multiple displays at once, and a single display may be able to
+              show content from multiple controllers at once.
             </dd>
             <dt>
               Resuming presentation
             </dt>
             <dd>
-              The UA must be able to resume an existing session with the
-              content being displayed on the secondary screen.
+              If a presentation controller becomes disconnected from a
+              presentation, the UA must provide a way for the controller to
+              resume its connection to the presentation.  It must also provide a
+              way for a different controller on the same UA to request
+              connection to one or more presentations.
             </dd>
             <dt>
               Communication
             </dt>
             <dd>
-              The UA must enable exchanging data between the primary and the
-              secondary screen in order to have a control channel between the
-              primary and secondary page. The UA must not make assumptions
-              about the execution locality of the UA of the remote page it
-              communicates with (i.e. the secondary page might run on a remote
-              UA, and thus the link between these two pages must be loosely
-              coupled).
+              The UA must enable exchange of data between the presentation
+              controller and the presentation.  This data exchange can be used
+              to control the content shown in the presentation.  The UAs that
+              host the controllers must not make an assumption about the
+              execution locality of the UA that hosts the presentation; the
+              presentations may be rendered on one or more remote UAs, and thus
+              the communication channels among them are loosely coupled.
             </dd>
             <dt>
               Signaling disconnection
             </dt>
             <dd>
-              The UA must signal disconnection from the presentation page to
-              the primary page and vice versa.
+              The UA must signal disconnection between controllers and
+              presentations to both sides.
+            </dd>
+            <dt>
+              Multiple controllers per presentation
+            </dt>
+            <dd>
+              When possible, a presentation should be able to accept connections
+              from multiple controllers simultaneously.  Not all presentations
+              will support this when its presentation browsing context is not
+              shareable across devices.
+            </dd>
+            <dt>
+              Multiple presentations per controller
+            </dt>
+            <dd>
+              A single controller should be able to launch multiple
+              presentations and maintain simultaneous connections to them.  Each
+              connected presentation is handled independently by the UA;
+              controlling the same content on presentations simultaneously in a
+              synchronized fashion is out of scope for this specifciation.
             </dd>
           </dl>
-          <p class="note">
-            Multi-screen enumeration and named identification requirement was
-            removed after <a rel="nofollow" class="external free" href=
-            "http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html">
-            discussion on the mailing list</a>.
-          </p>
         </section>
         <section>
           <h4>
@@ -695,8 +716,9 @@
           "concept-presentation-session">presentation sessions</span>.
         </p>
         <p>
-          An <dfn>opening browsing context</dfn> is a <span data-anolis-spec=
-          "w3c-html">browsing context</span> that has initiated or resumed a
+          An <dfn>controlling browsing context</dfn> (or controller for short)
+          is a <span data-anolis-spec= "w3c-html">browsing context</span> that
+          has initiated or resumed a
           <span>presentation session</span> by calling
           <code><span>startSession</span>()</code> or
           <code><span>joinSession</span>()</code> or received a
@@ -704,8 +726,9 @@
           <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
-          The <dfn>presenting browsing context</dfn> is the browsing context
-          responsible for rendering to a <span>presentation display</span>. A
+          The <dfn>presenting browsing context</dfn> (or presentation for short)
+          is the browsing context responsible for rendering to
+          a <span>presentation display</span>. A
           <span>presenting browsing context</span> can reside in the same user
           agent as the <span>opening browsing context</span> or a different
           one.
@@ -1095,7 +1118,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             display</span> and selection of one presentation display.
               <ol>
                 <li>If <em>T</em> completes with the user <em>granting
-                permission</em> to use a screen, run the following steps:
+                permission</em> to use a display, run the following steps:
                   <ol>
                     <li>If <code>presentationId</code> is not
                     <em>undefined</em>, assign <em>I</em> to that that
@@ -1170,7 +1193,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
           <p class="note">
             The details of implementing the permission request and display
             selection are left to the user agent; for example it may show the
-            user a dialog and allow the user to select an available screen
+            user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
             permission).
           </p>
@@ -1476,7 +1499,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               The mechanism used to monitor <a href=
               "#presentation-display">presention displays</a> availability is
               left to the user agent. The user agent may choose search for
-              screens at any time, not just when event handlers are added to
+              displays at any time, not just when event handlers are added to
               <code>NavigatorPresentation.onavailablechange</code>.
             </p>
             <p>
