@@ -4,13 +4,13 @@
       Presentation API
     </title>
     <style>
-@media print {
+    @media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">
     <style type="text/css">
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -78,8 +78,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-19-may-2015">
-        Editor's Draft 19 May 2015
+      <h2 class="no-num no-toc" id="editor's-draft-27-may-2015">
+        Editor's Draft 27 May 2015
       </h2>
       <dl>
         <dt>
@@ -414,7 +414,7 @@
             audience to enjoy the content. The web page shows UI elements that
             allow the user to trigger displaying content on the secondary
             display (e.g., a "send to second screen" ) only if there is at
-            least one secondary screen available.
+            least one presentation display available.
           </dd>
           <dt>
             Multiplayer gaming
@@ -479,48 +479,77 @@
             </dt>
             <dd>
               The UA must provide a way to find out whether at least one
-              secondary screen is available.
+              <a href="#presentation-display">presentation display</a> is
+              available.
             </dd>
             <dt>
               Launching presentation
             </dt>
             <dd>
-              The UA must provide a way to start sending content to the
-              secondary screen. This may occur at the request of the page or at
-              the request of the UA.
+              The UA must provide a way to start sending content to a
+              presentation display or displays from a <a href="#controlling-browsing-context">controlling
+              browsing context</a> (or <em>controller</em>), which creates a
+              new <a href="#presenting-browsing-context">presenting browsing context</a> (or
+              <em>presentation</em>). This may occur at the request of the
+              controller or at the request of the UA. A single controller may
+              be able to send content to multiple displays at once, and a
+              single display may be able to host multiple presentations at
+              once.
             </dd>
             <dt>
               Resuming presentation
             </dt>
             <dd>
-              The UA must be able to resume an existing session with the
-              content being displayed on the secondary screen.
+              If a controller becomes disconnected from its presentation, the
+              UA must provide a way for it to resume its connection to the
+              presentation. It must also provide a way for a new browsing
+              context on the same UA to request connection to one or more
+              presentations (thus becoming their controller).
             </dd>
             <dt>
               Communication
             </dt>
             <dd>
-              The UA must enable exchanging data between the primary and the
-              secondary screen in order to have a control channel between the
-              primary and secondary page. The UA must not make assumptions
-              about the execution locality of the UA of the remote page it
-              communicates with (i.e. the secondary page might run on a remote
-              UA, and thus the link between these two pages must be loosely
-              coupled).
+              The UA must enable exchange of data between a presentation and
+              its controller or controllers. This data exchange can be used to
+              determine what content is shown in the presentation. The UAs that
+              host the controllers must not make an assumption about the
+              execution locality of the UA that hosts the presentation; they
+              may be rendered on one or more remote UAs, and thus the
+              communication channels between a presentation and its controllers
+              is loosely coupled.
             </dd>
             <dt>
               Signaling disconnection
             </dt>
             <dd>
-              The UA must signal disconnection from the presentation page to
-              the primary page and vice versa.
+              The UA must signal disconnection between a controller and a
+              presentation to both the controller and the presentation. The
+              controller or the presentation may choose to initiate
+              disconnection; in that case, the UA must signal disconnection to
+              the other side.
+            </dd>
+            <dt>
+              Multiple controllers per presentation
+            </dt>
+            <dd>
+              A presentation should be able to accept control (via data
+              exchange) from multiple controllers simultaneously. Not all
+              presentations will support this; for example, when the
+              presentation browsing context is not accessible to other devices.
+            </dd>
+            <dt>
+              Multiple presentations per controller
+            </dt>
+            <dd>
+              A single controller should be able to launch multiple
+              presentations and exchange data with them. Each connection
+              between a controller and a presentation is handled independently
+              by the UA; controlling the same content on multiple presentations
+              simultaneously in a synchronized fashion is out of scope for this
+              specification.
             </dd>
           </dl>
-          <p class="note">
-            Multi-screen enumeration and named identification requirement was
-            removed after <a class="external free" href="http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html" rel="nofollow">
-            discussion on the mailing list</a>.
-          </p>
         </section>
         <section>
           <h4 id="non-functional-requirements"><span class="secno">2.2.2 </span>
@@ -618,10 +647,9 @@
       <p>
         This section shows example codes that highlight the usage of main
         features of the Presentation API. In these examples,
-        <code>controller.html</code> represents the controlling page that runs
-        in the opener UA and <code>presentation.html</code> represents the
-        presenting page that runs in the presenting UA. Both pages are served
-        from the domain <code>http://example.org</code>
+        <code>controller.html</code> implements the controller and
+        <code>presentation.html</code> implements the presentation. Both pages
+        are served from the domain <code>http://example.org</code>
         (<code>http://example.org/controller.html</code> and
         <code>http://example.org/presentation.html</code>). Please refer to the
         comments in the code examples for further details.
@@ -762,27 +790,28 @@
           technology.
         </p>
         <p>
-          A <dfn id="concept-presentation-session" title="concept-presentation-session">presentation
-          session</dfn> is an object relating an <a href="#opening-browsing-context">opening browsing
-          context</a> to its <a href="#presentation-display">presentation display</a> and enabling
-          two-way-messaging between them. Each such object has a
-          <dfn id="presentation-session-state">presentation session state</dfn> and a <dfn id="presentation-session-identifier">presentation session
-          identifier</dfn> to distinguish it from other <a href="#concept-presentation-session" title="concept-presentation-session">presentation sessions</a>.
+          A <dfn id="presentation-session">presentation session</dfn> is an object relating an
+          <a href="#controlling-browsing-context">controlling browsing context</a> to its <span>presentating
+          browsing context</span> and enables two-way-messaging between them.
+          Each presentation session has a <dfn id="presentation-session-state">presentation session state</dfn>
+          and a <dfn id="presentation-session-identifier">presentation session identifier</dfn> to distinguish it
+          from other <span>presentation sessions</span>.
         </p>
         <p>
-          An <dfn id="opening-browsing-context">opening browsing context</dfn> is a <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a> that has initiated or resumed a
-          <span>presentation session</span> by calling
-          <code><a href="#startsession">startSession</a>()</code> or
+          An <dfn id="controlling-browsing-context">controlling browsing context</dfn> (or <em>controller</em>
+          for short) is a <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing
+          context</a> that has initiated or resumed a <a href="#presentation-session">presentation
+          session</a> by calling <code><a href="#startsession">startSession</a>()</code> or
           <code><a href="#joinsession">joinSession</a>()</code> or received a
-          <span>presentation session</span> via
+          <a href="#presentation-session">presentation session</a> via
           <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
-          The <dfn id="presenting-browsing-context">presenting browsing context</dfn> is the browsing context
-          responsible for rendering to a <a href="#presentation-display">presentation display</a>. A
-          <a href="#presenting-browsing-context">presenting browsing context</a> can reside in the same user
-          agent as the <a href="#opening-browsing-context">opening browsing context</a> or a different
-          one.
+          The <dfn id="presenting-browsing-context">presenting browsing context</dfn> (or <em>presentation</em>
+          for short) is the browsing context responsible for rendering to a
+          <a href="#presentation-display">presentation display</a>. A <a href="#presenting-browsing-context">presenting browsing
+          context</a> can reside in the same user agent as the
+          <a href="#controlling-browsing-context">controlling browsing context</a> or a different one.
         </p>
       </section>
       <section>
@@ -806,15 +835,15 @@
           Interface <a href="#presentationsession"><code>PresentationSession</code></a>
         </h3>
         <p>
-          Each <a href="#concept-presentation-session" title="concept-presentation-session">presentation
-          session</a> is represented by a <a href="#presentationsession"><code>PresentationSession</code></a>
+          Each <span title="concept-presentation-session">presentation
+          session</span> is represented by a <a href="#presentationsession"><code>PresentationSession</code></a>
           object.
         </p>
         <pre class="idl">enum <dfn id="presentationsessionstate">PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
 enum <dfn id="binarytype">BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget {
-  readonly <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
+  readonly <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
   readonly attribute <a href="#presentationsessionstate">PresentationSessionState</a> <a href="#state">state</a>;
   void <a href="#close">close</a>();
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onstatechange">onstatechange</a>;
@@ -822,7 +851,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   // Communication
   attribute BinaryType <dfn id="binarytype-attribute" title="binarytype-attribute">binaryType</dfn>;
   <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
-  void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
+  void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
   void <dfn id="send-blob" title="send-blob">send</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
   void <dfn id="send-arraybuffer" title="send-arraybuffer">send</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#5">ArrayBuffer</a> data);
   void <dfn id="send-arraybufferview" title="send-arraybufferview">send</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> data);
@@ -834,7 +863,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </p>
         <p>
           The <dfn id="state"><code>state</code></dfn> attribute represents the
-          <span>presentation session</span>'s current state. It can take one of
+          <a href="#presentation-session">presentation session</a>'s current state. It can take one of
           the values of <a href="#presentationsessionstate"><code>PresentationSessionState</code></a>
           depending on connection state.
         </p>
@@ -864,8 +893,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </h4>
           <p class="note">
             Presentation API does not mandate a specific protocol for the
-            connection between the <a href="#opening-browsing-context">opening browsing context</a> and
-            the <a href="#presenting-browsing-context">presenting browsing context</a> except that for
+            connection between the <a href="#controlling-browsing-context">controlling browsing context</a>
+            and the <a href="#presenting-browsing-context">presenting browsing context</a> except that for
             multiple calls to <a href="#send"><code>send</code></a> it has to be ensured that
             messages are delivered to the other end in sequence.
           </p>
@@ -894,12 +923,13 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <li>Assign the <dfn id="destination-browsing-context">destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <a href="#destination-browsing-context">destination browsing context</a> be
-                the <a href="#opening-browsing-context">opening browsing context</a> if <a href="#send">send</a>
-                is called in the <a href="#presenting-browsing-context">presenting browsing context</a>.
+                the <a href="#controlling-browsing-context">controlling browsing context</a> if
+                <a href="#send">send</a> is called in the <a href="#presenting-browsing-context">presenting browsing
+                context</a>.
                 </li>
                 <li>Let <a href="#destination-browsing-context">destination browsing context</a> be the <a href="#presenting-browsing-context">
                   presenting browsing context</a> if <a href="#send">send</a> is
-                  called from the <a href="#opening-browsing-context">opening browsing context</a>.
+                  called from the <span>opening browsing context</span>.
                 </li>
               </ol>
             </li>
@@ -932,13 +962,13 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             has no default action.
             </li>
             <li>Initialize <em>event's</em> <code>origin</code> attribute to
-            the Unicode serialization of the URL that the <a href="#opening-browsing-context">opening
+            the Unicode serialization of the URL that the <a href="#controlling-browsing-context">controlling
             browsing context</a> and the <a href="#presenting-browsing-context">presenting browsing
             context</a> have in common.
               <p class="open-issue">
                 <a href="https://github.com/w3c/presentation-api/issues/63">ISSUE 63:
-                Define (cross) origin relationship between opener and
-                presenting page</a>
+                Define (cross) origin relationship between controller and
+                presentation</a>
               </p>
             </li>
             <li>Initialize the <em>event's</em> data attribute as follows:
@@ -1149,7 +1179,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             display</a> and selection of one presentation display.
               <ol>
                 <li>If <em>T</em> completes with the user <em>granting
-                permission</em> to use a screen, run the following steps:
+                permission</em> to use a display, run the following steps:
                   <ol>
                     <li>If <code>presentationId</code> is not
                     <em>undefined</em>, assign <em>I</em> to that that
@@ -1218,7 +1248,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <p class="note">
             The details of implementing the permission request and display
             selection are left to the user agent; for example it may show the
-            user a dialog and allow the user to select an available screen
+            user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
             permission).
           </p>
@@ -1309,7 +1339,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </h4>
           <p>
             When the user agent is to <dfn id="establish-a-presentation-connection">establish a presentation
-            connection</dfn> using a <span>presentation session</span>
+            connection</dfn> using a <a href="#presentation-session">presentation session</a>
             <em>S</em>, it must run the following steps:
           </p>
           <ol>
@@ -1361,7 +1391,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </ol>
           <p class="note">
             The mechanism that is used to present on the remote display and
-            connect the <a href="#opening-browsing-context">opening browsing context</a> with the
+            connect the <a href="#controlling-browsing-context">controlling browsing context</a> with the
             presented document is an implementation choice of the user agent.
             The connection must provide a two-way messaging abstraction capable
             of carrying <code>DOMString</code> payloads in a reliable and
@@ -1508,7 +1538,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <p class="note">
               The mechanism used to monitor <a href="#presentation-display">presention displays</a> availability is
               left to the user agent. The user agent may choose search for
-              screens at any time, not just when event handlers are added to
+              displays at any time, not just when event handlers are added to
               <code>NavigatorPresentation.onavailablechange</code>.
             </p>
             <p>
@@ -1615,7 +1645,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
 <dd><cite><a href="http://www.w3.org/2001/tag/doc/promises-guide">Writing Promise-Using Specifications</a></cite>, Domenic Denicola. W3C.
 
 <dt id="refsRFC2119">[RFC2119]
-<dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
+<dd><cite><a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
 
 <dt id="refsTYPEDARRAY">[TYPEDARRAY]
 <dd><cite><a href="http://www.khronos.org/registry/typedarray/specs/latest/">Typed Array</a></cite>, David Herman and Kenneth Russel. Khronos.
@@ -1624,7 +1654,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
 <dd><cite><a href="https://url.spec.whatwg.org/">URL</a></cite>, Anne van Kesteren. WHATWG.
 
 <dt id="refsWEBIDL">[WEBIDL]
-<dd><cite><a href="http://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
+<dd><cite><a href="https://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
 
 </dl></div>
     </section>
