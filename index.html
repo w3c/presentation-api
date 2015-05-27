@@ -931,16 +931,6 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <code>message</code>, which does not bubble, is not cancelable, and
             has no default action.
             </li>
-            <li>Initialize <em>event's</em> <code>origin</code> attribute to
-            the Unicode serialization of the URL that the <a href="#opening-browsing-context">opening
-            browsing context</a> and the <a href="#presenting-browsing-context">presenting browsing
-            context</a> have in common.
-              <p class="open-issue">
-                <a href="https://github.com/w3c/presentation-api/issues/63">ISSUE 63:
-                Define (cross) origin relationship between opener and
-                presenting page</a>
-              </p>
-            </li>
             <li>Initialize the <em>event's</em> data attribute as follows:
               <ol>
                 <li>If the <a href="#presentation-message-type">presentation message type</a> is
@@ -972,6 +962,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <a href="#presentationsession"><code>PresentationSession</code></a>.
             </li>
           </ol>
+          <p class="open-issue">
+            <a href="https://github.com/w3c/presentation-api/issues/63">ISSUE
+            63: Define (cross) origin relationship between opener and
+            presenting page</a>
+          </p>
         </section>
         <section>
           <h4 id="closing-a-presentationsession"><span class="secno">6.3.3 </span>
@@ -1390,7 +1385,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <span>The following are the event handlers (and their corresponding
             event handler event types) that must be supported, as event handler
             IDL attributes, by objects implementing the
-            <a href="#presentationsession"><code>PresentationSession</code></a> interface:</span>
+            <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> interface:</span>
           </p>
           <table>
             <thead>
@@ -1418,7 +1413,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             In order to satisfy the <span title="non-functional-requirements">power saving non-functionional
             requirements</span> the user agent must keep track of the number of
             <code>EventHandler</code>s registered to the
-            <code>onavailable</code> event. Using this information,
+            <a href="#onavailablechange"><code>onavailablechange</code></a> event. Using this information,
             implementation specific discovery of <span title="presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
           </p>The user agent must keep a <dfn id="list-of-available-presentation-displays">list of available presentation
@@ -1553,7 +1548,7 @@ dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : E
           execution of the <span>monitoring presentation display
           availability</span> algorithm when the <dfn id="presentation-display-availability">presentation display
           availability</dfn> changes. It is fired at the
-          <a href="#presentationsession"><code>PresentationSession</code></a> object, using the
+          <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> object, using the
           <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a> interface, with the
           <code>available</code> attribute set to the boolean value that the
           algorithm determined.
