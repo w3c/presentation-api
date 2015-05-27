@@ -393,50 +393,53 @@
             </dt>
             <dd>
               The UA must provide a way to start sending content to a
-              presentation display or displays from
-              a <a href="#presentation-controller">presentation controller</a>,
-              which creates a new <a href="#presentation">presentation</a>.
-              This may occur at the request of the controller or at the request
-              of the UA.  A single controller may be able to send content to
-              multiple displays at once, and a single display may be able to
-              show content from multiple controllers at once.
+              presentation display or displays from a <span>controller</span>,
+              which creates a new <span>presentation</span>.  This may occur at
+              the request of the controller or at the request of the UA.  A
+              single controller may be able to send content to multiple displays
+              at once, and a single display may be able to show content from
+              multiple controllers at once.
             </dd>
             <dt>
               Resuming presentation
             </dt>
             <dd>
-              If a presentation controller becomes disconnected from a
-              presentation, the UA must provide a way for the controller to
-              resume its connection to the presentation.  It must also provide a
-              way for a different controller on the same UA to request
-              connection to one or more presentations.
+              If a controller becomes disconnected from a presentation, the UA
+              must provide a way for the controller to resume its connection to
+              the presentation.  It must also provide a way for a different
+              controller on the same UA to request connection to one or more
+              presentations.
             </dd>
             <dt>
               Communication
             </dt>
             <dd>
-              The UA must enable exchange of data between the presentation
-              controller and the presentation.  This data exchange can be used
-              to control the content shown in the presentation.  The UAs that
-              host the controllers must not make an assumption about the
-              execution locality of the UA that hosts the presentation; the
-              presentations may be rendered on one or more remote UAs, and thus
-              the communication channels among them are loosely coupled.
+              The UA must enable exchange of data between the controllers and
+              the presentation.  This data exchange can be used to control the
+              content shown in the presentation.  The UAs that host the
+              controllers must not make an assumption about the execution
+              locality of the UA that hosts the presentation; they may be
+              rendered on one or more remote UAs, and thus the communication
+              channels between the controllers and the presentation is loosely
+              coupled.
             </dd>
             <dt>
               Signaling disconnection
             </dt>
             <dd>
-              The UA must signal disconnection between controllers and
-              presentations to both sides.
+              The UA must signal disconnection between a controller and a
+              presentation to both the controller and the presentation.  The
+              controller or the presentation may choose to initiate
+              disconnection; in that case, the UA must signal disconnection to
+              the other side.
             </dd>
             <dt>
               Multiple controllers per presentation
             </dt>
             <dd>
-              When possible, a presentation should be able to accept connections
-              from multiple controllers simultaneously.  Not all presentations
-              will support this when its presentation browsing context is not
+              A presentation should be able to accept control from multiple
+              controllers simultaneously.  Not all presentations will support
+              this; for example, when the presentation browsing context is not
               shareable across devices.
             </dd>
             <dt>
@@ -445,9 +448,10 @@
             <dd>
               A single controller should be able to launch multiple
               presentations and maintain simultaneous connections to them.  Each
-              connected presentation is handled independently by the UA;
-              controlling the same content on presentations simultaneously in a
-              synchronized fashion is out of scope for this specifciation.
+              connection between a controller and its presentation is handled
+              independently by the UA; controlling the same content on
+              presentations simultaneously in a synchronized fashion is out of
+              scope for this specification.
             </dd>
           </dl>
         </section>
@@ -557,10 +561,9 @@
       <p>
         This section shows example codes that highlight the usage of main
         features of the Presentation API. In these examples,
-        <code>controller.html</code> represents the controlling page that runs
-        in the opener UA and <code>presentation.html</code> represents the
-        presenting page that runs in the presenting UA. Both pages are served
-        from the domain <code>http://example.org</code>
+        <code>controller.html</code> implements the controller
+        and <code>presentation.html</code> implements the presentation.  Both
+        pages are served from the domain <code>http://example.org</code>
         (<code>http://example.org/controller.html</code> and
         <code>http://example.org/presentation.html</code>). Please refer to the
         comments in the code examples for further details.
@@ -707,18 +710,9 @@
           technology.
         </p>
         <p>
-          A <dfn title="concept-presentation-session">presentation
-          session</dfn> is an object relating an <span>opening browsing
-          context</span> to its <span>presentation display</span> and enabling
-          two-way-messaging between them. Each such object has a
-          <dfn>presentation session state</dfn> and a <dfn>presentation session
-          identifier</dfn> to distinguish it from other <span title=
-          "concept-presentation-session">presentation sessions</span>.
-        </p>
-        <p>
-          An <dfn>controlling browsing context</dfn> (or controller for short)
-          is a <span data-anolis-spec= "w3c-html">browsing context</span> that
-          has initiated or resumed a
+          An <dfn><abbr>controller</abbr>controlling browsing context</dfn> (or <em>controller</em> for
+          short) is a <span data-anolis-spec= "w3c-html">browsing context</span>
+          that has initiated or resumed a
           <span>presentation session</span> by calling
           <code><span>startSession</span>()</code> or
           <code><span>joinSession</span>()</code> or received a
@@ -726,12 +720,21 @@
           <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
-          The <dfn>presenting browsing context</dfn> (or presentation for short)
-          is the browsing context responsible for rendering to
-          a <span>presentation display</span>. A
+          The <dfn><abbr>presentation</abbr>presenting browsing context</dfn>
+          (or <em>presentation</em> for short) is the browsing context
+          responsible for rendering to a <span>presentation display</span>. A
           <span>presenting browsing context</span> can reside in the same user
-          agent as the <span>opening browsing context</span> or a different
+          agent as the <span>controlling browsing context</span> or a different
           one.
+        </p>
+        <p>
+          A <dfn>presentation
+          session</dfn> is an object relating an <span>controlling browsing
+          context</span> to its <span>presentation display</span> and enabling
+          two-way-messaging between them.  Each presentation session has a
+          <dfn>presentation session state</dfn> and a <dfn>presentation session
+          identifier</dfn> to distinguish it from other <span>presentation
+          sessions</span>.
         </p>
       </section>
       <section>
@@ -821,7 +824,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           </h4>
           <p class="note">
             Presentation API does not mandate a specific protocol for the
-            connection between the <span>opening browsing context</span> and
+            connection between the <span>controlling browsing context</span> and
             the <span>presenting browsing context</span> except that for
             multiple calls to <code>send</code> it has to be ensured that
             messages are delivered to the other end in sequence.
@@ -851,7 +854,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <span>destination browsing context</span> be
-                the <span>opening browsing context</span> if <span>send</span>
+                the <span>controlling browsing context</span> if <span>send</span>
                 is called in the <span>presenting browsing context</span>.
                 </li>
                 <li>Let <span>destination browsing context</span> be the <span>
@@ -890,14 +893,14 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             has no default action.
             </li>
             <li>Initialize <em>event's</em> <code>origin</code> attribute to
-            the Unicode serialization of the URL that the <span>opening
+            the Unicode serialization of the URL that the <span>controlling
             browsing context</span> and the <span>presenting browsing
             context</span> have in common.
               <p class="open-issue">
                 <a href=
                 "https://github.com/w3c/presentation-api/issues/63">ISSUE 63:
-                Define (cross) origin relationship between opener and
-                presenting page</a>
+                Define (cross) origin relationship between controller and
+                presentation</a>
               </p>
             </li>
             <li>Initialize the <em>event's</em> data attribute as follows:
@@ -1343,7 +1346,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
           </ol>
           <p class="note">
             The mechanism that is used to present on the remote display and
-            connect the <span>opening browsing context</span> with the
+            connect the <span>controlling browsing context</span> with the
             presented document is an implementation choice of the user agent.
             The connection must provide a two-way messaging abstraction capable
             of carrying <code>DOMString</code> payloads in a reliable and
