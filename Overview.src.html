@@ -6,14 +6,14 @@
       Presentation API
     </title>
     <style>
-@media print {
+    @media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link rel="stylesheet" type="text/css" href=
     "http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
     <style type="text/css">
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -1173,6 +1173,13 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             user a dialog and allow the user to select an available screen
             (granting permission), or cancel the selection (denying
             permission).
+          </p>
+          <p class="note">
+            The <code>presentationUrl</code> should name a resource accessible
+            to the local or a remote user agent. User agents must accept a
+            <code>presentationUrl</code> using the <code>http</code> or
+            <code>https</code> schemes; behavior for other schemes is not
+            defined by this specification.
           </p>
           <p class="open-issue">
             ISSUE: Do we want to distinguish the permission-denied outcome from
