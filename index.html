@@ -823,7 +823,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                         <li>
                           <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
                           to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                          <code>statechange</code> at <em>s.onstatechange</em>.
+                          <code>statechange</code> at <em>s</em>.
                         </li>
                       </ol>
                     </li>
@@ -1170,8 +1170,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                             <li>
                               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a
                               task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a>
-                              named <code>statechange</code> at
-                              <em>s.onstatechange</em>.
+                              named <code>statechange</code> at <em>s</em>.
                             </li>
                           </ol>
                         </li>
@@ -1307,7 +1306,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                   <li>
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                    <code>availablechange</code> at with the event's
+                    <code>availablechange</code> at
+                    <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
                     <code>available</code> property set to <code>true</code>.
                   </li>
                 </ol>
@@ -1319,7 +1319,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                   <li>
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                    <code>availablechange</code> with the event's
+                    <code>availablechange</code> at
+                    <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
                     <code>available</code> property set to <code>false</code>.
                   </li>
                 </ol>
@@ -1349,9 +1350,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <li>
                 <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
                 <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                <code>availablechange</code> at <em>E</em> (and only
-                <em>E</em>) with the event's <code>available</code> property
-                set to <code>false</code>.
+                <code>availablechange</code> at
+                <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
+                <code>available</code> property set to <code>false</code>.
               </li>
             </ol>
           </section>
