@@ -47,13 +47,16 @@ and the large screen displays the poker table with shared cards, current bets, a
 **Images**
 
 * <a name="uc03-img1"></a>Poker Table
-   ![Poker Table][uc03-img1]
+
+    ![Poker Table][uc03-img1]
 
 * <a name="uc03-img2"></a>Poker Player: Alice
-   ![Poker Client: Alice][uc03-img2]
+
+    ![Poker Client: Alice][uc03-img2]
 
 * <a name="uc03-img3"></a>Player Player: Bob
-   ![Poker Client: Bob][uc03-img3]
+
+    ![Poker Client: Bob][uc03-img3]
 
 ### <a name="uc04"></a>UC04: Media flinging to multiple screens
 
