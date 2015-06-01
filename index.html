@@ -639,7 +639,7 @@
 enum <dfn id="binarytype">BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget {
-  readonly <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
+  readonly <a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
   readonly attribute <a href="#presentationsessionstate">PresentationSessionState</a> <a href="#state">state</a>;
   void <a href="#close">close</a>();
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onstatechange">onstatechange</a>;
@@ -647,7 +647,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   // Communication
   attribute BinaryType <dfn id="binarytype-attribute" title="binarytype-attribute">binaryType</dfn>;
   <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
-  void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
+  void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="http://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
   void <dfn id="send-blob" title="send-blob">send</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
   void <dfn id="send-arraybuffer" title="send-arraybuffer">send</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#5">ArrayBuffer</a> data);
   void <dfn id="send-arraybufferview" title="send-arraybufferview">send</dfn> (<a class="external" data-anolis-spec="typedarray" href="http://www.khronos.org/registry/typedarray/specs/latest/#6">ArrayBufferView</a> data);
@@ -829,7 +829,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                         <li>
                           <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
                           to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                          <code>statechange</code> at <em>s.onstatechange</em>.
+                          <code>statechange</code> at <em>s</em>.
                         </li>
                       </ol>
                     </li>
@@ -1175,8 +1175,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                             <li>
                               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a
                               task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a>
-                              named <code>statechange</code> at
-                              <em>s.onstatechange</em>.
+                              named <code>statechange</code> at <em>s</em>.
                             </li>
                           </ol>
                         </li>
@@ -1312,7 +1311,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                   <li>
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                    <code>availablechange</code> at with the event's
+                    <code>availablechange</code> at
+                    <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
                     <code>available</code> property set to <code>true</code>.
                   </li>
                 </ol>
@@ -1324,7 +1324,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                   <li>
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
                     <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                    <code>availablechange</code> with the event's
+                    <code>availablechange</code> at
+                    <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
                     <code>available</code> property set to <code>false</code>.
                   </li>
                 </ol>
@@ -1354,9 +1355,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <li>
                 <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
                 <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                <code>availablechange</code> at <em>E</em> (and only
-                <em>E</em>) with the event's <code>available</code> property
-                set to <code>false</code>.
+                <code>availablechange</code> at
+                <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
+                <code>available</code> property set to <code>false</code>.
               </li>
             </ol>
           </section>
@@ -1443,7 +1444,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
 <dd><cite><a href="http://www.w3.org/2001/tag/doc/promises-guide">Writing Promise-Using Specifications</a></cite>, Domenic Denicola. W3C.
 
 <dt id="refsRFC2119">[RFC2119]
-<dd><cite><a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
+<dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, Scott Bradner. IETF.
 
 <dt id="refsTYPEDARRAY">[TYPEDARRAY]
 <dd><cite><a href="http://www.khronos.org/registry/typedarray/specs/latest/">Typed Array</a></cite>, David Herman and Kenneth Russel. Khronos.
@@ -1452,7 +1453,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
 <dd><cite><a href="https://url.spec.whatwg.org/">URL</a></cite>, Anne van Kesteren. WHATWG.
 
 <dt id="refsWEBIDL">[WEBIDL]
-<dd><cite><a href="https://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
+<dd><cite><a href="http://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
 
 </dl></div>
     </section>
