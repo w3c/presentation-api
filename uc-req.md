@@ -54,7 +54,7 @@ and the large screen displays the poker table with shared cards, current bets, a
 
     ![Poker Client: Alice][uc03-img2]
 
-* <a name="uc03-img3"></a>Player Player: Bob
+* <a name="uc03-img3"></a>Poker Player: Bob
 
     ![Poker Client: Bob][uc03-img3]
 
