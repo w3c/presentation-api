@@ -107,16 +107,16 @@ listed in the previews section.
 ### <a name="req01"></a>REQ01: Discovery & availability
 
 The UA must provide a way to find out whether at least one
-[presentation display](https://w3c.github.io/presentation-api#presentaton-display)
+[presentation display](https://w3c.github.io/presentation-api/#presentation-display)
 is available.
 
 ### <a name="req02"></a>REQ02: Launching presentation
 
 The UA must provide a way to start sending content to a presentation display or
 displays from a
-[controlling browsing context](https://w3c.github.io/presentation-api#controlling-browsing-context)
+[controlling browsing context](https://w3c.github.io/presentation-api/#controlling-browsing-context)
 (or <em>controller</em>), which creates a new
-[presenting browsing context](https://w3c.github.io/presentation-api#presenting-browsing-context)
+[presenting browsing context](https://w3c.github.io/presentation-api/#presenting-browsing-context)
 (or <em>presentation</em>). This may occur at the request of the controller or
 at the request of the UA. A single controller may be able to send content to
 multiple displays at once, and a single display may be able to host multiple
