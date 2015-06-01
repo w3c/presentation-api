@@ -68,7 +68,6 @@
     table thead, table tbody { border-bottom: solid; }
     table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
     dfn { font-weight: bolder; font-style: normal; }
-    #use-cases-and-requirements dd { margin-top: 0.5em; margin-bottom: 1em; }
     .copyright { font-size: small; }
     </style>
   </head>
@@ -288,196 +287,9 @@
       <h2>
         Use cases and requirements
       </h2>
-      <section id="use-cases">
-        <h3>
-          Use cases
-        </h3>
-        <dl>
-          <dt>
-            Presentations
-          </dt>
-          <dd>
-            A user is preparing a set of slides for a talk. Using a web-based
-            service, she is editing her slides and speaker notes on the primary
-            screen while the secondary larger screen shows a preview of the
-            current slide. When the slides are done, her mobile phone allows
-            her to access them from an online service while on the go. Coming
-            to the conference, using wireless display technology, she would
-            like to present her slides on the stage screen from her mobile
-            phone. The phone's touch screen helps her to navigate slides and
-            presents a slide preview while the projector shows her slides to
-            the audience.
-          </dd>
-          <dt>
-            Video and image sharing
-          </dt>
-          <dd>
-            Using an online video or image sharing service, a user would like
-            to show memorable moments to her friends. Using a device with a
-            small screen, however, a user cannot show the content to a large
-            group of people. Connecting an external TV screen or projector to
-            her device - with a cable or wirelessly - the online sharing
-            service now makes use of the connected display, allowing a wider
-            audience to enjoy the content. The web page shows UI elements that
-            allow the user to trigger displaying content on the secondary
-            display (e.g., a "send to second screen" ) only if there is at
-            least one presentation display available.
-          </dd>
-          <dt>
-            Multiplayer gaming
-          </dt>
-          <dd>
-            Splitting the gaming experience into a near screen controller and a
-            large screen visual experience can create new gaming experiences.
-            Accessing the local display on the small screen device and an
-            external larger display allows for richer web-based gaming
-            experiences.
-            <p class="open-issue">
-              <a href="https://github.com/w3c/presentation-api/issues/27">ISSUE
-              27: Define a multiplayer gaming use case</a>
-            </p>
-          </dd>
-          <dt>
-            Media flinging to multiple screens
-          </dt>
-          <dd>
-            Alice enters a video sharing site using a browser on her tablet.
-            Next, Alice picks her favorite video from the site, and the video
-            starts to play on her tablet. While the video is playing Alice
-            clicks a button "Share on different screen". The browser provides a
-            user interface that lists all the screens Alice has at her home,
-            asking her to select one. The screens are identified by names that
-            are familiar to Alice. Alice picks one screen from the list,
-            "Alice's big TV", and the video playback continues seamlessly on
-            the selected screen. Next she decides to switch the playback to a
-            different screen. She clicks the same button "Share on different
-            screen" provided by the site, and the browser presents the user
-            interface that lists all the screens. Alice picks another screen
-            from the list, "Alice's kitchen TV", and the playback resumes on
-            that screen. Video site also provides a feature to see the action
-            (Alice is watching a soccer game) from a different angle. Alice
-            clicks a button "Select screen for additional angle", and the
-            browser asks Alice similarly to select the screen for playback.
-            Alice picks "Alice's Projector" and the soccer game is shown on the
-            projector from a different angle, in parallel to the content being
-            played back on "Alice's kitchen TV".
-            <p class="open-issue">
-              <a href="https://github.com/w3c/presentation-api/issues/40">ISSUE
-              40: Screen availability mechanism for multiple sessions</a>
-            </p>
-          </dd>
-        </dl>
-      </section>
-      <section id="requirements">
-        <h3>
-          Requirements
-        </h3>
-        <p>
-          The requirements enumerated in this section are derived from the
-          <a href="#use-cases">use cases</a>.
-        </p>
-        <section>
-          <h4>
-            Functional requirements
-          </h4>
-          <dl>
-            <dt>
-              Discovery &amp; availability
-            </dt>
-            <dd>
-              The UA must provide a way to find out whether at least one
-              <a href="#presentation-display">presentation display</a> is
-              available.
-            </dd>
-            <dt>
-              Launching presentation
-            </dt>
-            <dd>
-              The UA must provide a way to start sending content to a
-              presentation display or displays from a <span>controlling
-              browsing context</span> (or <em>controller</em>), which creates a
-              new <span>presenting browsing context</span> (or
-              <em>presentation</em>). This may occur at the request of the
-              controller or at the request of the UA. A single controller may
-              be able to send content to multiple displays at once, and a
-              single display may be able to host multiple presentations at
-              once.
-            </dd>
-            <dt>
-              Resuming presentation
-            </dt>
-            <dd>
-              If a controller becomes disconnected from its presentation, the
-              UA must provide a way for it to resume its connection to the
-              presentation. It must also provide a way for a new browsing
-              context on the same UA to request connection to one or more
-              presentations (thus becoming their controller).
-            </dd>
-            <dt>
-              Communication
-            </dt>
-            <dd>
-              The UA must enable exchange of data between a presentation and
-              its controller or controllers. This data exchange can be used to
-              determine what content is shown in the presentation. The UAs that
-              host the controllers must not make an assumption about the
-              execution locality of the UA that hosts the presentation; they
-              may be rendered on one or more remote UAs, and thus the
-              communication channels between a presentation and its controllers
-              is loosely coupled.
-            </dd>
-            <dt>
-              Signaling disconnection
-            </dt>
-            <dd>
-              The UA must signal disconnection between a controller and a
-              presentation to both the controller and the presentation. The
-              controller or the presentation may choose to initiate
-              disconnection; in that case, the UA must signal disconnection to
-              the other side.
-            </dd>
-            <dt>
-              Multiple controllers per presentation
-            </dt>
-            <dd>
-              A presentation should be able to accept control (via data
-              exchange) from multiple controllers simultaneously. Not all
-              presentations will support this; for example, when the
-              presentation browsing context is not accessible to other devices.
-            </dd>
-            <dt>
-              Multiple presentations per controller
-            </dt>
-            <dd>
-              A single controller should be able to launch multiple
-              presentations and exchange data with them. Each connection
-              between a controller and a presentation is handled independently
-              by the UA; controlling the same content on multiple presentations
-              simultaneously in a synchronized fashion is out of scope for this
-              specification.
-            </dd>
-          </dl>
-        </section>
-        <section>
-          <h4>
-            Non-functional requirements
-          </h4>
-          <dl>
-            <dt>
-              Power saving friendly
-            </dt>
-            <dd>
-              All API design decisions must be analyzed from a power efficiency
-              point of view. Especially when using wireless display
-              technologies or querying availability over a radio channel, care
-              needs to be taken to design the API in a way that does not pose
-              obstacles to using radio resources in an efficient way. For
-              example, powering up the wireless display detection only when
-              needed.
-            </dd>
-          </dl>
-        </section>
-      </section>
+      Use cases and requirements are captured in the
+      separate <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md">Presentation
+      API Use Cases and Requirements</a> document.
     </section>
     <section>
       <h2>
@@ -1402,9 +1214,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </tbody>
           </table>
           <p>
-            In order to satisfy the <span title=
-            "non-functional-requirements">power saving non-functionional
-            requirements</span> the user agent must keep track of the number of
+            In order to satisfy
+            the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">power saving non-functional requirement</a>, the user agent must keep
+            track of the number of
             <code>EventHandler</code>s registered to the
             <code>onavailablechange</code> event. Using this information,
             implementation specific discovery of <span title=
