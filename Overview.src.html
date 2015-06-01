@@ -547,21 +547,19 @@
           context</span> can reside in the same user agent as the
           <span>controlling browsing context</span> or a different one.
         </p>
-      </section>
-      <section>
-        <h3>
-          Common definitions
-        </h3>
         <p>
-          Let <em>D</em> be the set of presentations that are currently known
-          to the user agent (regardles of their state). <em>D</em> is
-          represented as a set of tuples <em>(U, I, S)</em> where <em>U</em> is
-          the <span data-anolis-spec="url">URL</span> that is being presented;
-          <em>I</em> is an alphanumeric identifier for the presentation; and
-          <em>S</em> is the user agent's <code>PresentationSession</code> for
-          the presentation. <em>U</em> and <em>I</em> together uniquely
-          identify the <code>PresentationSession</code> of the corresponding
-          presentation.
+          The <dfn>set of presentations</dfn> contains the presentation sessions
+          created by all of the controlling browsing contexts for a user agent
+          (or a specific user profile within the user agent).  It is represented
+          by a global variable <em>D</em>, which has a set of tuples <em>(U, I,
+          S)</em>.  <em>U</em> is the <span data-anolis-spec="url">URL</span>
+          that was used to create or resume the session;
+          <em>I</em> is an alphanumeric identifier for the presentation session; and
+          <em>S</em> is the controlling browsing
+          context's <code>PresentationSession</code> object. <em>U</em>
+          and <em>I</em> together uniquely identify
+          the <code>PresentationSession</code> within the user agent.  When the
+          user agent starts, <em>D</em> is the empty set.
         </p>
       </section>
       <section>
@@ -758,8 +756,8 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             </li>
             <li>Set <em>S.state</em> to <code>disconnected</code>.
             </li>
-            <li>Let <em>D</em> be the set of presentations known by the user
-            agent.
+            <li>Let <em>D</em> be the <span>set of presentations</span> for
+            the user agent.
             </li>
             <li>
               <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
@@ -956,7 +954,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                         <li>If <em>C</em> completes successfully, run the
                         following steps:
                           <ol>
-                            <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+                            <li>Add <em>(S.url, S.id, S)</em> to the <span>set of presentations</span> <em>D</em>.
                             </li>
                             <li>
                               <span data-anolis-spec="promguide" title=
@@ -1053,7 +1051,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>Let <em>D</em> be the set of presentations known by the user
+            <li>Let <em>D</em> be the <span>set of presentations</span> for the user
             agent.
             </li>
             <li>
@@ -1125,7 +1123,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               <ol>
                 <li>Set <em>S.state</em> to <code>connected.</code>
                 </li>
-                <li>Let <em>D</em> be the set of presentations known by the
+                <li>Let <em>D</em> be the <span>set of presentations</span> for the
                 user agent.
                 </li>
                 <li>Queue a task <em>T</em> to run the following steps in
