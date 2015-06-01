@@ -65,7 +65,6 @@
     table thead, table tbody { border-bottom: solid; }
     table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
     dfn { font-weight: bolder; font-style: normal; }
-    #use-cases-and-requirements dd { margin-top: 0.5em; margin-bottom: 1em; }
     .copyright { font-size: small; }
     </style>
   </head>
@@ -216,21 +215,7 @@
       </a></li>
  <li><a href="#use-cases-and-requirements-0"><span class="secno">2 </span>
         Use cases and requirements
-      </a>
-  <ol>
-   <li><a href="#use-cases-0"><span class="secno">2.1 </span>
-          Use cases
-        </a></li>
-   <li><a href="#requirements-0"><span class="secno">2.2 </span>
-          Requirements
-        </a>
-    <ol>
-     <li><a href="#functional-requirements"><span class="secno">2.2.1 </span>
-            Functional requirements
-          </a></li>
-     <li><a href="#non-functional-requirements"><span class="secno">2.2.2 </span>
-            Non-functional requirements
-          </a></ol></ol></li>
+      </a></li>
  <li><a href="#conformance"><span class="secno">3 </span>
         Conformance
       </a></li>
@@ -380,168 +365,8 @@
     <section id="use-cases-and-requirements">
       <h2 id="use-cases-and-requirements-0"><span class="secno">2 </span>
         Use cases and requirements
-      </h2>
-      <section id="use-cases">
-        <h3 id="use-cases-0"><span class="secno">2.1 </span>
-          Use cases
-        </h3>
-        <dl>
-          <dt>
-            Presentations
-          </dt>
-          <dd>
-            A user is preparing a set of slides for a talk. Using a web-based
-            service, she is editing her slides and speaker notes on the primary
-            screen while the secondary larger screen shows a preview of the
-            current slide. When the slides are done, her mobile phone allows
-            her to access them from an online service while on the go. Coming
-            to the conference, using wireless display technology, she would
-            like to present her slides on the stage screen from her mobile
-            phone. The phone's touch screen helps her to navigate slides and
-            presents a slide preview while the projector shows her slides to
-            the audience.
-          </dd>
-          <dt>
-            Video and image sharing
-          </dt>
-          <dd>
-            Using an online video or image sharing service, a user would like
-            to show memorable moments to her friends. Using a device with a
-            small screen, however, a user cannot show the content to a large
-            group of people. Connecting an external TV screen or projector to
-            her device - with a cable or wirelessly - the online sharing
-            service now makes use of the connected display, allowing a wider
-            audience to enjoy the content. The web page shows UI elements that
-            allow the user to trigger displaying content on the secondary
-            display (e.g., a "send to second screen" ) only if there is at
-            least one secondary screen available.
-          </dd>
-          <dt>
-            Multiplayer gaming
-          </dt>
-          <dd>
-            Splitting the gaming experience into a near screen controller and a
-            large screen visual experience can create new gaming experiences.
-            Accessing the local display on the small screen device and an
-            external larger display allows for richer web-based gaming
-            experiences.
-            <p class="open-issue">
-              <a href="https://github.com/w3c/presentation-api/issues/27">ISSUE
-              27: Define a multiplayer gaming use case</a>
-            </p>
-          </dd>
-          <dt>
-            Media flinging to multiple screens
-          </dt>
-          <dd>
-            Alice enters a video sharing site using a browser on her tablet.
-            Next, Alice picks her favorite video from the site, and the video
-            starts to play on her tablet. While the video is playing Alice
-            clicks a button "Share on different screen". The browser provides a
-            user interface that lists all the screens Alice has at her home,
-            asking her to select one. The screens are identified by names that
-            are familiar to Alice. Alice picks one screen from the list,
-            "Alice's big TV", and the video playback continues seamlessly on
-            the selected screen. Next she decides to switch the playback to a
-            different screen. She clicks the same button "Share on different
-            screen" provided by the site, and the browser presents the user
-            interface that lists all the screens. Alice picks another screen
-            from the list, "Alice's kitchen TV", and the playback resumes on
-            that screen. Video site also provides a feature to see the action
-            (Alice is watching a soccer game) from a different angle. Alice
-            clicks a button "Select screen for additional angle", and the
-            browser asks Alice similarly to select the screen for playback.
-            Alice picks "Alice's Projector" and the soccer game is shown on the
-            projector from a different angle, in parallel to the content being
-            played back on "Alice's kitchen TV".
-            <p class="open-issue">
-              <a href="https://github.com/w3c/presentation-api/issues/40">ISSUE
-              40: Screen availability mechanism for multiple sessions</a>
-            </p>
-          </dd>
-        </dl>
-      </section>
-      <section id="requirements">
-        <h3 id="requirements-0"><span class="secno">2.2 </span>
-          Requirements
-        </h3>
-        <p>
-          The requirements enumerated in this section are derived from the
-          <a href="#use-cases">use cases</a>.
-        </p>
-        <section>
-          <h4 id="functional-requirements"><span class="secno">2.2.1 </span>
-            Functional requirements
-          </h4>
-          <dl>
-            <dt>
-              Discovery &amp; availability
-            </dt>
-            <dd>
-              The UA must provide a way to find out whether at least one
-              secondary screen is available.
-            </dd>
-            <dt>
-              Launching presentation
-            </dt>
-            <dd>
-              The UA must provide a way to start sending content to the
-              secondary screen. This may occur at the request of the page or at
-              the request of the UA.
-            </dd>
-            <dt>
-              Resuming presentation
-            </dt>
-            <dd>
-              The UA must be able to resume an existing session with the
-              content being displayed on the secondary screen.
-            </dd>
-            <dt>
-              Communication
-            </dt>
-            <dd>
-              The UA must enable exchanging data between the primary and the
-              secondary screen in order to have a control channel between the
-              primary and secondary page. The UA must not make assumptions
-              about the execution locality of the UA of the remote page it
-              communicates with (i.e. the secondary page might run on a remote
-              UA, and thus the link between these two pages must be loosely
-              coupled).
-            </dd>
-            <dt>
-              Signaling disconnection
-            </dt>
-            <dd>
-              The UA must signal disconnection from the presentation page to
-              the primary page and vice versa.
-            </dd>
-          </dl>
-          <p class="note">
-            Multi-screen enumeration and named identification requirement was
-            removed after <a class="external free" href="http://lists.w3.org/Archives/Public/public-webscreens/2014Feb/0021.html" rel="nofollow">
-            discussion on the mailing list</a>.
-          </p>
-        </section>
-        <section>
-          <h4 id="non-functional-requirements"><span class="secno">2.2.2 </span>
-            Non-functional requirements
-          </h4>
-          <dl>
-            <dt>
-              Power saving friendly
-            </dt>
-            <dd>
-              All API design decisions must be analyzed from a power efficiency
-              point of view. Especially when using wireless display
-              technologies or querying availability over a radio channel, care
-              needs to be taken to design the API in a way that does not pose
-              obstacles to using radio resources in an efficient way. For
-              example, powering up the wireless display detection only when
-              needed.
-            </dd>
-          </dl>
-        </section>
-      </section>
+      </h2>Use cases and requirements are captured in a separate <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md">Presentation
+      API Use Cases and Requirements</a> document.
     </section>
     <section>
       <h2 id="conformance"><span class="secno">3 </span>
@@ -618,10 +443,9 @@
       <p>
         This section shows example codes that highlight the usage of main
         features of the Presentation API. In these examples,
-        <code>controller.html</code> represents the controlling page that runs
-        in the opener UA and <code>presentation.html</code> represents the
-        presenting page that runs in the presenting UA. Both pages are served
-        from the domain <code>http://example.org</code>
+        <code>controller.html</code> implements the controller and
+        <code>presentation.html</code> implements the presentation. Both pages
+        are served from the domain <code>http://example.org</code>
         (<code>http://example.org/controller.html</code> and
         <code>http://example.org/presentation.html</code>). Please refer to the
         comments in the code examples for further details.
@@ -762,27 +586,28 @@
           technology.
         </p>
         <p>
-          A <dfn id="concept-presentation-session" title="concept-presentation-session">presentation
-          session</dfn> is an object relating an <a href="#opening-browsing-context">opening browsing
-          context</a> to its <a href="#presentation-display">presentation display</a> and enabling
-          two-way-messaging between them. Each such object has a
-          <dfn id="presentation-session-state">presentation session state</dfn> and a <dfn id="presentation-session-identifier">presentation session
-          identifier</dfn> to distinguish it from other <a href="#concept-presentation-session" title="concept-presentation-session">presentation sessions</a>.
+          A <dfn id="presentation-session">presentation session</dfn> is an object relating an
+          <a href="#controlling-browsing-context">controlling browsing context</a> to its <a href="#presenting-browsing-context">presenting
+          browsing context</a> and enables two-way-messaging between them.
+          Each presentation session has a <dfn id="presentation-session-state">presentation session state</dfn>
+          and a <dfn id="presentation-session-identifier">presentation session identifier</dfn> to distinguish it
+          from other <span>presentation sessions</span>.
         </p>
         <p>
-          An <dfn id="opening-browsing-context">opening browsing context</dfn> is a <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a> that has initiated or resumed a
-          <span>presentation session</span> by calling
-          <code><a href="#startsession">startSession</a>()</code> or
+          An <dfn id="controlling-browsing-context">controlling browsing context</dfn> (or <em>controller</em>
+          for short) is a <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing
+          context</a> that has initiated or resumed a <a href="#presentation-session">presentation
+          session</a> by calling <code><a href="#startsession">startSession</a>()</code> or
           <code><a href="#joinsession">joinSession</a>()</code> or received a
-          <span>presentation session</span> via
+          <a href="#presentation-session">presentation session</a> via
           <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
-          The <dfn id="presenting-browsing-context">presenting browsing context</dfn> is the browsing context
-          responsible for rendering to a <a href="#presentation-display">presentation display</a>. A
-          <a href="#presenting-browsing-context">presenting browsing context</a> can reside in the same user
-          agent as the <a href="#opening-browsing-context">opening browsing context</a> or a different
-          one.
+          The <dfn id="presenting-browsing-context">presenting browsing context</dfn> (or <em>presentation</em>
+          for short) is the browsing context responsible for rendering to a
+          <a href="#presentation-display">presentation display</a>. A <a href="#presenting-browsing-context">presenting browsing
+          context</a> can reside in the same user agent as the
+          <a href="#controlling-browsing-context">controlling browsing context</a> or a different one.
         </p>
       </section>
       <section>
@@ -806,8 +631,8 @@
           Interface <a href="#presentationsession"><code>PresentationSession</code></a>
         </h3>
         <p>
-          Each <a href="#concept-presentation-session" title="concept-presentation-session">presentation
-          session</a> is represented by a <a href="#presentationsession"><code>PresentationSession</code></a>
+          Each <span title="concept-presentation-session">presentation
+          session</span> is represented by a <a href="#presentationsession"><code>PresentationSession</code></a>
           object.
         </p>
         <pre class="idl">enum <dfn id="presentationsessionstate">PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
@@ -834,7 +659,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </p>
         <p>
           The <dfn id="state"><code>state</code></dfn> attribute represents the
-          <span>presentation session</span>'s current state. It can take one of
+          <a href="#presentation-session">presentation session</a>'s current state. It can take one of
           the values of <a href="#presentationsessionstate"><code>PresentationSessionState</code></a>
           depending on connection state.
         </p>
@@ -864,8 +689,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </h4>
           <p class="note">
             Presentation API does not mandate a specific protocol for the
-            connection between the <a href="#opening-browsing-context">opening browsing context</a> and
-            the <a href="#presenting-browsing-context">presenting browsing context</a> except that for
+            connection between the <a href="#controlling-browsing-context">controlling browsing context</a>
+            and the <a href="#presenting-browsing-context">presenting browsing context</a> except that for
             multiple calls to <a href="#send"><code>send</code></a> it has to be ensured that
             messages are delivered to the other end in sequence.
           </p>
@@ -894,12 +719,13 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <li>Assign the <dfn id="destination-browsing-context">destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <a href="#destination-browsing-context">destination browsing context</a> be
-                the <a href="#opening-browsing-context">opening browsing context</a> if <a href="#send">send</a>
-                is called in the <a href="#presenting-browsing-context">presenting browsing context</a>.
+                the <a href="#controlling-browsing-context">controlling browsing context</a> if
+                <a href="#send">send</a> is called in the <a href="#presenting-browsing-context">presenting browsing
+                context</a>.
                 </li>
                 <li>Let <a href="#destination-browsing-context">destination browsing context</a> be the <a href="#presenting-browsing-context">
                   presenting browsing context</a> if <a href="#send">send</a> is
-                  called from the <a href="#opening-browsing-context">opening browsing context</a>.
+                  called from the <span>opening browsing context</span>.
                 </li>
               </ol>
             </li>
@@ -1144,7 +970,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             display</a> and selection of one presentation display.
               <ol>
                 <li>If <em>T</em> completes with the user <em>granting
-                permission</em> to use a screen, run the following steps:
+                permission</em> to use a display, run the following steps:
                   <ol>
                     <li>If <code>presentationId</code> is not
                     <em>undefined</em>, assign <em>I</em> to that that
@@ -1213,7 +1039,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <p class="note">
             The details of implementing the permission request and display
             selection are left to the user agent; for example it may show the
-            user a dialog and allow the user to select an available screen
+            user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
             permission).
           </p>
@@ -1311,7 +1137,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </h4>
           <p>
             When the user agent is to <dfn id="establish-a-presentation-connection">establish a presentation
-            connection</dfn> using a <span>presentation session</span>
+            connection</dfn> using a <a href="#presentation-session">presentation session</a>
             <em>S</em>, it must run the following steps:
           </p>
           <ol>
@@ -1363,7 +1189,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </ol>
           <p class="note">
             The mechanism that is used to present on the remote display and
-            connect the <a href="#opening-browsing-context">opening browsing context</a> with the
+            connect the <a href="#controlling-browsing-context">controlling browsing context</a> with the
             presented document is an implementation choice of the user agent.
             The connection must provide a two-way messaging abstraction capable
             of carrying <code>DOMString</code> payloads in a reliable and
@@ -1417,11 +1243,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </tbody>
           </table>
           <p>
-            In order to satisfy the <span title="non-functional-requirements">power saving non-functionional
-            requirements</span> the user agent must keep track of the number of
-            <code>EventHandler</code>s registered to the
-            <a href="#onavailablechange"><code>onavailablechange</code></a> event. Using this information,
-            implementation specific discovery of <span title="presentation-display">presentation displays</span> can be resumed
+            In order to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
+            power saving non-functional requirement</a>, the user agent must
+            keep track of the number of <code>EventHandler</code>s registered
+            to the <a href="#onavailablechange"><code>onavailablechange</code></a> event. Using this
+            information, implementation specific discovery of <span title="presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
           </p>The user agent must keep a <dfn id="list-of-available-presentation-displays">list of available presentation
           displays</dfn>. According to the number of event handlers for
@@ -1510,7 +1336,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <p class="note">
               The mechanism used to monitor <a href="#presentation-display">presention displays</a> availability is
               left to the user agent. The user agent may choose search for
-              screens at any time, not just when event handlers are added to
+              displays at any time, not just when event handlers are added to
               <code>NavigatorPresentation.onavailablechange</code>.
             </p>
             <p>
