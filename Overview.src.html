@@ -777,7 +777,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
                           <span data-anolis-spec="w3c-html">Queue a task</span>
                           to <span data-anolis-spec="w3c-html" title=
                           "concept-event-fire">fire an event</span> named
-                          <code>statechange</code> at <em>s.onstatechange</em>.
+                          <code>statechange</code> at <em>s</em>.
                         </li>
                       </ol>
                     </li>
@@ -1016,7 +1016,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
           <p class="open-issue">
             ISSUE: Do we want to distinguish the permission-denied outcome from
             the no-screens-available outcome? Developers would be able to infer
-            it anyway from <code>onavailablechange</code>.
+            it anyway from <code>availablechange</code>.
           </p>
         </section>
         <section>
@@ -1145,8 +1145,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                               <span data-anolis-spec="w3c-html">Queue a
                               task</span> to <span data-anolis-spec="w3c-html"
                               title="concept-event-fire">fire an event</span>
-                              named <code>statechange</code> at
-                              <em>s.onstatechange</em>.
+                              named <code>statechange</code> at <em>s</em>.
                             </li>
                           </ol>
                         </li>
@@ -1217,13 +1216,13 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
             power saving non-functional requirement</a>, the user agent must
             keep track of the number of <code>EventHandler</code>s registered
-            to the <code>onavailablechange</code> event. Using this
+            to the <code>availablechange</code> event. Using this
             information, implementation specific discovery of <span title=
             "presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
           </p>The user agent must keep a <dfn>list of available presentation
           displays</dfn>. According to the number of event handlers for
-          <code>onavailablechange</code>, the user agent must also keep the
+          <code>availablechange</code>, the user agent must also keep the
           list up to date by running the algorithm for <span title=
           "algorithm-monitor-available">monitoring the list of available
           presentation displays</span>.
@@ -1234,7 +1233,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </h5>
             <p>
               When an event handler is added to the list of event handlers
-              registered for the <code>onavailablechange</code> event, the user
+              registered for the <code>availablechange</code> event, the user
               agent must run the <span title=
               "algorithm-monitor-available">algorithm to monitor the list of
               available presentation displays</span>.
@@ -1246,7 +1245,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </h5>
             <p>
               When an event handler is removed from the list of event handlers
-              registered to the <code>onavailablechange</code> event, the user
+              registered to the <code>availablechange</code> event, the user
               agent must run the following steps:
             </p>
             <ul>
@@ -1289,7 +1288,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                     <span data-anolis-spec="w3c-html">Queue a task</span> to
                     <span data-anolis-spec="w3c-html" title=
                     "concept-event-fire">fire an event</span> named
-                    <code>availablechange</code> at with the event's
+                    <code>availablechange</code> at
+                    <code>NavigatorPresentation</code> with the event's
                     <code>available</code> property set to <code>true</code>.
                   </li>
                 </ol>
@@ -1302,7 +1302,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                     <span data-anolis-spec="w3c-html">Queue a task</span> to
                     <span data-anolis-spec="w3c-html" title=
                     "concept-event-fire">fire an event</span> named
-                    <code>availablechange</code> with the event's
+                    <code>availablechange</code> at
+                    <code>NavigatorPresentation</code> with the event's
                     <code>available</code> property set to <code>false</code>.
                   </li>
                 </ol>
@@ -1334,9 +1335,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <span data-anolis-spec="w3c-html">Queue a task</span> to
                 <span data-anolis-spec="w3c-html" title=
                 "concept-event-fire">fire an event</span> named
-                <code>availablechange</code> at <em>E</em> (and only
-                <em>E</em>) with the event's <code>available</code> property
-                set to <code>false</code>.
+                <code>availablechange</code> at
+                <code>NavigatorPresentation</code> with the event's
+                <code>available</code> property set to <code>false</code>.
               </li>
             </ol>
           </section>
