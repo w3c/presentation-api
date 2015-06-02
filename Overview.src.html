@@ -339,8 +339,9 @@
         "dom">DOM</span>.
       </p>
       <p>
-        The term <span data-anolis-spec="es6" title=
-        "promise-objects">Promise</span> is defined in <span data-anolis-ref=
+        The terms <span data-anolis-spec="es6" title=
+        "promise-objects">Promise</span> and <span data-anolis-spec=
+        "es6">ArrayBuffer</span> are defined in <span data-anolis-ref=
         "">ES6</span>. The terms <span data-anolis-spec="promguide" title=
         "resolve-reject">resolving a Promise, and rejecting a Promise</span>
         are used as explained in <span data-anolis-ref="">PROMGUIDE</span>.
@@ -348,12 +349,6 @@
       <p>
         The term <span data-anolis-spec="url">URL</span> is defined in the
         WHATWG URL standard: <span data-anolis-ref="url">URL</span>.
-      </p>
-      <p>
-        The terms <span data-anolis-spec="typedarray">ArrayBuffer</span>,
-        <span data-anolis-spec="typedarray">ArrayBufferView</span> are defined
-        in the Typed Array specification: <span data-anolis-ref=
-        "typedarray">TYPEDARRAY</span>.
       </p>
       <p>
         The term <span data-anolis-spec="fileapi">Blob</span> is defined in the
@@ -593,9 +588,9 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
   void <dfn title="send-blob">send</dfn> (<span data-anolis-spec=
 "fileapi">Blob</span> data);
   void <dfn title="send-arraybuffer">send</dfn> (<span data-anolis-spec=
-"typedarray">ArrayBuffer</span> data);
+"es6">ArrayBuffer</span> data);
   void <dfn title="send-arraybufferview">send</dfn> (<span data-anolis-spec=
-"typedarray">ArrayBufferView</span> data);
+"webidl">ArrayBufferView</span> data);
 };
 </pre>
         <p>
@@ -1216,14 +1211,14 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
             power saving non-functional requirement</a>, the user agent must
             keep track of the number of <code>EventHandler</code>s registered
-            to the <code>availablechange</code> event. Using this
-            information, implementation specific discovery of <span title=
+            to the <code>availablechange</code> event. Using this information,
+            implementation specific discovery of <span title=
             "presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
           </p>The user agent must keep a <dfn>list of available presentation
           displays</dfn>. According to the number of event handlers for
-          <code>availablechange</code>, the user agent must also keep the
-          list up to date by running the algorithm for <span title=
+          <code>availablechange</code>, the user agent must also keep the list
+          up to date by running the algorithm for <span title=
           "algorithm-monitor-available">monitoring the list of available
           presentation displays</span>.
           <section>
