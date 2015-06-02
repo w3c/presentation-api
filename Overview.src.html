@@ -1409,12 +1409,12 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         Personally identifiable information
       </h3>
       <p>
-        The Presentation API reveals one bit of information about the presence
-        (or non-presence) of a <span>presentation screen</span> typically
-        discovered through the local area network. This could be used in
-        conjunction with other information for fingerprinting the user.
-        However, this information is also dependent on the user's local network
-        context, so the risk is minimized.
+        The <code>availablechange</code> event reveals one bit of information
+        about the presence (or non-presence) of a <span>presentation
+        screen</span> typically discovered through the local area network. This
+        could be used in conjunction with other information for fingerprinting
+        the user. However, this information is also dependent on the user's
+        local network context, so the risk is minimized.
       </p>
       <p class="open-issue">
         If we allow the page to filter the set of presentation screens based on
@@ -1425,9 +1425,9 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         presented?</a>
       </p>
       <p class="open-issue">
-        Requiring user permission before disclosing the presence of a
-        presentation display is counter to the initial purpose of improving the
-        user experience. See <a href=
+        We do not want to require user permission before disclosing the
+        presence of a presentation display, as it is counter to the initial
+        purpose of improving the user experience. See <a href=
         "https://github.com/w3c/presentation-api/issues/10">ISSUE 10: Is user
         permission required to prompt for screen availability information?</a>
       </p>
@@ -1435,26 +1435,31 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         Cross-origin access
       </h3>
       <p>
-        The <span>set of presentations</span> for a user agent (or a user
-        profile within that user agent) may persist across browing sessions.
+        A <span>presentation session</span> is allowed to be accessed across
+        origins; the URL that started the presentation and the presentation ID
+        are the only information needed to join a session from any origin in
+        that user agent. In other words, a presentation is not tied to a
+        particular opening origin.
       </p>
       <p>
-        Cross-origin presentation sessions are allowed; the URL to present and
-        the presentation ID are the only information needed to join a session.
-        In other words, a presentation is not tied to a particular opening
-        origin. We could restrict the set of presentations per origin to ensure
-        that a third-party Web site cannot hijack a presentation it did not
-        create, for example by saying that D is represented as a set of tuples
-        (O, U, I, S) where O is the URL of the opening browsing context, and by
-        adjusting algorithms accordingly.
+        The security of the presentation ID prevents arbitrary pages from
+        connecting to an existing presentation. We could further restrict the
+        set of presentations per origin to ensure that an unwanted page cannot
+        hijack a presentation it did not create, for example by saying that D
+        is represented as a set of tuples (O, U, I, S) where O is the URL of
+        the opening browsing context, and by adjusting algorithms accordingly.
+        However, this would prevent controlling contexts from different domains
+        from connecting to a shared presentation resource.
       </p>
       <p>
-        The specification is also silent about exchanging information in that
-        set of presentations across user agents to authorize other devices to
-        join an existing presentation but that is envisioned (at least in the
-        charter of the group).
+        This specification does not prohibit a user agent from publishing
+        information about its <span>set of presentations</span>. The charter
+        envisions a user agent on a another device (distinct from the
+        controller or presentation) becoming authorized to join the
+        presentation, either by user action or by discovering the
+        presentation's URL and id.
       </p>
-      <p class="note">
+      <p class="open-issue">
         This section should provide informative guidance as to what constitutes
         a reasonable context for a Web page to become authorized to control a
         presentation session.
@@ -1463,27 +1468,29 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         Device Access
       </h3>
       <p>
-        The presentation API abstracts away what "local" means for screens,
-        meaning that it exposes network-based screens as though they were local
-        screens. The Presentation API requires user permission to mitigate
-        issues that could arise here.
+        The presentation API abstracts away what "local" means for displays,
+        meaning that it exposes network-accessible displays as though they were
+        local displays. The Presentation API requires user permission for a
+        page to access any display to mitigate issues that could arise, such as
+        showing unwanted content on a display viewable by others.
       </p>
       <h3>
         Temporary identifiers and browser state
       </h3>
       <p>
-        The presentation URL and presentation ID could be used to connect to a
-        running session from another tab or another user agent. They can easily
-        be retrieved if an attacker can inject content in the page. Again, one
-        possible solution would be to restrict the API to secure contexts.
+        The presentation URL and presentation ID can be used to connect to a
+        presentation session from another browsing context. They can be
+        intercepted if an attacker can inject content into the controlling
+        page. Again, one possible solution would be to restrict the API to
+        secure contexts.
       </p>
       <h3>
         Incognito mode and clearing of browsing data
       </h3>
       <p>
-        The content displayed on the presenting context is different from the
-        local one. In particular, if the user is logged in in both contexts,
-        then logs out on opening browsing context, she will not be
+        The content displayed on the presentation is different from the
+        controller. In particular, if the user is logged in in both contexts,
+        then logs out of the controlling browsing context, she will not be
         automatically logged out from the presenting browsing context.
         Applications that use authentication should pay extra care when
         communicating between devices.
@@ -1498,7 +1505,7 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
         Define user agent context for rendering the presentation</a>
       </p>
-      <p class="note">
+      <p class="open-issue">
         The spec should clarify what is to happen to the set of known
         presentations in "incognito" (private browsing context) mode.
       </p>
