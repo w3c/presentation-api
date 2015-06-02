@@ -1405,47 +1405,34 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         Security and privacy considerations section</a>
       </p>
       <h3>
-        Personally Identifiable Information
+        Personally identifiable information
       </h3>
       <p>
-        The Presentation API reveals a bit of information about the presence of
-        secondary devices typically discovered through network discovery. This
-        can be used for fingerprinting. More information may be leaked in the
-        future if some sort of filtering based on capabilities is added to the
-        spec (see ISSUE #9 How to filter available screens according to the
-        content being presented).
+        The Presentation API reveals one bit of information about the presence
+        (or non-presence) of a <span>presentation screen</span> typically
+        discovered through the local area network. This could be used in
+        conjunction with other information for fingerprinting the user.
+        However, this information is also dependent on the user's local network
+        context, so the risk is minimized.
       </p>
-      <p>
-        Requiring user permission before disclosing that information dismisses
-        the initial purpose of improving the user experience (tracked in #10 Is
+      <p class="open-issue">
+        If we allow the page to filter the set of presentation screens based on
+        capabilities, then more bits of more information would be revealed.
+        This feature, if implemented, should take privacy into consideration.
+        See <a href="https://github.com/w3c/presentation-api/issues/9">ISSUE 9:
+        How to filter available screens according to the content being
+        presented?</a>
+      </p>
+      <p class="open-issue">
+        Requiring user permission before disclosing the presence of a
+        presentation display is counter to the initial purpose of improving the
+        user experience. See
+        <a href="https://github.com/w3c/presentation-api/issues/10">ISSUE 10: Is
         user permission required to prompt for screen availability
-        information?).
+        information?</a>
       </p>
-      <p>
-        A few possible mitigations (not necessarily exclusive):
-      </p>
-      <ul>
-        <li>
-          <p>
-            Restrict the API to secure contexts.
-          </p>
-        </li>
-        <li>
-          <p>
-            Do not enable filtering based on capabilities (at all, or without
-            user consent).
-          </p>
-        </li>
-        <li>
-          <p>
-            Make the need useless, e.g. by having the Presentation API fall
-            back to a pop-up window if there are no other screens available.
-            User experience would greatly suffer though.
-          </p>
-        </li>
-      </ul>
       <h3>
-        Cross-origin presentations
+        Cross-origin access
       </h3>
       <p>
         The <span>set of presentations</span> for a user agent (or a user
@@ -1488,17 +1475,11 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         The presentation URL and presentation ID could be used to connect to a
         running session from another tab or another user agent. They can easily
         be retrieved if an attacker can inject content in the page. Again, one
-        possible solution would be to restrict the API over secure contexts.
+        possible solution would be to restrict the API to secure contexts.
       </p>
       <h3>
-        Incognito mode
+        Incognito mode and clearing of browsing data
       </h3>
-      <p>
-        The spec should clarify what is to happen to the set of known
-        presentations in "incognito" mode. The spec should also specify the
-        restrictions on the presenting browsing context when the opening
-        browsing context is in "incognito" mode.
-      </p>
       <p>
         The content displayed on the presenting context is different from the
         local one. In particular, if the user is logged in in both contexts,
@@ -1507,16 +1488,22 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         Applications that use authentication should pay extra care when
         communicating between devices.
       </p>
-      <p class="open-issue">
-        <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
-        Define user agent context for rendering the presentation</a>
-      </p>
       <p>
         The set of presentations known to the user agent should be cleared when
         the user requests to "clear browsing data."
       </p>
+      <p class="open-issue">
+        The spec should specify any restrictions on the presenting browsing
+        context when the opening browsing context is in "incognito" mode.  See 
+        <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
+        Define user agent context for rendering the presentation</a>
+      </p>
+      <p class="note">
+        The spec should clarify what is to happen to the set of known
+        presentations in "incognito" (private browsing context) mode.
+      </p>
       <h3>
-        Messaging channel
+        Messaging between presentation sessions
       </h3>
       <p>
         This spec will not mandate communication protocols, but it should set
