@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-1-june-2015">
-        Editor's Draft 1 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-2-june-2015">
+        Editor's Draft 2 June 2015
       </h2>
       <dl>
         <dt>
@@ -411,7 +411,12 @@
         The term <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> is defined in <a href="#refsDOM">[DOM]</a>.
       </p>
       <p>
-        The terms <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a> and <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-arraybuffer-objects">ArrayBuffer</a> are defined in <a href="#refsES6">[ES6]</a>. The terms <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolving a Promise, and rejecting a Promise</a>
+        This document provides interface definitions using the
+        <a href="#refsWEBIDL">[WEBIDL]</a> standard. The terms
+        <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a>, <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a>, and <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#common-ArrayBufferView">ArrayBufferView</a> are defined in <a href="#refsWEBIDL">[WEBIDL]</a>.
+      </p>
+      <p>
+        The terms <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolving a Promise, and rejecting a Promise</a>
         are used as explained in <a href="#refsPROMGUIDE">[PROMGUIDE]</a>.
       </p>
       <p>
@@ -421,10 +426,6 @@
       <p>
         The term <a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> is defined in the
         File API specification: <a href="#refsFILEAPI">[FILEAPI]</a>.
-      </p>
-      <p>
-        This document provides interface definitions using the
-        <a href="#refsWEBIDL">[WEBIDL]</a> standard.
       </p>
     </section>
     <section>
@@ -644,7 +645,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
   void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
   void <dfn id="send-blob" title="send-blob">send</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
-  void <dfn id="send-arraybuffer" title="send-arraybuffer">send</dfn> (<a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-arraybuffer-objects">ArrayBuffer</a> data);
+  void <dfn id="send-arraybuffer" title="send-arraybuffer">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a> data);
   void <dfn id="send-arraybufferview" title="send-arraybufferview">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#common-ArrayBufferView">ArrayBufferView</a> data);
 };
 </pre>
@@ -930,11 +931,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Output
             </dt>
             <dd>
-              <em>P</em>, a <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>
+              <em>P</em>, a <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>.
+            <li>Let <em>P</em> be a new <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a>.
             </li>
             <li>Return <em>P</em>.
             </li>
@@ -1074,11 +1075,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Output
             </dt>
             <dd>
-              <em>P</em>, a <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>
+              <em>P</em>, a <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>.
+            <li>Let <em>P</em> be a new <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a>.
             </li>
             <li>Return <em>P</em>.
             </li>
@@ -1425,9 +1426,6 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
       </h2>
       <div id="anolis-references"><dl><dt id="refsDOM">[DOM]
 <dd><cite><a href="https://dom.spec.whatwg.org/">DOM</a></cite>, Anne van Kesteren, Aryeh Gregor and Ms2ger. WHATWG.
-
-<dt id="refsES6">[ES6]
-<dd><cite><a href="http://people.mozilla.org/~jorendorff/es6-draft.html">ECMA-262 6th Edition / Draft</a></cite>. ECMA / Jason Orendorff.
 
 <dt id="refsFILEAPI">[FILEAPI]
 <dd><cite><a href="http://dev.w3.org/2006/webapi/FileAPI/">File API</a></cite>, Arun Ranganathan and Jonas Sicking. W3C.
