@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-1-june-2015">
-        Editor's Draft 1 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-2-june-2015">
+        Editor's Draft 2 June 2015
       </h2>
       <dl>
         <dt>
@@ -302,7 +302,26 @@
         </a></ol></li>
  <li><a href="#security-and-privacy-considerations"><span class="secno">7 </span>
         Security and privacy considerations
+      </a>
+  <ol>
+   <li><a href="#personally-identifiable-information"><span class="secno">7.1 </span>
+        Personally Identifiable Information
       </a></li>
+   <li><a href="#cross-origin-presentations"><span class="secno">7.2 </span>
+        Cross-origin presentations
+      </a></li>
+   <li><a href="#device-access"><span class="secno">7.3 </span>
+        Device Access
+      </a></li>
+   <li><a href="#temporary-identifiers-and-browser-state"><span class="secno">7.4 </span>
+        Temporary identifiers and browser state
+      </a></li>
+   <li><a href="#incognito-mode"><span class="secno">7.5 </span>
+        Incognito mode
+      </a></li>
+   <li><a href="#messaging-channel"><span class="secno">7.6 </span>
+        Messaging channel
+      </a></ol></li>
  <li><a href="#references"><span class="secno">8 </span>
         References
       </a></li>
@@ -1053,7 +1072,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <p class="open-issue">
             ISSUE: Do we want to distinguish the permission-denied outcome from
             the no-screens-available outcome? Developers would be able to infer
-            it anyway from <a href="#onavailablechange"><code>onavailablechange</code></a>.
+            it anyway from <code>availablechange</code>.
           </p>
         </section>
         <section>
@@ -1245,13 +1264,13 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             In order to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
             power saving non-functional requirement</a>, the user agent must
             keep track of the number of <code>EventHandler</code>s registered
-            to the <a href="#onavailablechange"><code>onavailablechange</code></a> event. Using this
-            information, implementation specific discovery of <span title="presentation-display">presentation displays</span> can be resumed
+            to the <code>availablechange</code> event. Using this information,
+            implementation specific discovery of <span title="presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
           </p>The user agent must keep a <dfn id="list-of-available-presentation-displays">list of available presentation
           displays</dfn>. According to the number of event handlers for
-          <a href="#onavailablechange"><code>onavailablechange</code></a>, the user agent must also keep the
-          list up to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available
+          <code>availablechange</code>, the user agent must also keep the list
+          up to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available
           presentation displays</a>.
           <section>
             <h5 id="adding-an-eventhandler-to-onavailablechange"><span class="secno">6.4.4.1 </span>
@@ -1260,7 +1279,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </h5>
             <p>
               When an event handler is added to the list of event handlers
-              registered for the <a href="#onavailablechange"><code>onavailablechange</code></a> event, the user
+              registered for the <code>availablechange</code> event, the user
               agent must run the <a href="#algorithm-monitor-available" title="algorithm-monitor-available">algorithm to monitor the list of
               available presentation displays</a>.
             </p>
@@ -1271,7 +1290,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </h5>
             <p>
               When an event handler is removed from the list of event handlers
-              registered to the <a href="#onavailablechange"><code>onavailablechange</code></a> event, the user
+              registered to the <code>availablechange</code> event, the user
               agent must run the following steps:
             </p>
             <ul>
@@ -1422,6 +1441,129 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
         Security and privacy considerations section</a>
+      </p>
+      <h3 id="personally-identifiable-information"><span class="secno">7.1 </span>
+        Personally Identifiable Information
+      </h3>
+      <p>
+        The Presentation API reveals a bit of information about the presence of
+        secondary devices typically discovered through network discovery. This
+        can be used for fingerprinting. More information may be leaked in the
+        future if some sort of filtering based on capabilities is added to the
+        spec (see ISSUE #9 How to filter available screens according to the
+        content being presented).
+      </p>
+      <p>
+        Requiring user permission before disclosing that information dismisses
+        the initial purpose of improving the user experience (tracked in #10 Is
+        user permission required to prompt for screen availability
+        information?).
+      </p>
+      <p>
+        A few possible mitigations (not necessarily exclusive):
+      </p>
+      <ul>
+        <li>
+          <p>
+            Restrict the API to secure contexts.
+          </p>
+        </li>
+        <li>
+          <p>
+            Do not enable filtering based on capabilities (at all, or without
+            user consent).
+          </p>
+        </li>
+        <li>
+          <p>
+            Make the need useless, e.g. by having the Presentation API fall
+            back to a pop-up window if there are no other screens available.
+            User experience would greatly suffer though.
+          </p>
+        </li>
+      </ul>
+      <h3 id="cross-origin-presentations"><span class="secno">7.2 </span>
+        Cross-origin presentations
+      </h3>
+      <p>
+        The <span>set of presentations</span> for a user agent (or a user
+        profile within that user agent) may persist across browing sessions.
+      </p>
+      <p>
+        Cross-origin presentation sessions are allowed; the URL to present and
+        the presentation ID are the only information needed to join a session.
+        In other words, a presentation is not tied to a particular opening
+        origin. We could restrict the set of presentations per origin to ensure
+        that a third-party Web site cannot hijack a presentation it did not
+        create, for example by saying that D is represented as a set of tuples
+        (O, U, I, S) where O is the URL of the opening browsing context, and by
+        adjusting algorithms accordingly.
+      </p>
+      <p>
+        The specification is also silent about exchanging information in that
+        set of presentations across user agents to authorize other devices to
+        join an existing presentation but that is envisioned (at least in the
+        charter of the group).
+      </p>
+      <p class="note">
+        This section should provide informative guidance as to what constitutes
+        a reasonable context for a Web page to become authorized to control a
+        presentation session.
+      </p>
+      <h3 id="device-access"><span class="secno">7.3 </span>
+        Device Access
+      </h3>
+      <p>
+        The presentation API abstracts away what "local" means for screens,
+        meaning that it exposes network-based screens as though they were local
+        screens. The Presentation API requires user permission to mitigate
+        issues that could arise here.
+      </p>
+      <h3 id="temporary-identifiers-and-browser-state"><span class="secno">7.4 </span>
+        Temporary identifiers and browser state
+      </h3>
+      <p>
+        The presentation URL and presentation ID could be used to connect to a
+        running session from another tab or another user agent. They can easily
+        be retrieved if an attacker can inject content in the page. Again, one
+        possible solution would be to restrict the API over secure contexts.
+      </p>
+      <h3 id="incognito-mode"><span class="secno">7.5 </span>
+        Incognito mode
+      </h3>
+      <p>
+        The spec should clarify what is to happen to the set of known
+        presentations in "incognito" mode. The spec should also specify the
+        restrictions on the presenting browsing context when the opening
+        browsing context is in "incognito" mode.
+      </p>
+      <p>
+        The content displayed on the presenting context is different from the
+        local one. In particular, if the user is logged in in both contexts,
+        then logs out on opening browsing context, she will not be
+        automatically logged out from the presenting browsing context.
+        Applications that use authentication should pay extra care when
+        communicating between devices.
+      </p>
+      <p class="open-issue">
+        <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
+        Define user agent context for rendering the presentation</a>
+      </p>
+      <p>
+        The set of presentations known to the user agent should be cleared when
+        the user requests to "clear browsing data."
+      </p>
+      <h3 id="messaging-channel"><span class="secno">7.6 </span>
+        Messaging channel
+      </h3>
+      <p>
+        This spec will not mandate communication protocols, but it should set
+        some guarantees of message confidentiality and authenticity.
+      </p>
+      <p class="open-issue">
+        <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
+        Define security requirements for messaging channel between secure
+        origins</a>
       </p>
     </section>
     <section>

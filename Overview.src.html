@@ -1216,14 +1216,14 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
             power saving non-functional requirement</a>, the user agent must
             keep track of the number of <code>EventHandler</code>s registered
-            to the <code>availablechange</code> event. Using this
-            information, implementation specific discovery of <span title=
+            to the <code>availablechange</code> event. Using this information,
+            implementation specific discovery of <span title=
             "presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
           </p>The user agent must keep a <dfn>list of available presentation
           displays</dfn>. According to the number of event handlers for
-          <code>availablechange</code>, the user agent must also keep the
-          list up to date by running the algorithm for <span title=
+          <code>availablechange</code>, the user agent must also keep the list
+          up to date by running the algorithm for <span title=
           "algorithm-monitor-available">monitoring the list of available
           presentation displays</span>.
           <section>
@@ -1404,6 +1404,129 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
         Security and privacy considerations section</a>
+      </p>
+      <h3>
+        Personally Identifiable Information
+      </h3>
+      <p>
+        The Presentation API reveals a bit of information about the presence of
+        secondary devices typically discovered through network discovery. This
+        can be used for fingerprinting. More information may be leaked in the
+        future if some sort of filtering based on capabilities is added to the
+        spec (see ISSUE #9 How to filter available screens according to the
+        content being presented).
+      </p>
+      <p>
+        Requiring user permission before disclosing that information dismisses
+        the initial purpose of improving the user experience (tracked in #10 Is
+        user permission required to prompt for screen availability
+        information?).
+      </p>
+      <p>
+        A few possible mitigations (not necessarily exclusive):
+      </p>
+      <ul>
+        <li>
+          <p>
+            Restrict the API to secure contexts.
+          </p>
+        </li>
+        <li>
+          <p>
+            Do not enable filtering based on capabilities (at all, or without
+            user consent).
+          </p>
+        </li>
+        <li>
+          <p>
+            Make the need useless, e.g. by having the Presentation API fall
+            back to a pop-up window if there are no other screens available.
+            User experience would greatly suffer though.
+          </p>
+        </li>
+      </ul>
+      <h3>
+        Cross-origin presentations
+      </h3>
+      <p>
+        The <span>set of presentations</span> for a user agent (or a user
+        profile within that user agent) may persist across browing sessions.
+      </p>
+      <p>
+        Cross-origin presentation sessions are allowed; the URL to present and
+        the presentation ID are the only information needed to join a session.
+        In other words, a presentation is not tied to a particular opening
+        origin. We could restrict the set of presentations per origin to ensure
+        that a third-party Web site cannot hijack a presentation it did not
+        create, for example by saying that D is represented as a set of tuples
+        (O, U, I, S) where O is the URL of the opening browsing context, and by
+        adjusting algorithms accordingly.
+      </p>
+      <p>
+        The specification is also silent about exchanging information in that
+        set of presentations across user agents to authorize other devices to
+        join an existing presentation but that is envisioned (at least in the
+        charter of the group).
+      </p>
+      <p class="note">
+        This section should provide informative guidance as to what constitutes
+        a reasonable context for a Web page to become authorized to control a
+        presentation session.
+      </p>
+      <h3>
+        Device Access
+      </h3>
+      <p>
+        The presentation API abstracts away what "local" means for screens,
+        meaning that it exposes network-based screens as though they were local
+        screens. The Presentation API requires user permission to mitigate
+        issues that could arise here.
+      </p>
+      <h3>
+        Temporary identifiers and browser state
+      </h3>
+      <p>
+        The presentation URL and presentation ID could be used to connect to a
+        running session from another tab or another user agent. They can easily
+        be retrieved if an attacker can inject content in the page. Again, one
+        possible solution would be to restrict the API over secure contexts.
+      </p>
+      <h3>
+        Incognito mode
+      </h3>
+      <p>
+        The spec should clarify what is to happen to the set of known
+        presentations in "incognito" mode. The spec should also specify the
+        restrictions on the presenting browsing context when the opening
+        browsing context is in "incognito" mode.
+      </p>
+      <p>
+        The content displayed on the presenting context is different from the
+        local one. In particular, if the user is logged in in both contexts,
+        then logs out on opening browsing context, she will not be
+        automatically logged out from the presenting browsing context.
+        Applications that use authentication should pay extra care when
+        communicating between devices.
+      </p>
+      <p class="open-issue">
+        <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
+        Define user agent context for rendering the presentation</a>
+      </p>
+      <p>
+        The set of presentations known to the user agent should be cleared when
+        the user requests to "clear browsing data."
+      </p>
+      <h3>
+        Messaging channel
+      </h3>
+      <p>
+        This spec will not mandate communication protocols, but it should set
+        some guarantees of message confidentiality and authenticity.
+      </p>
+      <p class="open-issue">
+        <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
+        Define security requirements for messaging channel between secure
+        origins</a>
       </p>
     </section>
     <section>
