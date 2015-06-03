@@ -1436,24 +1436,20 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
       </h3>
       <p>
         A <span>presentation session</span> is allowed to be accessed across
-        origins; the URL that started the presentation and the presentation ID
-        are the only information needed to join a session from any origin in
-        that user agent. In other words, a presentation is not tied to a
-        particular opening origin.
+        origins; the presentation URL and presentation ID used to create the
+        presentation are the only information needed to join a session from any
+        origin in that user agent. In other words, a presentation is not tied
+        to a particular opening origin.
       </p>
       <p>
-        The security of the presentation ID prevents arbitrary pages from
-        connecting to an existing presentation. We could further restrict the
-        set of presentations per origin to ensure that an unwanted page cannot
-        hijack a presentation it did not create, for example by saying that D
-        is represented as a set of tuples (O, U, I, S) where O is the URL of
-        the opening browsing context, and by adjusting algorithms accordingly.
-        However, this would prevent controlling contexts from different domains
-        from connecting to a shared presentation resource.
+        This design allows controlling contexts from different domains to
+        connect to a shared presentation resource. The security of the
+        presentation ID prevents arbitrary pages from connecting to an existing
+        presentation.
       </p>
       <p>
         This specification does not prohibit a user agent from publishing
-        information about its <span>set of presentations</span>. The charter
+        information about its <span>set of presentations</span>. The group
         envisions a user agent on a another device (distinct from the
         controller or presentation) becoming authorized to join the
         presentation, either by user action or by discovering the
@@ -1481,8 +1477,10 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         The presentation URL and presentation ID can be used to connect to a
         presentation session from another browsing context. They can be
         intercepted if an attacker can inject content into the controlling
-        page. Again, one possible solution would be to restrict the API to
-        secure contexts.
+        page.
+      </p>
+      <p class="open-issue">
+        Should we restrict the API to some extent in non secure contexts?
       </p>
       <h3>
         Incognito mode and clearing of browsing data
