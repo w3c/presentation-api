@@ -6,14 +6,14 @@
       Presentation API
     </title>
     <style>
-    @media print {
+@media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link rel="stylesheet" type="text/css" href=
     "http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
     <style type="text/css">
-    /* Note formatting taken from HTML5 spec */
+/* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -527,15 +527,17 @@
           A <dfn>presentation session</dfn> is an object relating an
           <span>controlling browsing context</span> to its <span>presenting
           browsing context</span> and enables two-way-messaging between them.
-          Each presentation session has a <dfn>presentation session state</dfn>
-          and a <dfn>presentation session identifier</dfn> to distinguish it
-          from other <span>presentation sessions</span>.
+          Each <span>presentation session</span> has a <dfn>presentation
+          session state</dfn>, a <dfn>presentation session identifier</dfn> to
+          distinguish it from other <span>presentation sessions</span>, and a
+          <dfn>presentation session URL</dfn> that is a URL used to create or
+          resume the <span>presentation session</span>.
         </p>
         <p>
-          An <dfn>controlling browsing context</dfn> (or <em>controller</em>
-          for short) is a <span data-anolis-spec="w3c-html">browsing
-          context</span> that has initiated or resumed a <span>presentation
-          session</span> by calling <code><span>startSession</span>()</code> or
+          A <dfn>controlling browsing context</dfn> (or <em>controller</em> for
+          short) is a <span data-anolis-spec="w3c-html">browsing context</span>
+          that has initiated or resumed a <span>presentation session</span> by
+          calling <code><span>startSession</span>()</code> or
           <code><span>joinSession</span>()</code> or received a
           <span>presentation session</span> via
           <code><span>ondefaultsessionstart</span></code> event.
@@ -548,18 +550,16 @@
           <span>controlling browsing context</span> or a different one.
         </p>
         <p>
-          The <dfn>set of presentations</dfn> contains the presentation
-          sessions created by all of the controlling browsing contexts for a
-          user agent (or a specific user profile within the user agent). It is
-          represented by a global variable <em>D</em>, which has a set of
-          tuples <em>(U, I, S)</em>. <em>U</em> is the <span data-anolis-spec=
-          "url">URL</span> that was used to create or resume the session;
-          <em>I</em> is an alphanumeric identifier for the presentation
-          session; and <em>S</em> is the controlling browsing context's
-          <code>PresentationSession</code> object. <em>U</em> and <em>I</em>
-          together uniquely identify the <code>PresentationSession</code>
-          within the user agent. When the user agent starts, <em>D</em> is the
-          empty set.
+          The <dfn>set of presentations</dfn>, initially empty, contains the
+          <span>presentation session</span>s created by the <span>controlling
+          browsing context</span>s for the user agent (or a specific user
+          profile within the user agent). The <span>set of presentations</span>
+          is represented by a list of tuples, where each tuple consists of a
+          <span>presentation session URL</span>, a <span>presentation session
+          identifier</span>, and the <span>presentation session</span> itself.
+          The <span>presentation session URL</span> and <span>presentation
+          session identifier</span> uniquely identify the <span>presentation
+          session</span>.
         </p>
       </section>
       <section>
@@ -567,9 +567,8 @@
           Interface <code>PresentationSession</code>
         </h3>
         <p>
-          Each <span title="concept-presentation-session">presentation
-          session</span> is represented by a <code>PresentationSession</code>
-          object.
+          Each <span>presentation session</span> is represented by a
+          <code>PresentationSession</code> object.
         </p>
         <pre class="idl">
 enum <dfn>PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
@@ -597,8 +596,11 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
 };
 </pre>
         <p>
-          The <dfn><code>id</code></dfn> attribute holds the alphanumeric
-          <span>presentation session identifier</span>.
+          The <dfn><code>id</code></dfn> attribute specifies the
+          <span>presentation session</span>'s <span>presentation session
+          identifier</span>. The value must consists of <span>alphanumeric
+          ASCII characters</span> and be unique within the <span>set of
+          presentations</span>.
         </p>
         <p>
           The <dfn><code>state</code></dfn> attribute represents the
@@ -617,7 +619,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           When the <code><dfn>close</dfn>()</code> method is called on a
           <code>PresentationSession</code>, the user agent must run the
           algorithm to <span title="close-algorithm">close a presentation
-          session</span>.
+          session</span> with <code>PresentationSession</code>.
         </p>
         <p class="open-issue">
           <a href="https://github.com/w3c/presentation-api/issues/34">ISSUE 34:

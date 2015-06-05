@@ -4,13 +4,13 @@
       Presentation API
     </title>
     <style>
-    @media print {
+@media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">
     <style type="text/css">
-    /* Note formatting taken from HTML5 spec */
+/* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-3-june-2015">
-        Editor's Draft 3 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-5-june-2015">
+        Editor's Draft 5 June 2015
       </h2>
       <dl>
         <dt>
@@ -605,15 +605,17 @@
           A <dfn id="presentation-session">presentation session</dfn> is an object relating an
           <a href="#controlling-browsing-context">controlling browsing context</a> to its <a href="#presenting-browsing-context">presenting
           browsing context</a> and enables two-way-messaging between them.
-          Each presentation session has a <dfn id="presentation-session-state">presentation session state</dfn>
-          and a <dfn id="presentation-session-identifier">presentation session identifier</dfn> to distinguish it
-          from other <span>presentation sessions</span>.
+          Each <a href="#presentation-session">presentation session</a> has a <dfn id="presentation-session-state">presentation
+          session state</dfn>, a <dfn id="presentation-session-identifier">presentation session identifier</dfn> to
+          distinguish it from other <span>presentation sessions</span>, and a
+          <dfn id="presentation-session-url">presentation session URL</dfn> that is a URL used to create or
+          resume the <a href="#presentation-session">presentation session</a>.
         </p>
         <p>
-          An <dfn id="controlling-browsing-context">controlling browsing context</dfn> (or <em>controller</em>
-          for short) is a <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing
-          context</a> that has initiated or resumed a <a href="#presentation-session">presentation
-          session</a> by calling <code><a href="#startsession">startSession</a>()</code> or
+          A <dfn id="controlling-browsing-context">controlling browsing context</dfn> (or <em>controller</em> for
+          short) is a <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a>
+          that has initiated or resumed a <a href="#presentation-session">presentation session</a> by
+          calling <code><a href="#startsession">startSession</a>()</code> or
           <code><a href="#joinsession">joinSession</a>()</code> or received a
           <a href="#presentation-session">presentation session</a> via
           <code><span>ondefaultsessionstart</span></code> event.
@@ -626,17 +628,16 @@
           <a href="#controlling-browsing-context">controlling browsing context</a> or a different one.
         </p>
         <p>
-          The <dfn id="set-of-presentations">set of presentations</dfn> contains the presentation
-          sessions created by all of the controlling browsing contexts for a
-          user agent (or a specific user profile within the user agent). It is
-          represented by a global variable <em>D</em>, which has a set of
-          tuples <em>(U, I, S)</em>. <em>U</em> is the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> that was used to create or resume the session;
-          <em>I</em> is an alphanumeric identifier for the presentation
-          session; and <em>S</em> is the controlling browsing context's
-          <a href="#presentationsession"><code>PresentationSession</code></a> object. <em>U</em> and <em>I</em>
-          together uniquely identify the <a href="#presentationsession"><code>PresentationSession</code></a>
-          within the user agent. When the user agent starts, <em>D</em> is the
-          empty set.
+          The <dfn id="set-of-presentations">set of presentations</dfn>, initially empty, contains the
+          <a href="#presentation-session">presentation session</a>s created by the <a href="#controlling-browsing-context">controlling
+          browsing context</a>s for the user agent (or a specific user
+          profile within the user agent). The <a href="#set-of-presentations">set of presentations</a>
+          is represented by a list of tuples, where each tuple consists of a
+          <a href="#presentation-session-url">presentation session URL</a>, a <a href="#presentation-session-identifier">presentation session
+          identifier</a>, and the <a href="#presentation-session">presentation session</a> itself.
+          The <a href="#presentation-session-url">presentation session URL</a> and <a href="#presentation-session-identifier">presentation
+          session identifier</a> uniquely identify the <a href="#presentation-session">presentation
+          session</a>.
         </p>
       </section>
       <section>
@@ -644,9 +645,8 @@
           Interface <a href="#presentationsession"><code>PresentationSession</code></a>
         </h3>
         <p>
-          Each <span title="concept-presentation-session">presentation
-          session</span> is represented by a <a href="#presentationsession"><code>PresentationSession</code></a>
-          object.
+          Each <a href="#presentation-session">presentation session</a> is represented by a
+          <a href="#presentationsession"><code>PresentationSession</code></a> object.
         </p>
         <pre class="idl">enum <dfn id="presentationsessionstate">PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
 enum <dfn id="binarytype">BinaryType</dfn> { "blob", "arraybuffer" };
@@ -667,8 +667,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
 };
 </pre>
         <p>
-          The <dfn id="id"><code>id</code></dfn> attribute holds the alphanumeric
-          <a href="#presentation-session-identifier">presentation session identifier</a>.
+          The <dfn id="id"><code>id</code></dfn> attribute specifies the
+          <a href="#presentation-session">presentation session</a>'s <a href="#presentation-session-identifier">presentation session
+          identifier</a>. The value must consists of <span>alphanumeric
+          ASCII characters</span> and be unique within the <a href="#set-of-presentations">set of
+          presentations</a>.
         </p>
         <p>
           The <dfn id="state"><code>state</code></dfn> attribute represents the
@@ -686,7 +689,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           When the <code><dfn id="close">close</dfn>()</code> method is called on a
           <a href="#presentationsession"><code>PresentationSession</code></a>, the user agent must run the
           algorithm to <a href="#close-algorithm" title="close-algorithm">close a presentation
-          session</a>.
+          session</a> with <a href="#presentationsession"><code>PresentationSession</code></a>.
         </p>
         <p class="open-issue">
           <a href="https://github.com/w3c/presentation-api/issues/34">ISSUE 34:
@@ -1480,7 +1483,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
       </p>
       <p>
         This specification does not prohibit a user agent from publishing
-        information about its <span>set of presentations</span>. The group
+        information about its <a href="#set-of-presentations">set of presentations</a>. The group
         envisions a user agent on a another device (distinct from the
         controller or presentation) becoming authorized to join the
         presentation, either by user action or by discovering the
