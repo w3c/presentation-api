@@ -816,36 +816,32 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </h4>
           <p>
             When the user agent is to <dfn id="close-algorithm" title="close-algorithm">close a
-            presentation session S</dfn>, it must run the following steps:
+            presentation session</dfn> using <em>session</em>, it must run the
+            following steps:
           </p>
           <ol>
-            <li>If <em>S.state</em> is not <code>connected</code>, then:
-              <ol>
-                <li>Abort these steps.
-                </li>
-              </ol>
+            <li>If <a href="#presentation-session-state">presentation session state</a> of <em>session</em>
+            is not <code>connected</code>, then abort these steps.
             </li>
-            <li>Set <em>S.state</em> to <code>disconnected</code>.
-            </li>
-            <li>Let <em>D</em> be the <a href="#set-of-presentations">set of presentations</a> for the
-            user agent.
+            <li>Set <a href="#presentation-session-state">presentation session state</a> of <em>session</em>
+            to <code>disconnected</code>.
             </li>
             <li>
-              <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em>
-              to run the following steps in order:
+              <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to run the
+              following steps in order:
               <ol>
-                <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
+                <li>For each <em>known session</em> in the <a href="#set-of-presentations">set of
+                presentations</a>:
                   <ol>
-                    <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>
-                      I</em>, and <em>s</em> equal <em>S'</em>.
-                    </li>
-                    <li>If <em>u</em> is equal to <em>S.url</em> and <em>i</em>
-                    is equal to <em>S.id</em>, run the following steps:
+                    <li>If both <a href="#presentation-session-url">presentation session URL</a> and
+                    <a href="#presentation-session-identifier">presentation session identifier</a> of <em>known
+                    session</em> and <em>session</em> are equal, run the
+                    following steps:
                       <ol>
                         <li>
                           <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
                           to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                          <code>statechange</code> at <em>s</em>.
+                          <code>statechange</code> at <em>session</em>.
                         </li>
                       </ol>
                     </li>
