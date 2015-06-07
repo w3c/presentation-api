@@ -29,6 +29,7 @@
     "presentation session": "presentation-session",
     "presentation session identifier": "presentation-session-identifier",
     "presentation session state": "presentation-session-state",
+    "presentation session url": "presentation-session-url",
     "presentation-onmessage": "presentation-onmessage",
     "presentationsession": "presentationsession",
     "presentationsessionstate": "presentationsessionstate",
