@@ -775,7 +775,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
                           <span data-anolis-spec="w3c-html">Queue a task</span>
                           to <span data-anolis-spec="w3c-html" title=
                           "concept-event-fire">fire an event</span> named
-                          <code>statechange</code> at <em>s.onstatechange</em>.
+                          <code>statechange</code> at <em>s</em>.
                         </li>
                       </ol>
                     </li>
@@ -1015,7 +1015,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
           <p class="open-issue">
             ISSUE: Do we want to distinguish the permission-denied outcome from
             the no-screens-available outcome? Developers would be able to infer
-            it anyway from <code>onavailablechange</code>.
+            it anyway from <code>availablechange</code>.
           </p>
         </section>
         <section>
@@ -1144,8 +1144,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                               <span data-anolis-spec="w3c-html">Queue a
                               task</span> to <span data-anolis-spec="w3c-html"
                               title="concept-event-fire">fire an event</span>
-                              named <code>statechange</code> at
-                              <em>s.onstatechange</em>.
+                              named <code>statechange</code> at <em>s</em>.
                             </li>
                           </ol>
                         </li>
@@ -1216,14 +1215,14 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
             power saving non-functional requirement</a>, the user agent must
             keep track of the number of <code>EventHandler</code>s registered
-            to the <code>onavailablechange</code> event. Using this
-            information, implementation specific discovery of <span title=
+            to the <code>availablechange</code> event. Using this information,
+            implementation specific discovery of <span title=
             "presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
           </p>The user agent must keep a <dfn>list of available presentation
           displays</dfn>. According to the number of event handlers for
-          <code>onavailablechange</code>, the user agent must also keep the
-          list up to date by running the algorithm for <span title=
+          <code>availablechange</code>, the user agent must also keep the list
+          up to date by running the algorithm for <span title=
           "algorithm-monitor-available">monitoring the list of available
           presentation displays</span>.
           <section>
@@ -1233,7 +1232,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </h5>
             <p>
               When an event handler is added to the list of event handlers
-              registered for the <code>onavailablechange</code> event, the user
+              registered for the <code>availablechange</code> event, the user
               agent must run the <span title=
               "algorithm-monitor-available">algorithm to monitor the list of
               available presentation displays</span>.
@@ -1245,7 +1244,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </h5>
             <p>
               When an event handler is removed from the list of event handlers
-              registered to the <code>onavailablechange</code> event, the user
+              registered to the <code>availablechange</code> event, the user
               agent must run the following steps:
             </p>
             <ul>
@@ -1288,7 +1287,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                     <span data-anolis-spec="w3c-html">Queue a task</span> to
                     <span data-anolis-spec="w3c-html" title=
                     "concept-event-fire">fire an event</span> named
-                    <code>availablechange</code> at with the event's
+                    <code>availablechange</code> at
+                    <code>NavigatorPresentation</code> with the event's
                     <code>available</code> property set to <code>true</code>.
                   </li>
                 </ol>
@@ -1301,7 +1301,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                     <span data-anolis-spec="w3c-html">Queue a task</span> to
                     <span data-anolis-spec="w3c-html" title=
                     "concept-event-fire">fire an event</span> named
-                    <code>availablechange</code> with the event's
+                    <code>availablechange</code> at
+                    <code>NavigatorPresentation</code> with the event's
                     <code>available</code> property set to <code>false</code>.
                   </li>
                 </ol>
@@ -1333,9 +1334,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <span data-anolis-spec="w3c-html">Queue a task</span> to
                 <span data-anolis-spec="w3c-html" title=
                 "concept-event-fire">fire an event</span> named
-                <code>availablechange</code> at <em>E</em> (and only
-                <em>E</em>) with the event's <code>available</code> property
-                set to <code>false</code>.
+                <code>availablechange</code> at
+                <code>NavigatorPresentation</code> with the event's
+                <code>available</code> property set to <code>false</code>.
               </li>
             </ol>
           </section>
@@ -1402,6 +1403,120 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
         Security and privacy considerations section</a>
+      </p>
+      <h3>
+        Personally identifiable information
+      </h3>
+      <p>
+        The <code>availablechange</code> event reveals one bit of information
+        about the presence (or non-presence) of a <span>presentation
+        screen</span> typically discovered through the local area network. This
+        could be used in conjunction with other information for fingerprinting
+        the user. However, this information is also dependent on the user's
+        local network context, so the risk is minimized.
+      </p>
+      <p class="open-issue">
+        If we allow the page to filter the set of presentation screens based on
+        capabilities, then more bits of more information would be revealed.
+        This feature, if implemented, should take privacy into consideration.
+        See <a href="https://github.com/w3c/presentation-api/issues/9">ISSUE 9:
+        How to filter available screens according to the content being
+        presented?</a>
+      </p>
+      <p class="open-issue">
+        We do not want to require user permission before disclosing the
+        presence of a presentation display, as it is counter to the initial
+        purpose of improving the user experience. See <a href=
+        "https://github.com/w3c/presentation-api/issues/10">ISSUE 10: Is user
+        permission required to prompt for screen availability information?</a>
+      </p>
+      <h3>
+        Cross-origin access
+      </h3>
+      <p>
+        A <span>presentation session</span> is allowed to be accessed across
+        origins; the presentation URL and presentation ID used to create the
+        presentation are the only information needed to join a session from any
+        origin in that user agent. In other words, a presentation is not tied
+        to a particular opening origin.
+      </p>
+      <p>
+        This design allows controlling contexts from different domains to
+        connect to a shared presentation resource. The security of the
+        presentation ID prevents arbitrary pages from connecting to an existing
+        presentation.
+      </p>
+      <p>
+        This specification does not prohibit a user agent from publishing
+        information about its <span>set of presentations</span>. The group
+        envisions a user agent on a another device (distinct from the
+        controller or presentation) becoming authorized to join the
+        presentation, either by user action or by discovering the
+        presentation's URL and id.
+      </p>
+      <p class="open-issue">
+        This section should provide informative guidance as to what constitutes
+        a reasonable context for a Web page to become authorized to control a
+        presentation session.
+      </p>
+      <h3>
+        Device Access
+      </h3>
+      <p>
+        The presentation API abstracts away what "local" means for displays,
+        meaning that it exposes network-accessible displays as though they were
+        local displays. The Presentation API requires user permission for a
+        page to access any display to mitigate issues that could arise, such as
+        showing unwanted content on a display viewable by others.
+      </p>
+      <h3>
+        Temporary identifiers and browser state
+      </h3>
+      <p>
+        The presentation URL and presentation ID can be used to connect to a
+        presentation session from another browsing context. They can be
+        intercepted if an attacker can inject content into the controlling
+        page.
+      </p>
+      <p class="open-issue">
+        Should we restrict the API to some extent in non secure contexts?
+      </p>
+      <h3>
+        Incognito mode and clearing of browsing data
+      </h3>
+      <p>
+        The content displayed on the presentation is different from the
+        controller. In particular, if the user is logged in in both contexts,
+        then logs out of the controlling browsing context, she will not be
+        automatically logged out from the presenting browsing context.
+        Applications that use authentication should pay extra care when
+        communicating between devices.
+      </p>
+      <p>
+        The set of presentations known to the user agent should be cleared when
+        the user requests to "clear browsing data."
+      </p>
+      <p class="open-issue">
+        The spec should specify any restrictions on the presenting browsing
+        context when the opening browsing context is in "incognito" mode. See
+        <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
+        Define user agent context for rendering the presentation</a>
+      </p>
+      <p class="open-issue">
+        The spec should clarify what is to happen to the set of known
+        presentations in "incognito" (private browsing context) mode.
+      </p>
+      <h3>
+        Messaging between presentation sessions
+      </h3>
+      <p>
+        This spec will not mandate communication protocols, but it should set
+        some guarantees of message confidentiality and authenticity.
+      </p>
+      <p class="open-issue">
+        <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
+        Define security requirements for messaging channel between secure
+        origins</a>
       </p>
     </section>
     <section>
