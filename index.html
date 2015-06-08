@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-7-june-2015">
-        Editor's Draft 7 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-8-june-2015">
+        Editor's Draft 8 June 2015
       </h2>
       <dl>
         <dt>
@@ -833,10 +833,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>For each <em>known session</em> in the <a href="#set-of-presentations">set of
                 presentations</a>:
                   <ol>
-                    <li>If both <a href="#presentation-session-url">presentation session URL</a> and
-                    <a href="#presentation-session-identifier">presentation session identifier</a> of <em>known
-                    session</em> and <em>session</em> are equal, run the
-                    following steps:
+                    <li>If the <a href="#presentation-session-identifier">presentation session identifier</a> of
+                    <em>known session</em> and <em>session</em> are equal, run
+                    the following steps:
                       <ol>
                         <li>
                           <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
@@ -996,8 +995,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                     <li>Create a new <a href="#presentationsession"><code>PresentationSession</code></a>
                     <em>S</em>.
                     </li>
-                    <li>Set <code>S.url</code> to <code>presentationUrl</code>,
-                    set <code>S.id</code> to <em>I</em>, and set
+                    <li>Set <code>S.id</code> to <em>I</em>, and set
                     <code>S.state</code> to <code>disconnected</code>.
                     </li>
                     <li>
@@ -1010,8 +1008,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                         <li>If <em>C</em> completes successfully, run the
                         following steps:
                           <ol>
-                            <li>Add <em>(S.url, S.id, S)</em> to the <a href="#set-of-presentations">set
-                            of presentations</a> <em>D</em>.
+                            <li>Add <em>(presentationUrl, S.id, S)</em> to <em>
+                              D</em>.
                             </li>
                             <li>
                               <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <em>P</em> with
@@ -1163,7 +1161,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <li>
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em>
               to connect <em>S</em> to the document that is presenting
-              <em>S.url</em>.
+              <em>presentationUrl</em>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
@@ -1178,12 +1176,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                     <li>For each presentation <em>(U, I, S')</em> in
                     <em>D</em>,
                       <ol>
-                        <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal
-                        <em>I</em>, and <em>s</em> equal <em>S'</em>.
+                        <li>Let <em>i</em> equal <em>I</em>, and <em>s</em>
+                        equal <em>S'</em>.
                         </li>
-                        <li>If <em>u</em> is equal to <em>S.url</em> and
-                        <em>i</em> is equal to <em>S.id</em>, run the following
-                        steps:
+                        <li>If <em>i</em> is equal to <em>S.id</em>, run the
+                        following steps:
                           <ol>
                             <li>
                               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a
