@@ -618,7 +618,10 @@
           session state</dfn>, a <dfn id="presentation-session-identifier">presentation session identifier</dfn> to
           distinguish it from other <span>presentation sessions</span>, and a
           <dfn id="presentation-session-url">presentation session URL</dfn> that is a <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> used to create or resume the <a href="#presentation-session">presentation
-          session</a>.
+          session</a>. A <dfn id="valid-presentation-session-identifier">valid presentation session identifier</dfn>
+          consists of alphanumeric ASCII characters only, is at least 16
+          characters long, and is unique within the <a href="#set-of-presentations">set of
+          presentations</a>.
         </p>
         <p>
           A <dfn id="controlling-browsing-context">controlling browsing context</dfn> (or <em>controller</em> for
@@ -678,9 +681,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         <p>
           The <dfn id="id"><code>id</code></dfn> attribute specifies the
           <a href="#presentation-session">presentation session</a>'s <a href="#presentation-session-identifier">presentation session
-          identifier</a>. The value must consists of <span>alphanumeric
-          ASCII characters</span> and be unique within the <a href="#set-of-presentations">set of
-          presentations</a>.
+          identifier</a>.
         </p>
         <p>
           The <dfn id="state"><code>state</code></dfn> attribute represents the
@@ -1055,11 +1056,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> of the document to be presented
+              <code>presentationUrl</code>, the <a href="#presentation-session-url">presentation session
+              URL</a>
             </dd>
             <dd>
-              <code>presentationId</code>, an optional identifier for the
-              presentation
+              <code>presentationId</code>, the <a href="#presentation-session-identifier">presentation session
+              identifier</a>, optional
             </dd>
             <dt>
               Output
@@ -1077,7 +1079,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             presentation displays</a>, run the following steps:
               <ol>
                 <li>
-                  <a href="#monitor-the-list-of-available-presentation-displays">monitor the list of available presentation
+                  <a href="#monitor-the-list-of-available-presentation-displays">Monitor the list of available presentation
                   displays</a>.
                 </li>
                 <li>Wait until the algorithm completes.
@@ -1103,20 +1105,18 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
                   <ol>
-                    <li>If <code>presentationId</code> is not
-                    <em>undefined</em>, assign <em>I</em> to that that
-                    <code>presentationId</code>.
-                    </li>
-                    <li>If <code>presentationId</code> is
-                    <code>undefined</code>, let <em>I</em> be a random
-                    alphanumeric value of at least 16 characters drawn from the
-                    characters <code>[A-Za-z0-9]</code>.
+                    <li>If <code>presentationId</code> is undefined, let <var>
+                      I</var> be a <a href="#valid-presentation-session-identifier">valid presentation session
+                      identifier</a>, otherwise let <var>I</var> be the
+                      <code>presentationId</code>.
                     </li>
                     <li>Create a new <a href="#presentationsession"><code>PresentationSession</code></a>
                     <em>S</em>.
                     </li>
-                    <li>Set <code>S.id</code> to <em>I</em>, and set
-                    <code>S.state</code> to <code>disconnected</code>.
+                    <li>Set the <a href="#presentation-session-identifier">presentation session identifier</a> of
+                    <var>S</var> to <var>I</var>, and set the
+                    <a href="#presentation-session-state">presentation session state</a> of <var>S</var> to
+                    <code>disconnected</code>.
                     </li>
                     <li>
                       <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>

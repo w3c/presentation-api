@@ -544,7 +544,10 @@
           distinguish it from other <span>presentation sessions</span>, and a
           <dfn>presentation session URL</dfn> that is a <span data-anolis-spec=
           "url">URL</span> used to create or resume the <span>presentation
-          session</span>.
+          session</span>. A <dfn>valid presentation session identifier</dfn>
+          consists of alphanumeric ASCII characters only, is at least 16
+          characters long, and is unique within the <span>set of
+          presentations</span>.
         </p>
         <p>
           A <dfn>controlling browsing context</dfn> (or <em>controller</em> for
@@ -611,9 +614,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
         <p>
           The <dfn><code>id</code></dfn> attribute specifies the
           <span>presentation session</span>'s <span>presentation session
-          identifier</span>. The value must consists of <span>alphanumeric
-          ASCII characters</span> and be unique within the <span>set of
-          presentations</span>.
+          identifier</span>.
         </p>
         <p>
           The <dfn><code>state</code></dfn> attribute represents the
@@ -1003,12 +1004,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <span data-anolis-spec=
-              "url">URL</span> of the document to be presented
+              <code>presentationUrl</code>, the <span>presentation session
+              URL</span>
             </dd>
             <dd>
-              <code>presentationId</code>, an optional identifier for the
-              presentation
+              <code>presentationId</code>, the <span>presentation session
+              identifier</span>, optional
             </dd>
             <dt>
               Output
@@ -1028,7 +1029,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             presentation displays</span>, run the following steps:
               <ol>
                 <li>
-                  <span>monitor the list of available presentation
+                  <span>Monitor the list of available presentation
                   displays</span>.
                 </li>
                 <li>Wait until the algorithm completes.
@@ -1056,20 +1057,18 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
                   <ol>
-                    <li>If <code>presentationId</code> is not
-                    <em>undefined</em>, assign <em>I</em> to that that
-                    <code>presentationId</code>.
-                    </li>
-                    <li>If <code>presentationId</code> is
-                    <code>undefined</code>, let <em>I</em> be a random
-                    alphanumeric value of at least 16 characters drawn from the
-                    characters <code>[A-Za-z0-9]</code>.
+                    <li>If <code>presentationId</code> is undefined, let <var>
+                      I</var> be a <span>valid presentation session
+                      identifier</span>, otherwise let <var>I</var> be the
+                      <code>presentationId</code>.
                     </li>
                     <li>Create a new <code>PresentationSession</code>
                     <em>S</em>.
                     </li>
-                    <li>Set <code>S.id</code> to <em>I</em>, and set
-                    <code>S.state</code> to <code>disconnected</code>.
+                    <li>Set the <span>presentation session identifier</span> of
+                    <var>S</var> to <var>I</var>, and set the
+                    <span>presentation session state</span> of <var>S</var> to
+                    <code>disconnected</code>.
                     </li>
                     <li>
                       <span data-anolis-spec="w3c-html">Queue a task</span>
