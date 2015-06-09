@@ -6,14 +6,14 @@
       Presentation API
     </title>
     <style>
-@media print {
+    @media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link rel="stylesheet" type="text/css" href=
     "http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
     <style type="text/css">
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -339,9 +339,15 @@
         "dom">DOM</span>.
       </p>
       <p>
-        The term <span data-anolis-spec="es6" title=
-        "promise-objects">Promise</span> is defined in <span data-anolis-ref=
-        "">ES6</span>. The terms <span data-anolis-spec="promguide" title=
+        This document provides interface definitions using the
+        <span data-anolis-ref="webidl">WEBIDL</span> standard. The terms
+        <span data-anolis-spec="webidl">Promise</span>, <span data-anolis-spec=
+        "webidl">ArrayBuffer</span>, and <span data-anolis-spec=
+        "webidl">ArrayBufferView</span> are defined in <span data-anolis-ref=
+        "webidl">WEBIDL</span>.
+      </p>
+      <p>
+        The terms <span data-anolis-spec="promguide" title=
         "resolve-reject">resolving a Promise, and rejecting a Promise</span>
         are used as explained in <span data-anolis-ref="">PROMGUIDE</span>.
       </p>
@@ -350,18 +356,8 @@
         WHATWG URL standard: <span data-anolis-ref="url">URL</span>.
       </p>
       <p>
-        The terms <span data-anolis-spec="typedarray">ArrayBuffer</span>,
-        <span data-anolis-spec="typedarray">ArrayBufferView</span> are defined
-        in the Typed Array specification: <span data-anolis-ref=
-        "typedarray">TYPEDARRAY</span>.
-      </p>
-      <p>
         The term <span data-anolis-spec="fileapi">Blob</span> is defined in the
         File API specification: <span data-anolis-ref="fileapi">FILEAPI</span>.
-      </p>
-      <p>
-        This document provides interface definitions using the
-        <span data-anolis-ref="webidl">WEBIDL</span> standard.
       </p>
     </section>
     <section>
@@ -606,9 +602,9 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
   void <dfn title="send-blob">send</dfn> (<span data-anolis-spec=
 "fileapi">Blob</span> data);
   void <dfn title="send-arraybuffer">send</dfn> (<span data-anolis-spec=
-"typedarray">ArrayBuffer</span> data);
+"webidl">ArrayBuffer</span> data);
   void <dfn title="send-arraybufferview">send</dfn> (<span data-anolis-spec=
-"typedarray">ArrayBufferView</span> data);
+"webidl">ArrayBufferView</span> data);
 };
 </pre>
         <p>
@@ -1015,13 +1011,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Output
             </dt>
             <dd>
-              <em>P</em>, a <span data-anolis-spec="es6" title=
-              "promise-objects">Promise</span>
+              <em>P</em>, a <span data-anolis-spec="webidl">Promise</span>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <span data-anolis-spec="es6" title=
-            "promise-objects">Promise</span>.
+            <li>Let <em>P</em> be a new <span data-anolis-spec=
+            "webidl">Promise</span>.
             </li>
             <li>Return <em>P</em>.
             </li>
@@ -1171,13 +1166,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Output
             </dt>
             <dd>
-              <em>P</em>, a <span data-anolis-spec="es6" title=
-              "promise-objects">Promise</span>
+              <em>P</em>, a <span data-anolis-spec="webidl">Promise</span>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <span data-anolis-spec="es6" title=
-            "promise-objects">Promise</span>.
+            <li>Let <em>P</em> be a new <span data-anolis-spec=
+            "webidl">Promise</span>.
             </li>
             <li>Return <em>P</em>.
             </li>
@@ -1316,13 +1310,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Output
             </dt>
             <dd>
-              <em>P</em>, a <span data-anolis-spec="es6" title=
-              "promise-objects">Promise</span>
+              <em>P</em>, a <span data-anolis-spec="webidl">Promise</span>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <span data-anolis-spec="es6" title=
-            "promise-objects">Promise</span>.
+            <li>Let <em>P</em> be a new <span data-anolis-spec=
+            "webidl">Promise</span>.
             </li>
             <li>Return <em>P</em>.
             </li>
@@ -1410,8 +1403,6 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
   PresentationSession session;
 };
 </span>
-
-
 </pre>
         <p>
           An event named <code>defaultsessionstart</code> is fired when the UA
