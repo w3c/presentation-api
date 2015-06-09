@@ -1,6 +1,5 @@
 {
   "definitions": {
-    "algorithm-monitor-available": "algorithm-monitor-available",
     "algorithm-send": "algorithm-send",
     "availability": "availability",
     "binarytype": "binarytype",
