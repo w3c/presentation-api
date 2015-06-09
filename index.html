@@ -617,8 +617,8 @@
           Each <a href="#presentation-session">presentation session</a> has a <dfn id="presentation-session-state">presentation
           session state</dfn>, a <dfn id="presentation-session-identifier">presentation session identifier</dfn> to
           distinguish it from other <span>presentation sessions</span>, and a
-          <dfn id="presentation-session-url">presentation session URL</dfn> that is a URL used to create or
-          resume the <a href="#presentation-session">presentation session</a>.
+          <dfn id="presentation-session-url">presentation session URL</dfn> that is a <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> used to create or resume the <a href="#presentation-session">presentation
+          session</a>.
         </p>
         <p>
           A <dfn id="controlling-browsing-context">controlling browsing context</dfn> (or <em>controller</em> for
@@ -1202,10 +1202,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> of the document being presented
+              <code>presentationUrl</code>, the <a href="#presentation-session-url">presentation session
+              URL</a>
             </dd>
             <dd>
-              <code>presentationId</code>, the identifier for the presentation
+              <code>presentationId</code>, the <a href="#presentation-session-identifier">presentation session
+              identifier</a>
             </dd>
             <dt>
               Output
@@ -1219,35 +1221,34 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>Let <em>D</em> be the <a href="#set-of-presentations">set of presentations</a> for the
-            user agent.
-            </li>
             <li>
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em>
               to run the following steps in order:
               <ol>
-                <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
-                  <ol>
-                    <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>
-                      I</em>, and <em>s</em> equal <em>S</em>.
-                    </li>
-                    <li>If <em>u</em> is equal to <code>presentationUrl</code>
-                    and <em>i</em> is equal to <code>presentationId</code>, run
-                    the following steps:
-                      <ol>
-                        <li>
-                          <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <em>P</em> with
-                          <em>S</em>.
-                        </li>
-                        <li>
-                          <a href="#establish-a-presentation-connection">Establish a presentation connection</a> with
-                          <em>S</em>.
-                        </li>
-                        <li>Abort the remaining steps of <em>T</em>.
-                        </li>
-                      </ol>
-                    </li>
-                  </ol>
+                <li>For each <var>known session</var> in the <a href="#set-of-presentations">set of
+                presentations</a>,
+                  <div style="margin-left: 2em">
+                    If the <a href="#presentation-session-url">presentation session URL</a> of <var>known
+                    session</var> is equal to <code>presentationUrl</code>, and
+                    the <a href="#presentation-session-identifier">presentation session identifier</a> of
+                    <var>known session</var> is equal to
+                    <code>presentationId</code>, run the following steps:
+                    <ol>
+                      <li>Let <var>S</var> be the <a href="#presentation-session">presentation
+                      session</a> of <var>known session</var>.
+                      </li>
+                      <li>
+                        <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <var>P</var> with
+                        <var>S</var>.
+                      </li>
+                      <li>
+                        <a href="#establish-a-presentation-connection">Establish a presentation connection</a> with
+                        <var>S</var>.
+                      </li>
+                      <li>Abort the remaining steps of <var>T</var>.
+                      </li>
+                    </ol>
+                  </div>
                 </li>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a

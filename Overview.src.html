@@ -542,8 +542,9 @@
           Each <span>presentation session</span> has a <dfn>presentation
           session state</dfn>, a <dfn>presentation session identifier</dfn> to
           distinguish it from other <span>presentation sessions</span>, and a
-          <dfn>presentation session URL</dfn> that is a URL used to create or
-          resume the <span>presentation session</span>.
+          <dfn>presentation session URL</dfn> that is a <span data-anolis-spec=
+          "url">URL</span> used to create or resume the <span>presentation
+          session</span>.
         </p>
         <p>
           A <dfn>controlling browsing context</dfn> (or <em>controller</em> for
@@ -1160,11 +1161,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <span data-anolis-spec=
-              "url">URL</span> of the document being presented
+              <code>presentationUrl</code>, the <span>presentation session
+              URL</span>
             </dd>
             <dd>
-              <code>presentationId</code>, the identifier for the presentation
+              <code>presentationId</code>, the <span>presentation session
+              identifier</span>
             </dd>
             <dt>
               Output
@@ -1180,36 +1182,35 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>Let <em>D</em> be the <span>set of presentations</span> for the
-            user agent.
-            </li>
             <li>
               <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
               to run the following steps in order:
               <ol>
-                <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
-                  <ol>
-                    <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>
-                      I</em>, and <em>s</em> equal <em>S</em>.
-                    </li>
-                    <li>If <em>u</em> is equal to <code>presentationUrl</code>
-                    and <em>i</em> is equal to <code>presentationId</code>, run
-                    the following steps:
-                      <ol>
-                        <li>
-                          <span data-anolis-spec="promguide" title=
-                          "resolve-reject">Resolve</span> <em>P</em> with
-                          <em>S</em>.
-                        </li>
-                        <li>
-                          <span>Establish a presentation connection</span> with
-                          <em>S</em>.
-                        </li>
-                        <li>Abort the remaining steps of <em>T</em>.
-                        </li>
-                      </ol>
-                    </li>
-                  </ol>
+                <li>For each <var>known session</var> in the <span>set of
+                presentations</span>,
+                  <div style="margin-left: 2em">
+                    If the <span>presentation session URL</span> of <var>known
+                    session</var> is equal to <code>presentationUrl</code>, and
+                    the <span>presentation session identifier</span> of
+                    <var>known session</var> is equal to
+                    <code>presentationId</code>, run the following steps:
+                    <ol>
+                      <li>Let <var>S</var> be the <span>presentation
+                      session</span> of <var>known session</var>.
+                      </li>
+                      <li>
+                        <span data-anolis-spec="promguide" title=
+                        "resolve-reject">Resolve</span> <var>P</var> with
+                        <var>S</var>.
+                      </li>
+                      <li>
+                        <span>Establish a presentation connection</span> with
+                        <var>S</var>.
+                      </li>
+                      <li>Abort the remaining steps of <var>T</var>.
+                      </li>
+                    </ol>
+                  </div>
                 </li>
                 <li>
                   <span data-anolis-spec="promguide" title=
