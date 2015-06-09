@@ -264,36 +264,33 @@
      <li><a href="#event-handlers"><span class="secno">6.2.4 </span>
             Event Handlers
           </a></ol></li>
-   <li><a href="#interface-navigatorpresentation"><span class="secno">6.3 </span>
+   <li><a href="#interface-availability"><span class="secno">6.3 </span>
+          Interface <code>Availability</code>
+        </a>
+    <ol>
+     <li><a href="#monitoring-the-list-of-available-presentation-displays"><span class="secno">6.3.1 </span>
+            Monitoring the list of available presentation displays
+          </a></ol></li>
+   <li><a href="#interface-navigatorpresentation"><span class="secno">6.4 </span>
           Interface <code>NavigatorPresentation</code>
         </a>
     <ol>
-     <li><a href="#starting-a-presentation-session"><span class="secno">6.3.1 </span>
+     <li><a href="#starting-a-presentation-session"><span class="secno">6.4.1 </span>
             Starting a presentation session
           </a></li>
-     <li><a href="#joining-a-presentation-session"><span class="secno">6.3.2 </span>
+     <li><a href="#joining-a-presentation-session"><span class="secno">6.4.2 </span>
             Joining a presentation session
           </a></li>
-     <li><a href="#establishing-a-presentation-connection"><span class="secno">6.3.3 </span>
+     <li><a href="#establishing-a-presentation-connection"><span class="secno">6.4.3 </span>
             Establishing a presentation connection
           </a></li>
-     <li><a href="#the-onavailablechange-eventhandler"><span class="secno">6.3.4 </span>
-            The <code>onavailablechange</code> EventHandler
-          </a>
-      <ol>
-       <li><a href="#adding-an-eventhandler-to-onavailablechange"><span class="secno">6.3.4.1 </span>
-              Adding an <code>EventHandler</code> to
-              <code>onavailablechange</code>
-            </a></li>
-       <li><a href="#removing-an-eventhandler"><span class="secno">6.3.4.2 </span>
-              Removing an <code>EventHandler</code>
-            </a></li>
-       <li><a href="#monitoring-the-list-of-available-presentation-displays"><span class="secno">6.3.4.3 </span>
-              Monitoring the list of available presentation displays
-            </a></ol></ol></li>
-   <li><a href="#interface-availablechangeevent"><span class="secno">6.4 </span>
-          <span>Interface <code>AvailableChangeEvent</code></span>
-        </a></li>
+     <li><a href="#getting-the-presentation-displays-availability-information"><span class="secno">6.4.4 </span>
+            Getting the <span>presentation displays</span> availability
+            information
+          </a></li>
+     <li><a href="#event-handlers-0"><span class="secno">6.4.5 </span>
+            Event Handlers
+          </a></ol></li>
    <li><a href="#interface-defaultsessionstart"><span class="secno">6.5 </span>
           <span>Interface <code>DefaultSessionStart</code></span>
         </a></ol></li>
@@ -475,11 +472,23 @@
 &lt;script&gt;
   // the cast button is visible if at least one presentation display is available
   var castBtn = document.getElementById("castBtn");
-  // availablechange event is fired when the presentation display availability changes
-  navigator.presentation.onavailablechange = function (evt) {
-    // show or hide cast button depending on display availability
-    castBtn.style.display = evt.available ? "inline" : "none";
+  // show or hide cast button depending on display availability
+  var handleAvailabilityChange = function(available) {
+    castBtn.style.display = available ? "inline" : "none";
   };
+  // Promise is resolved as soon as the presentation display availability is known.
+  navigator.presentation.getAvailability().then(function(availability) {
+    // availability.value may be kept up-to-date by the UA as long as the availability
+    // object is alive. It is advised for the web developers to discard the object
+    // as soon as it's not needed.
+    handleAvailabilityChange(availability.value);
+    availability.onchange = function() { handleAvailabilityChange(this.value); };
+  }.catch(function() {
+    // Availability monitoring is not supported by the platform, discovery of presentation
+    // displays will happen only after startSession() call. Pretend the devices are
+    // available for simplicity (one could implement the third state for the button).
+    handleAvailabilityChange(true);
+  });
 &lt;/script&gt;
 </pre>
       </section>
@@ -618,7 +627,7 @@
           calling <code><a href="#startsession">startSession</a>()</code> or
           <code><a href="#joinsession">joinSession</a>()</code> or received a
           <a href="#presentation-session">presentation session</a> via
-          <code><span>ondefaultsessionstart</span></code> event.
+          <a href="#ondefaultsessionstart"><code><span>ondefaultsessionstart</span></code></a> event.
         </p>
         <p>
           The <dfn id="presenting-browsing-context">presenting browsing context</dfn> (or <em>presentation</em>
@@ -897,7 +906,116 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </section>
       </section>
       <section>
-        <h3 id="interface-navigatorpresentation"><span class="secno">6.3 </span>
+        <h3 id="interface-availability"><span class="secno">6.3 </span>
+          Interface <a href="#availability"><code>Availability</code></a>
+        </h3>
+        <pre class="idl">interface <dfn id="availability">Availability</dfn> : EventTarget {
+  readonly attribute boolean value;
+  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <span>onchange</span>;  
+};
+</pre>
+        <p>
+          The <code>change</code> event is fired during the execution of the
+          <span>monitoring presentation display availability</span> algorithm
+          when the <dfn id="presentation-display-availability">presentation display availability</dfn> changes. It is
+          fired at the <a href="#availability"><code>Availability</code></a> object, using the
+          <code>ChangeEvent</code> interface. The <a href="#availability"><code>Availability</code></a>
+          object's <code>value</code> attribute is updated to the boolean value
+          that the algorithm determined.
+        </p>
+        <p>
+          In order to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
+          power saving non-functional requirement</a>, the user agent must keep
+          track of the number of <a href="#availability"><code>Availability</code></a> objects requested
+          through the <code>getAvailability()</code> method. The UA may also
+          keep track of whether the page holding the <a href="#availability"><code>Availability</code></a>
+          object is in the foreground. Using this information, implementation
+          specific discovery of <span title="presentation-display">presentation
+          displays</span> can be resumed or suspended, in order to save power.
+        </p>
+        <p>
+          The user agent must keep a <dfn id="list-of-available-presentation-displays">list of available presentation
+          displays</dfn>. According to the number of alive
+          <a href="#availability"><code>Availability</code></a> objects, the user agent must also keep the
+          list up to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available
+          presentation displays</a>.
+        </p>
+        <p>
+          The user agent might not support continuous availability monitoring
+          due to platform or power consumption restrictions, for example. In
+          this case the <span>Promise</span> returned by
+          <code>getAvailability()</code> is <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">rejected</a> and the algorithm for
+          <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of
+          available presentation displays</a> will only run as part of the
+          <a href="#startsession" title="startSession">session start</a> algorithm.
+        </p>
+        <section>
+          <h5 id="monitoring-the-list-of-available-presentation-displays"><span class="secno">6.3.1 </span>
+            Monitoring the list of available presentation displays
+          </h5>
+          <p>
+            When the user agent is to <dfn id="algorithm-monitor-available" title="algorithm-monitor-available">monitor the list of available
+            presentation displays</dfn>, it must run the following steps:
+          </p>
+          <p>
+            While there are alive <a href="#availability">Availability</a> objects, the user
+            agent should continuously keep track of the <a href="#list-of-available-presentation-displays">list of available
+            presentation displays</a> and repeat the following steps:
+          </p>
+          <ol>
+            <li>
+              <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to retrieve
+              the list of currently available <a href="#presentation-display">presentation displays</a> and let <a id="newdisplays"><em>newDisplays</em></a> be this list.
+            </li>
+            <li>Wait for the completion of that task.
+            </li>
+            <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
+            empty and <a href="#newdisplays">newDisplays</a> is not empty, then
+            for each alive <a href="#availability"><code>Availability</code></a> object:
+              <ol>
+                <li>Set the object's <code>value</code> property to
+                <code>true</code>.
+                </li>
+                <li>
+                  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
+                  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
+                  <code>change</code> at the object.
+                </li>
+              </ol>
+            </li>
+            <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
+            not empty and <a href="#newdisplays">newDisplays</a> is empty, then
+            for each alive <a href="#availability"><code>Availability</code></a> object:
+              <ol>
+                <li>Set the object's <code>value</code> property to
+                <code>false</code>.
+                </li>
+                <li>
+                  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
+                  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
+                  <code>change</code> at the object.
+                </li>
+              </ol>
+            </li>
+            <li>Set the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> to
+            the value of <a href="#newdisplays">newDisplays</a>.
+            </li>
+          </ol>
+          <p class="note">
+            The mechanism used to monitor <a href="#presentation-display">presention displays</a> availability is
+            left to the user agent. The UA may choose to monitor the
+            availability of presentation displays even when there are no
+            <a href="#availability"><code>Availability</code></a> objects.
+          </p>
+          <p>
+            When the user agent is to <dfn id="cancel-monitoring-the-list-of-available-presentation-displays">cancel monitoring the list of
+            available presentation displays</dfn>, it must run the following
+            steps:
+          </p>
+        </section>
+      </section>
+      <section>
+        <h3 id="interface-navigatorpresentation"><span class="secno">6.4 </span>
           Interface <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a>
         </h3>
         <pre class="idl">partial interface <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#navigator">Navigator</a> {
@@ -913,8 +1031,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   readonly attribute <a href="#presentationsession">PresentationSession</a>? <span>session</span>;
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#startsession">startSession</a>(DOMString url, DOMString? presentationId);
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#joinsession">joinSession</a>(DOMString url, DOMString? presentationId);
-  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onavailablechange">onavailablechange</a>;
-  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <span>ondefaultsessionstart</span>;
+  Promise&lt;<a href="#availability">Availability</a>&gt; <a href="#getavailability">getAvailability</a>();
+  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#ondefaultsessionstart">ondefaultsessionstart</a>;
 };
 </pre>
         <p class="open-issue">
@@ -923,7 +1041,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           algorithms</a>
         </p>
         <section>
-          <h4 id="starting-a-presentation-session"><span class="secno">6.3.1 </span>
+          <h4 id="starting-a-presentation-session"><span class="secno">6.4.1 </span>
             Starting a presentation session
           </h4>
           <p>
@@ -1064,11 +1182,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <p class="open-issue">
             ISSUE: Do we want to distinguish the permission-denied outcome from
             the no-screens-available outcome? Developers would be able to infer
-            it anyway from <code>availablechange</code>.
+            it anyway from <code>getAvailability()</code>.
           </p>
         </section>
         <section>
-          <h4 id="joining-a-presentation-session"><span class="secno">6.3.2 </span>
+          <h4 id="joining-a-presentation-session"><span class="secno">6.4.2 </span>
             Joining a presentation session
           </h4>
           <p>
@@ -1143,7 +1261,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
         </section>
         <section>
-          <h4 id="establishing-a-presentation-connection"><span class="secno">6.3.3 </span>
+          <h4 id="establishing-a-presentation-connection"><span class="secno">6.4.3 </span>
             Establishing a presentation connection
           </h4>
           <p>
@@ -1220,8 +1338,63 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
         </section>
         <section>
-          <h4 id="the-onavailablechange-eventhandler"><span class="secno">6.3.4 </span>
-            The <a href="#onavailablechange"><code>onavailablechange</code></a> EventHandler
+          <h4 id="getting-the-presentation-displays-availability-information"><span class="secno">6.4.4 </span>
+            Getting the <span>presentation displays</span> availability
+            information
+          </h4>
+          <p>
+            When the <code><dfn id="getavailability">getAvailability</dfn>()</code> method is
+            called, the user agent must run the following steps:
+          </p>
+          <dl>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              <em>P</em>, a <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>
+            </dd>
+          </dl>
+          <ol>
+            <li>Let <em>P</em> be a new <a class="external" data-anolis-spec="es6" href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects" title="promise-objects">Promise</a>.
+            </li>
+            <li>Return <em>P</em>.
+            </li>
+            <li>If the user agent doesn't support continuous monitoring of the
+            presentation display availability, then:
+              <ol>
+                <li>
+                  <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em>.
+                </li>
+                <li>Abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>If the user agent does not <span>monitor presentation display
+            availability</span>, run the following steps:
+              <ol>
+                <li>
+                  <span>Monitor presentation display availability</span>.
+                </li>
+                <li>Wait until the algorithm completes.
+                </li>
+              </ol>
+            </li>
+            <li>
+              <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <em>P</em> with a <a href="#availability" title="Availability">Availability</a> object with the
+              <code>value</code> property set to <code>false</code> if the list
+              of the available displays is empty or <code>true</code>
+              otherwise.
+            </li>
+            <li>If possible, continue running the algorithm for <span>monitor
+            presentation display availability</span> as long as the returned
+            <a href="#availability" title="Availability">Availability</a> object is kept
+            alive.
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4 id="event-handlers-0"><span class="secno">6.4.5 </span>
+            Event Handlers
           </h4>
           <p>
             <span>The following are the event handlers (and their corresponding
@@ -1243,160 +1416,15 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <tbody>
               <tr>
                 <td>
-                  <dfn id="onavailablechange"><code>onavailablechange</code></dfn>
+                  <dfn id="ondefaultsessionstart"><code>ondefaultsessionstart</code></dfn>
                 </td>
                 <td>
-                  <code>availablechange</code>
+                  <code>defaultsessionstart</code>
                 </td>
               </tr>
             </tbody>
           </table>
-          <p>
-            In order to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
-            power saving non-functional requirement</a>, the user agent must
-            keep track of the number of <code>EventHandler</code>s registered
-            to the <code>availablechange</code> event. Using this information,
-            implementation specific discovery of <span title="presentation-display">presentation displays</span> can be resumed
-            or suspended, in order to save power.
-          </p>The user agent must keep a <dfn id="list-of-available-presentation-displays">list of available presentation
-          displays</dfn>. According to the number of event handlers for
-          <code>availablechange</code>, the user agent must also keep the list
-          up to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available
-          presentation displays</a>.
-          <section>
-            <h5 id="adding-an-eventhandler-to-onavailablechange"><span class="secno">6.3.4.1 </span>
-              Adding an <code>EventHandler</code> to
-              <a href="#onavailablechange"><code>onavailablechange</code></a>
-            </h5>
-            <p>
-              When an event handler is added to the list of event handlers
-              registered for the <code>availablechange</code> event, the user
-              agent must run the <a href="#algorithm-monitor-available" title="algorithm-monitor-available">algorithm to monitor the list of
-              available presentation displays</a>.
-            </p>
-          </section>
-          <section>
-            <h5 id="removing-an-eventhandler"><span class="secno">6.3.4.2 </span>
-              Removing an <code>EventHandler</code>
-            </h5>
-            <p>
-              When an event handler is removed from the list of event handlers
-              registered to the <code>availablechange</code> event, the user
-              agent must run the following steps:
-            </p>
-            <ul>
-              <li>If the removed event handler was the last one in the list,
-              <a href="#cancel-monitoring-the-list-of-available-presentation-displays">cancel monitoring the list of available presentation
-              displays</a>.
-              </li>
-            </ul>
-          </section>
-          <section>
-            <h5 id="monitoring-the-list-of-available-presentation-displays"><span class="secno">6.3.4.3 </span>
-              Monitoring the list of available presentation displays
-            </h5>
-            <p>
-              When the user agent is to <dfn id="algorithm-monitor-available" title="algorithm-monitor-available">monitor the list of available
-              presentation displays</dfn>, it must run the following steps:
-            </p>
-            <p>
-              While there are <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event
-              handlers</a> added to NavigatorPresentation.onavailablechange,
-              the user agent must continuously keep track the <a href="#list-of-available-presentation-displays">list of
-              available presentation displays</a> and repeat the following
-              steps:
-            </p>
-            <ol>
-              <li>
-                <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
-                retrieve the list of curently available <a href="#presentation-display">presentation displays</a> and let
-                <a id="newdisplays"><em>newDisplays</em></a> be this list.
-              </li>
-              <li>Wait for the completion of that task.
-              </li>
-              <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a>
-              is empty and <a href="#newdisplays">newDisplays</a> is not empty,
-              then
-                <ol>
-                  <li>
-                    <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
-                    <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                    <code>availablechange</code> at
-                    <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
-                    <code>available</code> property set to <code>true</code>.
-                  </li>
-                </ol>
-              </li>
-              <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a>
-              is not empty and <a href="#newdisplays">newDisplays</a> is empty,
-              then:
-                <ol>
-                  <li>
-                    <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
-                    <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                    <code>availablechange</code> at
-                    <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
-                    <code>available</code> property set to <code>false</code>.
-                  </li>
-                </ol>
-              </li>
-              <li>Set the <a href="#list-of-available-presentation-displays">list of available presentation displays</a>
-              to the value of <a href="#newdisplays">newDisplays</a>.
-              </li>
-            </ol>
-            <p class="note">
-              The mechanism used to monitor <a href="#presentation-display">presention displays</a> availability is
-              left to the user agent. The user agent may choose search for
-              displays at any time, not just when event handlers are added to
-              <code>NavigatorPresentation.onavailablechange</code>.
-            </p>
-            <p>
-              When the user agent is to <dfn id="cancel-monitoring-the-list-of-available-presentation-displays">cancel monitoring the list of
-              available presentation displays</dfn>, it must run the following
-              steps:
-            </p>
-            <ol>
-              <li>Cancel any tasks to retrieve the list of available
-              <a href="#presentation-display" title="presentation display">presentation displays</a>.
-              </li>
-              <li>Set the <a href="#list-of-available-presentation-displays">list of available presentation displays</a>
-              to empty.
-              </li>
-              <li>
-                <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
-                <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                <code>availablechange</code> at
-                <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> with the event's
-                <code>available</code> property set to <code>false</code>.
-              </li>
-            </ol>
-          </section>
         </section>
-      </section>
-      <section>
-        <h3 id="interface-availablechangeevent"><span class="secno">6.4 </span>
-          <span>Interface <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a></span>
-        </h3>
-        <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#availablechangeeventinit">AvailableChangeEventInit</a> eventInitDict)]
-interface <dfn id="availablechangeevent">AvailableChangeEvent</dfn> : Event {
-  readonly attribute boolean available;
-};
-
-dictionary <dfn id="availablechangeeventinit">AvailableChangeEventInit</dfn> : EventInit {
-  boolean available;
-};
-</span>
-</pre>
-        <p>
-          An event named <code>availablechange</code> is fired during the
-          execution of the <span>monitoring presentation display
-          availability</span> algorithm when the <dfn id="presentation-display-availability">presentation display
-          availability</dfn> changes. It is fired at the
-          <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> object, using the
-          <a href="#availablechangeevent"><code>AvailableChangeEvent</code></a> interface, with the
-          <code>available</code> attribute set to the boolean value that the
-          algorithm determined.
-        </p>
       </section>
       <section>
         <h3 id="interface-defaultsessionstart"><span class="secno">6.5 </span>
@@ -1437,12 +1465,13 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
         Personally identifiable information
       </h3>
       <p>
-        The <code>availablechange</code> event reveals one bit of information
-        about the presence (or non-presence) of a <span>presentation
-        screen</span> typically discovered through the local area network. This
-        could be used in conjunction with other information for fingerprinting
-        the user. However, this information is also dependent on the user's
-        local network context, so the risk is minimized.
+        The <code>change</code> event fired on the <a href="#availability"><code>Availability</code></a>
+        object reveals one bit of information about the presence (or
+        non-presence) of a <span>presentation screen</span> typically
+        discovered through the local area network. This could be used in
+        conjunction with other information for fingerprinting the user.
+        However, this information is also dependent on the user's local network
+        context, so the risk is minimized.
       </p>
       <p class="open-issue">
         If we allow the page to filter the set of presentation screens based on
