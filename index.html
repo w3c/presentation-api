@@ -4,13 +4,13 @@
       Presentation API
     </title>
     <style>
-    @media print {
+@media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet" type="text/css">
     <style type="text/css">
-    /* Note formatting taken from HTML5 spec */
+/* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-8-june-2015">
-        Editor's Draft 8 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-9-june-2015">
+        Editor's Draft 9 June 2015
       </h2>
       <dl>
         <dt>
@@ -617,8 +617,11 @@
           Each <a href="#presentation-session">presentation session</a> has a <dfn id="presentation-session-state">presentation
           session state</dfn>, a <dfn id="presentation-session-identifier">presentation session identifier</dfn> to
           distinguish it from other <span>presentation sessions</span>, and a
-          <dfn id="presentation-session-url">presentation session URL</dfn> that is a URL used to create or
-          resume the <a href="#presentation-session">presentation session</a>.
+          <dfn id="presentation-session-url">presentation session URL</dfn> that is a <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> used to create or resume the <a href="#presentation-session">presentation
+          session</a>. A <dfn id="valid-presentation-session-identifier">valid presentation session identifier</dfn>
+          consists of alphanumeric ASCII characters only, is at least 16
+          characters long, and is unique within the <a href="#set-of-presentations">set of
+          presentations</a>.
         </p>
         <p>
           A <dfn id="controlling-browsing-context">controlling browsing context</dfn> (or <em>controller</em> for
@@ -678,9 +681,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         <p>
           The <dfn id="id"><code>id</code></dfn> attribute specifies the
           <a href="#presentation-session">presentation session</a>'s <a href="#presentation-session-identifier">presentation session
-          identifier</a>. The value must consists of <span>alphanumeric
-          ASCII characters</span> and be unique within the <a href="#set-of-presentations">set of
-          presentations</a>.
+          identifier</a>.
         </p>
         <p>
           The <dfn id="state"><code>state</code></dfn> attribute represents the
@@ -916,12 +917,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
 </pre>
         <p>
           The <code>change</code> event is fired during the execution of the
-          <span>monitoring presentation display availability</span> algorithm
-          when the <dfn id="presentation-display-availability">presentation display availability</dfn> changes. It is
-          fired at the <a href="#availability"><code>Availability</code></a> object, using the
-          <code>ChangeEvent</code> interface. The <a href="#availability"><code>Availability</code></a>
-          object's <code>value</code> attribute is updated to the boolean value
-          that the algorithm determined.
+          <a href="#monitor-the-list-of-available-presentation-displays">monitor the list of available presentation displays</a>
+          algorithm when the <dfn id="presentation-display-availability">presentation display availability</dfn>
+          changes. It is fired at the <a href="#availability"><code>Availability</code></a>
+          object, using the <code>ChangeEvent</code> interface. The
+          <a href="#availability"><code>Availability</code></a> object's <code>value</code> attribute is
+          updated to the boolean value that the algorithm determined.
         </p>
         <p>
           In order to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
@@ -937,30 +938,31 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           The user agent must keep a <dfn id="list-of-available-presentation-displays">list of available presentation
           displays</dfn>. According to the number of alive
           <a href="#availability"><code>Availability</code></a> objects, the user agent must also keep the
-          list up to date by running the algorithm for <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of available
-          presentation displays</a>.
+          list up to date by running the algorithm to <a href="#monitor-the-list-of-available-presentation-displays">monitor the list of
+          available presentation displays</a>.
         </p>
         <p>
           The user agent might not support continuous availability monitoring
           due to platform or power consumption restrictions, for example. In
           this case the <span>Promise</span> returned by
-          <code>getAvailability()</code> is <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">rejected</a> and the algorithm for
-          <a href="#algorithm-monitor-available" title="algorithm-monitor-available">monitoring the list of
-          available presentation displays</a> will only run as part of the
-          <a href="#startsession" title="startSession">session start</a> algorithm.
+          <code>getAvailability()</code> is <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">rejected</a> and the algorithm to
+          <a href="#monitor-the-list-of-available-presentation-displays">monitor the list of available presentation displays</a> will
+          only run as part of the <a href="#startsession" title="startSession">session
+          start</a> algorithm.
         </p>
         <section>
           <h5 id="monitoring-the-list-of-available-presentation-displays"><span class="secno">6.3.1 </span>
             Monitoring the list of available presentation displays
           </h5>
           <p>
-            When the user agent is to <dfn id="algorithm-monitor-available" title="algorithm-monitor-available">monitor the list of available
+            When the user agent is to <dfn id="monitor-the-list-of-available-presentation-displays">monitor the list of available
             presentation displays</dfn>, it must run the following steps:
           </p>
           <p>
-            While there are alive <a href="#availability">Availability</a> objects, the user
-            agent should continuously keep track of the <a href="#list-of-available-presentation-displays">list of available
-            presentation displays</a> and repeat the following steps:
+            While there are alive <a href="#availability"><code><span>Availability</span></code></a>
+            objects, the user agent should continuously keep track of the
+            <a href="#list-of-available-presentation-displays">list of available presentation displays</a> and repeat the
+            following steps:
           </p>
           <ol>
             <li>
@@ -1054,11 +1056,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> of the document to be presented
+              <code>presentationUrl</code>, the <a href="#presentation-session-url">presentation session
+              URL</a>
             </dd>
             <dd>
-              <code>presentationId</code>, an optional identifier for the
-              presentation
+              <code>presentationId</code>, the <a href="#presentation-session-identifier">presentation session
+              identifier</a>, optional
             </dd>
             <dt>
               Output
@@ -1072,11 +1075,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>If the user agent does not <span>monitor presentation display
-            availability</span>, run the following steps:
+            <li>If the user agent does not <a href="#monitor-the-list-of-available-presentation-displays">monitor the list of available
+            presentation displays</a>, run the following steps:
               <ol>
                 <li>
-                  <span>Monitor presentation display availability</span>.
+                  <a href="#monitor-the-list-of-available-presentation-displays">Monitor the list of available presentation
+                  displays</a>.
                 </li>
                 <li>Wait until the algorithm completes.
                 </li>
@@ -1101,20 +1105,18 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
                   <ol>
-                    <li>If <code>presentationId</code> is not
-                    <em>undefined</em>, assign <em>I</em> to that that
-                    <code>presentationId</code>.
-                    </li>
-                    <li>If <code>presentationId</code> is
-                    <code>undefined</code>, let <em>I</em> be a random
-                    alphanumeric value of at least 16 characters drawn from the
-                    characters <code>[A-Za-z0-9]</code>.
+                    <li>If <code>presentationId</code> is undefined, let <var>
+                      I</var> be a <a href="#valid-presentation-session-identifier">valid presentation session
+                      identifier</a>, otherwise let <var>I</var> be the
+                      <code>presentationId</code>.
                     </li>
                     <li>Create a new <a href="#presentationsession"><code>PresentationSession</code></a>
                     <em>S</em>.
                     </li>
-                    <li>Set <code>S.id</code> to <em>I</em>, and set
-                    <code>S.state</code> to <code>disconnected</code>.
+                    <li>Set the <a href="#presentation-session-identifier">presentation session identifier</a> of
+                    <var>S</var> to <var>I</var>, and set the
+                    <a href="#presentation-session-state">presentation session state</a> of <var>S</var> to
+                    <code>disconnected</code>.
                     </li>
                     <li>
                       <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
@@ -1126,8 +1128,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                         <li>If <em>C</em> completes successfully, run the
                         following steps:
                           <ol>
-                            <li>Add <em>(presentationUrl, S.id, S)</em> to <em>
-                              D</em>.
+                            <li>Add the tuple {<em>presentationUrl</em>,
+                            <em>S.id</em>, <em>S</em>} to the <a href="#set-of-presentations">set of
+                            presentations</a>.
                             </li>
                             <li>
                               <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <em>P</em> with
@@ -1199,10 +1202,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> of the document being presented
+              <code>presentationUrl</code>, the <a href="#presentation-session-url">presentation session
+              URL</a>
             </dd>
             <dd>
-              <code>presentationId</code>, the identifier for the presentation
+              <code>presentationId</code>, the <a href="#presentation-session-identifier">presentation session
+              identifier</a>
             </dd>
             <dt>
               Output
@@ -1216,35 +1221,34 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>Let <em>D</em> be the <a href="#set-of-presentations">set of presentations</a> for the
-            user agent.
-            </li>
             <li>
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em>
               to run the following steps in order:
               <ol>
-                <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
-                  <ol>
-                    <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>
-                      I</em>, and <em>s</em> equal <em>S</em>.
-                    </li>
-                    <li>If <em>u</em> is equal to <code>presentationUrl</code>
-                    and <em>i</em> is equal to <code>presentationId</code>, run
-                    the following steps:
-                      <ol>
-                        <li>
-                          <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <em>P</em> with
-                          <em>S</em>.
-                        </li>
-                        <li>
-                          <a href="#establish-a-presentation-connection">Establish a presentation connection</a> with
-                          <em>S</em>.
-                        </li>
-                        <li>Abort the remaining steps of <em>T</em>.
-                        </li>
-                      </ol>
-                    </li>
-                  </ol>
+                <li>For each <var>known session</var> in the <a href="#set-of-presentations">set of
+                presentations</a>,
+                  <div style="margin-left: 2em">
+                    If the <a href="#presentation-session-url">presentation session URL</a> of <var>known
+                    session</var> is equal to <code>presentationUrl</code>, and
+                    the <a href="#presentation-session-identifier">presentation session identifier</a> of
+                    <var>known session</var> is equal to
+                    <code>presentationId</code>, run the following steps:
+                    <ol>
+                      <li>Let <var>S</var> be the <a href="#presentation-session">presentation
+                      session</a> of <var>known session</var>.
+                      </li>
+                      <li>
+                        <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <var>P</var> with
+                        <var>S</var>.
+                      </li>
+                      <li>
+                        <a href="#establish-a-presentation-connection">Establish a presentation connection</a> with
+                        <var>S</var>.
+                      </li>
+                      <li>Abort the remaining steps of <var>T</var>.
+                      </li>
+                    </ol>
+                  </div>
                 </li>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
@@ -1270,7 +1274,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <em>S</em>, it must run the following steps:
           </p>
           <ol>
-            <li>If <em>S.state</em> is <code>connected</code>, then:
+            <li>If the <a href="#presentation-session-state">presentation session state</a> of <var>S</var>
+            is <code>connected</code>, then:
               <ol>
                 <li>Abort all remaining steps.
                 </li>
@@ -1278,27 +1283,23 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em>
-              to connect <em>S</em> to the document that is presenting
-              <em>presentationUrl</em>.
+              to connect the <a href="#presentation-session">presentation session</a> <em>S</em> to
+              the <a href="#presenting-browsing-context">presenting browsing context</a>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
-                <li>Set <em>S.state</em> to <code>connected.</code>
-                </li>
-                <li>Let <em>D</em> be the <a href="#set-of-presentations">set of presentations</a> for
-                the user agent.
+                <li>Set the <a href="#presentation-session-state">presentation session state</a> of
+                <var>S</var> to <code>connected.</code>
                 </li>
                 <li>Queue a task <em>T</em> to run the following steps in
                 order:
                   <ol>
-                    <li>For each presentation <em>(U, I, S')</em> in
-                    <em>D</em>,
+                    <li>For each <var>known session</var> in the <a href="#set-of-presentations">set of
+                    presentations</a>:
                       <ol>
-                        <li>Let <em>i</em> equal <em>I</em>, and <em>s</em>
-                        equal <em>S'</em>.
-                        </li>
-                        <li>If <em>i</em> is equal to <em>S.id</em>, run the
-                        following steps:
+                        <li>If the <a href="#presentation-session-identifier">presentation session identifier</a>
+                        of <var>known session</var> and <var>S</var> are equal,
+                        then run the following steps:
                           <ol>
                             <li>
                               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a
@@ -1359,8 +1360,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>If the user agent doesn't support continuous monitoring of the
-            presentation display availability, then:
+            <li>If the user agent is unable to continuously <a href="#monitor-the-list-of-available-presentation-displays">monitor the
+            list of available presentation displays</a>, then:
               <ol>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em>.
