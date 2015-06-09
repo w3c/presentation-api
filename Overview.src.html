@@ -1237,7 +1237,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             <em>S</em>, it must run the following steps:
           </p>
           <ol>
-            <li>If <em>S.state</em> is <code>connected</code>, then:
+            <li>If the <span>presentation session state</span> of <var>S</var>
+            is <code>connected</code>, then:
               <ol>
                 <li>Abort all remaining steps.
                 </li>
@@ -1245,27 +1246,23 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>
               <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
-              to connect <em>S</em> to the document that is presenting
-              <em>presentationUrl</em>.
+              to connect the <span>presentation session</span> <em>S</em> to
+              the <span>presenting browsing context</span>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
-                <li>Set <em>S.state</em> to <code>connected.</code>
-                </li>
-                <li>Let <em>D</em> be the <span>set of presentations</span> for
-                the user agent.
+                <li>Set the <span>presentation session state</span> of
+                <var>S</var> to <code>connected.</code>
                 </li>
                 <li>Queue a task <em>T</em> to run the following steps in
                 order:
                   <ol>
-                    <li>For each presentation <em>(U, I, S')</em> in
-                    <em>D</em>,
+                    <li>For each <var>known session</var> in the <span>set of
+                    presentations</span>:
                       <ol>
-                        <li>Let <em>i</em> equal <em>I</em>, and <em>s</em>
-                        equal <em>S'</em>.
-                        </li>
-                        <li>If <em>i</em> is equal to <em>S.id</em>, run the
-                        following steps:
+                        <li>If the <span>presentation session identifier</span>
+                        of <var>known session</var> and <var>S</var> are equal,
+                        then run the following steps:
                           <ol>
                             <li>
                               <span data-anolis-spec="w3c-html">Queue a

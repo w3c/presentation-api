@@ -1274,7 +1274,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <em>S</em>, it must run the following steps:
           </p>
           <ol>
-            <li>If <em>S.state</em> is <code>connected</code>, then:
+            <li>If the <a href="#presentation-session-state">presentation session state</a> of <var>S</var>
+            is <code>connected</code>, then:
               <ol>
                 <li>Abort all remaining steps.
                 </li>
@@ -1282,27 +1283,23 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em>
-              to connect <em>S</em> to the document that is presenting
-              <em>presentationUrl</em>.
+              to connect the <a href="#presentation-session">presentation session</a> <em>S</em> to
+              the <a href="#presenting-browsing-context">presenting browsing context</a>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
-                <li>Set <em>S.state</em> to <code>connected.</code>
-                </li>
-                <li>Let <em>D</em> be the <a href="#set-of-presentations">set of presentations</a> for
-                the user agent.
+                <li>Set the <a href="#presentation-session-state">presentation session state</a> of
+                <var>S</var> to <code>connected.</code>
                 </li>
                 <li>Queue a task <em>T</em> to run the following steps in
                 order:
                   <ol>
-                    <li>For each presentation <em>(U, I, S')</em> in
-                    <em>D</em>,
+                    <li>For each <var>known session</var> in the <a href="#set-of-presentations">set of
+                    presentations</a>:
                       <ol>
-                        <li>Let <em>i</em> equal <em>I</em>, and <em>s</em>
-                        equal <em>S'</em>.
-                        </li>
-                        <li>If <em>i</em> is equal to <em>S.id</em>, run the
-                        following steps:
+                        <li>If the <a href="#presentation-session-identifier">presentation session identifier</a>
+                        of <var>known session</var> and <var>S</var> are equal,
+                        then run the following steps:
                           <ol>
                             <li>
                               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a
