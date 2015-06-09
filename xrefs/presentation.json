@@ -1,6 +1,5 @@
 {
   "definitions": {
-    "algorithm-monitor-available": "algorithm-monitor-available",
     "algorithm-send": "algorithm-send",
     "availability": "availability",
     "binarytype": "binarytype",
@@ -17,6 +16,7 @@
     "id": "id",
     "joinsession": "joinsession",
     "list of available presentation displays": "list-of-available-presentation-displays",
+    "monitor the list of available presentation displays": "monitor-the-list-of-available-presentation-displays",
     "navigatorpresentation": "navigatorpresentation",
     "ondefaultsessionstart": "ondefaultsessionstart",
     "onmessage": "onmessage",

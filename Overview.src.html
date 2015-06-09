@@ -6,14 +6,14 @@
       Presentation API
     </title>
     <style>
-    @media print {
+@media print {
       [data-anolis-spec]::after { content:"[" attr(data-anolis-spec) "]"; font-size:.6em; vertical-align:super; text-transform:uppercase }
     }
     </style>
     <link rel="stylesheet" type="text/css" href=
     "http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
     <style type="text/css">
-    /* Note formatting taken from HTML5 spec */
+/* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -853,12 +853,12 @@ interface <dfn>Availability</dfn> : EventTarget {
 </pre>
         <p>
           The <code>change</code> event is fired during the execution of the
-          <span>monitoring presentation display availability</span> algorithm
-          when the <dfn>presentation display availability</dfn> changes. It is
-          fired at the <span><code>Availability</code></span> object, using the
-          <code>ChangeEvent</code> interface. The <code>Availability</code>
-          object's <code>value</code> attribute is updated to the boolean value
-          that the algorithm determined.
+          <span>monitor the list of available presentation displays</span>
+          algorithm when the <dfn>presentation display availability</dfn>
+          changes. It is fired at the <span><code>Availability</code></span>
+          object, using the <code>ChangeEvent</code> interface. The
+          <code>Availability</code> object's <code>value</code> attribute is
+          updated to the boolean value that the algorithm determined.
         </p>
         <p>
           In order to satisfy the <a href=
@@ -875,33 +875,32 @@ interface <dfn>Availability</dfn> : EventTarget {
           The user agent must keep a <dfn>list of available presentation
           displays</dfn>. According to the number of alive
           <code>Availability</code> objects, the user agent must also keep the
-          list up to date by running the algorithm for <span title=
-          "algorithm-monitor-available">monitoring the list of available
-          presentation displays</span>.
+          list up to date by running the algorithm to <span>monitor the list of
+          available presentation displays</span>.
         </p>
         <p>
           The user agent might not support continuous availability monitoring
           due to platform or power consumption restrictions, for example. In
           this case the <span>Promise</span> returned by
           <code>getAvailability()</code> is <span data-anolis-spec="promguide"
-          title="resolve-reject">rejected</span> and the algorithm for
-          <span title="algorithm-monitor-available">monitoring the list of
-          available presentation displays</span> will only run as part of the
-          <span title="startSession">session start</span> algorithm.
+          title="resolve-reject">rejected</span> and the algorithm to
+          <span>monitor the list of available presentation displays</span> will
+          only run as part of the <span title="startSession">session
+          start</span> algorithm.
         </p>
         <section>
           <h5>
             Monitoring the list of available presentation displays
           </h5>
           <p>
-            When the user agent is to <dfn title=
-            "algorithm-monitor-available">monitor the list of available
+            When the user agent is to <dfn>monitor the list of available
             presentation displays</dfn>, it must run the following steps:
           </p>
           <p>
-            While there are alive <span>Availability</span> objects, the user
-            agent should continuously keep track of the <span>list of available
-            presentation displays</span> and repeat the following steps:
+            While there are alive <code><span>Availability</span></code>
+            objects, the user agent should continuously keep track of the
+            <span>list of available presentation displays</span> and repeat the
+            following steps:
           </p>
           <ol>
             <li>
@@ -1024,11 +1023,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>If the user agent does not <span>monitor presentation display
-            availability</span>, run the following steps:
+            <li>If the user agent does not <span>monitor the list of available
+            presentation displays</span>, run the following steps:
               <ol>
                 <li>
-                  <span>Monitor presentation display availability</span>.
+                  <span>monitor the list of available presentation
+                  displays</span>.
                 </li>
                 <li>Wait until the algorithm completes.
                 </li>
@@ -1081,8 +1081,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                         <li>If <em>C</em> completes successfully, run the
                         following steps:
                           <ol>
-                            <li>Add <em>(presentationUrl, S.id, S)</em> to <em>
-                              D</em>.
+                            <li>Add the tuple {<em>presentationUrl</em>,
+                            <em>S.id</em>, <em>S</em>} to the <span>set of
+                            presentations</span>.
                             </li>
                             <li>
                               <span data-anolis-spec="promguide" title=
@@ -1328,8 +1329,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>If the user agent doesn't support continuous monitoring of the
-            presentation display availability, then:
+            <li>If the user agent is unable to continuously <span>monitor the
+            list of available presentation displays</span>, then:
               <ol>
                 <li>
                   <span data-anolis-spec="promguide" title=
