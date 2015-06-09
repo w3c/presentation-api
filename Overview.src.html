@@ -417,10 +417,8 @@
 &lt;script&gt;
   // it is also possible to use relative presentation URL e.g. "presentation.html"
   var presUrl = "http://example.com/presentation.html";
-  // create random presId
-  var presId = Math.random().toFixed(6).substr(2);
-  // Start new session. presId is optional.
-  navigator.presentation.startSession(presUrl, presId)
+  // Start new session.
+  navigator.presentation.startSession(presUrl)
     // the new started session will be passed to setSession on success
     .then(setSession)
     // user cancels the selection dialog or an error is occurred
@@ -455,7 +453,7 @@
 &lt;head&gt;
   &lt;!-- the link element with rel='default-presentation' allows the page to specify --&gt;
   &lt;!-- the presentation URL and id for when the UA initiates a presentation session --&gt;
-  &lt;link href="http://example.com/presentation.html" rel="default-presentation" id="ABCD1234" &gt;
+  &lt;link href="http://example.com/presentation.html" rel="default-presentation" &gt;
 &lt;/head&gt;
 &lt;script&gt;
   navigator.presentation.ondefaultsessionstart = function (evt) {
@@ -974,8 +972,8 @@ partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
         <pre class="idl">
 interface <dfn>NavigatorPresentation</dfn> : EventTarget {
   readonly attribute <span>PresentationSession</span>? <span>session</span>;
-  Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url, DOMString? presentationId);
-  Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString? presentationId);
+  Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url);
+  Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString presentationId);
   Promise&lt;<span>Availability</span>&gt; <span>getAvailability</span>();
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
@@ -991,9 +989,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             Starting a presentation session
           </h4>
           <p>
-            When the <code><dfn>startSession</dfn>(presentationUrl,
-            presentationId)</code> method is called, the user agent must run
-            the following steps:
+            When the <code><dfn>startSession</dfn>(presentationUrl)</code>
+            method is called, the user agent must run the following steps:
           </p>
           <dl>
             <dt>
@@ -1002,10 +999,6 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             <dd>
               <code>presentationUrl</code>, the <span>presentation session
               URL</span>
-            </dd>
-            <dd>
-              <code>presentationId</code>, the <span>presentation session
-              identifier</span>, optional
             </dd>
             <dt>
               Output
@@ -1052,10 +1045,10 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
                   <ol>
-                    <li>If <code>presentationId</code> is undefined, let <var>
-                      I</var> be a <span>valid presentation session
-                      identifier</span>, otherwise let <var>I</var> be the
-                      <code>presentationId</code>.
+                    <li>Let <var>I</var> be a new <span>valid presentation
+                    session identifier</span> unique among all
+                    <span>presentation session identifier</span>s for known
+                    sessions in the <span>set of presentations</span>.
                     </li>
                     <li>Create a new <code>PresentationSession</code>
                     <em>S</em>.
