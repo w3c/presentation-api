@@ -388,11 +388,23 @@
 &lt;script&gt;
   // the cast button is visible if at least one presentation display is available
   var castBtn = document.getElementById("castBtn");
-  // availablechange event is fired when the presentation display availability changes
-  navigator.presentation.onavailablechange = function (evt) {
-    // show or hide cast button depending on display availability
-    castBtn.style.display = evt.available ? "inline" : "none";
+  // show or hide cast button depending on display availability
+  var handleAvailabilityChange = function(available) {
+    castBtn.style.display = available ? "inline" : "none";
   };
+  // Promise is resolved as soon as the presentation display availability is known.
+  navigator.presentation.getAvailability().then(function(availability) {
+    // availability.value may be kept up-to-date by the UA as long as the availability
+    // object is alive. It is advised for the web developers to discard the object
+    // as soon as it's not needed.
+    handleAvailabilityChange(availability.value);
+    availability.onchange = function() { handleAvailabilityChange(this.value); };
+  }.catch(function() {
+    // Availability monitoring is not supported by the platform, discovery of presentation
+    // displays will happen only after startSession() call. Pretend the devices are
+    // available for simplicity (one could implement the third state for the button).
+    handleAvailabilityChange(true);
+  });
 &lt;/script&gt;
 </pre>
       </section>
@@ -523,15 +535,21 @@
           A <dfn>presentation session</dfn> is an object relating an
           <span>controlling browsing context</span> to its <span>presenting
           browsing context</span> and enables two-way-messaging between them.
-          Each presentation session has a <dfn>presentation session state</dfn>
-          and a <dfn>presentation session identifier</dfn> to distinguish it
-          from other <span>presentation sessions</span>.
+          Each <span>presentation session</span> has a <dfn>presentation
+          session state</dfn>, a <dfn>presentation session identifier</dfn> to
+          distinguish it from other <span>presentation sessions</span>, and a
+          <dfn>presentation session URL</dfn> that is a <span data-anolis-spec=
+          "url">URL</span> used to create or resume the <span>presentation
+          session</span>. A <dfn>valid presentation session identifier</dfn>
+          consists of alphanumeric ASCII characters only, is at least 16
+          characters long, and is unique within the <span>set of
+          presentations</span>.
         </p>
         <p>
-          An <dfn>controlling browsing context</dfn> (or <em>controller</em>
-          for short) is a <span data-anolis-spec="w3c-html">browsing
-          context</span> that has initiated or resumed a <span>presentation
-          session</span> by calling <code><span>startSession</span>()</code> or
+          A <dfn>controlling browsing context</dfn> (or <em>controller</em> for
+          short) is a <span data-anolis-spec="w3c-html">browsing context</span>
+          that has initiated or resumed a <span>presentation session</span> by
+          calling <code><span>startSession</span>()</code> or
           <code><span>joinSession</span>()</code> or received a
           <span>presentation session</span> via
           <code><span>ondefaultsessionstart</span></code> event.
@@ -543,21 +561,17 @@
           context</span> can reside in the same user agent as the
           <span>controlling browsing context</span> or a different one.
         </p>
-      </section>
-      <section>
-        <h3>
-          Common definitions
-        </h3>
         <p>
-          Let <em>D</em> be the set of presentations that are currently known
-          to the user agent (regardles of their state). <em>D</em> is
-          represented as a set of tuples <em>(U, I, S)</em> where <em>U</em> is
-          the <span data-anolis-spec="url">URL</span> that is being presented;
-          <em>I</em> is an alphanumeric identifier for the presentation; and
-          <em>S</em> is the user agent's <code>PresentationSession</code> for
-          the presentation. <em>U</em> and <em>I</em> together uniquely
-          identify the <code>PresentationSession</code> of the corresponding
-          presentation.
+          The <dfn>set of presentations</dfn>, initially empty, contains the
+          <span>presentation session</span>s created by the <span>controlling
+          browsing context</span>s for the user agent (or a specific user
+          profile within the user agent). The <span>set of presentations</span>
+          is represented by a list of tuples, where each tuple consists of a
+          <span>presentation session URL</span>, a <span>presentation session
+          identifier</span>, and the <span>presentation session</span> itself.
+          The <span>presentation session URL</span> and <span>presentation
+          session identifier</span> uniquely identify the <span>presentation
+          session</span>.
         </p>
       </section>
       <section>
@@ -565,9 +579,8 @@
           Interface <code>PresentationSession</code>
         </h3>
         <p>
-          Each <span title="concept-presentation-session">presentation
-          session</span> is represented by a <code>PresentationSession</code>
-          object.
+          Each <span>presentation session</span> is represented by a
+          <code>PresentationSession</code> object.
         </p>
         <pre class="idl">
 enum <dfn>PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
@@ -595,8 +608,9 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
 };
 </pre>
         <p>
-          The <dfn><code>id</code></dfn> attribute holds the alphanumeric
-          <span>presentation session identifier</span>.
+          The <dfn><code>id</code></dfn> attribute specifies the
+          <span>presentation session</span>'s <span>presentation session
+          identifier</span>.
         </p>
         <p>
           The <dfn><code>state</code></dfn> attribute represents the
@@ -615,7 +629,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           When the <code><dfn>close</dfn>()</code> method is called on a
           <code>PresentationSession</code>, the user agent must run the
           algorithm to <span title="close-algorithm">close a presentation
-          session</span>.
+          session</span> with <code>PresentationSession</code>.
         </p>
         <p class="open-issue">
           <a href="https://github.com/w3c/presentation-api/issues/34">ISSUE 34:
@@ -743,37 +757,32 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           </h4>
           <p>
             When the user agent is to <dfn title="close-algorithm">close a
-            presentation session S</dfn>, it must run the following steps:
+            presentation session</dfn> using <em>session</em>, it must run the
+            following steps:
           </p>
           <ol>
-            <li>If <em>S.state</em> is not <code>connected</code>, then:
-              <ol>
-                <li>Abort these steps.
-                </li>
-              </ol>
+            <li>If <span>presentation session state</span> of <em>session</em>
+            is not <code>connected</code>, then abort these steps.
             </li>
-            <li>Set <em>S.state</em> to <code>disconnected</code>.
-            </li>
-            <li>Let <em>D</em> be the set of presentations known by the user
-            agent.
+            <li>Set <span>presentation session state</span> of <em>session</em>
+            to <code>disconnected</code>.
             </li>
             <li>
-              <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
-              to run the following steps in order:
+              <span data-anolis-spec="w3c-html">Queue a task</span> to run the
+              following steps in order:
               <ol>
-                <li>For each presentation <em>(U, I, S')</em> in <em>D</em>,
+                <li>For each <em>known session</em> in the <span>set of
+                presentations</span>:
                   <ol>
-                    <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>
-                      I</em>, and <em>s</em> equal <em>S'</em>.
-                    </li>
-                    <li>If <em>u</em> is equal to <em>S.url</em> and <em>i</em>
-                    is equal to <em>S.id</em>, run the following steps:
+                    <li>If the <span>presentation session identifier</span> of
+                    <em>known session</em> and <em>session</em> are equal, run
+                    the following steps:
                       <ol>
                         <li>
                           <span data-anolis-spec="w3c-html">Queue a task</span>
                           to <span data-anolis-spec="w3c-html" title=
                           "concept-event-fire">fire an event</span> named
-                          <code>statechange</code> at <em>s</em>.
+                          <code>statechange</code> at <em>session</em>.
                         </li>
                       </ol>
                     </li>
@@ -831,6 +840,125 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
       </section>
       <section>
         <h3>
+          Interface <code>Availability</code>
+        </h3>
+        <pre class="idl">
+interface <dfn>Availability</dfn> : EventTarget {
+  readonly attribute boolean value;
+  attribute <span data-anolis-spec=
+"w3c-html">EventHandler</span> <span>onchange</span>;  
+};
+</pre>
+        <p>
+          The <code>change</code> event is fired during the execution of the
+          <span>monitor the list of available presentation displays</span>
+          algorithm when the <dfn>presentation display availability</dfn>
+          changes. It is fired at the <span><code>Availability</code></span>
+          object, using the <code>ChangeEvent</code> interface. The
+          <code>Availability</code> object's <code>value</code> attribute is
+          updated to the boolean value that the algorithm determined.
+        </p>
+        <p>
+          In order to satisfy the <a href=
+          "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
+          power saving non-functional requirement</a>, the user agent must keep
+          track of the number of <code>Availability</code> objects requested
+          through the <code>getAvailability()</code> method. The UA may also
+          keep track of whether the page holding the <code>Availability</code>
+          object is in the foreground. Using this information, implementation
+          specific discovery of <span title="presentation-display">presentation
+          displays</span> can be resumed or suspended, in order to save power.
+        </p>
+        <p>
+          The user agent must keep a <dfn>list of available presentation
+          displays</dfn>. According to the number of alive
+          <code>Availability</code> objects, the user agent must also keep the
+          list up to date by running the algorithm to <span>monitor the list of
+          available presentation displays</span>.
+        </p>
+        <p>
+          The user agent might not support continuous availability monitoring
+          due to platform or power consumption restrictions, for example. In
+          this case the <span>Promise</span> returned by
+          <code>getAvailability()</code> is <span data-anolis-spec="promguide"
+          title="resolve-reject">rejected</span> and the algorithm to
+          <span>monitor the list of available presentation displays</span> will
+          only run as part of the <span title="startSession">session
+          start</span> algorithm.
+        </p>
+        <section>
+          <h5>
+            Monitoring the list of available presentation displays
+          </h5>
+          <p>
+            When the user agent is to <dfn>monitor the list of available
+            presentation displays</dfn>, it must run the following steps:
+          </p>
+          <p>
+            While there are alive <code><span>Availability</span></code>
+            objects, the user agent should continuously keep track of the
+            <span>list of available presentation displays</span> and repeat the
+            following steps:
+          </p>
+          <ol>
+            <li>
+              <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve
+              the list of currently available <a href=
+              "#presentation-display">presentation displays</a> and let <a id=
+              "newdisplays"><em>newDisplays</em></a> be this list.
+            </li>
+            <li>Wait for the completion of that task.
+            </li>
+            <li>If the <span>list of available presentation displays</span> is
+            empty and <a href="#newdisplays">newDisplays</a> is not empty, then
+            for each alive <code>Availability</code> object:
+              <ol>
+                <li>Set the object's <code>value</code> property to
+                <code>true</code>.
+                </li>
+                <li>
+                  <span data-anolis-spec="w3c-html">Queue a task</span> to
+                  <span data-anolis-spec="w3c-html" title=
+                  "concept-event-fire">fire an event</span> named
+                  <code>change</code> at the object.
+                </li>
+              </ol>
+            </li>
+            <li>If the <span>list of available presentation displays</span> is
+            not empty and <a href="#newdisplays">newDisplays</a> is empty, then
+            for each alive <code>Availability</code> object:
+              <ol>
+                <li>Set the object's <code>value</code> property to
+                <code>false</code>.
+                </li>
+                <li>
+                  <span data-anolis-spec="w3c-html">Queue a task</span> to
+                  <span data-anolis-spec="w3c-html" title=
+                  "concept-event-fire">fire an event</span> named
+                  <code>change</code> at the object.
+                </li>
+              </ol>
+            </li>
+            <li>Set the <span>list of available presentation displays</span> to
+            the value of <a href="#newdisplays">newDisplays</a>.
+            </li>
+          </ol>
+          <p class="note">
+            The mechanism used to monitor <a href=
+            "#presentation-display">presention displays</a> availability is
+            left to the user agent. The UA may choose to monitor the
+            availability of presentation displays even when there are no
+            <code>Availability</code> objects.
+          </p>
+          <p>
+            When the user agent is to <dfn>cancel monitoring the list of
+            available presentation displays</dfn>, it must run the following
+            steps:
+          </p>
+        </section>
+      </section>
+      <section>
+        <h3>
           Interface <code>NavigatorPresentation</code>
         </h3>
         <pre class="idl">
@@ -848,8 +976,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
   readonly attribute <span>PresentationSession</span>? <span>session</span>;
   Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url, DOMString? presentationId);
   Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString? presentationId);
-  attribute <span data-anolis-spec=
-"w3c-html">EventHandler</span> <span>onavailablechange</span>;
+  Promise&lt;<span>Availability</span>&gt; <span>getAvailability</span>();
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
 };
@@ -873,12 +1000,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <span data-anolis-spec=
-              "url">URL</span> of the document to be presented
+              <code>presentationUrl</code>, the <span>presentation session
+              URL</span>
             </dd>
             <dd>
-              <code>presentationId</code>, an optional identifier for the
-              presentation
+              <code>presentationId</code>, the <span>presentation session
+              identifier</span>, optional
             </dd>
             <dt>
               Output
@@ -893,11 +1020,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>If the user agent does not <span>monitor presentation display
-            availability</span>, run the following steps:
+            <li>If the user agent does not <span>monitor the list of available
+            presentation displays</span>, run the following steps:
               <ol>
                 <li>
-                  <span>Monitor presentation display availability</span>.
+                  <span>Monitor the list of available presentation
+                  displays</span>.
                 </li>
                 <li>Wait until the algorithm completes.
                 </li>
@@ -924,21 +1052,18 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
                   <ol>
-                    <li>If <code>presentationId</code> is not
-                    <em>undefined</em>, assign <em>I</em> to that that
-                    <code>presentationId</code>.
-                    </li>
-                    <li>If <code>presentationId</code> is
-                    <code>undefined</code>, let <em>I</em> be a random
-                    alphanumeric value of at least 16 characters drawn from the
-                    characters <code>[A-Za-z0-9]</code>.
+                    <li>If <code>presentationId</code> is undefined, let <var>
+                      I</var> be a <span>valid presentation session
+                      identifier</span>, otherwise let <var>I</var> be the
+                      <code>presentationId</code>.
                     </li>
                     <li>Create a new <code>PresentationSession</code>
                     <em>S</em>.
                     </li>
-                    <li>Set <code>S.url</code> to <code>presentationUrl</code>,
-                    set <code>S.id</code> to <em>I</em>, and set
-                    <code>S.state</code> to <code>disconnected</code>.
+                    <li>Set the <span>presentation session identifier</span> of
+                    <var>S</var> to <var>I</var>, and set the
+                    <span>presentation session state</span> of <var>S</var> to
+                    <code>disconnected</code>.
                     </li>
                     <li>
                       <span data-anolis-spec="w3c-html">Queue a task</span>
@@ -951,7 +1076,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                         <li>If <em>C</em> completes successfully, run the
                         following steps:
                           <ol>
-                            <li>Add <em>(S.url, S.id, S)</em> to <em>D</em>.
+                            <li>Add the tuple {<em>presentationUrl</em>,
+                            <em>S.id</em>, <em>S</em>} to the <span>set of
+                            presentations</span>.
                             </li>
                             <li>
                               <span data-anolis-spec="promguide" title=
@@ -1011,7 +1138,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
           <p class="open-issue">
             ISSUE: Do we want to distinguish the permission-denied outcome from
             the no-screens-available outcome? Developers would be able to infer
-            it anyway from <code>availablechange</code>.
+            it anyway from <code>getAvailability()</code>.
           </p>
         </section>
         <section>
@@ -1028,11 +1155,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <span data-anolis-spec=
-              "url">URL</span> of the document being presented
+              <code>presentationUrl</code>, the <span>presentation session
+              URL</span>
             </dd>
             <dd>
-              <code>presentationId</code>, the identifier for the presentation
+              <code>presentationId</code>, the <span>presentation session
+              identifier</span>
             </dd>
             <dt>
               Output
@@ -1047,36 +1175,35 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>Let <em>D</em> be the set of presentations known by the user
-            agent.
-            </li>
             <li>
               <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
               to run the following steps in order:
               <ol>
-                <li>For each presentation <em>(U, I, S)</em> in <em>D</em>,
-                  <ol>
-                    <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal <em>
-                      I</em>, and <em>s</em> equal <em>S</em>.
-                    </li>
-                    <li>If <em>u</em> is equal to <code>presentationUrl</code>
-                    and <em>i</em> is equal to <code>presentationId</code>, run
-                    the following steps:
-                      <ol>
-                        <li>
-                          <span data-anolis-spec="promguide" title=
-                          "resolve-reject">Resolve</span> <em>P</em> with
-                          <em>S</em>.
-                        </li>
-                        <li>
-                          <span>Establish a presentation connection</span> with
-                          <em>S</em>.
-                        </li>
-                        <li>Abort the remaining steps of <em>T</em>.
-                        </li>
-                      </ol>
-                    </li>
-                  </ol>
+                <li>For each <var>known session</var> in the <span>set of
+                presentations</span>,
+                  <div style="margin-left: 2em">
+                    If the <span>presentation session URL</span> of <var>known
+                    session</var> is equal to <code>presentationUrl</code>, and
+                    the <span>presentation session identifier</span> of
+                    <var>known session</var> is equal to
+                    <code>presentationId</code>, run the following steps:
+                    <ol>
+                      <li>Let <var>S</var> be the <span>presentation
+                      session</span> of <var>known session</var>.
+                      </li>
+                      <li>
+                        <span data-anolis-spec="promguide" title=
+                        "resolve-reject">Resolve</span> <var>P</var> with
+                        <var>S</var>.
+                      </li>
+                      <li>
+                        <span>Establish a presentation connection</span> with
+                        <var>S</var>.
+                      </li>
+                      <li>Abort the remaining steps of <var>T</var>.
+                      </li>
+                    </ol>
+                  </div>
                 </li>
                 <li>
                   <span data-anolis-spec="promguide" title=
@@ -1104,7 +1231,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             <em>S</em>, it must run the following steps:
           </p>
           <ol>
-            <li>If <em>S.state</em> is <code>connected</code>, then:
+            <li>If the <span>presentation session state</span> of <var>S</var>
+            is <code>connected</code>, then:
               <ol>
                 <li>Abort all remaining steps.
                 </li>
@@ -1112,28 +1240,23 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>
               <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
-              to connect <em>S</em> to the document that is presenting
-              <em>S.url</em>.
+              to connect the <span>presentation session</span> <em>S</em> to
+              the <span>presenting browsing context</span>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
-                <li>Set <em>S.state</em> to <code>connected.</code>
-                </li>
-                <li>Let <em>D</em> be the set of presentations known by the
-                user agent.
+                <li>Set the <span>presentation session state</span> of
+                <var>S</var> to <code>connected.</code>
                 </li>
                 <li>Queue a task <em>T</em> to run the following steps in
                 order:
                   <ol>
-                    <li>For each presentation <em>(U, I, S')</em> in
-                    <em>D</em>,
+                    <li>For each <var>known session</var> in the <span>set of
+                    presentations</span>:
                       <ol>
-                        <li>Let <em>u</em> equal <em>U</em>, <em>i</em> equal
-                        <em>I</em>, and <em>s</em> equal <em>S'</em>.
-                        </li>
-                        <li>If <em>u</em> is equal to <em>S.url</em> and
-                        <em>i</em> is equal to <em>S.id</em>, run the following
-                        steps:
+                        <li>If the <span>presentation session identifier</span>
+                        of <var>known session</var> and <var>S</var> are equal,
+                        then run the following steps:
                           <ol>
                             <li>
                               <span data-anolis-spec="w3c-html">Queue a
@@ -1175,7 +1298,66 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
         </section>
         <section>
           <h4>
-            The <code>onavailablechange</code> EventHandler
+            Getting the <span>presentation displays</span> availability
+            information
+          </h4>
+          <p>
+            When the <code><dfn>getAvailability</dfn>()</code> method is
+            called, the user agent must run the following steps:
+          </p>
+          <dl>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              <em>P</em>, a <span data-anolis-spec="webidl">Promise</span>
+            </dd>
+          </dl>
+          <ol>
+            <li>Let <em>P</em> be a new <span data-anolis-spec=
+            "webidl">Promise</span>.
+            </li>
+            <li>Return <em>P</em>.
+            </li>
+            <li>If the user agent is unable to continuously <span>monitor the
+            list of available presentation displays</span>, then:
+              <ol>
+                <li>
+                  <span data-anolis-spec="promguide" title=
+                  "resolve-reject">Reject</span> <em>P</em>.
+                </li>
+                <li>Abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>If the user agent does not <span>monitor presentation display
+            availability</span>, run the following steps:
+              <ol>
+                <li>
+                  <span>Monitor presentation display availability</span>.
+                </li>
+                <li>Wait until the algorithm completes.
+                </li>
+              </ol>
+            </li>
+            <li>
+              <span data-anolis-spec="promguide" title=
+              "resolve-reject">Resolve</span> <em>P</em> with a <span title=
+              "Availability">Availability</span> object with the
+              <code>value</code> property set to <code>false</code> if the list
+              of the available displays is empty or <code>true</code>
+              otherwise.
+            </li>
+            <li>If possible, continue running the algorithm for <span>monitor
+            presentation display availability</span> as long as the returned
+            <span title="Availability">Availability</span> object is kept
+            alive.
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
+            Event Handlers
           </h4>
           <p>
             <span>The following are the event handlers (and their corresponding
@@ -1197,14 +1379,14 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             <tbody>
               <tr>
                 <td>
-                  <dfn><code>onavailablechange</code></dfn>
+                  <dfn><code>ondefaultsessionstart</code></dfn>
                 </td>
                 <td>
-                  <code>availablechange</code>
+                  <code>defaultsessionstart</code>
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
           <p>
             In order to satisfy the <a href=
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#req08-power-saving-friendly">
@@ -1214,8 +1396,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             implementation specific discovery of <span title=
             "presentation-display">presentation displays</span> can be resumed
             or suspended, in order to save power.
-          </p>The user agent must keep a <dfn>list of available presentation
-          displays</dfn>. According to the number of event handlers for
+          </p>The user agent must keep a <span>list of available presentation
+          displays</span>. According to the number of event handlers for
           <code>availablechange</code>, the user agent must also keep the list
           up to date by running the algorithm for <span title=
           "algorithm-monitor-available">monitoring the list of available
@@ -1270,7 +1452,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <span data-anolis-spec="w3c-html">Queue a task</span> to
                 retrieve the list of curently available <a href=
                 "#presentation-display">presentation displays</a> and let
-                <a id="newdisplays"><em>newDisplays</em></a> be this list.
+                <a href="#newdisplays"><em>newDisplays</em></a> be this list.
               </li>
               <li>Wait for the completion of that task.
               </li>
@@ -1314,8 +1496,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               <code>NavigatorPresentation.onavailablechange</code>.
             </p>
             <p>
-              When the user agent is to <dfn>cancel monitoring the list of
-              available presentation displays</dfn>, it must run the following
+              When the user agent is to <span>cancel monitoring the list of
+              available presentation displays</span>, it must run the following
               steps:
             </p>
             <ol>
@@ -1339,32 +1521,6 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       </section>
       <section>
         <h3>
-          <span>Interface <code>AvailableChangeEvent</code></span>
-        </h3>
-        <pre class="idl">
-<span>[Constructor(DOMString type, optional <span>AvailableChangeEventInit</span> eventInitDict)]
-interface <dfn>AvailableChangeEvent</dfn> : Event {
-  readonly attribute boolean available;
-};
-
-dictionary <dfn>AvailableChangeEventInit</dfn> : EventInit {
-  boolean available;
-};
-</span>
-</pre>
-        <p>
-          An event named <code>availablechange</code> is fired during the
-          execution of the <span>monitoring presentation display
-          availability</span> algorithm when the <dfn>presentation display
-          availability</dfn> changes. It is fired at the
-          <span><code>NavigatorPresentation</code></span> object, using the
-          <code>AvailableChangeEvent</code> interface, with the
-          <code>available</code> attribute set to the boolean value that the
-          algorithm determined.
-        </p>
-      </section>
-      <section>
-        <h3>
           <span>Interface <code>DefaultSessionStart</code></span>
         </h3>
         <pre class="idl">
@@ -1377,8 +1533,6 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
   PresentationSession session;
 };
 </span>
-
-
 </pre>
         <p>
           An event named <code>defaultsessionstart</code> is fired when the UA
@@ -1398,6 +1552,121 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
         Security and privacy considerations section</a>
+      </p>
+      <h3>
+        Personally identifiable information
+      </h3>
+      <p>
+        The <code>change</code> event fired on the <code>Availability</code>
+        object reveals one bit of information about the presence (or
+        non-presence) of a <span>presentation screen</span> typically
+        discovered through the local area network. This could be used in
+        conjunction with other information for fingerprinting the user.
+        However, this information is also dependent on the user's local network
+        context, so the risk is minimized.
+      </p>
+      <p class="open-issue">
+        If we allow the page to filter the set of presentation screens based on
+        capabilities, then more bits of more information would be revealed.
+        This feature, if implemented, should take privacy into consideration.
+        See <a href="https://github.com/w3c/presentation-api/issues/9">ISSUE 9:
+        How to filter available screens according to the content being
+        presented?</a>
+      </p>
+      <p class="open-issue">
+        We do not want to require user permission before disclosing the
+        presence of a presentation display, as it is counter to the initial
+        purpose of improving the user experience. See <a href=
+        "https://github.com/w3c/presentation-api/issues/10">ISSUE 10: Is user
+        permission required to prompt for screen availability information?</a>
+      </p>
+      <h3>
+        Cross-origin access
+      </h3>
+      <p>
+        A <span>presentation session</span> is allowed to be accessed across
+        origins; the presentation URL and presentation ID used to create the
+        presentation are the only information needed to join a session from any
+        origin in that user agent. In other words, a presentation is not tied
+        to a particular opening origin.
+      </p>
+      <p>
+        This design allows controlling contexts from different domains to
+        connect to a shared presentation resource. The security of the
+        presentation ID prevents arbitrary pages from connecting to an existing
+        presentation.
+      </p>
+      <p>
+        This specification does not prohibit a user agent from publishing
+        information about its <span>set of presentations</span>. The group
+        envisions a user agent on a another device (distinct from the
+        controller or presentation) becoming authorized to join the
+        presentation, either by user action or by discovering the
+        presentation's URL and id.
+      </p>
+      <p class="open-issue">
+        This section should provide informative guidance as to what constitutes
+        a reasonable context for a Web page to become authorized to control a
+        presentation session.
+      </p>
+      <h3>
+        Device Access
+      </h3>
+      <p>
+        The presentation API abstracts away what "local" means for displays,
+        meaning that it exposes network-accessible displays as though they were
+        local displays. The Presentation API requires user permission for a
+        page to access any display to mitigate issues that could arise, such as
+        showing unwanted content on a display viewable by others.
+      </p>
+      <h3>
+        Temporary identifiers and browser state
+      </h3>
+      <p>
+        The presentation URL and presentation ID can be used to connect to a
+        presentation session from another browsing context. They can be
+        intercepted if an attacker can inject content into the controlling
+        page.
+      </p>
+      <p class="open-issue">
+        Should we restrict the API to some extent in non secure contexts?
+      </p>
+      <h3>
+        Incognito mode and clearing of browsing data
+      </h3>
+      <p>
+        The content displayed on the presentation is different from the
+        controller. In particular, if the user is logged in in both contexts,
+        then logs out of the controlling browsing context, she will not be
+        automatically logged out from the presenting browsing context.
+        Applications that use authentication should pay extra care when
+        communicating between devices.
+      </p>
+      <p>
+        The set of presentations known to the user agent should be cleared when
+        the user requests to "clear browsing data."
+      </p>
+      <p class="open-issue">
+        The spec should specify any restrictions on the presenting browsing
+        context when the opening browsing context is in "incognito" mode. See
+        <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
+        Define user agent context for rendering the presentation</a>
+      </p>
+      <p class="open-issue">
+        The spec should clarify what is to happen to the set of known
+        presentations in "incognito" (private browsing context) mode.
+      </p>
+      <h3>
+        Messaging between presentation sessions
+      </h3>
+      <p>
+        This spec will not mandate communication protocols, but it should set
+        some guarantees of message confidentiality and authenticity.
+      </p>
+      <p class="open-issue">
+        <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
+        Define security requirements for messaging channel between secure
+        origins</a>
       </p>
     </section>
     <section>

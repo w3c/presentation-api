@@ -2,8 +2,7 @@
   "definitions": {
     "algorithm-monitor-available": "algorithm-monitor-available",
     "algorithm-send": "algorithm-send",
-    "availablechangeevent": "availablechangeevent",
-    "availablechangeeventinit": "availablechangeeventinit",
+    "availability": "availability",
     "binarytype": "binarytype",
     "binarytype-attribute": "binarytype-attribute",
     "cancel monitoring the list of available presentation displays": "cancel-monitoring-the-list-of-available-presentation-displays",
@@ -14,11 +13,13 @@
     "defaultsessionstarteventinit": "defaultsessionstarteventinit",
     "destination browsing context": "destination-browsing-context",
     "establish a presentation connection": "establish-a-presentation-connection",
+    "getavailability": "getavailability",
     "id": "id",
     "joinsession": "joinsession",
     "list of available presentation displays": "list-of-available-presentation-displays",
+    "monitor the list of available presentation displays": "monitor-the-list-of-available-presentation-displays",
     "navigatorpresentation": "navigatorpresentation",
-    "onavailablechange": "onavailablechange",
+    "ondefaultsessionstart": "ondefaultsessionstart",
     "onmessage": "onmessage",
     "onstatechange": "onstatechange",
     "presentation": "presentation",
@@ -29,6 +30,7 @@
     "presentation session": "presentation-session",
     "presentation session identifier": "presentation-session-identifier",
     "presentation session state": "presentation-session-state",
+    "presentation session url": "presentation-session-url",
     "presentation-onmessage": "presentation-onmessage",
     "presentationsession": "presentationsession",
     "presentationsessionstate": "presentationsessionstate",
@@ -37,8 +39,10 @@
     "send-arraybuffer": "send-arraybuffer",
     "send-arraybufferview": "send-arraybufferview",
     "send-blob": "send-blob",
+    "set of presentations": "set-of-presentations",
     "startsession": "startsession",
-    "state": "state"
+    "state": "state",
+    "valid presentation session identifier": "valid-presentation-session-identifier"
   },
   "url": "https://w3c.github.io/presentation-api"
 }
