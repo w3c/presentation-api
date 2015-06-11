@@ -897,18 +897,18 @@ interface <dfn>Availability</dfn> : EventTarget {
           </p>
           <p>
             While there are live <code>Availability</code> objects, the user
-            agent may <span>monitor the list of available displays</span>
-            continuously, so that pages can use the <code>value</code> property
-            of an <code>Availability</code> object to offer presentation only
-            when there are available displays. However, the user agent may not
-            support continuous availability monitoring; for example, because of
-            platform or power consumption restrictions. In this case the
-            <span>Promise</span> returned by <code>getAvailability()</code> is
-            <span data-anolis-spec="promguide" title=
-            "resolve-reject">rejected</span> and the algorithm to <span>monitor
-            the list of available presentation displays</span> will only run as
-            part of the <span title="startSession">session start</span>
-            algorithm.
+            agent may <span>monitor the list of available presentation
+            displays</span> continuously, so that pages can use the
+            <code>value</code> property of an <code>Availability</code> object
+            to offer presentation only when there are available displays.
+            However, the user agent may not support continuous availability
+            monitoring; for example, because of platform or power consumption
+            restrictions. In this case the <span>Promise</span> returned by
+            <code>getAvailability()</code> is <span data-anolis-spec=
+            "promguide" title="resolve-reject">rejected</span> and the
+            algorithm to <span>monitor the list of available presentation
+            displays</span> will only run as part of the <span title=
+            "startSession">session start</span> algorithm.
           </p>
           <p>
             When there are no live <code>Availability</code> objects (that is,
@@ -928,10 +928,10 @@ interface <dfn>Availability</dfn> : EventTarget {
             a subset of Web content because of functional, security or hardware
             limitations. Examples are set-top boxes, smart TVs or networked
             speakers capable of rendering only audio. We say that such a
-            display is a <dfn>compatible presentation display</dfn> for an
-            <code>availabilityUrl</code> if the user agent can reasonably
-            guarantee that the presentation of <code>availabilityUrl</code> on
-            that display will succeed.
+            display is a <dfn>compatible presentation display</dfn> for a
+            <dfn>display availability URL</dfn> if the user agent can
+            reasonably guarantee that the presentation of the URL on that
+            display will succeed.
           </p>
           <h4>
             Monitor the list of available presentation displays
@@ -1369,7 +1369,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Input
             </dt>
             <dd>
-              <code>availabilityUrl</code>, an optional <span>screen
+              <code>availabilityUrl</code>, an optional <span>display
               availability URL</span>
             </dd>
             <dt>
@@ -1400,17 +1400,13 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             object with its <code>value</code> property set to
             <code>false</code>.
             </li>
-            <li>If <code>avaialabilityUrl</code> is set, create a tuple <em>(A,
+            <li>If <code>availabilityUrl</code> is set, create a tuple <em>(A,
             availabilityUrl, P)</em> and add it to the <span>set of
             availability objects</span>.
             </li>
-            <li>If <code>avaialabilityUrl</code> is set, create a tuple <em>(A,
-            availabilityUrl, P)</em> and add it to the <span>set of
-            availability objects</span>.
-            </li>
-            <li>If <code>avaialabilityUrl</code> is not set, create a tuple
-            <em>(A, undefined, P)</em> and add it to the <span>set of
-            availability objects</span>.
+            <li>If <code>availabilityUrl</code> is not set, create a tuple <em>
+              (A, undefined, P)</em> and add it to the <span>set of
+              availability objects</span>.
             </li>
             <li>Run the algorithm to <span>monitor the list of available
             presentation displays</span>.

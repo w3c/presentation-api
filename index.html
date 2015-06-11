@@ -965,17 +965,16 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
           <p>
             While there are live <a href="#availability"><code>Availability</code></a> objects, the user
-            agent may <span>monitor the list of available displays</span>
-            continuously, so that pages can use the <code>value</code> property
-            of an <a href="#availability"><code>Availability</code></a> object to offer presentation only
-            when there are available displays. However, the user agent may not
-            support continuous availability monitoring; for example, because of
-            platform or power consumption restrictions. In this case the
-            <span>Promise</span> returned by <code>getAvailability()</code> is
-            <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">rejected</a> and the algorithm to <a href="#monitor-the-list-of-available-presentation-displays-0">monitor
-            the list of available presentation displays</a> will only run as
-            part of the <a href="#startsession" title="startSession">session start</a>
-            algorithm.
+            agent may <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation
+            displays</a> continuously, so that pages can use the
+            <code>value</code> property of an <a href="#availability"><code>Availability</code></a> object
+            to offer presentation only when there are available displays.
+            However, the user agent may not support continuous availability
+            monitoring; for example, because of platform or power consumption
+            restrictions. In this case the <span>Promise</span> returned by
+            <code>getAvailability()</code> is <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">rejected</a> and the
+            algorithm to <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation
+            displays</a> will only run as part of the <a href="#startsession" title="startSession">session start</a> algorithm.
           </p>
           <p>
             When there are no live <a href="#availability"><code>Availability</code></a> objects (that is,
@@ -993,10 +992,10 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             a subset of Web content because of functional, security or hardware
             limitations. Examples are set-top boxes, smart TVs or networked
             speakers capable of rendering only audio. We say that such a
-            display is a <dfn id="compatible-presentation-display">compatible presentation display</dfn> for an
-            <code>availabilityUrl</code> if the user agent can reasonably
-            guarantee that the presentation of <code>availabilityUrl</code> on
-            that display will succeed.
+            display is a <dfn id="compatible-presentation-display">compatible presentation display</dfn> for a
+            <dfn id="display-availability-url">display availability URL</dfn> if the user agent can
+            reasonably guarantee that the presentation of the URL on that
+            display will succeed.
           </p>
           <h4 id="monitor-the-list-of-available-presentation-displays"><span class="secno">6.3.3 </span>
             Monitor the list of available presentation displays
@@ -1414,8 +1413,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Input
             </dt>
             <dd>
-              <code>availabilityUrl</code>, an optional <span>screen
-              availability URL</span>
+              <code>availabilityUrl</code>, an optional <a href="#display-availability-url">display
+              availability URL</a>
             </dd>
             <dt>
               Output
@@ -1443,17 +1442,13 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             object with its <code>value</code> property set to
             <code>false</code>.
             </li>
-            <li>If <code>avaialabilityUrl</code> is set, create a tuple <em>(A,
+            <li>If <code>availabilityUrl</code> is set, create a tuple <em>(A,
             availabilityUrl, P)</em> and add it to the <a href="#set-of-availability-objects">set of
             availability objects</a>.
             </li>
-            <li>If <code>avaialabilityUrl</code> is set, create a tuple <em>(A,
-            availabilityUrl, P)</em> and add it to the <a href="#set-of-availability-objects">set of
-            availability objects</a>.
-            </li>
-            <li>If <code>avaialabilityUrl</code> is not set, create a tuple
-            <em>(A, undefined, P)</em> and add it to the <a href="#set-of-availability-objects">set of
-            availability objects</a>.
+            <li>If <code>availabilityUrl</code> is not set, create a tuple <em>
+              (A, undefined, P)</em> and add it to the <a href="#set-of-availability-objects">set of
+              availability objects</a>.
             </li>
             <li>Run the algorithm to <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available
             presentation displays</a>.

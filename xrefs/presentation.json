@@ -11,6 +11,7 @@
     "defaultsessionstartevent": "defaultsessionstartevent",
     "defaultsessionstarteventinit": "defaultsessionstarteventinit",
     "destination browsing context": "destination-browsing-context",
+    "display availability url": "display-availability-url",
     "establish a presentation connection": "establish-a-presentation-connection",
     "getavailability": "getavailability",
     "id": "id",
