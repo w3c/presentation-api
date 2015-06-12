@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-10-june-2015">
-        Editor's Draft 10 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-12-june-2015">
+        Editor's Draft 12 June 2015
       </h2>
       <dl>
         <dt>
@@ -432,6 +432,10 @@
         The term <a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> is defined in the
         File API specification: <a href="#refsFILEAPI">[FILEAPI]</a>.
       </p>
+      <p>
+        The term <dfn id="rtcdatachannel">RTCDataChannel</dfn> is defined in the WebRTC API
+        specification: <a href="http://w3c.github.io/webrtc-pc/#widl-RTCDataChannel-protocol">WEBRTC</a>.
+      </p>
     </section>
     <section>
       <h2 id="examples"><span class="secno">5 </span>
@@ -692,19 +696,17 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           Specify the presentation initialization algorithm</a>
         </p>
         <section>
-          <p class="open-issue">
-            <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
-            46: Define send behavior</a>
-          </p>
           <h4 id="sending-a-message-through-presentationsession"><span class="secno">6.2.1 </span>
             Sending a message through <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
           <p class="note">
-            Presentation API does not mandate a specific protocol for the
+            Presentation API does not mandate a specific transport for the
             connection between the <a href="#controlling-browsing-context">controlling browsing context</a>
-            and the <a href="#presenting-browsing-context">presenting browsing context</a> except that for
+            and the <a href="#presenting-browsing-context">presenting browsing context</a>, except that for
             multiple calls to <a href="#send"><code>send</code></a> it has to be ensured that
-            messages are delivered to the other end in sequence.
+            messages are delivered to the other end reliably and in sequence.
+            The transport should function equivalently to an
+            <a href="#rtcdatachannel">RTCDataChannel</a> in reliable mode.
           </p>
           <p>
             Let <dfn id="presentation-message-data">presentation message data</dfn> be the payload data to be
