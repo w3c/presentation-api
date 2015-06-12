@@ -350,6 +350,10 @@
         The term <span data-anolis-spec="fileapi">Blob</span> is defined in the
         File API specification: <span data-anolis-ref="fileapi">FILEAPI</span>.
       </p>
+      <p>
+        The term <span data-anolis-spec="webrtc">RTCDataChannel</span> is defined in the
+        WebRTC API specification: <span data-anolis-ref="webrtc">WEBRTC</span>.
+      </p>
     </section>
     <section>
       <h2>
@@ -625,19 +629,18 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           Specify the presentation initialization algorithm</a>
         </p>
         <section>
-          <p class="open-issue">
-            <a href="https://github.com/w3c/presentation-api/issues/46">ISSUE
-            46: Define send behavior</a>
-          </p>
           <h4>
             Sending a message through <code>PresentationSession</code>
           </h4>
           <p class="note">
-            Presentation API does not mandate a specific protocol for the
+            Presentation API does not mandate a specific transport for the
             connection between the <span>controlling browsing context</span>
-            and the <span>presenting browsing context</span> except that for
+            and the <span>presenting browsing context</span>, except that for
             multiple calls to <code>send</code> it has to be ensured that
-            messages are delivered to the other end in sequence.
+            messages are delivered to the other end reliably and in sequence.
+            The transport should function equivalently to an <a href=
+            "http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a>
+            in reliable mode.
           </p>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
