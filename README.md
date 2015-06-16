@@ -3,7 +3,7 @@
 This repository contains the
 [Presentation API](http://w3c.github.io/presentation-api/)
 specification that is being worked on in the
-[W3C Second Screen Presentation Working Group](http://www.w3.org/2014/secondscreen/).
+[W3C Second Screen Working Group](http://www.w3.org/2014/secondscreen/).
 
 Please refer to the group's [Work Mode](https://www.w3.org/wiki/Second_Screen/Work_Mode)
 for instructions on how to contribute.
