@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-11-june-2015">
-        Editor's Draft 11 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-17-june-2015">
+        Editor's Draft 17 June 2015
       </h2>
       <dl>
         <dt>
@@ -941,10 +941,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <em>A</em> is a live <a href="#availability"><code>Availability</code></a> object;
             </li>
             <li>
-              <em>availabilityUrl</em> is either the
-              <code>availabilityUrl</code> passed to
-              <code>getAvailability()</code> to create A, or <em>undefined</em>
-              if no <code>availabilityUrl</code> was passed.
+              <em>availabilityUrl</em> is the <code>availabilityUrl</code>
+              passed to <code>getAvailability()</code> to create A.
             </li>
             <li>
               <em>P</em> is the <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a>
@@ -1022,29 +1020,14 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>Set <em>previousAvailability</em> to the value of
                 <em>A</em>'s <code>value</code> property.
                 </li>
-                <li>If <em>availabilityUrl</em> is <em>undefined</em>, then:
-                  <ol>
-                    <li>If <em>newDisplays</em> is not empty, set <em>A</em>'s
-                    <code>value</code> property to <code>true</code>.
-                    </li>
-                    <li>If <em>newDisplays</em> is empty, set <em>A</em>'s
-                    <code>value</code> property to <code>false</code>.
-                    </li>
-                  </ol>
+                <li>Let <em>newAvailability</em> be <code>true</code> if
+                <em>newDisplays</em> is not empty and at least one display in
+                <em>newDisplays</em> is a <a href="#compatible-presentation-display">compatible presentation
+                display</a> for <em>availabilityUrl</em>. Otherwise, set
+                <em>newAvailability</em> to <code>false</code>.
                 </li>
-                <li>If <em>availabilityUrl</em> is not <em>undefined</em>,
-                then:
-                  <ol>
-                    <li>Let <em>newAvailability</em> be <code>true</code> if
-                    <em>newDisplays</em> is not empty and at least one display
-                    in <em>newDisplays</em> is a <a href="#compatible-presentation-display">compatible presentation
-                    display</a> for <em>availabilityUrl</em>. Otherwise, set
-                    <em>newAvailability</em> to <code>false</code>.
-                    </li>
-                    <li>Set <em>A</em>'s <code>value</code> property to
-                    <em>newAvailability</em>.
-                    </li>
-                  </ol>
+                <li>Set <em>A</em>'s <code>value</code> property to
+                <em>newAvailability</em>.
                 </li>
                 <li>If <em>P</em> is not settled, then
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolve</a> <em>P</em> with <em>A</em>.
@@ -1100,7 +1083,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   readonly attribute <a href="#presentationsession">PresentationSession</a>? <span>session</span>;
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#startsession">startSession</a>(DOMString url);
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#joinsession">joinSession</a>(DOMString url, DOMString presentationId);
-  Promise&lt;<a href="#availability">Availability</a>&gt; <a href="#getavailability">getAvailability</a>(DOMString? url);
+  Promise&lt;<a href="#availability">Availability</a>&gt; <a href="#getavailability">getAvailability</a>(DOMString url);
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#ondefaultsessionstart">ondefaultsessionstart</a>;
 };
 </pre>
@@ -1139,6 +1122,24 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Run the following steps:
               <ol>
+                <li>If is an entry <em>(A, presentationUrl, P)</em> in the
+                <a href="#set-of-availability-objects">set of availability objects</a>, where
+                <em>presentationUrl</em> is equal to
+                <code>presentationUrl</code>, then:
+                  <ol>
+                    <li>Let <em>Astart</em> be <em>A</em>.
+                    </li>
+                  </ol>
+                </li>
+                <li>Otherwise:
+                  <ol>
+                    <li>Create a new tuple <em>(Astart, presentationUrl,
+                    undefined)</em>, where <em>Astart</em> is a new
+                    <a href="#availability"><code>Availability</code></a> object, and insert it into the
+                    <a href="#set-of-availability-objects">set of availability objects</a>.
+                    </li>
+                  </ol>
+                </li>
                 <li>
                   <a href="#monitor-the-list-of-available-presentation-displays-0">Monitor the list of available presentation
                   displays</a>.
@@ -1147,8 +1148,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 </li>
               </ol>
             </li>
-            <li>If the <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
-            empty, then:
+            <li>If the <code>value</code> property of <em>Astart</em> is false,
+            then:
               <ol>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
@@ -1413,8 +1414,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               Input
             </dt>
             <dd>
-              <code>availabilityUrl</code>, an optional <a href="#display-availability-url">display
-              availability URL</a>
+              <code>availabilityUrl</code>, a <a href="#display-availability-url">display availability
+              URL</a>
             </dd>
             <dt>
               Output
@@ -1442,13 +1443,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             object with its <code>value</code> property set to
             <code>false</code>.
             </li>
-            <li>If <code>availabilityUrl</code> is set, create a tuple <em>(A,
-            availabilityUrl, P)</em> and add it to the <a href="#set-of-availability-objects">set of
-            availability objects</a>.
-            </li>
-            <li>If <code>availabilityUrl</code> is not set, create a tuple <em>
-              (A, undefined, P)</em> and add it to the <a href="#set-of-availability-objects">set of
-              availability objects</a>.
+            <li>Create a tuple <em>(A, availabilityUrl, P)</em> and add it to
+            the <a href="#set-of-availability-objects">set of availability objects</a>.
             </li>
             <li>Run the algorithm to <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available
             presentation displays</a>.

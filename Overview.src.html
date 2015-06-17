@@ -873,10 +873,8 @@ interface <dfn>Availability</dfn> : EventTarget {
               <em>A</em> is a live <code>Availability</code> object;
             </li>
             <li>
-              <em>availabilityUrl</em> is either the
-              <code>availabilityUrl</code> passed to
-              <code>getAvailability()</code> to create A, or <em>undefined</em>
-              if no <code>availabilityUrl</code> was passed.
+              <em>availabilityUrl</em> is the <code>availabilityUrl</code>
+              passed to <code>getAvailability()</code> to create A.
             </li>
             <li>
               <em>P</em> is the <span data-anolis-spec="webidl">Promise</span>
@@ -958,29 +956,14 @@ interface <dfn>Availability</dfn> : EventTarget {
                 <li>Set <em>previousAvailability</em> to the value of
                 <em>A</em>'s <code>value</code> property.
                 </li>
-                <li>If <em>availabilityUrl</em> is <em>undefined</em>, then:
-                  <ol>
-                    <li>If <em>newDisplays</em> is not empty, set <em>A</em>'s
-                    <code>value</code> property to <code>true</code>.
-                    </li>
-                    <li>If <em>newDisplays</em> is empty, set <em>A</em>'s
-                    <code>value</code> property to <code>false</code>.
-                    </li>
-                  </ol>
+                <li>Let <em>newAvailability</em> be <code>true</code> if
+                <em>newDisplays</em> is not empty and at least one display in
+                <em>newDisplays</em> is a <span>compatible presentation
+                display</span> for <em>availabilityUrl</em>. Otherwise, set
+                <em>newAvailability</em> to <code>false</code>.
                 </li>
-                <li>If <em>availabilityUrl</em> is not <em>undefined</em>,
-                then:
-                  <ol>
-                    <li>Let <em>newAvailability</em> be <code>true</code> if
-                    <em>newDisplays</em> is not empty and at least one display
-                    in <em>newDisplays</em> is a <span>compatible presentation
-                    display</span> for <em>availabilityUrl</em>. Otherwise, set
-                    <em>newAvailability</em> to <code>false</code>.
-                    </li>
-                    <li>Set <em>A</em>'s <code>value</code> property to
-                    <em>newAvailability</em>.
-                    </li>
-                  </ol>
+                <li>Set <em>A</em>'s <code>value</code> property to
+                <em>newAvailability</em>.
                 </li>
                 <li>If <em>P</em> is not settled, then
                   <span data-anolis-spec="promguide" title=
@@ -1041,7 +1024,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
   readonly attribute <span>PresentationSession</span>? <span>session</span>;
   Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url);
   Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString presentationId);
-  Promise&lt;<span>Availability</span>&gt; <span>getAvailability</span>(DOMString? url);
+  Promise&lt;<span>Availability</span>&gt; <span>getAvailability</span>(DOMString url);
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
 };
@@ -1082,6 +1065,24 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Run the following steps:
               <ol>
+                <li>If is an entry <em>(A, presentationUrl, P)</em> in the
+                <span>set of availability objects</span>, where
+                <em>presentationUrl</em> is equal to
+                <code>presentationUrl</code>, then:
+                  <ol>
+                    <li>Let <em>Astart</em> be <em>A</em>.
+                    </li>
+                  </ol>
+                </li>
+                <li>Otherwise:
+                  <ol>
+                    <li>Create a new tuple <em>(Astart, presentationUrl,
+                    undefined)</em>, where <em>Astart</em> is a new
+                    <code>Availability</code> object, and insert it into the
+                    <span>set of availability objects</span>.
+                    </li>
+                  </ol>
+                </li>
                 <li>
                   <span>Monitor the list of available presentation
                   displays</span>.
@@ -1090,8 +1091,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 </li>
               </ol>
             </li>
-            <li>If the <span>list of available presentation displays</span> is
-            empty, then:
+            <li>If the <code>value</code> property of <em>Astart</em> is false,
+            then:
               <ol>
                 <li>
                   <span data-anolis-spec="promguide" title=
@@ -1369,8 +1370,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               Input
             </dt>
             <dd>
-              <code>availabilityUrl</code>, an optional <span>display
-              availability URL</span>
+              <code>availabilityUrl</code>, a <span>display availability
+              URL</span>
             </dd>
             <dt>
               Output
@@ -1400,13 +1401,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             object with its <code>value</code> property set to
             <code>false</code>.
             </li>
-            <li>If <code>availabilityUrl</code> is set, create a tuple <em>(A,
-            availabilityUrl, P)</em> and add it to the <span>set of
-            availability objects</span>.
-            </li>
-            <li>If <code>availabilityUrl</code> is not set, create a tuple <em>
-              (A, undefined, P)</em> and add it to the <span>set of
-              availability objects</span>.
+            <li>Create a tuple <em>(A, availabilityUrl, P)</em> and add it to
+            the <span>set of availability objects</span>.
             </li>
             <li>Run the algorithm to <span>monitor the list of available
             presentation displays</span>.
