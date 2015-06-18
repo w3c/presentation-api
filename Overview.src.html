@@ -934,7 +934,7 @@ interface <dfn>Availability</dfn> : EventTarget {
           </h4>
           <p>
             If <span>set of availability objects</span> is non-empty, or there
-            is a pending call to <span title="startSession">start a
+            is a pending request to <span title="startSession">start a
             session</span>, the user agent can <dfn>monitor the list of
             available presentation displays</dfn> by running the following
             steps.
@@ -990,9 +990,9 @@ interface <dfn>Availability</dfn> : EventTarget {
             <em>A</em>.
             </li>
             <li>If the <span>set of availability objects</span> is now empty
-            and there is no pending call to <span title="startSession">start a
-            session</span>, cancel any pending task to <span>monitor the set of
-            presentation displays</span> for power saving purposes.
+            and there is no pending request to <span title="startSession">start
+            a session</span>, cancel any pending task to <span>monitor the set
+            of presentation displays</span> for power saving purposes.
             </li>
           </ol>
           <p class="note">
