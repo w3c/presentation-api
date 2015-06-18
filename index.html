@@ -639,8 +639,8 @@
         </p>
         <p>
           The <dfn id="set-of-presentations">set of presentations</dfn>, initially empty, contains the
-          <a href="#presentation-session">presentation session</a>s created by the <a href="#controlling-browsing-context">controlling
-          browsing context</a>s for the user agent (or a specific user
+          <span>presentation sessions</span> created by the <span>controlling
+          browsing contexts</span> for the user agent (or a specific user
           profile within the user agent). The <a href="#set-of-presentations">set of presentations</a>
           is represented by a list of tuples, where each tuple consists of a
           <a href="#presentation-session-url">presentation session URL</a>, a <a href="#presentation-session-identifier">presentation session
@@ -944,6 +944,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <em>A</em> was created.
             </li>
           </ol>
+        </section>
+        <section>
           <h4 id="the-list-of-available-presentation-displays"><span class="secno">6.3.2 </span>
             The list of available presentation displays
           </h4>
@@ -952,7 +954,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             displays</dfn>. This current list of <span>presentation
             displays</span> that may be used for starting new presentations,
             and is populated based on an implementation specific discovery
-            mechanism. It is set to most recent result of the algorithm to
+            mechanism. It is set to the most recent result of the algorithm to
             <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation displays</a>.
           </p>
           <p>
@@ -980,7 +982,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             or suspended.
           </p>
           <p>
-            Some <a href="#presentation-display">presentation display</a>s may only be able to display
+            Some <span>presentation displays</span> may only be able to display
             a subset of Web content because of functional, security or hardware
             limitations. Examples are set-top boxes, smart TVs or networked
             speakers capable of rendering only audio. We say that such a
@@ -989,6 +991,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             reasonably guarantee that the presentation of the URL on that
             display will succeed.
           </p>
+        </section>
+        <section>
           <h4 id="monitor-the-list-of-available-presentation-displays"><span class="secno">6.3.3 </span>
             Monitor the list of available presentation displays
           </h4>
@@ -1002,7 +1006,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <ol>
             <li>
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to retrieve
-              available presentation displays (using a implementation specific
+              available presentation displays (using an implementation specific
               mechanism) and let <a id="newdisplays"><em>newDisplays</em></a>
               be this list.
             </li>
@@ -1116,24 +1120,6 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Run the following steps:
               <ol>
-                <li>If is an entry <em>(A, presentationUrl, P)</em> in the
-                <a href="#set-of-availability-objects">set of availability objects</a>, where
-                <em>presentationUrl</em> is equal to
-                <code>presentationUrl</code>, then:
-                  <ol>
-                    <li>Let <em>Astart</em> be <em>A</em>.
-                    </li>
-                  </ol>
-                </li>
-                <li>Otherwise:
-                  <ol>
-                    <li>Create a new tuple <em>(Astart, presentationUrl,
-                    undefined)</em>, where <em>Astart</em> is a new
-                    <a href="#availability"><code>Availability</code></a> object, and insert it into the
-                    <a href="#set-of-availability-objects">set of availability objects</a>.
-                    </li>
-                  </ol>
-                </li>
                 <li>
                   <a href="#monitor-the-list-of-available-presentation-displays-0">Monitor the list of available presentation
                   displays</a>.
@@ -1142,8 +1128,17 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 </li>
               </ol>
             </li>
-            <li>If the <code>value</code> property of <em>Astart</em> is false,
-            then:
+            <li>If either of the following is true:
+              <ol>
+                <li>The <span>list of presentation displays</span> is empty;
+                </li>
+                <li>No member if the <span>list of presentation displays</span>
+                is a <a href="#compatible-presentation-display">compatible presentation display</a> for
+                <code>presentationUrl</code>;
+                </li>
+              </ol>
+            </li>
+            <li>Then:
               <ol>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
@@ -1163,7 +1158,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                   <ol>
                     <li>Let <var>I</var> be a new <a href="#valid-presentation-session-identifier">valid presentation
                     session identifier</a> unique among all
-                    <a href="#presentation-session-identifier">presentation session identifier</a>s for known
+                    <span>presentation session identifiers</span> for known
                     sessions in the <a href="#set-of-presentations">set of presentations</a>.
                     </li>
                     <li>Create a new <a href="#presentationsession"><code>PresentationSession</code></a>

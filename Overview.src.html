@@ -559,8 +559,8 @@
         </p>
         <p>
           The <dfn>set of presentations</dfn>, initially empty, contains the
-          <span>presentation session</span>s created by the <span>controlling
-          browsing context</span>s for the user agent (or a specific user
+          <span>presentation sessions</span> created by the <span>controlling
+          browsing contexts</span> for the user agent (or a specific user
           profile within the user agent). The <span>set of presentations</span>
           is represented by a list of tuples, where each tuple consists of a
           <span>presentation session URL</span>, a <span>presentation session
@@ -876,6 +876,8 @@ interface <dfn>Availability</dfn> : EventTarget {
               <em>A</em> was created.
             </li>
           </ol>
+        </section>
+        <section>
           <h4>
             The list of available presentation displays
           </h4>
@@ -884,7 +886,7 @@ interface <dfn>Availability</dfn> : EventTarget {
             displays</dfn>. This current list of <span>presentation
             displays</span> that may be used for starting new presentations,
             and is populated based on an implementation specific discovery
-            mechanism. It is set to most recent result of the algorithm to
+            mechanism. It is set to the most recent result of the algorithm to
             <span>monitor the list of available presentation displays</span>.
           </p>
           <p>
@@ -916,7 +918,7 @@ interface <dfn>Availability</dfn> : EventTarget {
             or suspended.
           </p>
           <p>
-            Some <span>presentation display</span>s may only be able to display
+            Some <span>presentation displays</span> may only be able to display
             a subset of Web content because of functional, security or hardware
             limitations. Examples are set-top boxes, smart TVs or networked
             speakers capable of rendering only audio. We say that such a
@@ -925,6 +927,8 @@ interface <dfn>Availability</dfn> : EventTarget {
             reasonably guarantee that the presentation of the URL on that
             display will succeed.
           </p>
+        </section>
+        <section>
           <h4>
             Monitor the list of available presentation displays
           </h4>
@@ -938,7 +942,7 @@ interface <dfn>Availability</dfn> : EventTarget {
           <ol>
             <li>
               <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve
-              available presentation displays (using a implementation specific
+              available presentation displays (using an implementation specific
               mechanism) and let <a id="newdisplays"><em>newDisplays</em></a>
               be this list.
             </li>
@@ -1059,24 +1063,6 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             </li>
             <li>Run the following steps:
               <ol>
-                <li>If is an entry <em>(A, presentationUrl, P)</em> in the
-                <span>set of availability objects</span>, where
-                <em>presentationUrl</em> is equal to
-                <code>presentationUrl</code>, then:
-                  <ol>
-                    <li>Let <em>Astart</em> be <em>A</em>.
-                    </li>
-                  </ol>
-                </li>
-                <li>Otherwise:
-                  <ol>
-                    <li>Create a new tuple <em>(Astart, presentationUrl,
-                    undefined)</em>, where <em>Astart</em> is a new
-                    <code>Availability</code> object, and insert it into the
-                    <span>set of availability objects</span>.
-                    </li>
-                  </ol>
-                </li>
                 <li>
                   <span>Monitor the list of available presentation
                   displays</span>.
@@ -1085,8 +1071,17 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 </li>
               </ol>
             </li>
-            <li>If the <code>value</code> property of <em>Astart</em> is false,
-            then:
+            <li>If either of the following is true:
+              <ol>
+                <li>The <span>list of presentation displays</span> is empty;
+                </li>
+                <li>No member if the <span>list of presentation displays</span>
+                is a <span>compatible presentation display</span> for
+                <code>presentationUrl</code>;
+                </li>
+              </ol>
+            </li>
+            <li>Then:
               <ol>
                 <li>
                   <span data-anolis-spec="promguide" title=
@@ -1108,7 +1103,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                   <ol>
                     <li>Let <var>I</var> be a new <span>valid presentation
                     session identifier</span> unique among all
-                    <span>presentation session identifier</span>s for known
+                    <span>presentation session identifiers</span> for known
                     sessions in the <span>set of presentations</span>.
                     </li>
                     <li>Create a new <code>PresentationSession</code>
