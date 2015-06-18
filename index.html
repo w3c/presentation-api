@@ -77,8 +77,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-12-june-2015">
-        Editor's Draft 12 June 2015
+      <h2 class="no-num no-toc" id="editor's-draft-18-june-2015">
+        Editor's Draft 18 June 2015
       </h2>
       <dl>
         <dt>
@@ -726,9 +726,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Let <a href="#presentation-message-type">presentation message type</a> <em>messageType</em>
             be <code>binary</code> if <code>data</code> is one of
-            <code>ArrayBuffer</code> or <code>Blob</code>. Let
-            <em>messageType</em> be <code>text</code> if <code>data</code> is
-            of type <code>DOMString</code>)
+            <code>ArrayBuffer</code>, <code>ArrayBufferView</code>, or
+            <code>Blob</code>. Let <em>messageType</em> be <code>text</code> if
+            <code>data</code> is of type <code>DOMString</code>)
             </li>
             <li>Assign the <dfn id="destination-browsing-context">destination browsing context</dfn> as follows:
               <ol>

@@ -660,9 +660,9 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             </li>
             <li>Let <span>presentation message type</span> <em>messageType</em>
             be <code>binary</code> if <code>data</code> is one of
-            <code>ArrayBuffer</code> or <code>Blob</code>. Let
-            <em>messageType</em> be <code>text</code> if <code>data</code> is
-            of type <code>DOMString</code>)
+            <code>ArrayBuffer</code>, <code>ArrayBufferView</code>, or
+            <code>Blob</code>. Let <em>messageType</em> be <code>text</code> if
+            <code>data</code> is of type <code>DOMString</code>)
             </li>
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
