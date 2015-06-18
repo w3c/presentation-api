@@ -1130,15 +1130,16 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>If either of the following is true:
               <ol>
-                <li>The <span>list of presentation displays</span> is empty;
+                <li>The <a href="#list-of-available-presentation-displays">list of available presentation displays</a> is
+                empty;
                 </li>
-                <li>No member if the <span>list of presentation displays</span>
-                is a <a href="#compatible-presentation-display">compatible presentation display</a> for
+                <li>No member if the list of available presentation displays is
+                a <a href="#compatible-presentation-display">compatible presentation display</a> for
                 <code>presentationUrl</code>;
                 </li>
               </ol>
             </li>
-            <li>Then:
+            <li>Then run the following steps:
               <ol>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
