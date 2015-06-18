@@ -612,8 +612,9 @@
   });
   navigator.presentation.getSession().then(addSession);
   navigator.presentation.onsessionavailable = function(evt) {
-    var sessions = navigator.presentation.getSessions();
-    addSession(sessions[sessions.length-1]);
+    navigator.presentation.getSessions().then(function(sessions) {
+      addSession(sessions[sessions.length-1]);
+    });
   };
 &lt;/script&gt;
         
@@ -1472,6 +1473,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             Establishing a presentation connection in a presenting browsing
             context
           </h4>
+          <p class="open-issue">
+            <a href="https://github.com/w3c/presentation-api/issues/19">ISSUE
+            19: Specify behavior when multiple controlling pages are connected
+            to the session</a>
+          </p>
           <p>
             When a new <a href="#presenting-browsing-context">presenting browsing context</a> has been
             created and navigated to the <code>presentationUrl</code> on a
@@ -1503,7 +1509,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">Queue a
               task</a> <var>T</var> to wait for and accept an incoming
               connection request from a <a href="#controlling-browsing-context">controlling browsing
-              context</a> using implementation specific mechanism.
+              context</a> using an implementation specific mechanism.
             </li>
             <li>When a new connection request is received from a
             <a href="#controlling-browsing-context">controlling browsing context</a>, run the following steps:
@@ -1601,17 +1607,18 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">Queue a
               task</a> to run the following steps in order:
               <ol>
-                <li>Let array be an empty array.
+                <li>Let <var>array</var> be an empty array.
                 </li>
                 <li>For each known session in the <a href="#set-of-presentations">set of
                 presentations</a>
                   <ol>
-                    <li>Add known session to the array.
+                    <li>Add known session to <var>array</var>.
                     </li>
                   </ol>
                 </li>
                 <li>
-                  <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <var>P</var> with array.
+                  <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Resolve</a> <var>P</var> with
+                  <var>array</var>.
                 </li>
               </ol>
             </li>
