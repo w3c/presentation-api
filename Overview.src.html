@@ -497,20 +497,29 @@
     localStorage &amp;&amp; delete localStorage["presId"];
   };
 &lt;/script&gt;
+        
 </pre>
         <pre class="example">
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
-  var session = navigator.presentation.session;
-  session.onstatechange = function () {
-    // session.state is either 'connected' or 'disconnected'
-    console.log("session's state is now", session.state);
-  };
-  session.onmessage = function (evt) {
-    if (evt.data == "say hello")
-      session.send("hello");
+  var addSession = function(session) {
+    session.onstatechange = function () {
+      // session.state is either 'connected' or 'disconnected'
+      console.log("session's state is now", session.state);
+    };
+    session.onmessage = function (evt) {
+      if (evt.data == "say hello")
+        session.send("hello");
+    }
+  });
+  navigator.presentation.getSession().then(addSession);
+  navigator.presentation.onsessionavailable = function(evt) {
+    navigator.presentation.getSessions().then(function(sessions) {
+      addSession(sessions[sessions.length-1]);
+    });
   };
 &lt;/script&gt;
+        
 </pre>
       </section>
     </section>
@@ -1019,19 +1028,20 @@ partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
         </p>
         <pre class="idl">
 interface <dfn>NavigatorPresentation</dfn> : EventTarget {
-  readonly attribute <span>PresentationSession</span>? <span>session</span>;
+  // This API used by controlling browsing context.
   Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url);
   Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString presentationId);
   Promise&lt;<span>Availability</span>&gt; <span>getAvailability</span>(DOMString url);
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
+
+  // This API used by presenting browsing context.                  
+  Promise&lt;<span>PresentationSession</span>&gt; <span>getSession</span>();
+  Promise&lt;<span>PresentationSession[]</span>&gt; <span>getSessions</span>();
+  attribute <span data-anolis-spec=
+"w3c-html">EventHandler</span> <span>onsessionavailable</span>;
 };
 </pre>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/52">ISSUE 52:
-          Specify the NavigatorPresentation.session attribute and its related
-          algorithms</a>
-        </p>
         <section>
           <h4>
             Starting a presentation session
@@ -1273,7 +1283,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
         </section>
         <section>
           <h4>
-            Establishing a presentation connection
+            Establishing a presentation connection in a controlling browsing
+            context
           </h4>
           <p>
             When the user agent is to <dfn>establish a presentation
@@ -1401,6 +1412,169 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
         </section>
         <section>
           <h4>
+            Establishing a presentation connection in a presenting browsing
+            context
+          </h4>
+          <p class="open-issue">
+            <a href="https://github.com/w3c/presentation-api/issues/19">ISSUE
+            19: Specify behavior when multiple controlling pages are connected
+            to the session</a>
+          </p>
+          <p>
+            When a new <span>presenting browsing context</span> has been
+            created and navigated to the <code>presentationUrl</code> on a
+            user-selected <span>presentation display</span>, the user agent
+            must run the following steps:
+          </p>
+          <ol>
+            <li>
+              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
+              task</span> to start the <span>monitoring of incoming
+              presentation sessions</span> from <span title=
+              "controlling browsing context">controlling browsing
+              contexts</span>.
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
+            Monitoring incoming presentation sessions in a presenting browsing
+            context
+          </h4>
+          <p>
+            When the user agent is to start <dfn>monitoring incoming
+            presentation sessions</dfn> in a <span>presenting browsing
+            context</span> from <span title=
+            "controlling browsing context">controlling browsing
+            contexts</span>, it must run the following steps:
+          </p>
+          <ol>
+            <li>
+              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
+              task</span> <var>T</var> to wait for and accept an incoming
+              connection request from a <span>controlling browsing
+              context</span> using an implementation specific mechanism.
+            </li>
+            <li>When a new connection request is received from a
+            <span>controlling browsing context</span>, run the following steps:
+              <ol>
+                <li>Create new <code>PresentationSession</code> <var>S</var>.
+                </li>
+                <li>Let <var>I</var> be a new <span>valid presentation session
+                identifier</span> unique among all <span>presentation session
+                identifier</span>s for known sessions in the <span>set of
+                presentations</span>.
+                </li>
+                <li>Set the <span>presentation session identifier</span> of
+                <var>S</var> to <var>I</var>.
+                </li>
+                <li>Establish the connection between the controlling and
+                presenting browsing contexts using an implementation specific
+                mechanism.
+                </li>
+                <li>Set the <span>presentation session state</span> of
+                <var>S</var> to <code>connected</code>.
+                </li>
+                <li>Add a tuple (<code>undefined</code>, <span>presentation
+                session identifier</span> of <var>S</var>, <var>S</var>) to the
+                <span>set of presentations</span>.
+                </li>
+                <li>
+                  <span data-anolis-spec="w3c-html" title="queue a task">Queue
+                  a task</span> to <span data-anolis-spec="w3c-html" title=
+                  "concept-event-fire">fire an event</span> named
+                  <code>sessionavailable</code> at
+                  <code>NavigatorPresentation</code>.
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
+            Getting the first connected presentation session on the startup of
+            a presenting browsing context
+          </h4>
+          <p>
+            When the <code>getSession()</code> method is called, the user agent
+            must run the following steps:
+          </p>
+          <ol>
+            <li>Let <var>P</var> be a new <span data-anolis-spec=
+            "webidl">Promise</span>.
+            </li>
+            <li>Return <var>P</var>.
+            </li>
+            <li>
+              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
+              task</span> <var>T</var> to run the following steps in order:
+              <ol>
+                <li>If the <span>set of presentations</span> is empty, then
+                wait until at least one element is added to the <span>set of
+                presentations</span>.
+                </li>
+                <li>Let <var>S</var> be the first <span>presentation
+                session</span> added to the <span>set of presentations</span>.
+                </li>
+                <li>
+                  <span data-anolis-spec="promguide" title=
+                  "resolve-reject">Resolve</span> <var>P</var> with
+                  <var>S</var>.
+                </li>
+              </ol>
+            </li>
+          </ol>
+          <p class="note">
+            If the <span>set of presentations</span> is empty, we leave the
+            <span data-anolis-spec="webidl">Promise</span> pending until
+            connecting request arrives from the <span>controlling browsing
+            context</span>. If the first <span>controlling browsing
+            context</span> disconnects after initial connection, then promise
+            returned to subsequent calls to <code>getSession()</code> will
+            resolve with <span>presentation session</span> that has it
+            <span>presentation session state</span> set to
+            <code>disconnected</code>.
+          </p>
+        </section>
+        <section>
+          <h4>
+            Getting all connected presentation sessions in a presenting
+            browsing context
+          </h4>
+          <p>
+            When the <code>getSessions()</code> method is called, the user
+            agent must run the following steps:
+          </p>
+          <ol>
+            <li>Let <var>P</var> be a new <span data-anolis-spec=
+            "webidl">Promise</span>.
+            </li>
+            <li>Return <var>P</var>.
+            </li>
+            <li>
+              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
+              task</span> to run the following steps in order:
+              <ol>
+                <li>Let <var>array</var> be an empty array.
+                </li>
+                <li>For each known session in the <span>set of
+                presentations</span>
+                  <ol>
+                    <li>Add known session to <var>array</var>.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  <span data-anolis-spec="promguide" title=
+                  "resolve-reject">Resolve</span> <var>P</var> with
+                  <var>array</var>.
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
             Event Handlers
           </h4>
           <p>
@@ -1427,6 +1601,14 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 </td>
                 <td>
                   <code>defaultsessionstart</code>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>onsessionavailable</code></dfn>
+                </td>
+                <td>
+                  <code>sessionavailable</code>
                 </td>
               </tr>
             </tbody>
