@@ -436,7 +436,8 @@
         <a href="#refsHTML5">[HTML5]</a>.
       </p>
       <p>
-        The term <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> is defined in <a href="#refsDOM">[DOM]</a>.
+        The term <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMException">DOMException</a> is defined
+        in <a href="#refsWEBIDL">[WEBIDL]</a>.
       </p>
       <p>
         This document provides interface definitions using the
@@ -449,15 +450,15 @@
       </p>
       <p>
         The term <a class="external" data-anolis-spec="url" href="https://url.spec.whatwg.org/#url">URL</a> is defined in the
-        WHATWG URL standard: <a href="#refsURL">[URL]</a>.
+        WHATWG URL standard <a href="#refsURL">[URL]</a>.
       </p>
       <p>
         The term <a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> is defined in the
-        File API specification: <a href="#refsFILEAPI">[FILEAPI]</a>.
+        File API specification <a href="#refsFILEAPI">[FILEAPI]</a>.
       </p>
       <p>
-        The term <dfn id="rtcdatachannel">RTCDataChannel</dfn> is defined in the WebRTC API
-        specification: <a href="http://w3c.github.io/webrtc-pc/#widl-RTCDataChannel-protocol">WEBRTC</a>.
+        The term <a class="external" data-anolis-spec="webrtc" href="http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a> is
+        defined in the WebRTC API specification <a class="informative" href="#refsWEBRTC">[WEBRTC]</a>.
       </p>
     </section>
     <section>
@@ -736,7 +737,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             multiple calls to <a href="#send"><code>send</code></a> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
-            <a href="#rtcdatachannel">RTCDataChannel</a> in reliable mode.
+            <a class="external" data-anolis-spec="webrtc" href="http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a> in reliable
+            mode.
           </p>
           <p>
             Let <dfn id="presentation-message-data">presentation message data</dfn> be the payload data to be
@@ -1165,7 +1167,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
               <ol>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
-                  <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> named
+                  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMException" title="domexception">DOMException</a> named
                   <code>"NotFoundError"</code>.
                 </li>
                 <li>Abort all remaining steps.
@@ -1220,7 +1222,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                           <ol>
                             <li>
                               <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> P with a
-                              <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> named
+                              <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMException" title="domexception">DOMException</a> named
                               <code>"OperationError"</code>.
                             </li>
                           </ol>
@@ -1234,7 +1236,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                   <ol>
                     <li>
                       <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
-                      <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> named
+                      <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMException" title="domexception">DOMException</a> named
                       <code>"AbortError"</code>.
                     </li>
                   </ol>
@@ -1326,7 +1328,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 </li>
                 <li>
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
-                  <a class="external" data-anolis-spec="dom" href="https://dom.spec.whatwg.org/#domexception" title="domexception">DOMException</a> named
+                  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMException" title="domexception">DOMException</a> named
                   <code>"NotFoundError"</code>.
                 </li>
               </ol>
@@ -1814,10 +1816,7 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
       <h2 id="references"><span class="secno">8 </span>
         References
       </h2>
-      <div id="anolis-references"><dl><dt id="refsDOM">[DOM]
-<dd><cite><a href="https://dom.spec.whatwg.org/">DOM</a></cite>, Anne van Kesteren, Aryeh Gregor and Ms2ger. WHATWG.
-
-<dt id="refsFILEAPI">[FILEAPI]
+      <div id="anolis-references"><dl><dt id="refsFILEAPI">[FILEAPI]
 <dd><cite><a href="http://dev.w3.org/2006/webapi/FileAPI/">File API</a></cite>, Arun Ranganathan and Jonas Sicking. W3C.
 
 <dt id="refsHTML5">[HTML5]
@@ -1834,6 +1833,9 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
 
 <dt id="refsWEBIDL">[WEBIDL]
 <dd><cite><a href="https://heycam.github.io/webidl/">Web IDL</a></cite>, Cameron McCormack. W3C.
+
+<dt id="refsWEBRTC">[WEBRTC]
+<dd>(Non-normative) <cite><a href="https://w3c.github.io/webrtc-pc/">WebRTC</a></cite>, Ian Hickson, Adam Bergkvist, Daniel C. Burnett et al.. W3C.
 
 </dl></div>
     </section>

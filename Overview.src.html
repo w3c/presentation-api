@@ -325,9 +325,8 @@
         <span data-anolis-ref="">HTML5</span>.
       </p>
       <p>
-        The term <span data-anolis-spec="dom" title=
-        "domexception">DOMException</span> is defined in <span data-anolis-ref=
-        "dom">DOM</span>.
+        The term <span data-anolis-spec="webidl">DOMException</span> is defined
+        in <span data-anolis-ref="webidl">WEBIDL</span>.
       </p>
       <p>
         This document provides interface definitions using the
@@ -344,16 +343,16 @@
       </p>
       <p>
         The term <span data-anolis-spec="url">URL</span> is defined in the
-        WHATWG URL standard: <span data-anolis-ref="url">URL</span>.
+        WHATWG URL standard <span data-anolis-ref="url">URL</span>.
       </p>
       <p>
         The term <span data-anolis-spec="fileapi">Blob</span> is defined in the
-        File API specification: <span data-anolis-ref="fileapi">FILEAPI</span>.
+        File API specification <span data-anolis-ref="fileapi">FILEAPI</span>.
       </p>
       <p>
-        The term <dfn>RTCDataChannel</dfn> is defined in the WebRTC API
-        specification: <a href=
-        "http://w3c.github.io/webrtc-pc/#widl-RTCDataChannel-protocol">WEBRTC</a>.
+        The term <span data-anolis-spec="webrtc">RTCDataChannel</span> is
+        defined in the WebRTC API specification <span data-anolis-ref="" class=
+        "informative">WEBRTC</span>.
       </p>
     </section>
     <section>
@@ -647,7 +646,8 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             multiple calls to <code>send</code> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
-            <span>RTCDataChannel</span> in reliable mode.
+            <span data-anolis-spec="webrtc">RTCDataChannel</span> in reliable
+            mode.
           </p>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
@@ -1093,7 +1093,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>
                   <span data-anolis-spec="promguide" title=
                   "resolve-reject">Reject</span> <em>P</em> with a
-                  <span data-anolis-spec="dom" title=
+                  <span data-anolis-spec="webidl" title=
                   "domexception">DOMException</span> named
                   <code>"NotFoundError"</code>.
                 </li>
@@ -1152,7 +1152,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                             <li>
                               <span data-anolis-spec="promguide" title=
                               "resolve-reject">Reject</span> P with a
-                              <span data-anolis-spec="dom" title=
+                              <span data-anolis-spec="webidl" title=
                               "domexception">DOMException</span> named
                               <code>"OperationError"</code>.
                             </li>
@@ -1168,7 +1168,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                     <li>
                       <span data-anolis-spec="promguide" title=
                       "resolve-reject">Reject</span> <em>P</em> with a
-                      <span data-anolis-spec="dom" title=
+                      <span data-anolis-spec="webidl" title=
                       "domexception">DOMException</span> named
                       <code>"AbortError"</code>.
                     </li>
@@ -1264,7 +1264,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>
                   <span data-anolis-spec="promguide" title=
                   "resolve-reject">Reject</span> <em>P</em> with a
-                  <span data-anolis-spec="dom" title=
+                  <span data-anolis-spec="webidl" title=
                   "domexception">DOMException</span> named
                   <code>"NotFoundError"</code>.
                 </li>
