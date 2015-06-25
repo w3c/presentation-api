@@ -104,18 +104,24 @@
           Version history:
         </dt>
         <dd>
-          <!--begin-link-->https://github.com/w3c/presentation-api/commits/ 
-          <!--end-link-->
+          <a href="https://github.com/w3c/presentation-api/commits/">GitHub
+          w3c/presentation-api/commits</a>
         </dd>
         <dt>
           Participate:
         </dt>
         <dd>
-          Send feedback to <a href=
-          "https://lists.w3.org/Archives/Public/public-secondscreen/">public-secondscreen@w3.org</a>
-          or <a href="https://github.com/w3c/presentation-api/issues/new">open
-          a new issue</a> (<a href=
+          <a href="https://github.com/w3c/presentation-api/">GitHub
+          w3c/presentation-api</a> (<a href=
+          "https://github.com/w3c/presentation-api/issues/new">file an
+          issue</a>, <a href=
           "https://github.com/w3c/presentation-api/issues/">open issues</a>)
+        </dd>
+        <dd>
+          Send feedback to <a href=
+          "mailto:public-secondscreen@w3.org">public-secondscreen@w3.org</a>
+          (<a href=
+          "https://lists.w3.org/Archives/Public/public-secondscreen/">archives</a>)
         </dd>
         <dt>
           Editors:
@@ -182,11 +188,12 @@
       </p>
       <p>
         This document is a <b>work in progress</b> and is subject to change.
-        Some sections are still incomplete or underspecified. Privacy and
-        security considerations need to be adjusted based on feedback and
-        experience. Open issues are noted inline. Please check the group's
+        Some sections are still incomplete or underspecified. <a href=
+        "#security-and-privacy-considerations">Security and privacy
+        considerations</a> need to be adjusted based on feedback and
+        experience. Some open issues are noted inline; please check the group's
         <a href="https://github.com/w3c/presentation-api/issues">issue
-        tracker</a> on GitHub for an accurate list. Feedback from early
+        tracker</a> on GitHub for all open issues. Feedback from early
         experimentations is encouraged to allow the Second Screen Presentation
         Working Group to evolve the specification based on implementation
         issues.
@@ -228,50 +235,54 @@
         Introduction
       </h2><em>This section is non-normative.</em>
       <p>
-        This specification aims to make secondary displays such as a projector
-        or a connected TV available to the web and takes into account displays
-        that are attached using wired (HDMI, DVI or similar) and wireless
-        technologies (MiraCast, Chromecast, DLNA, AirPlay or similar).
+        This specification aims to make <span>presentation display</span>s such
+        as projectors or connected TVs, available to the Web and takes into
+        account displays that are attached using wired (HDMI, DVI, or similar)
+        and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, or
+        similar).
       </p>
       <p>
         Devices with limited screen size lack the ability to show content to a
         larger audience, for example, a group of colleagues in a conference
         room, or friends and family at home. Showing content on an external
-        large display helps to improve the perceived quality and impact of the
-        presented content.
+        large <span>presentation display</span> helps to improve the perceived
+        quality and impact of the presented content.
       </p>
       <p>
         At its core, this specification enables an exchange of messages between
-        a requesting page and a presentation page shown in the secondary
-        display. How those messages are transmitted is left to the UA in order
-        to allow for the use of display devices that can be attached to a wide
-        variety of ways. For example, when a display device is attached using
-        HDMI or MiraCast, the UA on the requesting device can render the
-        requested presentation page in that same UA. Instead of displaying in a
-        window on that same device, however, it can use whatever means the
-        operating system provides for using those external displays. In that
-        case, both the requesting page and the presentation page run on the
-        requesting device and the operating system is used to route the
-        presentation display output to the other display device. The second
-        display device doesn't need to know anything about this spec or that
-        the content involves HTML5.
+        a page that acts as the <span>controller</span> and another page that
+        represents the <span>presentation</span> shown in the
+        <span>presentation display</span>. How the messages are transmitted is
+        left to the UA in order to allow the use of <span>presentation
+        display</span> devices that can be attached in a wide variety of ways.
+        For example, when a <span>presentation display</span> device is
+        attached using HDMI or Miracast, the same UA that acts as the
+        <span>controller</span> renders the <span>presentation</span>. Instead
+        of displaying the <span>presentation</span> in another window on the
+        same device, however, it can use whatever means the operating system
+        provides for using the external <span>presentation display</span>s. In
+        such a case, both the <span>controller</span> and
+        <span>presentation</span> run on the same UA and the operating system
+        is used to route the <span>presentation display</span> output to the
+        <span>presentation display</span>. This specification imposes no
+        requirements on the <span>presentation display</span> devices connected
+        in such a manner.
       </p>
       <p>
-        Alternately, some types of external displays may be able to render
-        HTML5 themselves and may have defined their way to send messages to
-        that content. In that case, the UA on the requesting device would not
-        need to render the presentation page itself. Instead, the UA could act
-        as a proxy translating the request to show a page and the messages into
-        the form understood by the display device.
-      </p>
-      <p>
-        This way of attaching to displays could be enhanced in the future by
-        defining a standard protocol for delivering these types of messages
-        that display devices could choose to implement.
+        If the <span>presentation display</span> is able to able to render HTML
+        documents and communicate with the <span>controller</span>, the
+        <span>controller</span> does not need to render the
+        <span>presentation</span>. In this case, the UA acts as a proxy that
+        requests the <span>presentation display</span> to show and render the
+        <span>presentation</span> itself. This way of attaching to displays
+        could be enhanced in the future by defining a standard protocol for
+        delivering these types of messages that display devices could choose to
+        implement.
       </p>
       <p>
         The API defined here is intended to be used with UAs that attach to
-        display devices through any of the above means.
+        <span>presentation display</span> devices through any of the above
+        means.
       </p>
     </section>
     <section id="use-cases-and-requirements">
@@ -325,9 +336,8 @@
         <span data-anolis-ref="">HTML5</span>.
       </p>
       <p>
-        The term <span data-anolis-spec="dom" title=
-        "domexception">DOMException</span> is defined in <span data-anolis-ref=
-        "dom">DOM</span>.
+        The term <span data-anolis-spec="webidl">DOMException</span> is defined
+        in <span data-anolis-ref="webidl">WEBIDL</span>.
       </p>
       <p>
         This document provides interface definitions using the
@@ -344,26 +354,22 @@
       </p>
       <p>
         The term <span data-anolis-spec="url">URL</span> is defined in the
-        WHATWG URL standard: <span data-anolis-ref="url">URL</span>.
+        WHATWG URL standard <span data-anolis-ref="url">URL</span>.
       </p>
       <p>
         The term <span data-anolis-spec="fileapi">Blob</span> is defined in the
-        File API specification: <span data-anolis-ref="fileapi">FILEAPI</span>.
+        File API specification <span data-anolis-ref="fileapi">FILEAPI</span>.
       </p>
       <p>
-        The term <dfn>RTCDataChannel</dfn> is defined in the WebRTC API
-        specification: <a href=
-        "http://w3c.github.io/webrtc-pc/#widl-RTCDataChannel-protocol">WEBRTC</a>.
+        The term <span data-anolis-spec="webrtc">RTCDataChannel</span> is
+        defined in the WebRTC API specification <span data-anolis-ref="" class=
+        "informative">WEBRTC</span>.
       </p>
     </section>
     <section>
       <h2>
         Examples
       </h2>
-      <p class="open-issue">
-        <a href="https://github.com/w3c/presentation-api/issues/42">ISSUE 42:
-        Make the Example section more concise</a>
-      </p>
       <p>
         This section shows example codes that highlight the usage of main
         features of the Presentation API. In these examples,
@@ -551,25 +557,26 @@
           presentations</span>.
         </p>
         <p>
-          A <dfn>controlling browsing context</dfn> (or <em>controller</em> for
-          short) is a <span data-anolis-spec="w3c-html">browsing context</span>
-          that has initiated or resumed a <span>presentation session</span> by
-          calling <code><span>startSession</span>()</code> or
+          A <dfn>controlling browsing context</dfn> (or <dfn>controller</dfn>
+          for short) is a <span data-anolis-spec="w3c-html">browsing
+          context</span> that has initiated or resumed a <span>presentation
+          session</span> by calling <code><span>startSession</span>()</code> or
           <code><span>joinSession</span>()</code> or received a
           <span>presentation session</span> via
           <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
-          The <dfn>presenting browsing context</dfn> (or <em>presentation</em>
-          for short) is the browsing context responsible for rendering to a
-          <span>presentation display</span>. A <span>presenting browsing
-          context</span> can reside in the same user agent as the
-          <span>controlling browsing context</span> or a different one.
+          The <dfn>presenting browsing context</dfn> (or
+          <dfn>presentation</dfn> for short) is the browsing context
+          responsible for rendering to a <span>presentation display</span>. A
+          <span>presenting browsing context</span> can reside in the same user
+          agent as the <span>controlling browsing context</span> or a different
+          one.
         </p>
         <p>
           The <dfn>set of presentations</dfn>, initially empty, contains the
-          <span>presentation sessions</span> created by the <span>controlling
-          browsing contexts</span> for the user agent (or a specific user
+          <span>presentation session</span>s created by the <span>controlling
+          browsing context</span>s for the user agent (or a specific user
           profile within the user agent). The <span>set of presentations</span>
           is represented by a list of tuples, where each tuple consists of a
           <span>presentation session URL</span>, a <span>presentation session
@@ -636,22 +643,19 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           algorithm to <span title="close-algorithm">close a presentation
           session</span> with <code>PresentationSession</code>.
         </p>
-        <p class="open-issue">
-          <a href="https://github.com/w3c/presentation-api/issues/34">ISSUE 34:
-          Specify the presentation initialization algorithm</a>
-        </p>
         <section>
           <h4>
             Sending a message through <code>PresentationSession</code>
           </h4>
           <p class="note">
-            Presentation API does not mandate a specific transport for the
-            connection between the <span>controlling browsing context</span>
-            and the <span>presenting browsing context</span>, except that for
-            multiple calls to <code>send</code> it has to be ensured that
+            No specific transport for the connection between the
+            <span>controlling browsing context</span> and the <span>presenting
+            browsing context</span> is mandated, except that for multiple calls
+            to <code title="send">send()</code> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
-            <span>RTCDataChannel</span> in reliable mode.
+            <span data-anolis-spec="webrtc"><code>RTCDataChannel</code></span>
+            in reliable mode.
           </p>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
@@ -678,13 +682,14 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <span>destination browsing context</span> be
-                the <span>controlling browsing context</span> if
-                <span>send</span> is called in the <span>presenting browsing
+                the <span>controlling browsing context</span> if <code title=
+                "send">send()</code> is called in the <span>presenting browsing
                 context</span>.
                 </li>
                 <li>Let <span>destination browsing context</span> be the <span>
-                  presenting browsing context</span> if <span>send</span> is
-                  called from the <span>opening browsing context</span>.
+                  presenting browsing context</span> if <code title=
+                  "send">send()</code> is called from the <span>controlling
+                  browsing context</span>.
                 </li>
               </ol>
             </li>
@@ -748,11 +753,6 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
               <span><code>PresentationSession</code></span>.
             </li>
           </ol>
-          <p class="open-issue">
-            <a href="https://github.com/w3c/presentation-api/issues/63">ISSUE
-            63: Define (cross) origin relationship between opener and
-            presenting page</a>
-          </p>
         </section>
         <section>
           <h4>
@@ -851,15 +851,37 @@ interface <dfn>Availability</dfn> : EventTarget {
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>onchange</span>;  
 };
+        
 </pre>
         <p>
-          The <code>change</code> event is fired during the execution of the
-          <span>monitor the list of available presentation displays</span>
-          algorithm. It is fired at the <span><code>Availability</code></span>
-          object, using the <code>ChangeEvent</code> interface. The
-          <code>Availability</code> object's <code>value</code> attribute is
-          updated to the boolean value that the algorithm determined.
+          An <code>Availability</code> object is associated with a
+          <span>presentation display</span> and represents its
+          <dfn>presentation display availability</dfn>.
         </p>
+        <p>
+          The <code>value</code> attribute must return the last value it was
+          set to. The value is updated by the <span>monitor the list of
+          available presentation displays</span> algorithm.
+        </p>
+        <p>
+          The <code>onchange</code> attribute is an <span data-anolis-spec=
+          "w3c-html" title="event handlers">event handler</span> whose
+          corresponding <span data-anolis-spec="w3c-html">event handler event
+          type</span> is <code>change</code>.
+        </p>
+        <p>
+          When the user agent is to <dfn>signal a presentation display
+          availability change</dfn> using <var>availability object</var>, the
+          user agent must run the following steps:
+        </p>
+        <ol>
+          <li>
+            <span data-anolis-spec="w3c-html">Queue a task</span> to
+            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
+            an event</span> named <code>change</code> at <em>availability
+            object</em>.
+          </li>
+        </ol>
         <section>
           <h4>
             The set of availability objects
@@ -944,7 +966,7 @@ interface <dfn>Availability</dfn> : EventTarget {
           <p>
             If <span>set of availability objects</span> is non-empty, or there
             is a pending request to <span title="startSession">start a
-            session</span>, the user agent can <dfn>monitor the list of
+            session</span>, the user agent must <dfn>monitor the list of
             available presentation displays</dfn> by running the following
             steps.
           </p>
@@ -977,10 +999,8 @@ interface <dfn>Availability</dfn> : EventTarget {
                   "resolve-reject">resolve</span> <em>P</em> with <em>A</em>.
                 </li>
                 <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, <span data-anolis-spec=
-                "w3c-html">queue a task</span> to <span data-anolis-spec=
-                "w3c-html" title="concept-event-fire">fire an event</span>
-                named <code>change</code> at <em>A</em>.
+                <em>newAvailability</em>, <span>signal a presentation display
+                availability change</span> with <em>A</em>.
                 </li>
               </ol>
             </li>
@@ -1018,13 +1038,15 @@ interface <dfn>Availability</dfn> : EventTarget {
         </h3>
         <pre class="idl">
 partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
-  readonly attribute <span>NavigatorPresentation</span> <span>presentation</span>;
+  readonly attribute <span>NavigatorPresentation</span> <span title=
+"navigator-presentation">presentation</span>;
 };
 </pre>
         <p>
-          The <dfn><code>presentation</code></dfn> attribute is used to
-          retrieve an instance of the <code>NavigatorPresentation</code>
-          interface, the main interface of Presentation API.
+          The <dfn title=
+          "navigator-presentation"><code>presentation</code></dfn> attribute is
+          used to retrieve an instance of the
+          <code>NavigatorPresentation</code> interface.
         </p>
         <pre class="idl">
 interface <dfn>NavigatorPresentation</dfn> : EventTarget {
@@ -1097,7 +1119,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>
                   <span data-anolis-spec="promguide" title=
                   "resolve-reject">Reject</span> <em>P</em> with a
-                  <span data-anolis-spec="dom" title=
+                  <span data-anolis-spec="webidl" title=
                   "domexception">DOMException</span> named
                   <code>"NotFoundError"</code>.
                 </li>
@@ -1156,7 +1178,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                             <li>
                               <span data-anolis-spec="promguide" title=
                               "resolve-reject">Reject</span> P with a
-                              <span data-anolis-spec="dom" title=
+                              <span data-anolis-spec="webidl" title=
                               "domexception">DOMException</span> named
                               <code>"OperationError"</code>.
                             </li>
@@ -1172,7 +1194,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                     <li>
                       <span data-anolis-spec="promguide" title=
                       "resolve-reject">Reject</span> <em>P</em> with a
-                      <span data-anolis-spec="dom" title=
+                      <span data-anolis-spec="webidl" title=
                       "domexception">DOMException</span> named
                       <code>"AbortError"</code>.
                     </li>
@@ -1268,7 +1290,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>
                   <span data-anolis-spec="promguide" title=
                   "resolve-reject">Reject</span> <em>P</em> with a
-                  <span data-anolis-spec="dom" title=
+                  <span data-anolis-spec="webidl" title=
                   "domexception">DOMException</span> named
                   <code>"NotFoundError"</code>.
                 </li>
