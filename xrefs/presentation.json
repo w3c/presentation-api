@@ -28,6 +28,7 @@
     "onstatechange": "onstatechange",
     "presentation": "presentation",
     "presentation display": "presentation-display",
+    "presentation display availability": "presentation-display-availability",
     "presentation message data": "presentation-message-data",
     "presentation message type": "presentation-message-type",
     "presentation session": "presentation-session",
@@ -44,6 +45,7 @@
     "send-blob": "send-blob",
     "set of availability objects": "set-of-availability-objects",
     "set of presentations": "set-of-presentations",
+    "signal a presentation display availability change": "signal-a-presentation-display-availability-change",
     "startsession": "startsession",
     "state": "state",
     "valid presentation session identifier": "valid-presentation-session-identifier"

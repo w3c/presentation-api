@@ -851,15 +851,37 @@ interface <dfn>Availability</dfn> : EventTarget {
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>onchange</span>;  
 };
+        
 </pre>
         <p>
-          The <code>change</code> event is fired during the execution of the
-          <span>monitor the list of available presentation displays</span>
-          algorithm. It is fired at the <span><code>Availability</code></span>
-          object, using the <code>ChangeEvent</code> interface. The
-          <code>Availability</code> object's <code>value</code> attribute is
-          updated to the boolean value that the algorithm determined.
+          An <code>Availability</code> object is associated with a
+          <span>presentation display</span> and represents its
+          <dfn>presentation display availability</dfn>.
         </p>
+        <p>
+          The <code>value</code> attribute must return the last value it was
+          set to. The value is updated by the <span>monitor the list of
+          available presentation displays</span> algorithm.
+        </p>
+        <p>
+          The <code>onchange</code> attribute is an <span data-anolis-spec=
+          "w3c-html" title="event handlers">event handler</span> whose
+          corresponding <span data-anolis-spec="w3c-html">event handler event
+          type</span> is <code>change</code>.
+        </p>
+        <p>
+          When the user agent is to <dfn>signal a presentation display
+          availability change</dfn> using <var>availability object</var>, the
+          user agent must run the following steps:
+        </p>
+        <ol>
+          <li>
+            <span data-anolis-spec="w3c-html">Queue a task</span> to
+            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
+            an event</span> named <code>change</code> at <em>availability
+            object</em>.
+          </li>
+        </ol>
         <section>
           <h4>
             The set of availability objects
@@ -944,7 +966,7 @@ interface <dfn>Availability</dfn> : EventTarget {
           <p>
             If <span>set of availability objects</span> is non-empty, or there
             is a pending request to <span title="startSession">start a
-            session</span>, the user agent can <dfn>monitor the list of
+            session</span>, the user agent must <dfn>monitor the list of
             available presentation displays</dfn> by running the following
             steps.
           </p>
@@ -977,10 +999,8 @@ interface <dfn>Availability</dfn> : EventTarget {
                   "resolve-reject">resolve</span> <em>P</em> with <em>A</em>.
                 </li>
                 <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, <span data-anolis-spec=
-                "w3c-html">queue a task</span> to <span data-anolis-spec=
-                "w3c-html" title="concept-event-fire">fire an event</span>
-                named <code>change</code> at <em>A</em>.
+                <em>newAvailability</em>, <span>signal a presentation display
+                availability change</span> with <em>A</em>.
                 </li>
               </ol>
             </li>

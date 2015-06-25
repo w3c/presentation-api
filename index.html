@@ -932,15 +932,36 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   readonly attribute boolean value;
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <span>onchange</span>;  
 };
+        
 </pre>
         <p>
-          The <code>change</code> event is fired during the execution of the
-          <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation displays</a>
-          algorithm. It is fired at the <a href="#availability"><code>Availability</code></a>
-          object, using the <code>ChangeEvent</code> interface. The
-          <a href="#availability"><code>Availability</code></a> object's <code>value</code> attribute is
-          updated to the boolean value that the algorithm determined.
+          An <a href="#availability"><code>Availability</code></a> object is associated with a
+          <a href="#presentation-display">presentation display</a> and represents its
+          <dfn id="presentation-display-availability">presentation display availability</dfn>.
         </p>
+        <p>
+          The <code>value</code> attribute must return the last value it was
+          set to. The value is updated by the <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of
+          available presentation displays</a> algorithm.
+        </p>
+        <p>
+          The <code>onchange</code> attribute is an <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers" title="event handlers">event handler</a> whose
+          corresponding <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type">event handler event
+          type</a> is <code>change</code>.
+        </p>
+        <p>
+          When the user agent is to <dfn id="signal-a-presentation-display-availability-change">signal a presentation display
+          availability change</dfn> using <var>availability object</var>, the
+          user agent must run the following steps:
+        </p>
+        <ol>
+          <li>
+            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
+            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire
+            an event</a> named <code>change</code> at <em>availability
+            object</em>.
+          </li>
+        </ol>
         <section>
           <h4 id="the-set-of-availability-objects"><span class="secno">6.3.1 </span>
             The set of availability objects
@@ -1021,7 +1042,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <p>
             If <a href="#set-of-availability-objects">set of availability objects</a> is non-empty, or there
             is a pending request to <a href="#startsession" title="startSession">start a
-            session</a>, the user agent can <dfn id="monitor-the-list-of-available-presentation-displays-0">monitor the list of
+            session</a>, the user agent must <dfn id="monitor-the-list-of-available-presentation-displays-0">monitor the list of
             available presentation displays</dfn> by running the following
             steps.
           </p>
@@ -1053,8 +1074,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolve</a> <em>P</em> with <em>A</em>.
                 </li>
                 <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">queue a task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a>
-                named <code>change</code> at <em>A</em>.
+                <em>newAvailability</em>, <a href="#signal-a-presentation-display-availability-change">signal a presentation display
+                availability change</a> with <em>A</em>.
                 </li>
               </ol>
             </li>
