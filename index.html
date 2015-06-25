@@ -735,14 +735,14 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             Sending a message through <a href="#presentationsession"><code>PresentationSession</code></a>
           </h4>
           <p class="note">
-            Presentation API does not mandate a specific transport for the
-            connection between the <a href="#controlling-browsing-context">controlling browsing context</a>
-            and the <a href="#presenting-browsing-context">presenting browsing context</a>, except that for
-            multiple calls to <a href="#send"><code>send</code></a> it has to be ensured that
+            No specific transport for the connection between the
+            <a href="#controlling-browsing-context">controlling browsing context</a> and the <a href="#presenting-browsing-context">presenting
+            browsing context</a> is mandated, except that for multiple calls
+            to <a href="#send"><code title="send">send()</code></a> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
-            <a class="external" data-anolis-spec="webrtc" href="http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a> in reliable
-            mode.
+            <a class="external" data-anolis-spec="webrtc" href="http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel"><code>RTCDataChannel</code></a>
+            in reliable mode.
           </p>
           <p>
             Let <dfn id="presentation-message-data">presentation message data</dfn> be the payload data to be
@@ -769,13 +769,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <li>Assign the <dfn id="destination-browsing-context">destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <a href="#destination-browsing-context">destination browsing context</a> be
-                the <a href="#controlling-browsing-context">controlling browsing context</a> if
-                <a href="#send">send</a> is called in the <a href="#presenting-browsing-context">presenting browsing
+                the <a href="#controlling-browsing-context">controlling browsing context</a> if <a href="#send"><code title="send">send()</code></a> is called in the <a href="#presenting-browsing-context">presenting browsing
                 context</a>.
                 </li>
                 <li>Let <a href="#destination-browsing-context">destination browsing context</a> be the <a href="#presenting-browsing-context">
-                  presenting browsing context</a> if <a href="#send">send</a> is
-                  called from the <span>opening browsing context</span>.
+                  presenting browsing context</a> if <a href="#send"><code title="send">send()</code></a> is called from the <a href="#controlling-browsing-context">controlling
+                  browsing context</a>.
                 </li>
               </ol>
             </li>

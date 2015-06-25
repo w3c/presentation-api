@@ -648,14 +648,14 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             Sending a message through <code>PresentationSession</code>
           </h4>
           <p class="note">
-            Presentation API does not mandate a specific transport for the
-            connection between the <span>controlling browsing context</span>
-            and the <span>presenting browsing context</span>, except that for
-            multiple calls to <code>send</code> it has to be ensured that
+            No specific transport for the connection between the
+            <span>controlling browsing context</span> and the <span>presenting
+            browsing context</span> is mandated, except that for multiple calls
+            to <code title="send">send()</code> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
-            <span data-anolis-spec="webrtc">RTCDataChannel</span> in reliable
-            mode.
+            <span data-anolis-spec="webrtc"><code>RTCDataChannel</code></span>
+            in reliable mode.
           </p>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
@@ -682,13 +682,14 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
                 <li>Let the the <span>destination browsing context</span> be
-                the <span>controlling browsing context</span> if
-                <span>send</span> is called in the <span>presenting browsing
+                the <span>controlling browsing context</span> if <code title=
+                "send">send()</code> is called in the <span>presenting browsing
                 context</span>.
                 </li>
                 <li>Let <span>destination browsing context</span> be the <span>
-                  presenting browsing context</span> if <span>send</span> is
-                  called from the <span>opening browsing context</span>.
+                  presenting browsing context</span> if <code title=
+                  "send">send()</code> is called from the <span>controlling
+                  browsing context</span>.
                 </li>
               </ol>
             </li>
