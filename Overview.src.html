@@ -235,50 +235,54 @@
         Introduction
       </h2><em>This section is non-normative.</em>
       <p>
-        This specification aims to make secondary displays such as a projector
-        or a connected TV available to the web and takes into account displays
-        that are attached using wired (HDMI, DVI or similar) and wireless
-        technologies (MiraCast, Chromecast, DLNA, AirPlay or similar).
+        This specification aims to make <span>presentation display</span>s such
+        as projectors or connected TVs, available to the Web and takes into
+        account displays that are attached using wired (HDMI, DVI, or similar)
+        and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, or
+        similar).
       </p>
       <p>
         Devices with limited screen size lack the ability to show content to a
         larger audience, for example, a group of colleagues in a conference
         room, or friends and family at home. Showing content on an external
-        large display helps to improve the perceived quality and impact of the
-        presented content.
+        large <span>presentation display</span> helps to improve the perceived
+        quality and impact of the presented content.
       </p>
       <p>
         At its core, this specification enables an exchange of messages between
-        a requesting page and a presentation page shown in the secondary
-        display. How those messages are transmitted is left to the UA in order
-        to allow for the use of display devices that can be attached to a wide
-        variety of ways. For example, when a display device is attached using
-        HDMI or MiraCast, the UA on the requesting device can render the
-        requested presentation page in that same UA. Instead of displaying in a
-        window on that same device, however, it can use whatever means the
-        operating system provides for using those external displays. In that
-        case, both the requesting page and the presentation page run on the
-        requesting device and the operating system is used to route the
-        presentation display output to the other display device. The second
-        display device doesn't need to know anything about this spec or that
-        the content involves HTML5.
+        a page that acts as the <span>controller</span> and another page that
+        represents the <span>presentation</span> shown in the
+        <span>presentation display</span>. How the messages are transmitted is
+        left to the UA in order to allow the use of <span>presentation
+        display</span> devices that can be attached in a wide variety of ways.
+        For example, when a <span>presentation display</span> device is
+        attached using HDMI or Miracast, the same UA that acts as the
+        <span>controller</span> renders the <span>presentation</span>. Instead
+        of displaying the <span>presentation</span> in another window on the
+        same device, however, it can use whatever means the operating system
+        provides for using the external <span>presentation display</span>s. In
+        such a case, both the <span>controller</span> and
+        <span>presentation</span> run on the same UA and the operating system
+        is used to route the <span>presentation display</span> output to the
+        <span>presentation display</span>. This specification imposes no
+        requirements on the <span>presentation display</span> devices connected
+        in such a manner.
       </p>
       <p>
-        Alternately, some types of external displays may be able to render
-        HTML5 themselves and may have defined their way to send messages to
-        that content. In that case, the UA on the requesting device would not
-        need to render the presentation page itself. Instead, the UA could act
-        as a proxy translating the request to show a page and the messages into
-        the form understood by the display device.
-      </p>
-      <p>
-        This way of attaching to displays could be enhanced in the future by
-        defining a standard protocol for delivering these types of messages
-        that display devices could choose to implement.
+        If the <span>presentation display</span> is able to able to render HTML
+        documents and communicate with the <span>controller</span>, the
+        <span>controller</span> does not need to render the
+        <span>presentation</span>. In this case, the UA acts as a proxy that
+        requests the <span>presentation display</span> to show and render the
+        <span>presentation</span> itself. This way of attaching to displays
+        could be enhanced in the future by defining a standard protocol for
+        delivering these types of messages that display devices could choose to
+        implement.
       </p>
       <p>
         The API defined here is intended to be used with UAs that attach to
-        display devices through any of the above means.
+        <span>presentation display</span> devices through any of the above
+        means.
       </p>
     </section>
     <section id="use-cases-and-requirements">
@@ -553,20 +557,21 @@
           presentations</span>.
         </p>
         <p>
-          A <dfn>controlling browsing context</dfn> (or <em>controller</em> for
-          short) is a <span data-anolis-spec="w3c-html">browsing context</span>
-          that has initiated or resumed a <span>presentation session</span> by
-          calling <code><span>startSession</span>()</code> or
+          A <dfn>controlling browsing context</dfn> (or <dfn>controller</dfn>
+          for short) is a <span data-anolis-spec="w3c-html">browsing
+          context</span> that has initiated or resumed a <span>presentation
+          session</span> by calling <code><span>startSession</span>()</code> or
           <code><span>joinSession</span>()</code> or received a
           <span>presentation session</span> via
           <code><span>ondefaultsessionstart</span></code> event.
         </p>
         <p>
-          The <dfn>presenting browsing context</dfn> (or <em>presentation</em>
-          for short) is the browsing context responsible for rendering to a
-          <span>presentation display</span>. A <span>presenting browsing
-          context</span> can reside in the same user agent as the
-          <span>controlling browsing context</span> or a different one.
+          The <dfn>presenting browsing context</dfn> (or
+          <dfn>presentation</dfn> for short) is the browsing context
+          responsible for rendering to a <span>presentation display</span>. A
+          <span>presenting browsing context</span> can reside in the same user
+          agent as the <span>controlling browsing context</span> or a different
+          one.
         </p>
         <p>
           The <dfn>set of presentations</dfn>, initially empty, contains the
@@ -1021,13 +1026,15 @@ interface <dfn>Availability</dfn> : EventTarget {
         </h3>
         <pre class="idl">
 partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
-  readonly attribute <span>NavigatorPresentation</span> <span>presentation</span>;
+  readonly attribute <span>NavigatorPresentation</span> <span title=
+"navigator-presentation">presentation</span>;
 };
 </pre>
         <p>
-          The <dfn><code>presentation</code></dfn> attribute is used to
-          retrieve an instance of the <code>NavigatorPresentation</code>
-          interface, the main interface of Presentation API.
+          The <dfn title=
+          "navigator-presentation"><code>presentation</code></dfn> attribute is
+          used to retrieve an instance of the
+          <code>NavigatorPresentation</code> interface.
         </p>
         <pre class="idl">
 interface <dfn>NavigatorPresentation</dfn> : EventTarget {
