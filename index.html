@@ -434,7 +434,7 @@
       <p>
         The terms <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#browsing-context">browsing context</a>,
         <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handlers">event handlers</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type" title="event handler event type">event handler
-        event types</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">firing an event</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">queing a task</a> are defined in
+        event types</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">firing an event</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/browsers.html#navigate">navigate</a>, <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">queuing a task</a> are defined in
         <a href="#refsHTML5">[HTML5]</a>.
       </p>
       <p>
@@ -634,7 +634,7 @@
           technology.
         </p>
         <p>
-          A <dfn id="presentation-session">presentation session</dfn> is an object relating an
+          A <dfn id="presentation-session">presentation session</dfn> is an object relating a
           <a href="#controlling-browsing-context">controlling browsing context</a> to its <a href="#presenting-browsing-context">presenting
           browsing context</a> and enables two-way-messaging between them.
           Each <a href="#presentation-session">presentation session</a> has a <dfn id="presentation-session-state">presentation
@@ -763,8 +763,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
             <li>Assign the <dfn id="destination-browsing-context">destination browsing context</dfn> as follows:
               <ol>
-                <li>Let the the <a href="#destination-browsing-context">destination browsing context</a> be
-                the <a href="#controlling-browsing-context">controlling browsing context</a> if <a href="#send"><code title="send">send()</code></a> is called in the <a href="#presenting-browsing-context">presenting browsing
+                <li>Let the <a href="#destination-browsing-context">destination browsing context</a> be the
+                <a href="#controlling-browsing-context">controlling browsing context</a> if <a href="#send"><code title="send">send()</code></a> is called in the <a href="#presenting-browsing-context">presenting browsing
                 context</a>.
                 </li>
                 <li>Let <a href="#destination-browsing-context">destination browsing context</a> be the <a href="#presenting-browsing-context">
@@ -1188,9 +1188,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 </li>
               </ol>
             </li>
-            <li>Queue a task <em>T</em> to request user permission for the use
-            of a <a data-anolis-ref="presentation" href="#presentation-display">presentation
-            display</a> and selection of one presentation display.
+            <li>
+              <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> <em>T</em>
+              to request user permission for the use of a
+              <a data-anolis-ref="presentation" href="#presentation-display">presentation display</a>
+              and selection of one presentation display.
               <ol>
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
@@ -1382,8 +1384,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>Set the <a href="#presentation-session-state">presentation session state</a> of
                 <var>S</var> to <code>connected.</code>
                 </li>
-                <li>Queue a task <em>T</em> to run the following steps in
-                order:
+                <li>
+                  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a>
+                  <em>T</em> to run the following steps in order:
                   <ol>
                     <li>For each <var>known session</var> in the <a href="#set-of-presentations">set of
                     presentations</a>:
@@ -1499,8 +1502,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           <ol>
             <li>
               <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">Queue a
-              task</a> to start the <span>monitoring of incoming
-              presentation sessions</span> from <a href="#controlling-browsing-context" title="controlling browsing context">controlling browsing
+              task</a> to start <a href="#monitoring-incoming-presentation-sessions">monitoring incoming presentation
+              sessions</a> from <a href="#controlling-browsing-context" title="controlling browsing context">controlling browsing
               contexts</a>.
             </li>
           </ol>
@@ -1594,11 +1597,11 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a> pending until
             connecting request arrives from the <a href="#controlling-browsing-context">controlling browsing
             context</a>. If the first <a href="#controlling-browsing-context">controlling browsing
-            context</a> disconnects after initial connection, then promise
-            returned to subsequent calls to <code>getSession()</code> will
-            resolve with <a href="#presentation-session">presentation session</a> that has it
-            <a href="#presentation-session-state">presentation session state</a> set to
-            <code>disconnected</code>.
+            context</a> disconnects after initial connection, then the
+            <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-promise">Promise</a> returned to
+            subsequent calls to <code>getSession()</code> will resolve with a
+            <a href="#presentation-session">presentation session</a> that has its <a href="#presentation-session-state">presentation
+            session state</a> set to <code>disconnected</code>.
           </p>
         </section>
         <section>

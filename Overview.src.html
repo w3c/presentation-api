@@ -327,7 +327,7 @@
         event types</span>, <span data-anolis-spec="w3c-html" title=
         "concept-event-fire">firing an event</span>, <span data-anolis-spec=
         "w3c-html">navigate</span>, <span data-anolis-spec="w3c-html" title=
-        "queue a task">queing a task</span> are defined in
+        "queue a task">queuing a task</span> are defined in
         <span data-anolis-ref="">HTML5</span>.
       </p>
       <p>
@@ -538,7 +538,7 @@
           technology.
         </p>
         <p>
-          A <dfn>presentation session</dfn> is an object relating an
+          A <dfn>presentation session</dfn> is an object relating a
           <span>controlling browsing context</span> to its <span>presenting
           browsing context</span> and enables two-way-messaging between them.
           Each <span>presentation session</span> has a <dfn>presentation
@@ -676,8 +676,8 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
             </li>
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
-                <li>Let the the <span>destination browsing context</span> be
-                the <span>controlling browsing context</span> if <code title=
+                <li>Let the <span>destination browsing context</span> be the
+                <span>controlling browsing context</span> if <code title=
                 "send">send()</code> is called in the <span>presenting browsing
                 context</span>.
                 </li>
@@ -1122,9 +1122,11 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 </li>
               </ol>
             </li>
-            <li>Queue a task <em>T</em> to request user permission for the use
-            of a <span data-anolis-ref="presentation">presentation
-            display</span> and selection of one presentation display.
+            <li>
+              <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
+              to request user permission for the use of a
+              <span data-anolis-ref="presentation">presentation display</span>
+              and selection of one presentation display.
               <ol>
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
@@ -1326,8 +1328,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 <li>Set the <span>presentation session state</span> of
                 <var>S</var> to <code>connected.</code>
                 </li>
-                <li>Queue a task <em>T</em> to run the following steps in
-                order:
+                <li>
+                  <span data-anolis-spec="w3c-html">Queue a task</span>
+                  <em>T</em> to run the following steps in order:
                   <ol>
                     <li>For each <var>known session</var> in the <span>set of
                     presentations</span>:
@@ -1446,8 +1449,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
           <ol>
             <li>
               <span data-anolis-spec="w3c-html" title="queue a task">Queue a
-              task</span> to start the <span>monitoring of incoming
-              presentation sessions</span> from <span title=
+              task</span> to start <span>monitoring incoming presentation
+              sessions</span> from <span title=
               "controlling browsing context">controlling browsing
               contexts</span>.
             </li>
@@ -1546,11 +1549,11 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             <span data-anolis-spec="webidl">Promise</span> pending until
             connecting request arrives from the <span>controlling browsing
             context</span>. If the first <span>controlling browsing
-            context</span> disconnects after initial connection, then promise
-            returned to subsequent calls to <code>getSession()</code> will
-            resolve with <span>presentation session</span> that has it
-            <span>presentation session state</span> set to
-            <code>disconnected</code>.
+            context</span> disconnects after initial connection, then the
+            <span data-anolis-spec="webidl">Promise</span> returned to
+            subsequent calls to <code>getSession()</code> will resolve with a
+            <span>presentation session</span> that has its <span>presentation
+            session state</span> set to <code>disconnected</code>.
           </p>
         </section>
         <section>
