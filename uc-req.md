@@ -10,7 +10,7 @@ This section collects relevant use cases for the [Presentation API][pres-api].
 
 > Each use case is defined in its own subsection. To define a new use case just
 > copy/paste an existing one and update the use case identifier (UCxx), title,
-> dependencies, description and requirements.
+> description and requirements.
 
 ### <a name="uc01"></a>UC01: Presentation
 
@@ -23,7 +23,7 @@ she would like to present her slides on the stage screen from her mobile phone.
 The phone's touch screen helps her to navigate slides and presents a slide
 preview while the projector shows her slides to the audience.
 
-**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05)
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ05](#req05), [REQ06](#req06)
 
 ### <a name="uc02"></a>UC02: Video and image sharing
 
@@ -35,8 +35,14 @@ sharing service now makes use of the connected display, allowing a wider
 audience to enjoy the content. The web page shows UI elements that allow the
 user to trigger displaying content on the secondary display (e.g., a "send to
 second screen") only if there is at least one presentation display available.
+The user selects a set of videos and images to show on the second display. The playback
+starts on the secondary display and will continue even if the user navigates to another
+web page on his mobile device. The user can navigate back to the online sharing service
+and the controlling page will connect automatically to the running session on the
+presentation display.
 
-**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05)
+
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ03](#req03), [REQ05](#req05), [REQ06](#req06)
 
 ### <a name="uc03"></a>UC03: Multiplayer gaming - Poker
 
@@ -54,7 +60,7 @@ Bob can see their personal cards on their smartphones and the large screen
 displays the poker table with shared cards, current bets, and remaining money of
 each player.
 
-**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ03](#req03), [REQ04](#req04), [REQ05](#req05)
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07)
 
 **Images**
 
@@ -90,7 +96,7 @@ playback. Alice picks "Alice's Projector" and the soccer game is shown on the
 projector from a different angle, in parallel to the content being played back
 on "Alice's kitchen TV".
 
-**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05)
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ05](#req05), [REQ06](#req06), [REQ08](#req08)
 
 > ISSUE #40: [Screen availability mechanism for multiple
 > sessions](https://github.com/w3c/presentation-api/issues/40)
@@ -129,7 +135,13 @@ a way for it to resume its connection to the presentation. It must also provide
 a way for a new browsing context on the same UA to request connection to one or
 more presentations (thus becoming their controller).
 
-### <a name="req04"></a>REQ04: Communication
+### <a name="req04"></a>REQ04: Joining presentation
+
+The UA on the controller device must provide a way for controlling browsing context
+to join running presentations. These are started in general either manually
+by the user or from another controller as described in [REQ02](#req02).
+
+### <a name="req05"></a>REQ05: Communication
 
 The UA must enable exchange of data between a presentation and its controller or
 controllers. This data exchange can be used to determine what content is shown
@@ -139,21 +151,21 @@ they may be rendered on one or more remote UAs, and thus the communication
 channels between a presentation and its controllers
 is loosely coupled.
 
-### <a name="req05"></a>REQ05: Signaling disconnection
+### <a name="req06"></a>REQ06: Signaling disconnection
 
 The UA must signal disconnection between a controller and a presentation to both
 the controller and the presentation. The controller or the presentation may
 choose to initiate disconnection; in that case, the UA must signal disconnection
 to the other side.
 
-### <a name="req07"></a>REQ06: Multiple controllers per presentation
+### <a name="req07"></a>REQ07: Multiple controllers per presentation
 
 A presentation should be able to accept control (via data exchange) from
 multiple controllers simultaneously. Not all presentations will support this;
 for example, when the presentation browsing context is not accessible to other
 devices.
 
-### <a name="req07"></a>REQ07: Multiple presentations per controller
+### <a name="req08"></a>REQ08: Multiple presentations per controller
 
 A single controller should be able to launch multiple presentations and exchange
 data with them. Each connection between a controller and a presentation is
@@ -163,7 +175,7 @@ specification.
 
 ## Non-functional Requirements
 
-### <a name="req08"></a>REQ08: Power saving friendly
+### <a name="nf-req01"></a>NF-REQ01: Power saving friendly
 
 All API design decisions must be analyzed from a power efficiency point of
 view. Especially when using wireless display technologies or querying
