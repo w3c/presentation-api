@@ -33,13 +33,18 @@ releases/FPWD.html: tidy ../xref xrefs/presentation.json
 
 releases/WD.html: tidy ../xref xrefs/presentation.json
 	# Generate the Working Draft release from the source spec
+	# (in a temp file as "previous link" will not yet be correct)
 	$(ANOLIS) --w3c-status=WD --w3c-compat-substitutions \
 	--w3c-compat-crazy-substitutions --w3c-shortname="presentation-api" \
 	--omit-optional-tags --quote-attr-values --enable=xspecxref \
-	--xref="../xref" --enable=refs Overview.src.html $@
+	--xref="../xref" --enable=refs Overview.src.html tmp.html
 
-	# Generate the "Previous version" link
-	sed -i "s|<!--previous-version-->|\n        <dt>Previous version:</dt>\n        <dd><a href=\"$(PUBLISHED-URL)\">$(PUBLISHED-URL)</a></dd>|" $@
+	# Generate the "Previous version" link and the final Working Draft
+	sed "s|<!--previous-version-->|\
+	<dt>Previous version:</dt><dd><a href=\"$(PUBLISHED-URL)\">$(PUBLISHED-URL)</a></dd>|" tmp.html > $@
+
+	# Get rid of the temp copy
+	rm tmp.html
 
 
 index.html: tidy ../xref xrefs/presentation.json
