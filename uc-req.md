@@ -128,12 +128,12 @@ at the request of the UA. A single controller may be able to send content to
 multiple displays at once, and a single display may be able to host multiple
 presentations at once.
 
-### <a name="req03"></a>REQ03: Resuming presentation
+### <a name="req03"></a>REQ03: Resuming connection to presentation
 
 If a controller becomes disconnected from its presentation, the UA must provide
 a way for it to resume its connection to the presentation. It must also provide
 a way for a new browsing context on the same UA to request connection to one or
-more presentations (thus becoming their controller).
+more presenting browsing contexts (thus becoming their controlling browsing context).
 
 ### <a name="req04"></a>REQ04: Joining presentation
 
