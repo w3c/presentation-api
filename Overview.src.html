@@ -1773,11 +1773,13 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         presentations in "incognito" (private browsing context) mode.
       </p>
       <h3>
-        Messaging between presentation sessions
+        Messaging between contexts
       </h3>
       <p>
-        This spec will not mandate communication protocols, but it should set
-        some guarantees of message confidentiality and authenticity.
+        This spec will not mandate communication protocols between the
+        <span>controlling browsing context</span> and the <span>presenting
+        browsing context</span> , but it should set some guarantees of message
+        confidentiality and authenticity.
       </p>
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
