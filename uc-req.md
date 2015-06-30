@@ -101,6 +101,25 @@ on "Alice's kitchen TV".
 > ISSUE #40: [Screen availability mechanism for multiple
 > sessions](https://github.com/w3c/presentation-api/issues/40)
 
+### <a name="uc05"></a>UC05: Multiplayer gaming - Pictionary
+
+Bob starts the Pictionary application on his smartphone. He clicks the
+"Start on TV" button in the application and selects his TV’s name from the list
+of presentation devices that pops up on the phone's screen. The Pictionary app
+starts on the TV screen. Bob now waits for Ann and Joe to join the game from their
+smartphones by starting the same application and connecting to the TV. After all
+the players have joined Bob presses the "start game" button on his smartphone and
+receives the first word to draw. He has to draw a blanket. Bob draws a picture of
+a blanket on the touch screen of his smartphone. The picture is mirrored on the
+TV screen while he is drawing. At the same time Ann and Joe are trying to guess
+what Bob is drawing by typing answers on their own smartphones and sending them
+to the TV screen. TV shows all the answers coming from all the users and the game
+continues until the correct answer is provided by Ann. Ann gets points for the
+correct answer. Next round of the game is about to start with Ann drawing a new word.
+
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07)
+
+
 ## Requirements
 
 This section collects all requirements derived from the [use cases](#use-cases)
