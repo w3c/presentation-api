@@ -133,7 +133,7 @@ presentations at once.
 If a controller becomes disconnected from its presentation, the UA must provide
 a way for it to resume its connection to the presentation. It must also provide
 a way for a new browsing context on the same UA to request connection to one or
-more presenting browsing contexts (thus becoming their controlling browsing context).
+more presentations (thus becoming their controller).
 
 ### <a name="req04"></a>REQ04: Joining presentation
 
