@@ -6,7 +6,7 @@ branches:
 
 env:
   global:
-    - URL="https://raw.githubusercontent.com/w3c/presentation-api/TR/releases/WD.html"
+    - URL="https://rawgit.com/w3c/presentation-api/TR/releases/WD.html"
     - DECISION="https://lists.w3.org/Archives/Public/public-secondscreen/2015Jun/0096.html"
     - secure: "nJ8QtGEN8dzi2syMLFDpK8AAfTtvR/6QXe+H/rymwXHyD0LuoBGtH8NxZ6uyV1TfqTC3YcjuM0pFqtO+9gNi1L2uYeJH808cb6QjM9+qhuL9E0xE6qcoud7jqMeMY/K6HsSDqjEDJdTKNBOygMIzg69TASBoe9V/yGmpGZzGDZg="
  
