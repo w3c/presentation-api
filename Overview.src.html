@@ -92,7 +92,7 @@
           Latest editor's draft:
         </dt>
         <dd>
-          <!--begin-link-->http://w3c.github.io/presentation-api/ 
+          <!--begin-link-->http://w3c.github.io/presentation-api/
           <!--end-link-->
         </dd>
         <dt>
@@ -498,7 +498,7 @@
     localStorage &amp;&amp; delete localStorage["presId"];
   };
 &lt;/script&gt;
-        
+
 </pre>
         <pre class="example">
 &lt;!-- presentation.html --&gt;
@@ -520,7 +520,7 @@
     });
   };
 &lt;/script&gt;
-        
+
 </pre>
       </section>
     </section>
@@ -844,9 +844,9 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
 interface <dfn>Availability</dfn> : EventTarget {
   readonly attribute boolean value;
   attribute <span data-anolis-spec=
-"w3c-html">EventHandler</span> <span>onchange</span>;  
+"w3c-html">EventHandler</span> <span>onchange</span>;
 };
-        
+
 </pre>
         <p>
           An <code>Availability</code> object is associated with a
@@ -1052,7 +1052,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
 
-  // This API used by presenting browsing context.                  
+  // This API used by presenting browsing context.
   Promise&lt;<span>PresentationSession</span>&gt; <span>getSession</span>();
   Promise&lt;<span>PresentationSession[]</span>&gt; <span>getSessions</span>();
   attribute <span data-anolis-spec=
