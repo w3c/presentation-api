@@ -72,15 +72,15 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="w3c-working-draft-30-june-2015">
-        W3C Working Draft 30 June 2015
+      <h2 class="no-num no-toc" id="w3c-working-draft-1-july-2015">
+        W3C Working Draft 1 July 2015
       </h2>
       <dl>
         <dt>
           This version:
         </dt>
         <dd>
-          <!--begin-link--><a href="http://www.w3.org/TR/2015/WD-presentation-api-20150630/">http://www.w3.org/TR/2015/WD-presentation-api-20150630/</a><!--end-link-->
+          <!--begin-link--><a href="http://www.w3.org/TR/2015/WD-presentation-api-20150701/">http://www.w3.org/TR/2015/WD-presentation-api-20150701/</a><!--end-link-->
         </dd>
         <dt>
           Latest published version:
@@ -92,9 +92,7 @@
           Latest editor's draft:
         </dt>
         <dd>
-          <!--begin-link--><a href="http://w3c.github.io/presentation-api/ 
-          ">http://w3c.github.io/presentation-api/ 
-          </a><!--end-link-->
+          <a href="http://w3c.github.io/presentation-api/">http://w3c.github.io/presentation-api/</a>
         </dd>
         <dt>
           Version history:
@@ -595,7 +593,7 @@
     localStorage &amp;&amp; delete localStorage["presId"];
   };
 &lt;/script&gt;
-        
+
 </pre>
         <pre class="example">&lt;!-- presentation.html --&gt;
 &lt;script&gt;
@@ -616,7 +614,7 @@
     });
   };
 &lt;/script&gt;
-        
+
 </pre>
       </section>
     </section>
@@ -925,9 +923,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </h3>
         <pre class="idl">interface <dfn id="availability">Availability</dfn> : EventTarget {
   readonly attribute boolean value;
-  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <span>onchange</span>;  
+  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <span>onchange</span>;
 };
-        
+
 </pre>
         <p>
           An <a href="#availability"><code>Availability</code></a> object is associated with a
@@ -1122,7 +1120,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   Promise&lt;<a href="#availability">Availability</a>&gt; <a href="#getavailability">getAvailability</a>(DOMString url);
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#ondefaultsessionstart">ondefaultsessionstart</a>;
 
-  // This API used by presenting browsing context.                  
+  // This API used by presenting browsing context.
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <span>getSession</span>();
   Promise&lt;<span>PresentationSession[]</span>&gt; <span>getSessions</span>();
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onsessionavailable">onsessionavailable</a>;
