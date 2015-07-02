@@ -103,11 +103,11 @@ on "Alice's kitchen TV".
 
 ### <a name="uc05"></a>UC05: Multiplayer gaming - Pictionary
 
-Bob starts the Pictionary application on his smartphone. He clicks the
-"Start on TV" button in the application and selects his TV’s name from the list
-of presentation devices that pops up on the phone's screen. The Pictionary app
-starts on the TV screen. Bob now waits for Ann and Joe to join the game from their
-smartphones by starting the same application and connecting to the TV. After all
+Bob visits a Pictionary game [PICTIONARYGAME] site on his smartphone. He clicks the
+"Start on TV" button and selects his TV’s name from the list
+of presentation devices that pops up on the phone's screen. The Pictionary site
+opens on the TV screen. Bob now waits for Ann and Joe to join the game from their
+smartphones by opening the same site and connecting to the TV. After all
 the players have joined Bob presses the "start game" button on his smartphone and
 receives the first word to draw. He has to draw a blanket. Bob draws a picture of
 a blanket on the touch screen of his smartphone. The picture is mirrored on the
@@ -116,6 +116,13 @@ what Bob is drawing by typing answers on their own smartphones and sending them
 to the TV screen. TV shows all the answers coming from all the users and the game
 continues until the correct answer is provided by Ann. Ann gets points for the
 correct answer. Next round of the game is about to start with Ann drawing a new word.
+At this point Joe decides to exit the game and presses the "exit game" button.
+That information is passed to the TV and Joe's name disappears from the list of
+the players on the TV screen. Bob and Ann play one more round of the game with Ann
+drawing and Bob guessing the correct word. After that round is over they decide
+to stop playing and both press the "exit game" button on their smartphones.
+The site opened on TV is notified that all the players have left the game and
+starts presenting a list of top players on the TV screen.
 
 **Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07)
 
@@ -208,3 +215,7 @@ needed.
 [uc03-img1]: ./images/uc-multiplayer-game-poker-table.png
 [uc03-img2]: ./images/uc-multiplayer-game-player-alice.png
 [uc03-img3]: ./images/uc-multiplayer-game-player-bob.png
+
+## References
+
+[PICTIONARYGAME] https://en.wikipedia.org/wiki/Pictionary
