@@ -5,7 +5,7 @@
     </title>
     <link href="https://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
     <style>
-    /* Note formatting taken from HTML5 spec */
+/* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -72,8 +72,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-1-july-2015">
-        Editor's Draft 1 July 2015
+      <h2 class="no-num no-toc" id="editor's-draft-3-july-2015">
+        Editor's Draft 3 July 2015
       </h2>
       <dl>
         <dt>
@@ -252,8 +252,8 @@
      <li><a href="#event-handlers"><span class="secno">6.2.4 </span>
             Event Handlers
           </a></ol></li>
-   <li><a href="#interface-availability"><span class="secno">6.3 </span>
-          Interface <code>Availability</code>
+   <li><a href="#interface-presentationavailability"><span class="secno">6.3 </span>
+          Interface <code>PresentationAvailability</code>
         </a>
     <ol>
      <li><a href="#the-set-of-availability-objects"><span class="secno">6.3.1 </span>
@@ -918,17 +918,17 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </section>
       </section>
       <section>
-        <h3 id="interface-availability"><span class="secno">6.3 </span>
-          Interface <a href="#availability"><code>Availability</code></a>
+        <h3 id="interface-presentationavailability"><span class="secno">6.3 </span>
+          Interface <a href="#presentationavailability"><code>PresentationAvailability</code></a>
         </h3>
-        <pre class="idl">interface <dfn id="availability">Availability</dfn> : EventTarget {
+        <pre class="idl">interface <dfn id="presentationavailability">PresentationAvailability</dfn> : EventTarget {
   readonly attribute boolean value;
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <span>onchange</span>;  
 };
         
 </pre>
         <p>
-          An <a href="#availability"><code>Availability</code></a> object is associated with a
+          An <a href="#presentationavailability"><code>PresentationAvailability</code></a> object is associated with a
           <a href="#presentation-display">presentation display</a> and represents its
           <dfn id="presentation-display-availability">presentation display availability</dfn>.
         </p>
@@ -968,7 +968,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           </p>
           <ol>
             <li>
-              <em>A</em> is a live <a href="#availability"><code>Availability</code></a> object;
+              <em>A</em> is a live <a href="#presentationavailability"><code>PresentationAvailability</code></a>
+              object;
             </li>
             <li>
               <em>availabilityUrl</em> is the <code>availabilityUrl</code>
@@ -994,28 +995,31 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation displays</a>.
           </p>
           <p>
-            While there are live <a href="#availability"><code>Availability</code></a> objects, the user
-            agent may <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation
+            While there are live <a href="#presentationavailability"><code>PresentationAvailability</code></a> objects,
+            the user agent may <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation
             displays</a> continuously, so that pages can use the
-            <code>value</code> property of an <a href="#availability"><code>Availability</code></a> object
-            to offer presentation only when there are available displays.
-            However, the user agent may not support continuous availability
-            monitoring; for example, because of platform or power consumption
-            restrictions. In this case the <span>Promise</span> returned by
-            <code>getAvailability()</code> is <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">rejected</a> and the
-            algorithm to <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation
-            displays</a> will only run as part of the <a href="#startsession" title="startSession">session start</a> algorithm.
+            <code>value</code> property of an
+            <a href="#presentationavailability"><code>PresentationAvailability</code></a> object to offer presentation
+            only when there are available displays. However, the user agent may
+            not support continuous availability monitoring; for example,
+            because of platform or power consumption restrictions. In this case
+            the <span>Promise</span> returned by <code>getAvailability()</code>
+            is <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">rejected</a> and the algorithm to <a href="#monitor-the-list-of-available-presentation-displays-0">monitor
+            the list of available presentation displays</a> will only run as
+            part of the <a href="#startsession" title="startSession">session start</a>
+            algorithm.
           </p>
           <p>
-            When there are no live <a href="#availability"><code>Availability</code></a> objects (that is,
-            the <a href="#set-of-availability-objects">set of availability objects</a> is empty), user agents
-            should not <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available presentation
-            displays</a> to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#nf-req01-power-saving-friendly">
+            When there are no live <a href="#presentationavailability"><code>PresentationAvailability</code></a>
+            objects (that is, the <a href="#set-of-availability-objects">set of availability objects</a> is
+            empty), user agents should not <a href="#monitor-the-list-of-available-presentation-displays-0">monitor the list of available
+            presentation displays</a> to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#nf-req01-power-saving-friendly">
             power saving non-functional requirement</a>. To further save power,
             the UA may also keep track of whether the page holding an
-            <a href="#availability"><code>Availability</code></a> object is in the foreground. Using this
-            information, implementation specific discovery of <span title="presentation-display">presentation displays</span> can be resumed
-            or suspended.
+            <a href="#presentationavailability"><code>PresentationAvailability</code></a> object is in the foreground.
+            Using this information, implementation specific discovery of
+            <span title="presentation-display">presentation displays</span> can
+            be resumed or suspended.
           </p>
           <p>
             Some <span>presentation displays</span> may only be able to display
@@ -1077,9 +1081,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
           </ol>
           <p>
-            When an <a href="#availability"><code>Availability</code></a> object is no longer alive (i.e.,
-            is eligible for garbage collection), the user agent should run the
-            following steps:
+            When an <a href="#presentationavailability"><code>PresentationAvailability</code></a> object is no longer
+            alive (i.e., is eligible for garbage collection), the user agent
+            should run the following steps:
           </p>
           <ol>
             <li>Find and remove any entry <em>(A, availabilityUrl, P)</em> in
@@ -1117,7 +1121,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
   // This API used by controlling browsing context.
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#startsession">startSession</a>(DOMString url);
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#joinsession">joinSession</a>(DOMString url, DOMString presentationId);
-  Promise&lt;<a href="#availability">Availability</a>&gt; <a href="#getavailability">getAvailability</a>(DOMString url);
+  Promise&lt;<a href="#presentationavailability">PresentationAvailability</a>&gt; <a href="#getavailability">getAvailability</a>(DOMString url);
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#ondefaultsessionstart">ondefaultsessionstart</a>;
 
   // This API used by presenting browsing context.                  
@@ -1469,9 +1473,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 </li>
               </ol>
             </li>
-            <li>Otherwise, let <em>A</em> be a new <a href="#availability"><code>Availability</code></a>
-            object with its <code>value</code> property set to
-            <code>false</code>.
+            <li>Otherwise, let <em>A</em> be a new
+            <a href="#presentationavailability"><code>PresentationAvailability</code></a> object with its
+            <code>value</code> property set to <code>false</code>.
             </li>
             <li>Create a tuple <em>(A, availabilityUrl, P)</em> and add it to
             the <a href="#set-of-availability-objects">set of availability objects</a>.
@@ -1716,13 +1720,14 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
         Personally identifiable information
       </h3>
       <p>
-        The <code>change</code> event fired on the <a href="#availability"><code>Availability</code></a>
-        object reveals one bit of information about the presence (or
-        non-presence) of a <span>presentation screen</span> typically
-        discovered through the local area network. This could be used in
-        conjunction with other information for fingerprinting the user.
-        However, this information is also dependent on the user's local network
-        context, so the risk is minimized.
+        The <code>change</code> event fired on the
+        <a href="#presentationavailability"><code>PresentationAvailability</code></a> object reveals one bit of
+        information about the presence (or non-presence) of a
+        <span>presentation screen</span> typically discovered through the local
+        area network. This could be used in conjunction with other information
+        for fingerprinting the user. However, this information is also
+        dependent on the user's local network context, so the risk is
+        minimized.
       </p>
       <p class="open-issue">
         If we allow the page to filter the set of presentation screens based on

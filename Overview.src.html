@@ -838,10 +838,10 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
       </section>
       <section>
         <h3>
-          Interface <code>Availability</code>
+          Interface <code>PresentationAvailability</code>
         </h3>
         <pre class="idl">
-interface <dfn>Availability</dfn> : EventTarget {
+interface <dfn>PresentationAvailability</dfn> : EventTarget {
   readonly attribute boolean value;
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>onchange</span>;  
@@ -849,7 +849,7 @@ interface <dfn>Availability</dfn> : EventTarget {
         
 </pre>
         <p>
-          An <code>Availability</code> object is associated with a
+          An <code>PresentationAvailability</code> object is associated with a
           <span>presentation display</span> and represents its
           <dfn>presentation display availability</dfn>.
         </p>
@@ -890,7 +890,8 @@ interface <dfn>Availability</dfn> : EventTarget {
           </p>
           <ol>
             <li>
-              <em>A</em> is a live <code>Availability</code> object;
+              <em>A</em> is a live <code>PresentationAvailability</code>
+              object;
             </li>
             <li>
               <em>availabilityUrl</em> is the <code>availabilityUrl</code>
@@ -916,32 +917,33 @@ interface <dfn>Availability</dfn> : EventTarget {
             <span>monitor the list of available presentation displays</span>.
           </p>
           <p>
-            While there are live <code>Availability</code> objects, the user
-            agent may <span>monitor the list of available presentation
+            While there are live <code>PresentationAvailability</code> objects,
+            the user agent may <span>monitor the list of available presentation
             displays</span> continuously, so that pages can use the
-            <code>value</code> property of an <code>Availability</code> object
-            to offer presentation only when there are available displays.
-            However, the user agent may not support continuous availability
-            monitoring; for example, because of platform or power consumption
-            restrictions. In this case the <span>Promise</span> returned by
-            <code>getAvailability()</code> is <span data-anolis-spec=
-            "promguide" title="resolve-reject">rejected</span> and the
-            algorithm to <span>monitor the list of available presentation
-            displays</span> will only run as part of the <span title=
-            "startSession">session start</span> algorithm.
+            <code>value</code> property of an
+            <code>PresentationAvailability</code> object to offer presentation
+            only when there are available displays. However, the user agent may
+            not support continuous availability monitoring; for example,
+            because of platform or power consumption restrictions. In this case
+            the <span>Promise</span> returned by <code>getAvailability()</code>
+            is <span data-anolis-spec="promguide" title=
+            "resolve-reject">rejected</span> and the algorithm to <span>monitor
+            the list of available presentation displays</span> will only run as
+            part of the <span title="startSession">session start</span>
+            algorithm.
           </p>
           <p>
-            When there are no live <code>Availability</code> objects (that is,
-            the <span>set of availability objects</span> is empty), user agents
-            should not <span>monitor the list of available presentation
-            displays</span> to satisfy the <a href=
+            When there are no live <code>PresentationAvailability</code>
+            objects (that is, the <span>set of availability objects</span> is
+            empty), user agents should not <span>monitor the list of available
+            presentation displays</span> to satisfy the <a href=
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#nf-req01-power-saving-friendly">
             power saving non-functional requirement</a>. To further save power,
             the UA may also keep track of whether the page holding an
-            <code>Availability</code> object is in the foreground. Using this
-            information, implementation specific discovery of <span title=
-            "presentation-display">presentation displays</span> can be resumed
-            or suspended.
+            <code>PresentationAvailability</code> object is in the foreground.
+            Using this information, implementation specific discovery of
+            <span title="presentation-display">presentation displays</span> can
+            be resumed or suspended.
           </p>
           <p>
             Some <span>presentation displays</span> may only be able to display
@@ -1004,9 +1006,9 @@ interface <dfn>Availability</dfn> : EventTarget {
             </li>
           </ol>
           <p>
-            When an <code>Availability</code> object is no longer alive (i.e.,
-            is eligible for garbage collection), the user agent should run the
-            following steps:
+            When an <code>PresentationAvailability</code> object is no longer
+            alive (i.e., is eligible for garbage collection), the user agent
+            should run the following steps:
           </p>
           <ol>
             <li>Find and remove any entry <em>(A, availabilityUrl, P)</em> in
@@ -1048,7 +1050,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
   // This API used by controlling browsing context.
   Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url);
   Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString presentationId);
-  Promise&lt;<span>Availability</span>&gt; <span>getAvailability</span>(DOMString url);
+  Promise&lt;<span>PresentationAvailability</span>&gt; <span>getAvailability</span>(DOMString url);
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
 
@@ -1418,9 +1420,9 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                 </li>
               </ol>
             </li>
-            <li>Otherwise, let <em>A</em> be a new <code>Availability</code>
-            object with its <code>value</code> property set to
-            <code>false</code>.
+            <li>Otherwise, let <em>A</em> be a new
+            <code>PresentationAvailability</code> object with its
+            <code>value</code> property set to <code>false</code>.
             </li>
             <li>Create a tuple <em>(A, availabilityUrl, P)</em> and add it to
             the <span>set of availability objects</span>.
@@ -1673,13 +1675,14 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         Personally identifiable information
       </h3>
       <p>
-        The <code>change</code> event fired on the <code>Availability</code>
-        object reveals one bit of information about the presence (or
-        non-presence) of a <span>presentation screen</span> typically
-        discovered through the local area network. This could be used in
-        conjunction with other information for fingerprinting the user.
-        However, this information is also dependent on the user's local network
-        context, so the risk is minimized.
+        The <code>change</code> event fired on the
+        <code>PresentationAvailability</code> object reveals one bit of
+        information about the presence (or non-presence) of a
+        <span>presentation screen</span> typically discovered through the local
+        area network. This could be used in conjunction with other information
+        for fingerprinting the user. However, this information is also
+        dependent on the user's local network context, so the risk is
+        minimized.
       </p>
       <p class="open-issue">
         If we allow the page to filter the set of presentation screens based on
