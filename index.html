@@ -5,7 +5,7 @@
     </title>
     <link href="https://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
     <style>
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -1825,8 +1825,10 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
         Messaging between presentation sessions
       </h3>
       <p>
-        This spec will not mandate communication protocols, but it should set
-        some guarantees of message confidentiality and authenticity.
+        This spec will not mandate communication protocols between the
+        <a href="#controlling-browsing-context">controlling browsing context</a> and the <a href="#presenting-browsing-context">presenting
+        browsing context</a>, but it should set some guarantees of message
+        confidentiality and authenticity between corresponding <a href="#presentation-session" title="presentation session">presentation sessions</a>.
       </p>
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
