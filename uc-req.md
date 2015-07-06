@@ -104,7 +104,7 @@ on "Alice's kitchen TV".
 
 ### <a name="uc05"></a>UC05: Multiplayer gaming - Pictionary
 
-Bob visits a Pictionary game [PICTIONARYGAME](#ref-PICTIONARYGAME) site on his
+Bob visits a Pictionary game [[PICTIONARYGAME]](#ref-PICTIONARYGAME) site on his
 smartphone. He clicks the "Start on TV" button and selects his TV’s name from
 the list of presentation displays that pops up on the phone's screen. The
 Pictionary site opens on the TV screen.
