@@ -1022,7 +1022,7 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
             </li>
           </ol>
           <p class="note">
-            The mechanism used to monitor <span>presention displays</span>
+            The mechanism used to monitor <span>presentation displays</span>
             availability and determine the compatibility of a
             <span>presentation display</span> with a given URL is left to the
             user agent.
@@ -1414,7 +1414,10 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
               <ol>
                 <li>
                   <span data-anolis-spec="promguide" title=
-                  "resolve-reject">Reject</span> <em>P</em>.
+                  "resolve-reject">Reject</span> <em>P</em> with a
+                  <span data-anolis-spec="webidl" title=
+                  "domexception">DOMException</span> named
+                  <code>"NotSupportedError"</code>.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>

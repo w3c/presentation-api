@@ -72,8 +72,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-3-july-2015">
-        Editor's Draft 3 July 2015
+      <h2 class="no-num no-toc" id="editor's-draft-6-july-2015">
+        Editor's Draft 6 July 2015
       </h2>
       <dl>
         <dt>
@@ -1097,7 +1097,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             </li>
           </ol>
           <p class="note">
-            The mechanism used to monitor <span>presention displays</span>
+            The mechanism used to monitor <span>presentation displays</span>
             availability and determine the compatibility of a
             <a href="#presentation-display">presentation display</a> with a given URL is left to the
             user agent.
@@ -1467,7 +1467,9 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             list of available presentation displays</a>, then:
               <ol>
                 <li>
-                  <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em>.
+                  <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">Reject</a> <em>P</em> with a
+                  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMException" title="domexception">DOMException</a> named
+                  <code>"NotSupportedError"</code>.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
