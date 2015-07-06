@@ -5,7 +5,7 @@
     </title>
     <link href="https://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
     <style>
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -324,8 +324,8 @@
    <li><a href="#incognito-mode-and-clearing-of-browsing-data"><span class="secno">7.5 </span>
         Incognito mode and clearing of browsing data
       </a></li>
-   <li><a href="#messaging-between-presentation-sessions"><span class="secno">7.6 </span>
-        Messaging between presentation sessions
+   <li><a href="#messaging-between-contexts"><span class="secno">7.6 </span>
+        Messaging between contexts
       </a></ol></li>
  <li><a href="#references"><span class="secno">8 </span>
         References
@@ -1821,12 +1821,14 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
         The spec should clarify what is to happen to the set of known
         presentations in "incognito" (private browsing context) mode.
       </p>
-      <h3 id="messaging-between-presentation-sessions"><span class="secno">7.6 </span>
-        Messaging between presentation sessions
+      <h3 id="messaging-between-contexts"><span class="secno">7.6 </span>
+        Messaging between contexts
       </h3>
       <p>
-        This spec will not mandate communication protocols, but it should set
-        some guarantees of message confidentiality and authenticity.
+        This spec will not mandate communication protocols between the
+        <a href="#controlling-browsing-context">controlling browsing context</a> and the <a href="#presenting-browsing-context">presenting
+        browsing context</a> , but it should set some guarantees of message
+        confidentiality and authenticity.
       </p>
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
