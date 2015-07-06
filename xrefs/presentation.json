@@ -1,7 +1,6 @@
 {
   "definitions": {
     "algorithm-send": "algorithm-send",
-    "availability": "availability",
     "binarytype": "binarytype",
     "binarytype-attribute": "binarytype-attribute",
     "close": "close",
@@ -36,6 +35,7 @@
     "presentation session state": "presentation-session-state",
     "presentation session url": "presentation-session-url",
     "presentation-onmessage": "presentation-onmessage",
+    "presentationavailability": "presentationavailability",
     "presentationsession": "presentationsession",
     "presentationsessionstate": "presentationsessionstate",
     "presenting browsing context": "presenting-browsing-context",
