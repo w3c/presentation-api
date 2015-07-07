@@ -1109,6 +1109,8 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           The <dfn id="navigator-presentation" title="navigator-presentation"><code>presentation</code></dfn> attribute is
           used to retrieve an instance of the <a href="#presentation-interface" title="presentation-interface"><code>Presentation</code></a> interface.
         </p>
+        <!-- TODO: Anolis wants to link Presentation to the term defined in Common Idioms, so we create 
+             our own definition for the interface here.  See if this can be cleaned up when we migrate from Anolis. -->
         <pre class="idl">interface <dfn id="presentation-interface" title="presentation-interface">Presentation</dfn> : EventTarget {
   // This API used by controlling browsing context.
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#startsession">startSession</a>(DOMString url);
