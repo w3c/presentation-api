@@ -72,8 +72,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-6-july-2015">
-        Editor's Draft 6 July 2015
+      <h2 class="no-num no-toc" id="editor's-draft-7-july-2015">
+        Editor's Draft 7 July 2015
       </h2>
       <dl>
         <dt>
@@ -942,19 +942,6 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           corresponding <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type">event handler event
           type</a> is <code>change</code>.
         </p>
-        <p>
-          When the user agent is to <dfn id="signal-a-presentation-display-availability-change">signal a presentation display
-          availability change</dfn> using <var>availability object</var>, the
-          user agent must run the following steps:
-        </p>
-        <ol>
-          <li>
-            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
-            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire
-            an event</a> named <code>change</code> at <em>availability
-            object</em>.
-          </li>
-        </ol>
         <section>
           <h4 id="the-set-of-availability-objects"><span class="secno">6.3.1 </span>
             The set of availability objects
@@ -1067,12 +1054,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>Set <em>A</em>'s <code>value</code> property to
                 <em>newAvailability</em>.
                 </li>
+                <li>If <em>previousAvailability</em> is not equal to
+                <em>newAvailability</em>, then <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">queue a task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a>
+                named <code>change</code> at <em>A</em>.
+                </li>
                 <li>If <em>P</em> is not settled, then
                   <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolve</a> <em>P</em> with <em>A</em>.
-                </li>
-                <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, <a href="#signal-a-presentation-display-availability-change">signal a presentation display
-                availability change</a> with <em>A</em>.
                 </li>
               </ol>
             </li>
