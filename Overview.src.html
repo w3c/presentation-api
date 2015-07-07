@@ -1027,24 +1027,24 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
       <section>
         <h3>
           Interface <span title=
-          "presentation-interface"><code>Presentation</code></span>
+          "interface-presentation"><code>Presentation</code></span>
         </h3>
         <pre class="idl">
 partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
   [SameObject] readonly attribute <span title=
-"presentation-interface">Presentation</span> <span title=
+"interface-presentation">Presentation</span> <span title=
 "navigator-presentation">presentation</span>;
 };
+        
 </pre>
         <p>
           The <dfn title=
           "navigator-presentation"><code>presentation</code></dfn> attribute is
           used to retrieve an instance of the <span title=
-          "presentation-interface"><code>Presentation</code></span> interface.
+          "interface-presentation"><code>Presentation</code></span> interface.
         </p>
         <pre class="idl">
-interface <dfn title=
-"presentation-interface">Presentation</dfn> : EventTarget {
+interface Presentation : EventTarget {
   // This API used by controlling browsing context.
   Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url);
   Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString presentationId);
@@ -1604,7 +1604,7 @@ interface <dfn title=
             The following are the event handlers (and their corresponding event
             handler event types) that must be supported, as event handler IDL
             attributes, by objects implementing the <span title=
-            "presentation-interface"><code>Presentation</code></span>
+            "interface-presentation"><code>Presentation</code></span>
             interface:
           </p>
           <table>
