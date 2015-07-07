@@ -1030,8 +1030,7 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
         </h3>
         <pre class="idl">
 partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
-  readonly attribute <span>NavigatorPresentation</span> <span title=
-"navigator-presentation">presentation</span>;
+  [SameObject] readonly attribute <span>NavigatorPresentation</span> <span title="navigator-presentation">presentation</span>;
 };
 </pre>
         <p>
@@ -1642,7 +1641,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
         <pre class="idl">
 <span>[Constructor(DOMString type, optional <span>DefaultSessionStartEventInit</span> eventInitDict)]
 interface <dfn>DefaultSessionStartEvent</dfn> : Event {
-  readonly attribute PresentationSession session;
+  [SameObject] readonly attribute PresentationSession session;
 };
 
 dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {

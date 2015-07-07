@@ -1102,7 +1102,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           Interface <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a>
         </h3>
         <pre class="idl">partial interface <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#navigator">Navigator</a> {
-  readonly attribute <a href="#navigatorpresentation">NavigatorPresentation</a> <a href="#navigator-presentation" title="navigator-presentation">presentation</a>;
+  [SameObject] readonly attribute <a href="#navigatorpresentation">NavigatorPresentation</a> <a href="#navigator-presentation" title="navigator-presentation">presentation</a>;
 };
 </pre>
         <p>
@@ -1684,7 +1684,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </h3>
         <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#defaultsessionstarteventinit">DefaultSessionStartEventInit</a> eventInitDict)]
 interface <dfn id="defaultsessionstartevent">DefaultSessionStartEvent</dfn> : Event {
-  readonly attribute PresentationSession session;
+  [SameObject] readonly attribute PresentationSession session;
 };
 
 dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</dfn> : EventInit {
