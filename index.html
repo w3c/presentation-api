@@ -72,8 +72,8 @@
       <h1>
         Presentation API
       </h1>
-      <h2 class="no-num no-toc" id="editor's-draft-6-july-2015">
-        Editor's Draft 6 July 2015
+      <h2 class="no-num no-toc" id="editor's-draft-7-july-2015">
+        Editor's Draft 7 July 2015
       </h2>
       <dl>
         <dt>
@@ -265,8 +265,8 @@
      <li><a href="#monitor-the-list-of-available-presentation-displays"><span class="secno">6.3.3 </span>
             Monitor the list of available presentation displays
           </a></ol></li>
-   <li><a href="#interface-navigatorpresentation"><span class="secno">6.4 </span>
-          Interface <code>NavigatorPresentation</code>
+   <li><a href="#interface-presentation"><span class="secno">6.4 </span>
+          Interface <span title="presentation-interface"><code>Presentation</code></span>
         </a>
     <ol>
      <li><a href="#starting-a-presentation-session"><span class="secno">6.4.1 </span>
@@ -302,8 +302,8 @@
      <li><a href="#event-handlers-0"><span class="secno">6.4.9 </span>
             Event Handlers
           </a></ol></li>
-   <li><a href="#interface-defaultsessionstart"><span class="secno">6.5 </span>
-          <span>Interface <code>DefaultSessionStart</code></span>
+   <li><a href="#interface-defaultsessionstartevent"><span class="secno">6.5 </span>
+          <span>Interface <code>DefaultSessionStartEvent</code></span>
         </a></ol></li>
  <li><a href="#security-and-privacy-considerations"><span class="secno">7 </span>
         Security and privacy considerations
@@ -686,14 +686,14 @@
 enum <dfn id="binarytype">BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget {
-  readonly <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
+  readonly attribute <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
   readonly attribute <a href="#presentationsessionstate">PresentationSessionState</a> <a href="#state">state</a>;
   void <a href="#close">close</a>();
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onstatechange">onstatechange</a>;
 
   // Communication
   attribute BinaryType <dfn id="binarytype-attribute" title="binarytype-attribute">binaryType</dfn>;
-  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
+  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
   void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
   void <dfn id="send-blob" title="send-blob">send</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
   void <dfn id="send-arraybuffer" title="send-arraybuffer">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a> data);
@@ -942,19 +942,6 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
           corresponding <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#event-handler-event-type">event handler event
           type</a> is <code>change</code>.
         </p>
-        <p>
-          When the user agent is to <dfn id="signal-a-presentation-display-availability-change">signal a presentation display
-          availability change</dfn> using <var>availability object</var>, the
-          user agent must run the following steps:
-        </p>
-        <ol>
-          <li>
-            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">Queue a task</a> to
-            <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire
-            an event</a> named <code>change</code> at <em>availability
-            object</em>.
-          </li>
-        </ol>
         <section>
           <h4 id="the-set-of-availability-objects"><span class="secno">6.3.1 </span>
             The set of availability objects
@@ -1064,15 +1051,21 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 display</a> for <em>availabilityUrl</em>. Otherwise, set
                 <em>newAvailability</em> to <code>false</code>.
                 </li>
-                <li>Set <em>A</em>'s <code>value</code> property to
-                <em>newAvailability</em>.
-                </li>
-                <li>If <em>P</em> is not settled, then
-                  <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolve</a> <em>P</em> with <em>A</em>.
-                </li>
                 <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, <a href="#signal-a-presentation-display-availability-change">signal a presentation display
-                availability change</a> with <em>A</em>.
+                <em>newAvailability</em>, then <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">queue a task</a> to run the following steps:
+                  <ol>
+                    <li>Set <em>A</em>'s <code>value</code> property to
+                    <em>newAvailability</em>.
+                    </li>
+                    <li>If <em>P</em> is settled, then
+                      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
+                      <code>change</code> at <em>A</em>.
+                    </li>
+                    <li>If <em>P</em> is not settled, then
+                    <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">
+                      resolve</a> <em>P</em> with <em>A</em>.
+                    </li>
+                  </ol>
                 </li>
               </ol>
             </li>
@@ -1105,19 +1098,20 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </section>
       </section>
       <section>
-        <h3 id="interface-navigatorpresentation"><span class="secno">6.4 </span>
-          Interface <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a>
+        <h3 id="interface-presentation"><span class="secno">6.4 </span>
+          Interface <a href="#presentation-interface" title="presentation-interface"><code>Presentation</code></a>
         </h3>
         <pre class="idl">partial interface <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#navigator">Navigator</a> {
-  readonly attribute <a href="#navigatorpresentation">NavigatorPresentation</a> <a href="#navigator-presentation" title="navigator-presentation">presentation</a>;
+  [SameObject] readonly attribute <a href="#presentation-interface" title="presentation-interface">Presentation</a> <a href="#navigator-presentation" title="navigator-presentation">presentation</a>;
 };
 </pre>
         <p>
           The <dfn id="navigator-presentation" title="navigator-presentation"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the
-          <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> interface.
+          used to retrieve an instance of the <a href="#presentation-interface" title="presentation-interface"><code>Presentation</code></a> interface.
         </p>
-        <pre class="idl">interface <dfn id="navigatorpresentation">NavigatorPresentation</dfn> : EventTarget {
+        <!-- TODO: Anolis wants to link Presentation to the term defined in Common Idioms, so we create 
+             our own definition for the interface here.  See if this can be cleaned up when we migrate from Anolis. -->
+        <pre class="idl">interface <dfn id="presentation-interface" title="presentation-interface">Presentation</dfn> : EventTarget {
   // This API used by controlling browsing context.
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#startsession">startSession</a>(DOMString url);
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#joinsession">joinSession</a>(DOMString url, DOMString presentationId);
@@ -1126,7 +1120,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
 
   // This API used by presenting browsing context.                  
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <span>getSession</span>();
-  Promise&lt;<span>PresentationSession[]</span>&gt; <span>getSessions</span>();
+  Promise&lt;sequence&lt;<a href="#presentationsession">PresentationSession</a>&gt;&gt; <span>getSessions</span>();
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onsessionavailable">onsessionavailable</a>;
 };
 </pre>
@@ -1557,8 +1551,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>
                   <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">Queue
                   a task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                  <code>sessionavailable</code> at
-                  <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a>.
+                  <code>sessionavailable</code> at <a href="#navigator-presentation" title="navigator-presentation"><code>presentation</code></a>.
                 </li>
               </ol>
             </li>
@@ -1648,10 +1641,10 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             Event Handlers
           </h4>
           <p>
-            <span>The following are the event handlers (and their corresponding
-            event handler event types) that must be supported, as event handler
-            IDL attributes, by objects implementing the
-            <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> interface:</span>
+            The following are the event handlers (and their corresponding event
+            handler event types) that must be supported, as event handler IDL
+            attributes, by objects implementing the <a href="#presentation-interface" title="presentation-interface"><code>Presentation</code></a>
+            interface:
           </p>
           <table>
             <thead>
@@ -1686,12 +1679,12 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </section>
       </section>
       <section>
-        <h3 id="interface-defaultsessionstart"><span class="secno">6.5 </span>
-          <span>Interface <code>DefaultSessionStart</code></span>
+        <h3 id="interface-defaultsessionstartevent"><span class="secno">6.5 </span>
+          <span>Interface <a href="#defaultsessionstartevent"><code>DefaultSessionStartEvent</code></a></span>
         </h3>
         <pre class="idl"><span>[Constructor(DOMString type, optional <a href="#defaultsessionstarteventinit">DefaultSessionStartEventInit</a> eventInitDict)]
 interface <dfn id="defaultsessionstartevent">DefaultSessionStartEvent</dfn> : Event {
-  readonly attribute PresentationSession session;
+  [SameObject] readonly attribute PresentationSession session;
 };
 
 dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</dfn> : EventInit {
@@ -1702,9 +1695,9 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
         <p>
           An event named <code>defaultsessionstart</code> is fired when the UA
           initiates a presentation on behalf of the page. It is fired at the
-          <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> object, using the
-          <a href="#defaultsessionstartevent"><code>DefaultSessionStartEvent</code></a> interface, with the
-          <code>session</code> attribute set to the
+          <a href="#navigator-presentation" title="navigator-presentation"><code>presentation</code></a>
+          object, using the <a href="#defaultsessionstartevent"><code>DefaultSessionStartEvent</code></a> interface,
+          with the <code>session</code> attribute set to the
           <a href="#presentationsession"><code>PresentationSession</code></a> object provided by the
           UA.
         </p>

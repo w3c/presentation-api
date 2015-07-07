@@ -594,7 +594,8 @@ enum <dfn>PresentationSessionState</dfn> { "connected", "disconnected" /*, "resu
 enum <dfn>BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn>PresentationSession</dfn> : EventTarget {
-  readonly <span data-anolis-spec="webidl">DOMString</span>? <span>id</span>;
+  readonly attribute <span data-anolis-spec=
+"webidl">DOMString</span>? <span>id</span>;
   readonly attribute <span>PresentationSessionState</span> <span>state</span>;
   void <span>close</span>();
   attribute <span data-anolis-spec=
@@ -602,7 +603,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
 
   // Communication
   attribute BinaryType <dfn title="binarytype-attribute">binaryType</dfn>;
-  <span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
+  attribute <span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
 "presentation-onmessage">onmessage</dfn>;
   void <dfn>send</dfn> (<span data-anolis-spec=
 "webidl">DOMString</span> message);
@@ -864,19 +865,6 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
           corresponding <span data-anolis-spec="w3c-html">event handler event
           type</span> is <code>change</code>.
         </p>
-        <p>
-          When the user agent is to <dfn>signal a presentation display
-          availability change</dfn> using <var>availability object</var>, the
-          user agent must run the following steps:
-        </p>
-        <ol>
-          <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> to
-            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
-            an event</span> named <code>change</code> at <em>availability
-            object</em>.
-          </li>
-        </ol>
         <section>
           <h4>
             The set of availability objects
@@ -988,16 +976,23 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
                 display</span> for <em>availabilityUrl</em>. Otherwise, set
                 <em>newAvailability</em> to <code>false</code>.
                 </li>
-                <li>Set <em>A</em>'s <code>value</code> property to
-                <em>newAvailability</em>.
-                </li>
-                <li>If <em>P</em> is not settled, then
-                  <span data-anolis-spec="promguide" title=
-                  "resolve-reject">resolve</span> <em>P</em> with <em>A</em>.
-                </li>
                 <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, <span>signal a presentation display
-                availability change</span> with <em>A</em>.
+                <em>newAvailability</em>, then <span data-anolis-spec=
+                "w3c-html">queue a task</span> to run the following steps:
+                  <ol>
+                    <li>Set <em>A</em>'s <code>value</code> property to
+                    <em>newAvailability</em>.
+                    </li>
+                    <li>If <em>P</em> is settled, then
+                      <span data-anolis-spec="w3c-html" title=
+                      "concept-event-fire">fire an event</span> named
+                      <code>change</code> at <em>A</em>.
+                    </li>
+                    <li>If <em>P</em> is not settled, then
+                    <span data-anolis-spec="promguide" title="resolve-reject">
+                      resolve</span> <em>P</em> with <em>A</em>.
+                    </li>
+                  </ol>
                 </li>
               </ol>
             </li>
@@ -1031,22 +1026,27 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
       </section>
       <section>
         <h3>
-          Interface <code>NavigatorPresentation</code>
+          Interface <span title=
+          "presentation-interface"><code>Presentation</code></span>
         </h3>
         <pre class="idl">
 partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
-  readonly attribute <span>NavigatorPresentation</span> <span title=
+  [SameObject] readonly attribute <span title=
+"presentation-interface">Presentation</span> <span title=
 "navigator-presentation">presentation</span>;
 };
 </pre>
         <p>
           The <dfn title=
           "navigator-presentation"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the
-          <code>NavigatorPresentation</code> interface.
+          used to retrieve an instance of the <span title=
+          "presentation-interface"><code>Presentation</code></span> interface.
         </p>
+        <!-- TODO: Anolis wants to link Presentation to the term defined in Common Idioms, so we create 
+             our own definition for the interface here.  See if this can be cleaned up when we migrate from Anolis. -->
         <pre class="idl">
-interface <dfn>NavigatorPresentation</dfn> : EventTarget {
+interface <dfn title=
+"presentation-interface">Presentation</dfn> : EventTarget {
   // This API used by controlling browsing context.
   Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url);
   Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString presentationId);
@@ -1056,7 +1056,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 
   // This API used by presenting browsing context.                  
   Promise&lt;<span>PresentationSession</span>&gt; <span>getSession</span>();
-  Promise&lt;<span>PresentationSession[]</span>&gt; <span>getSessions</span>();
+  Promise&lt;sequence&lt;<span>PresentationSession</span>&gt;&gt; <span>getSessions</span>();
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>onsessionavailable</span>;
 };
@@ -1508,8 +1508,8 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
                   <span data-anolis-spec="w3c-html" title="queue a task">Queue
                   a task</span> to <span data-anolis-spec="w3c-html" title=
                   "concept-event-fire">fire an event</span> named
-                  <code>sessionavailable</code> at
-                  <code>NavigatorPresentation</code>.
+                  <code>sessionavailable</code> at <span title=
+                  "navigator-presentation"><code>presentation</code></span>.
                 </li>
               </ol>
             </li>
@@ -1603,10 +1603,11 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
             Event Handlers
           </h4>
           <p>
-            <span>The following are the event handlers (and their corresponding
-            event handler event types) that must be supported, as event handler
-            IDL attributes, by objects implementing the
-            <code>NavigatorPresentation</code> interface:</span>
+            The following are the event handlers (and their corresponding event
+            handler event types) that must be supported, as event handler IDL
+            attributes, by objects implementing the <span title=
+            "presentation-interface"><code>Presentation</code></span>
+            interface:
           </p>
           <table>
             <thead>
@@ -1642,12 +1643,12 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
       </section>
       <section>
         <h3>
-          <span>Interface <code>DefaultSessionStart</code></span>
+          <span>Interface <code>DefaultSessionStartEvent</code></span>
         </h3>
         <pre class="idl">
 <span>[Constructor(DOMString type, optional <span>DefaultSessionStartEventInit</span> eventInitDict)]
 interface <dfn>DefaultSessionStartEvent</dfn> : Event {
-  readonly attribute PresentationSession session;
+  [SameObject] readonly attribute PresentationSession session;
 };
 
 dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
@@ -1658,9 +1659,9 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         <p>
           An event named <code>defaultsessionstart</code> is fired when the UA
           initiates a presentation on behalf of the page. It is fired at the
-          <span><code>NavigatorPresentation</code></span> object, using the
-          <code>DefaultSessionStartEvent</code> interface, with the
-          <code>session</code> attribute set to the
+          <span title="navigator-presentation"><code>presentation</code></span>
+          object, using the <code>DefaultSessionStartEvent</code> interface,
+          with the <code>session</code> attribute set to the
           <span><code>PresentationSession</code></span> object provided by the
           UA.
         </p>
