@@ -864,19 +864,6 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
           corresponding <span data-anolis-spec="w3c-html">event handler event
           type</span> is <code>change</code>.
         </p>
-        <p>
-          When the user agent is to <dfn>signal a presentation display
-          availability change</dfn> using <var>availability object</var>, the
-          user agent must run the following steps:
-        </p>
-        <ol>
-          <li>
-            <span data-anolis-spec="w3c-html">Queue a task</span> to
-            <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
-            an event</span> named <code>change</code> at <em>availability
-            object</em>.
-          </li>
-        </ol>
         <section>
           <h4>
             The set of availability objects
@@ -991,13 +978,15 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
                 <li>Set <em>A</em>'s <code>value</code> property to
                 <em>newAvailability</em>.
                 </li>
+                <li> If <em>previousAvailability</em> is not equal to
+                <em>newAvailability</em>, then
+                <span data-anolis-spec="w3c-html">queue a task</span> to
+                <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
+                  an event</span> named <code>change</code> at <em>A</em>.
+                </li>
                 <li>If <em>P</em> is not settled, then
                   <span data-anolis-spec="promguide" title=
                   "resolve-reject">resolve</span> <em>P</em> with <em>A</em>.
-                </li>
-                <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, <span>signal a presentation display
-                availability change</span> with <em>A</em>.
                 </li>
               </ol>
             </li>
