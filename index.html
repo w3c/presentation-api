@@ -265,8 +265,8 @@
      <li><a href="#monitor-the-list-of-available-presentation-displays"><span class="secno">6.3.3 </span>
             Monitor the list of available presentation displays
           </a></ol></li>
-   <li><a href="#interface-navigatorpresentation"><span class="secno">6.4 </span>
-          Interface <code>NavigatorPresentation</code>
+   <li><a href="#interface-presentation"><span class="secno">6.4 </span>
+          Interface <code>Presentation</code>
         </a>
     <ol>
      <li><a href="#starting-a-presentation-session"><span class="secno">6.4.1 </span>
@@ -1098,19 +1098,18 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
         </section>
       </section>
       <section>
-        <h3 id="interface-navigatorpresentation"><span class="secno">6.4 </span>
-          Interface <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a>
+        <h3 id="interface-presentation"><span class="secno">6.4 </span>
+          Interface <a href="#presentation"><code>Presentation</code></a>
         </h3>
         <pre class="idl">partial interface <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#navigator">Navigator</a> {
-  [SameObject] readonly attribute <a href="#navigatorpresentation">NavigatorPresentation</a> <a href="#navigator-presentation" title="navigator-presentation">presentation</a>;
+  [SameObject] readonly attribute <a href="#presentation-interface" title="presentation-interface">Presentation</a> <a href="#navigator-presentation" title="navigator-presentation">presentation</a>;
 };
 </pre>
         <p>
           The <dfn id="navigator-presentation" title="navigator-presentation"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the
-          <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> interface.
+          used to retrieve an instance of the <a href="#presentation-interface" title="presentation-interface"><code>Presentation</code></a> interface.
         </p>
-        <pre class="idl">interface <dfn id="navigatorpresentation">NavigatorPresentation</dfn> : EventTarget {
+        <pre class="idl">interface <dfn id="presentation-interface" title="presentation-interface">Presentation</dfn> : EventTarget {
   // This API used by controlling browsing context.
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#startsession">startSession</a>(DOMString url);
   Promise&lt;<a href="#presentationsession">PresentationSession</a>&gt; <a href="#joinsession">joinSession</a>(DOMString url, DOMString presentationId);
@@ -1550,8 +1549,7 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 <li>
                   <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task" title="queue a task">Queue
                   a task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a> named
-                  <code>sessionavailable</code> at
-                  <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a>.
+                  <code>sessionavailable</code> at <a href="#navigator-presentation" title="navigator-presentation"><code>presentation</code></a>.
                 </li>
               </ol>
             </li>
@@ -1641,10 +1639,10 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
             Event Handlers
           </h4>
           <p>
-            <span>The following are the event handlers (and their corresponding
-            event handler event types) that must be supported, as event handler
-            IDL attributes, by objects implementing the
-            <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> interface:</span>
+            The following are the event handlers (and their corresponding event
+            handler event types) that must be supported, as event handler IDL
+            attributes, by objects implementing the <a href="#presentation-interface" title="presentation-interface"><code>Presentation</code></a>
+            interface:
           </p>
           <table>
             <thead>
@@ -1695,9 +1693,9 @@ dictionary <dfn id="defaultsessionstarteventinit">DefaultSessionStartEventInit</
         <p>
           An event named <code>defaultsessionstart</code> is fired when the UA
           initiates a presentation on behalf of the page. It is fired at the
-          <a href="#navigatorpresentation"><code>NavigatorPresentation</code></a> object, using the
-          <a href="#defaultsessionstartevent"><code>DefaultSessionStartEvent</code></a> interface, with the
-          <code>session</code> attribute set to the
+          <a href="#navigator-presentation" title="navigator-presentation"><code>presentation</code></a>
+          object, using the <a href="#defaultsessionstartevent"><code>DefaultSessionStartEvent</code></a> interface,
+          with the <code>session</code> attribute set to the
           <a href="#presentationsession"><code>PresentationSession</code></a> object provided by the
           UA.
         </p>
