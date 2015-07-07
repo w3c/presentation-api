@@ -1046,7 +1046,7 @@ interface <dfn>NavigatorPresentation</dfn> : EventTarget {
 
   // This API used by presenting browsing context.                  
   Promise&lt;<span>PresentationSession</span>&gt; <span>getSession</span>();
-  Promise&lt;<span>PresentationSession[]</span>&gt; <span>getSessions</span>();
+  Promise&lt;sequence&lt;<span>PresentationSession</span>&gt;&gt; <span>getSessions</span>();
   attribute <span data-anolis-spec=
 "w3c-html">EventHandler</span> <span>onsessionavailable</span>;
 };
