@@ -686,14 +686,14 @@
 enum <dfn id="binarytype">BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget {
-  readonly <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
+  readonly attribute <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a>? <a href="#id">id</a>;
   readonly attribute <a href="#presentationsessionstate">PresentationSessionState</a> <a href="#state">state</a>;
   void <a href="#close">close</a>();
   attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <a href="#onstatechange">onstatechange</a>;
 
   // Communication
   attribute BinaryType <dfn id="binarytype-attribute" title="binarytype-attribute">binaryType</dfn>;
-  <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
+  attribute <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#eventhandler">EventHandler</a> <dfn id="presentation-onmessage" title="presentation-onmessage">onmessage</dfn>;
   void <dfn id="send">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a> message);
   void <dfn id="send-blob" title="send-blob">send</dfn> (<a class="external" data-anolis-spec="fileapi" href="http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a> data);
   void <dfn id="send-arraybuffer" title="send-arraybuffer">send</dfn> (<a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a> data);

@@ -594,7 +594,8 @@ enum <dfn>PresentationSessionState</dfn> { "connected", "disconnected" /*, "resu
 enum <dfn>BinaryType</dfn> { "blob", "arraybuffer" };
 
 interface <dfn>PresentationSession</dfn> : EventTarget {
-  readonly <span data-anolis-spec="webidl">DOMString</span>? <span>id</span>;
+  readonly attribute <span data-anolis-spec=
+"webidl">DOMString</span>? <span>id</span>;
   readonly attribute <span>PresentationSessionState</span> <span>state</span>;
   void <span>close</span>();
   attribute <span data-anolis-spec=
@@ -602,7 +603,7 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
 
   // Communication
   attribute BinaryType <dfn title="binarytype-attribute">binaryType</dfn>;
-  <span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
+  attribute <span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
 "presentation-onmessage">onmessage</dfn>;
   void <dfn>send</dfn> (<span data-anolis-spec=
 "webidl">DOMString</span> message);
