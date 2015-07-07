@@ -976,18 +976,23 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
                 display</span> for <em>availabilityUrl</em>. Otherwise, set
                 <em>newAvailability</em> to <code>false</code>.
                 </li>
-                <li>Set <em>A</em>'s <code>value</code> property to
-                <em>newAvailability</em>.
-                </li>
                 <li>If <em>previousAvailability</em> is not equal to
                 <em>newAvailability</em>, then <span data-anolis-spec=
-                "w3c-html">queue a task</span> to <span data-anolis-spec=
-                "w3c-html" title="concept-event-fire">fire an event</span>
-                named <code>change</code> at <em>A</em>.
-                </li>
-                <li>If <em>P</em> is not settled, then
-                  <span data-anolis-spec="promguide" title=
-                  "resolve-reject">resolve</span> <em>P</em> with <em>A</em>.
+                "w3c-html">queue a task</span> to run the following steps:
+                  <ol>
+                    <li>Set <em>A</em>'s <code>value</code> property to
+                    <em>newAvailability</em>.
+                    </li>
+                    <li>
+                      <span data-anolis-spec="w3c-html" title=
+                      "concept-event-fire">Fire an event</span> named
+                      <code>change</code> at <em>A</em>.
+                    </li>
+                    <li>If <em>P</em> is not settled, then
+                    <span data-anolis-spec="promguide" title="resolve-reject">
+                      resolve</span> <em>P</em> with <em>A</em>.
+                    </li>
+                  </ol>
                 </li>
               </ol>
             </li>

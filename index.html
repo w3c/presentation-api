@@ -1051,15 +1051,21 @@ interface <dfn id="presentationsession">PresentationSession</dfn> : EventTarget 
                 display</a> for <em>availabilityUrl</em>. Otherwise, set
                 <em>newAvailability</em> to <code>false</code>.
                 </li>
-                <li>Set <em>A</em>'s <code>value</code> property to
-                <em>newAvailability</em>.
-                </li>
                 <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, then <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">queue a task</a> to <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">fire an event</a>
-                named <code>change</code> at <em>A</em>.
-                </li>
-                <li>If <em>P</em> is not settled, then
-                  <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">resolve</a> <em>P</em> with <em>A</em>.
+                <em>newAvailability</em>, then <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/webappapis.html#queue-a-task">queue a task</a> to run the following steps:
+                  <ol>
+                    <li>Set <em>A</em>'s <code>value</code> property to
+                    <em>newAvailability</em>.
+                    </li>
+                    <li>
+                      <a class="external" data-anolis-spec="w3c-html" href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#concept-event-fire" title="concept-event-fire">Fire an event</a> named
+                      <code>change</code> at <em>A</em>.
+                    </li>
+                    <li>If <em>P</em> is not settled, then
+                    <a class="external" data-anolis-spec="promguide" href="http://www.w3.org/2001/tag/doc/promises-guide#shorthand-manipulating" title="resolve-reject">
+                      resolve</a> <em>P</em> with <em>A</em>.
+                    </li>
+                  </ol>
                 </li>
               </ol>
             </li>
