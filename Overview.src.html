@@ -5,8 +5,80 @@
     <title>
       Presentation API
     </title>
-    <link rel="stylesheet" href=
-    "https://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
+    <script src="http://www.w3.org/Tools/respec/respec-w3c-common" async class=
+    "remove">
+    </script>
+    <script class="remove">
+      var respecConfig = {
+        specStatus: 'ED',
+        edDraftURI: 'http://w3c.github.io/presentation-api/',
+        shortName:  'presentation-api',
+        editors: [
+          {
+            w3cid: 68454,
+            name: 'Mark Foltz',
+            company: 'Google',
+            mailto: 'mfoltz@google.com'
+          },
+          {
+            w3cid: 63802,
+            name: 'Dominik Röttsches',
+            company: 'Intel',
+            note: 'until April 2015'
+          }
+        ],
+        previousMaturity: 'WD',
+        previousPublishDate: '2015-07-01',
+        otherLinks: [
+          {
+            key: 'Version history',
+            data: [
+              {
+                value: 'GitHub w3c/presentation-api/commits',
+                href: 'https://github.com/w3c/presentation-api/commits/'
+              }
+            ]
+          },
+          {
+            key: 'Participate',
+            data: [
+              {
+                value: 'GitHub w3c/presentation-api',
+                href: 'https://github.com/w3c/presentation-api/'
+              },
+              {
+                value: 'File an issue',
+                href: 'https://github.com/w3c/presentation-api/issues/new'
+              },
+              {
+                value: 'Open issues',
+                href: 'https://github.com/w3c/presentation-api/issues/'
+              },
+              {
+                value: 'Mailing-list (public-secondscreen@w3.org)',
+                href: 'https://lists.w3.org/Archives/Public/public-secondscreen/'
+              }
+            ]
+          }
+        ],
+        wg: 'Second Screen Presentation Working Group',
+        wgURI: 'http://www.w3.org/2014/secondscreen/',
+        wgPublicList: 'public-secondscreen',
+        wgPatentURI: 'http://www.w3.org/2004/01/pp-impl/74168/status',
+        issueBase: 'https://www.github.com/w3c/presentation-api/issues/',
+        localBiblio: {
+          PROMGUIDE: {
+            title: 'Writing Promise-Using Specifications',
+            href: 'http://www.w3.org/2001/tag/doc/promises-guide',
+            authors: [
+              'Domenic Denicola'
+            ],
+            status: 'finding',
+            publisher: 'W3C'
+          }
+        }
+      };
+    </script>
     <style>
     /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
@@ -67,120 +139,14 @@
     </style>
   </head>
   <body>
-    <div class="head">
-      <!--logo-->
-      <h1>
-        Presentation API
-      </h1>
-      <h2 class="no-num no-toc">
-        [LONGSTATUS] [DATE]
-      </h2>
-      <dl>
-        <dt>
-          This version:
-        </dt>
-        <dd>
-          <!--begin-link-->[VERSION]<!--end-link-->
-        </dd>
-        <dt>
-          Latest published version:
-        </dt>
-        <dd>
-          <!--begin-link-->[LATEST]<!--end-link-->
-        </dd><!--previous-version-->
-        <dt>
-          Latest editor's draft:
-        </dt>
-        <dd>
-          <a href=
-          "http://w3c.github.io/presentation-api/">http://w3c.github.io/presentation-api/</a>
-        </dd>
-        <dt>
-          Version history:
-        </dt>
-        <dd>
-          <a href="https://github.com/w3c/presentation-api/commits/">GitHub
-          w3c/presentation-api/commits</a>
-        </dd>
-        <dt>
-          Participate:
-        </dt>
-        <dd>
-          <a href="https://github.com/w3c/presentation-api/">GitHub
-          w3c/presentation-api</a> (<a href=
-          "https://github.com/w3c/presentation-api/issues/new">file an
-          issue</a>, <a href=
-          "https://github.com/w3c/presentation-api/issues/">open issues</a>)
-        </dd>
-        <dd>
-          Send feedback to <a href=
-          "mailto:public-secondscreen@w3.org">public-secondscreen@w3.org</a>
-          (<a href=
-          "https://lists.w3.org/Archives/Public/public-secondscreen/">archives</a>)
-        </dd>
-        <dt>
-          Editors:
-        </dt>
-        <dd data-editor-id="68454">
-          <a href="mailto:mfoltz@google.com">Mark Foltz</a>, Google
-        </dd>
-        <dd data-editor-id="63802">
-          Dominik Röttsches, Intel (until April 2015)
-        </dd>
-      </dl>
-      <p class="copyright">
-        <a href=
-        "http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
-        © 2015 <a href="http://www.w3.org/"><abbr title=
-        "World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href=
-        "http://www.csail.mit.edu/"><abbr title=
-        "Massachusetts Institute of Technology">MIT</abbr></a>, <a href=
-        "http://www.ercim.eu/"><abbr title=
-        "European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
-        <a href="http://www.keio.ac.jp/">Keio</a>, <a href=
-        "http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href=
-        "http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
-        <a href=
-        "http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
-        and <a href=
-        "http://www.w3.org/Consortium/Legal/copyright-documents">document
-        use</a> rules apply.
-      </p>
-      <hr>
-    </div>
-    <section>
-      <h2 class="no-num no-toc">
-        Abstract
-      </h2>
+    <section id="abstract">
       <p>
         This specification defines an API to enable web content to access
         external presentation-type displays and use them for presenting web
         content.
       </p>
     </section>
-    <section>
-      <h2 class="no-num no-toc" id="sotd">
-        Status of This Document
-      </h2>
-      <p>
-        <em>This section describes the status of this document at the time of
-        its publication. Other documents may supersede this document. A list of
-        current W3C publications and the latest revision of this technical
-        report can be found in the <a href="http://www.w3.org/TR/">W3C
-        technical reports index</a> at http://www.w3.org/TR/.</em>
-      </p>
-      <p>
-        This document was published by the <a href=
-        "http://www.w3.org/2014/secondscreen/">Second Screen Presentation
-        Working Group</a> as a Working Draft. If you wish to make comments
-        regarding this document, please send them to <a href=
-        "mailto:public-secondscreen@w3.org">public-secondscreen@w3.org</a>
-        (<a href=
-        "mailto:public-secondscreen-request@w3.org?subject=subscribe">subscribe</a>,
-        <a href=
-        "http://lists.w3.org/Archives/Public/public-secondscreen/">archives</a>).
-        All comments are welcome.
-      </p>
+    <section id="sotd">
       <p>
         This document is a <b>work in progress</b> and is subject to change.
         Some sections are still incomplete or underspecified. <a href=
@@ -193,45 +159,14 @@
         Working Group to evolve the specification based on implementation
         issues.
       </p>
-      <p>
-        Publication as a Working Draft does not imply endorsement by the W3C
-        Membership. This is a draft document and may be updated, replaced or
-        obsoleted by other documents at any time. It is inappropriate to cite
-        this document as other than work in progress.
-      </p>
-      <p>
-        This document was produced by a group operating under the <a id=
-        "sotd_patent" rel="w3p:patentRules" href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004
-        W3C Patent Policy</a>. W3C maintains a <a href=
-        "http://www.w3.org/2004/01/pp-impl/74168/status" rel=
-        "disclosure">public list of any patent disclosures</a> made in
-        connection with the deliverables of the group; that page also includes
-        instructions for disclosing a patent. An individual who has actual
-        knowledge of a patent which the individual believes contains <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
-        Claim(s)</a> must disclose the information in accordance with <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
-        6 of the W3C Patent Policy</a>.
-      </p>
-      <p>
-        This document is governed by the <a id="w3c_process_revision" href=
-        "http://www.w3.org/2014/Process-20140801/">1 August 2014 <abbr title=
-        "World Wide Web Consortium">W3C</abbr> Process Document</a>.
-      </p>
     </section>
-    <section>
-      <h2 class="no-num no-toc">
-        Table of Contents
-      </h2><!--toc-->
-    </section>
-    <section>
+    <section class="informative">
       <h2>
         Introduction
-      </h2><em>This section is non-normative.</em>
+      </h2>
       <p>
-        This specification aims to make <span>presentation display</span>s such
-        as projectors or connected TVs, available to the Web and takes into
+        This specification aims to make <a>presentation displays</a> such as
+        projectors or connected TVs, available to the Web and takes into
         account displays that are attached using wired (HDMI, DVI, or similar)
         and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, or
         similar).
@@ -240,74 +175,62 @@
         Devices with limited screen size lack the ability to show content to a
         larger audience, for example, a group of colleagues in a conference
         room, or friends and family at home. Showing content on an external
-        large <span>presentation display</span> helps to improve the perceived
+        large <a>presentation display</a> helps to improve the perceived
         quality and impact of the presented content.
       </p>
       <p>
         At its core, this specification enables an exchange of messages between
-        a page that acts as the <span>controller</span> and another page that
-        represents the <span>presentation</span> shown in the
-        <span>presentation display</span>. How the messages are transmitted is
-        left to the UA in order to allow the use of <span>presentation
-        display</span> devices that can be attached in a wide variety of ways.
-        For example, when a <span>presentation display</span> device is
-        attached using HDMI or Miracast, the same UA that acts as the
-        <span>controller</span> renders the <span>presentation</span>. Instead
-        of displaying the <span>presentation</span> in another window on the
-        same device, however, it can use whatever means the operating system
-        provides for using the external <span>presentation display</span>s. In
-        such a case, both the <span>controller</span> and
-        <span>presentation</span> run on the same UA and the operating system
-        is used to route the <span>presentation display</span> output to the
-        <span>presentation display</span>. This specification imposes no
-        requirements on the <span>presentation display</span> devices connected
-        in such a manner.
+        a page that acts as the <a>controller</a> and another page that
+        represents the <a title="presenting browsing context">presentation</a>
+        shown in the <a>presentation display</a>. How the messages are
+        transmitted is left to the UA in order to allow the use of
+        <a>presentation display</a> devices that can be attached in a wide
+        variety of ways. For example, when a <a>presentation display</a> device
+        is attached using HDMI or Miracast, the same UA that acts as the
+        <a>controller</a> renders the <a title=
+        "presenting browsing context">presentation</a>. Instead of displaying
+        the <a title="presenting browsing context">presentation</a> in another
+        window on the same device, however, it can use whatever means the
+        operating system provides for using the external <a>presentation
+        displays</a>. In such a case, both the <a>controller</a> and <a title=
+        "presenting browsing context">presentation</a> run on the same UA and
+        the operating system is used to route the <a>presentation display</a>
+        output to the <a>presentation display</a>. This specification imposes
+        no requirements on the <a>presentation display</a> devices connected in
+        such a manner.
       </p>
       <p>
-        If the <span>presentation display</span> is able to render HTML
-        documents and communicate with the <span>controller</span>, the
-        <span>controller</span> does not need to render the
-        <span>presentation</span>. In this case, the UA acts as a proxy that
-        requests the <span>presentation display</span> to show and render the
-        <span>presentation</span> itself. This way of attaching to displays
-        could be enhanced in the future by defining a standard protocol for
-        delivering these types of messages that display devices could choose to
-        implement.
+        If the <a>presentation display</a> is able to render HTML documents and
+        communicate with the <a>controller</a>, the <a>controller</a> does not
+        need to render the <a title=
+        "presenting browsing context">presentation</a>. In this case, the UA
+        acts as a proxy that requests the <a>presentation display</a> to show
+        and render the <a title="presenting browsing context">presentation</a>
+        itself. This way of attaching to displays could be enhanced in the
+        future by defining a standard protocol for delivering these types of
+        messages that display devices could choose to implement.
       </p>
       <p>
         The API defined here is intended to be used with UAs that attach to
-        <span>presentation display</span> devices through any of the above
-        means.
+        <a>presentation display</a> devices through any of the above means.
       </p>
     </section>
     <section id="use-cases-and-requirements">
       <h2>
         Use cases and requirements
-      </h2>Use cases and requirements are captured in a separate <a href=
-      "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md">Presentation
-      API Use Cases and Requirements</a> document.
-    </section>
-    <section>
-      <h2>
-        Conformance
       </h2>
       <p>
-        All diagrams, examples, and notes in this specification are
-        non-normative, as are all sections explicitly marked non-normative.
-        Everything else in this specification is normative.
+        Use cases and requirements are captured in a separate <a href=
+        "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md">Presentation
+        API Use Cases and Requirements</a> document.
       </p>
-      <p>
-        The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-        "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-        "OPTIONAL" in this document are to be interpreted as described in RFC
-        2119. For readability, these words do not appear in all uppercase
-        letters in this specification. <span data-anolis-ref="">RFC2119</span>
-      </p>
+    </section>
+    <section id="conformance">
       <p>
         Requirements phrased in the imperative as part of algorithms (such as
         "strip any leading space characters" or "return false and terminate
         these steps") are to be interpreted with the meaning of the key word
-        ("must", "should", "may", etc.) used in introducing the algorithm.
+        ("MUST", "SHOULD", "MAY", etc.) used in introducing the algorithm.
       </p>
       <p>
         Conformance requirements phrased as algorithms or specific steps may be
@@ -321,44 +244,53 @@
         Terminology
       </h2>
       <p>
-        The terms <span data-anolis-spec="w3c-html">browsing context</span>,
-        <span data-anolis-spec="w3c-html">event handlers</span>, <span title=
-        "event handler event type" data-anolis-spec="w3c-html">event handler
-        event types</span>, <span data-anolis-spec="w3c-html" title=
-        "concept-event-fire">firing an event</span>, <span data-anolis-spec=
-        "w3c-html">navigate</span>, <span data-anolis-spec="w3c-html" title=
-        "queue a task">queuing a task</span> are defined in
-        <span data-anolis-ref="">HTML5</span>.
+        The terms <dfn><a href=
+        "http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
+        context</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/webappapis.html#event-handlers">event
+        handler</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/webappapis.html#event-handler-event-type">event
+        handler event type</a></dfn>, <dfn title="fire"><a href=
+        "http://www.w3.org/TR/html5/infrastructure.html#concept-event-fire">firing
+        an event</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/browsers.html#navigate">navigate</a></dfn>,
+        <dfn><a href="http://www.w3.org/TR/html5/webappapis.html">queue a
+        task</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/infrastructure.html#concept-events-trusted">
+        trusted event</a></dfn> are defined in [[!HTML5]].
       </p>
       <p>
-        The term <span data-anolis-spec="webidl">DOMException</span> is defined
-        in <span data-anolis-ref="webidl">WEBIDL</span>.
+        This document provides interface definitions using the Web IDL standard
+        ([[!WEBIDL]]). The terms <dfn><a href=
+        "https://heycam.github.io/webidl/#idl-promise">Promise</a></dfn>,
+        <dfn><a href=
+        "http://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></dfn>,
+        <dfn><a href=
+        "http://heycam.github.io/webidl/#idl-ArrayBufferView">ArrayBufferView</a></dfn>
+        and <dfn><a href=
+        "http://heycam.github.io/webidl/#idl-DOMException">DOMException</a></dfn>
+        are defined in [[!WEBIDL]].
       </p>
       <p>
-        This document provides interface definitions using the
-        <span data-anolis-ref="webidl">WEBIDL</span> standard. The terms
-        <span data-anolis-spec="webidl">Promise</span>, <span data-anolis-spec=
-        "webidl">ArrayBuffer</span>, and <span data-anolis-spec=
-        "webidl">ArrayBufferView</span> are defined in <span data-anolis-ref=
-        "webidl">WEBIDL</span>.
+        The terms <dfn title="resolve"><a href=
+        "http://www.w3.org/2001/tag/doc/promises-guide#resolve-promise">resolving
+        a Promise</a></dfn>, and <dfn title="reject"><a href=
+        "http://www.w3.org/2001/tag/doc/promises-guide#reject-promise">rejecting
+        a Promise</a></dfn> are used as explained in [[!PROMGUIDE]].
       </p>
       <p>
-        The terms <span data-anolis-spec="promguide" title=
-        "resolve-reject">resolving a Promise, and rejecting a Promise</span>
-        are used as explained in <span data-anolis-ref="">PROMGUIDE</span>.
+        The term <dfn><a href="https://url.spec.whatwg.org/#url">URL</a></dfn>
+        is defined in the WHATWG URL standard [[!URL]].
       </p>
       <p>
-        The term <span data-anolis-spec="url">URL</span> is defined in the
-        WHATWG URL standard <span data-anolis-ref="url">URL</span>.
+        The term <dfn><a href=
+        "http://dev.w3.org/2006/webapi/FileAPI/#blob">Blob</a></dfn> is defined
+        in the File API specification [[!FILEAPI]].
       </p>
       <p>
-        The term <span data-anolis-spec="fileapi">Blob</span> is defined in the
-        File API specification <span data-anolis-ref="fileapi">FILEAPI</span>.
-      </p>
-      <p>
-        The term <span data-anolis-spec="webrtc">RTCDataChannel</span> is
-        defined in the WebRTC API specification <span data-anolis-ref="" class=
-        "informative">WEBRTC</span>.
+        The term <dfn><a href=
+        "http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a></dfn>
+        is defined in the WebRTC API specification ([[WEBRTC]]).
       </p>
     </section>
     <section>
@@ -533,52 +465,51 @@
           Common idioms
         </h3>
         <p>
-          A <dfn>presentation display</dfn> refers to an external screen
-          available to the user agent via an implementation specific connection
-          technology.
+          A <dfn lt="presentation display|presentation displays">presentation
+          display</dfn> refers to an external screen available to the user
+          agent via an implementation specific connection technology.
         </p>
         <p>
-          A <dfn>presentation session</dfn> is an object relating a
-          <span>controlling browsing context</span> to its <span>presenting
-          browsing context</span> and enables two-way-messaging between them.
-          Each <span>presentation session</span> has a <dfn>presentation
-          session state</dfn>, a <dfn>presentation session identifier</dfn> to
-          distinguish it from other <span>presentation sessions</span>, and a
-          <dfn>presentation session URL</dfn> that is a <span data-anolis-spec=
-          "url">URL</span> used to create or resume the <span>presentation
-          session</span>. A <dfn>valid presentation session identifier</dfn>
-          consists of alphanumeric ASCII characters only, is at least 16
-          characters long, and is unique within the <span>set of
-          presentations</span>.
+          A <dfn lt="presentation session|presentation sessions">presentation
+          session</dfn> is an object relating a <a>controlling browsing
+          context</a> to its <a>presenting browsing context</a> and enables
+          two-way-messaging between them. Each <a>presentation session</a> has
+          a <dfn>presentation session state</dfn>, a <dfn lt=
+          "presentation session identifier|presentation session identifiers">presentation
+          session identifier</dfn> to distinguish it from other <a>presentation
+          sessions</a>, and a <dfn>presentation session URL</dfn> that is a
+          <a>URL</a> used to create or resume the <a>presentation session</a>.
+          A <dfn>valid presentation session identifier</dfn> consists of
+          alphanumeric ASCII characters only, is at least 16 characters long,
+          and is unique within the <a>set of presentations</a>.
+        </p>
+        <p link-for="Presentation">
+          A <dfn lt=
+          "controlling browsing context|controlling browsing contexts">controlling
+          browsing context</dfn> (or <dfn>controller</dfn> for short) is a
+          <a>browsing context</a> that has initiated or resumed a
+          <a>presentation session</a> by calling
+          <code><a>startSession</a>()</code> or
+          <code><a>joinSession</a>()</code> or received a <a>presentation
+          session</a> via <code><a>ondefaultsessionstart</a></code> event.
         </p>
         <p>
-          A <dfn>controlling browsing context</dfn> (or <dfn>controller</dfn>
-          for short) is a <span data-anolis-spec="w3c-html">browsing
-          context</span> that has initiated or resumed a <span>presentation
-          session</span> by calling <code><span>startSession</span>()</code> or
-          <code><span>joinSession</span>()</code> or received a
-          <span>presentation session</span> via
-          <code><span>ondefaultsessionstart</span></code> event.
-        </p>
-        <p>
-          The <dfn>presenting browsing context</dfn> (or
-          <dfn>presentation</dfn> for short) is the browsing context
-          responsible for rendering to a <span>presentation display</span>. A
-          <span>presenting browsing context</span> can reside in the same user
-          agent as the <span>controlling browsing context</span> or a different
-          one.
+          The <dfn>presenting browsing context</dfn> (or <dfn title=
+          "presentation context">presentation</dfn> for short) is the browsing
+          context responsible for rendering to a <a>presentation display</a>. A
+          <a>presenting browsing context</a> can reside in the same user agent
+          as the <a>controlling browsing context</a> or a different one.
         </p>
         <p>
           The <dfn>set of presentations</dfn>, initially empty, contains the
-          <span>presentation session</span>s created by the <span>controlling
-          browsing context</span>s for the user agent (or a specific user
-          profile within the user agent). The <span>set of presentations</span>
-          is represented by a list of tuples, where each tuple consists of a
-          <span>presentation session URL</span>, a <span>presentation session
-          identifier</span>, and the <span>presentation session</span> itself.
-          The <span>presentation session URL</span> and <span>presentation
-          session identifier</span> uniquely identify the <span>presentation
-          session</span>.
+          <a>presentation session</a>s created by the <a>controlling browsing
+          contexts</a> for the user agent (or a specific user profile within
+          the user agent). The <a>set of presentations</a> is represented by a
+          list of tuples, where each tuple consists of a <a>presentation
+          session URL</a>, a <a>presentation session identifier</a>, and the
+          <a>presentation session</a> itself. The <a>presentation session
+          URL</a> and <a>presentation session identifier</a> uniquely identify
+          the <a>presentation session</a>.
         </p>
       </section>
       <section>
@@ -586,72 +517,66 @@
           Interface <code>PresentationSession</code>
         </h3>
         <p>
-          Each <span>presentation session</span> is represented by a
-          <code>PresentationSession</code> object.
+          Each <a>presentation session</a> is represented by a
+          <a>PresentationSession</a> object.
         </p>
         <pre class="idl">
-enum <dfn>PresentationSessionState</dfn> { "connected", "disconnected" /*, "resumed" */ };
-enum <dfn>BinaryType</dfn> { "blob", "arraybuffer" };
+          enum PresentationSessionState { "connected", "disconnected" /*, "resumed" */ };
+          enum BinaryType { "blob", "arraybuffer" };
 
-interface <dfn>PresentationSession</dfn> : EventTarget {
-  readonly attribute <span data-anolis-spec=
-"webidl">DOMString</span>? <span>id</span>;
-  readonly attribute <span>PresentationSessionState</span> <span>state</span>;
-  void <span>close</span>();
-  attribute <span data-anolis-spec=
-"w3c-html">EventHandler</span> <span>onstatechange</span>;
+          interface PresentationSession : EventTarget {
+            readonly attribute DOMString? id;
+            readonly attribute PresentationSessionState state;
+            void close();
+            attribute EventHandler onstatechange;
 
-  // Communication
-  attribute BinaryType <dfn title="binarytype-attribute">binaryType</dfn>;
-  attribute <span data-anolis-spec="w3c-html">EventHandler</span> <dfn title=
-"presentation-onmessage">onmessage</dfn>;
-  void <dfn>send</dfn> (<span data-anolis-spec=
-"webidl">DOMString</span> message);
-  void <dfn title="send-blob">send</dfn> (<span data-anolis-spec=
-"fileapi">Blob</span> data);
-  void <dfn title="send-arraybuffer">send</dfn> (<span data-anolis-spec=
-"webidl">ArrayBuffer</span> data);
-  void <dfn title="send-arraybufferview">send</dfn> (<span data-anolis-spec=
-"webidl">ArrayBufferView</span> data);
-};
+            // Communication
+            attribute BinaryType binaryType;
+            attribute EventHandler onmessage;
+            void send (DOMString message);
+            void send (Blob data);
+            void send (ArrayBuffer data);
+            void send (ArrayBufferView data);
+          };
+        
 </pre>
-        <p>
-          The <dfn><code>id</code></dfn> attribute specifies the
-          <span>presentation session</span>'s <span>presentation session
-          identifier</span>.
-        </p>
-        <p>
-          The <dfn><code>state</code></dfn> attribute represents the
-          <span>presentation session</span>'s current state. It can take one of
-          the values of <span><code>PresentationSessionState</code></span>
-          depending on connection state.
-        </p>
-        <p>
-          When the <code><span>send</span>()</code> method is called on a
-          <code>PresentationSession</code> object with a <code>message</code>,
-          the user agent must run the algorithm to <span title=
-          "algorithm-send">send a message through a
-          <span><code>PresentationSession</code></span></span>.
-        </p>
-        <p>
-          When the <code><dfn>close</dfn>()</code> method is called on a
-          <code>PresentationSession</code>, the user agent must run the
-          algorithm to <span title="close-algorithm">close a presentation
-          session</span> with <code>PresentationSession</code>.
-        </p>
+        <div dfn-for="PresentationSession" link-for="PresentationSession">
+          <p>
+            The <dfn><code>id</code></dfn> attribute specifies the
+            <a>presentation session</a>'s <a>presentation session
+            identifier</a>.
+          </p>
+          <p>
+            The <dfn><code>state</code></dfn> attribute represents the
+            <a>presentation session</a>'s current state. It can take one of the
+            values of <a>PresentationSessionState</a> depending on connection
+            state.
+          </p>
+          <p>
+            When the <code><dfn>send</dfn>()</code> method is called on a
+            <a>PresentationSession</a> object with a <code>message</code>, the
+            user agent MUST run the algorithm to <a title="algorithm-send">send
+            a message through a <code>PresentationSession</code></a>.
+          </p>
+          <p>
+            When the <code><dfn>close</dfn>()</code> method is called on a
+            <a>PresentationSession</a>, the user agent MUST run the algorithm
+            to <a title="close-algorithm">close a presentation session</a> with
+            <a>PresentationSession</a>.
+          </p>
+        </div>
         <section>
           <h4>
             Sending a message through <code>PresentationSession</code>
           </h4>
           <p class="note">
-            No specific transport for the connection between the
-            <span>controlling browsing context</span> and the <span>presenting
-            browsing context</span> is mandated, except that for multiple calls
-            to <code title="send">send()</code> it has to be ensured that
+            No specific transport for the connection between the <a>controlling
+            browsing context</a> and the <a>presenting browsing context</a> is
+            mandated, except that for multiple calls to <code><a for=
+            "PresentationSession">send</a>()</code> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
-            <span data-anolis-spec="webrtc"><code>RTCDataChannel</code></span>
-            in reliable mode.
+            <a><code>RTCDataChannel</code></a> in reliable mode.
           </p>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
@@ -661,39 +586,39 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           </p>
           <p>
             When the user agent is to <dfn title="algorithm-send">send a
-            message through a <code>PresentationSession</code> S</dfn>, it must
+            message through a <code>PresentationSession</code> S</dfn>, it MUST
             run the following steps:
           </p>
-          <ol>
-            <li>If the <code>state</code> property of
-            <code>PresentationSession</code> is <code>"disconnected"</code>,
-            throw an <code>InvalidStateError</code> exception.
+          <ol link-for="PresentationSession">
+            <li>If the <a>state</a> property of <a>PresentationSession</a> is
+            <code>"disconnected"</code>, throw an
+            <code>InvalidStateError</code> exception.
             </li>
-            <li>Let <span>presentation message type</span> <em>messageType</em>
-            be <code>binary</code> if <code>data</code> is one of
+            <li>Let <a>presentation message type</a> <em>messageType</em> be
+            <code>binary</code> if <code>data</code> is one of
             <code>ArrayBuffer</code>, <code>ArrayBufferView</code>, or
             <code>Blob</code>. Let <em>messageType</em> be <code>text</code> if
             <code>data</code> is of type <code>DOMString</code>)
             </li>
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
-                <li>Let the <span>destination browsing context</span> be the
-                <span>controlling browsing context</span> if <code title=
-                "send">send()</code> is called in the <span>presenting browsing
-                context</span>.
+                <li>Let the <a>destination browsing context</a> be the
+                <a>controlling browsing context</a> if
+                <code><a>send</a>()</code> is called in the <a>presenting
+                browsing context</a>.
                 </li>
-                <li>Let <span>destination browsing context</span> be the <span>
-                  presenting browsing context</span> if <code title=
-                  "send">send()</code> is called from the <span>controlling
-                  browsing context</span>.
+                <li>Let <a>destination browsing context</a> be the
+                <a>presenting browsing context</a> if
+                <code><a>send</a>()</code> is called from the <a>controlling
+                browsing context</a>.
                 </li>
               </ol>
             </li>
             <li>Using an implementation specific mechanism, transmit the
-            contents of the <code>data</code> argument as <span>presentation
-            message data</span> and <span>presentation message type</span> <em>
-              messageType</em> to the <span>destination browsing context</span>
-              side.
+            contents of the <code>data</code> argument as <a>presentation
+            message data</a> and <a>presentation message type</a>
+            <em>messageType</em> to the <a>destination browsing context</a>
+            side.
             </li>
           </ol>
         </section>
@@ -703,50 +628,43 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           </h4>
           <p>
             When the user agent has received a transmission from the remote
-            side consisting of <span>presentation message data</span> and
-            <span>presentation message type</span>, it must run the following
-            steps:
+            side consisting of <a>presentation message data</a> and
+            <a>presentation message type</a>, it MUST run the following steps:
           </p>
-          <ol>
-            <li>If the <code>state</code> property of
-            <code>PresentationSession</code> is <code>"disconnected"</code>,
-            abort these steps.
+          <ol link-for="PresentationSession">
+            <li>If the <a>state</a> property of <a>PresentationSession</a> is
+            <code>"disconnected"</code>, abort these steps.
             </li>
-            <li>Let <em>event</em> be a newly created <span data-anolis-spec=
-            "w3c-html" title="concept-events-trusted">trusted event</span> that
+            <li>Let <em>event</em> be a newly created <a>trusted event</a> that
             uses the <code>MessageEvent</code> interface, with the event type
             <code>message</code>, which does not bubble, is not cancelable, and
             has no default action.
             </li>
             <li>Initialize the <em>event's</em> data attribute as follows:
               <ol>
-                <li>If the <span>presentation message type</span> is
+                <li>If the <a>presentation message type</a> is
                 <code>text</code>, then initialize <em>event's</em>
-                <code>data</code> attribute to the contents of
-                <span>presentation message data</span> of type
-                <code>DOMString</code>.
+                <code>data</code> attribute to the contents of <a>presentation
+                message data</a> of type <code>DOMString</code>.
                 </li>
-                <li>If the <span>presentation message type</span> is
-                <code>binary</code>, and <code>binaryType</code> is set to
+                <li>If the <a>presentation message type</a> is
+                <code>binary</code>, and <a>binaryType</a> is set to
                 <code>blob</code>, then initialise <em>event</em>'s
                 <code>data</code> attribute to a new <code>Blob</code> object
-                that represents <span>presentation message data</span> as its
-                raw data.
+                that represents <a>presentation message data</a> as its raw
+                data.
                 </li>
-                <li>If the <span>presentation message type</span> is
-                <code>binary</code>, and <code>binaryType</code> is set to
+                <li>If the <a>presentation message type</a> is
+                <code>binary</code>, and <a>binaryType</a> is set to
                 <code>arraybuffer</code>, then initialise <em>event</em>'s
                 <code>data</code> attribute to a new <code>ArrayBuffer</code>
-                object whose contents are <span>presentation message
-                data</span>.
+                object whose contents are <a>presentation message data</a>.
                 </li>
               </ol>
             </li>
             <li>
-              <span data-anolis-spec="w3c-html">Queue a task</span> to
-              <span data-anolis-spec="w3c-html" title="concept-event-fire">fire
-              <em>event</em></span> at
-              <span><code>PresentationSession</code></span>.
+              <a>Queue a task</a> to <a>fire</a> <em>event</em> at
+              <a><code>PresentationSession</code></a>.
             </li>
           </ol>
         </section>
@@ -756,31 +674,28 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           </h4>
           <p>
             When the user agent is to <dfn title="close-algorithm">close a
-            presentation session</dfn> using <em>session</em>, it must run the
+            presentation session</dfn> using <em>session</em>, it MUST run the
             following steps:
           </p>
           <ol>
-            <li>If <span>presentation session state</span> of <em>session</em>
-            is not <code>connected</code>, then abort these steps.
+            <li>If <a>presentation session state</a> of <em>session</em> is not
+            <code>connected</code>, then abort these steps.
             </li>
-            <li>Set <span>presentation session state</span> of <em>session</em>
-            to <code>disconnected</code>.
+            <li>Set <a>presentation session state</a> of <em>session</em> to
+            <code>disconnected</code>.
             </li>
             <li>
-              <span data-anolis-spec="w3c-html">Queue a task</span> to run the
-              following steps in order:
+              <a>Queue a task</a> to run the following steps in order:
               <ol>
-                <li>For each <em>known session</em> in the <span>set of
-                presentations</span>:
+                <li>For each <em>known session</em> in the <a>set of
+                presentations</a>:
                   <ol>
-                    <li>If the <span>presentation session identifier</span> of
+                    <li>If the <a>presentation session identifier</a> of
                     <em>known session</em> and <em>session</em> are equal, run
                     the following steps:
                       <ol>
                         <li>
-                          <span data-anolis-spec="w3c-html">Queue a task</span>
-                          to <span data-anolis-spec="w3c-html" title=
-                          "concept-event-fire">fire an event</span> named
+                          <a>Queue a task</a> to <a>fire</a> an event named
                           <code>statechange</code> at <em>session</em>.
                         </li>
                       </ol>
@@ -802,10 +717,10 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           <p>
             The following are the event handlers (and their corresponding event
             handler event types) that must be supported, as event handler IDL
-            attributes, by objects implementing the
-            <code>PresentationSession</code> interface:
+            attributes, by objects implementing the <a>PresentationSession</a>
+            interface:
           </p>
-          <table>
+          <table dfn-for="PresentationSession">
             <thead>
               <tr>
                 <th>
@@ -842,52 +757,50 @@ interface <dfn>PresentationSession</dfn> : EventTarget {
           Interface <code>PresentationAvailability</code>
         </h3>
         <pre class="idl">
-interface <dfn>PresentationAvailability</dfn> : EventTarget {
-  readonly attribute boolean value;
-  attribute <span data-anolis-spec=
-"w3c-html">EventHandler</span> <span>onchange</span>;  
-};
+          interface PresentationAvailability : EventTarget {
+            readonly attribute boolean value;
+            attribute EventHandler onchange;
+          };
         
 </pre>
         <p>
-          An <code>PresentationAvailability</code> object is associated with a
-          <span>presentation display</span> and represents its
+          A <a><code>PresentationAvailability</code></a> object is associated
+          with a <a>presentation display</a> and represents its
           <dfn>presentation display availability</dfn>.
         </p>
         <p>
-          The <code>value</code> attribute must return the last value it was
-          set to. The value is updated by the <span>monitor the list of
-          available presentation displays</span> algorithm.
+          The <dfn for="PresentationAvailability">value</dfn> attribute MUST
+          return the last value it was set to. The value is updated by the
+          <a>monitor the list of available presentation displays</a> algorithm.
         </p>
         <p>
-          The <code>onchange</code> attribute is an <span data-anolis-spec=
-          "w3c-html" title="event handlers">event handler</span> whose
-          corresponding <span data-anolis-spec="w3c-html">event handler event
-          type</span> is <code>change</code>.
+          The <dfn for="PresentationAvailability">onchange</dfn> attribute is
+          an <a>event handler</a> whose corresponding <a>event handler event
+          type</a> is <code>change</code>.
         </p>
         <section>
           <h4>
             The set of availability objects
           </h4>
           <p>
-            The user agent must keep track of the <dfn>set of availability
-            objects</dfn> requested through the <code>getAvailability()</code>
-            method. The <span>set of availability objects</span> is represented
-            as a set of tuples <em>(A, availabilityUrl, P)</em>, initially
-            empty, where:
+            The user agent MUST keep track of the <dfn>set of availability
+            objects</dfn> requested through the <code><a for=
+            "Presentation">getAvailability</a>()</code> method. The <a>set of
+            availability objects</a> is represented as a set of tuples <em>(A,
+            availabilityUrl, P)</em>, initially empty, where:
           </p>
           <ol>
             <li>
-              <em>A</em> is a live <code>PresentationAvailability</code>
-              object;
+              <em>A</em> is a live <a>PresentationAvailability</a> object;
             </li>
             <li>
               <em>availabilityUrl</em> is the <code>availabilityUrl</code>
-              passed to <code>getAvailability()</code> to create A.
+              passed to <code><a for=
+              "Presentation">getAvailability</a>()</code> to create A.
             </li>
             <li>
-              <em>P</em> is the <span data-anolis-spec="webidl">Promise</span>
-              that was returned by <code>getAvailability()</code> when
+              <em>P</em> is the <a>Promise</a> that was returned by
+              <code><a for="Presentation">getAvailability</a>()</code> when
               <em>A</em> was created.
             </li>
           </ol>
@@ -897,45 +810,43 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
             The list of available presentation displays
           </h4>
           <p>
-            The user agent must keep a <dfn>list of available presentation
-            displays</dfn>. This current list of <span>presentation
-            displays</span> that may be used for starting new presentations,
-            and is populated based on an implementation specific discovery
-            mechanism. It is set to the most recent result of the algorithm to
-            <span>monitor the list of available presentation displays</span>.
+            The user agent MUST keep a <dfn>list of available presentation
+            displays</dfn>. This current list of <a>presentation displays</a>
+            may be used for starting new presentations, and is populated based
+            on an implementation specific discovery mechanism. It is set to the
+            most recent result of the algorithm to <a>monitor the list of
+            available presentation displays</a>.
           </p>
           <p>
-            While there are live <code>PresentationAvailability</code> objects,
-            the user agent may <span>monitor the list of available presentation
-            displays</span> continuously, so that pages can use the
-            <code>value</code> property of an
-            <code>PresentationAvailability</code> object to offer presentation
-            only when there are available displays. However, the user agent may
-            not support continuous availability monitoring; for example,
-            because of platform or power consumption restrictions. In this case
-            the <span>Promise</span> returned by <code>getAvailability()</code>
-            is <span data-anolis-spec="promguide" title=
-            "resolve-reject">rejected</span> and the algorithm to <span>monitor
-            the list of available presentation displays</span> will only run as
-            part of the <span title="startSession">session start</span>
+            While there are live <a>PresentationAvailability</a> objects, the
+            user agent MAY <a>monitor the list of available presentation
+            displays</a> continuously, so that pages can use the <a for=
+            "PresentationAvailability">value</a> property of an
+            <a>PresentationAvailability</a> object to offer presentation only
+            when there are available displays. However, the user agent may not
+            support continuous availability monitoring; for example, because of
+            platform or power consumption restrictions. In this case the
+            <a>Promise</a> returned by <code>getAvailability()</code> is
+            <a title="reject">rejected</a> and the algorithm to <a>monitor the
+            list of available presentation displays</a> will only run as part
+            of the <a for="Presentation" title="startSession">session start</a>
             algorithm.
           </p>
           <p>
-            When there are no live <code>PresentationAvailability</code>
-            objects (that is, the <span>set of availability objects</span> is
-            empty), user agents should not <span>monitor the list of available
-            presentation displays</span> to satisfy the <a href=
+            When there are no live <a>PresentationAvailability</a> objects
+            (that is, the <a>set of availability objects</a> is empty), user
+            agents SHOULD NOT <a>monitor the list of available presentation
+            displays</a> to satisfy the <a href=
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#nf-req01-power-saving-friendly">
             power saving non-functional requirement</a>. To further save power,
-            the UA may also keep track of whether the page holding an
-            <code>PresentationAvailability</code> object is in the foreground.
-            Using this information, implementation specific discovery of
-            <span title="presentation-display">presentation displays</span> can
-            be resumed or suspended.
+            the user agent MAY also keep track of whether the page holding an
+            <a>PresentationAvailability</a> object is in the foreground. Using
+            this information, implementation specific discovery of
+            <a>presentation displays</a> can be resumed or suspended.
           </p>
           <p>
-            Some <span>presentation displays</span> may only be able to display
-            a subset of Web content because of functional, security or hardware
+            Some <a>presentation displays</a> may only be able to display a
+            subset of Web content because of functional, security or hardware
             limitations. Examples are set-top boxes, smart TVs or networked
             speakers capable of rendering only audio. We say that such a
             display is a <dfn>compatible presentation display</dfn> for a
@@ -949,152 +860,138 @@ interface <dfn>PresentationAvailability</dfn> : EventTarget {
             Monitor the list of available presentation displays
           </h4>
           <p>
-            If <span>set of availability objects</span> is non-empty, or there
-            is a pending request to <span title="startSession">start a
-            session</span>, the user agent must <dfn>monitor the list of
+            If <a>set of availability objects</a> is non-empty, or there is a
+            pending request to <a for="Presentation" title="startSession">start
+            a session</a>, the user agent MUST <dfn>monitor the list of
             available presentation displays</dfn> by running the following
             steps.
           </p>
-          <ol>
+          <ol link-for="PresentationAvailability">
             <li>
-              <span data-anolis-spec="w3c-html">Queue a task</span> to retrieve
-              available presentation displays (using an implementation specific
-              mechanism) and let <a id="newdisplays"><em>newDisplays</em></a>
-              be this list.
+              <a>Queue a task</a> to retrieve available presentation displays
+              (using an implementation specific mechanism) and let
+              <em>newDisplays</em> be this list.
             </li>
             <li>Wait for the completion of that task.
             </li>
-            <li>For each member <em>(A, availabilityUrl, P)</em> of the <span>
-              set of availability objects</span>:
+            <li>For each member <em>(A, availabilityUrl, P)</em> of the <a>set
+            of availability objects</a>:
               <ol>
                 <li>Set <em>previousAvailability</em> to the value of
-                <em>A</em>'s <code>value</code> property.
+                <em>A</em>'s <a>value</a> property.
                 </li>
                 <li>Let <em>newAvailability</em> be <code>true</code> if
                 <em>newDisplays</em> is not empty and at least one display in
-                <em>newDisplays</em> is a <span>compatible presentation
-                display</span> for <em>availabilityUrl</em>. Otherwise, set
+                <em>newDisplays</em> is a <a>compatible presentation
+                display</a> for <em>availabilityUrl</em>. Otherwise, set
                 <em>newAvailability</em> to <code>false</code>.
                 </li>
                 <li>If <em>previousAvailability</em> is not equal to
-                <em>newAvailability</em>, then <span data-anolis-spec=
-                "w3c-html">queue a task</span> to run the following steps:
+                <em>newAvailability</em>, then <a>queue a task</a> to run the
+                following steps:
                   <ol>
-                    <li>Set <em>A</em>'s <code>value</code> property to
+                    <li>Set <em>A</em>'s <a>value</a> property to
                     <em>newAvailability</em>.
                     </li>
-                    <li>If <em>P</em> is settled, then
-                      <span data-anolis-spec="w3c-html" title=
-                      "concept-event-fire">fire an event</span> named
-                      <code>change</code> at <em>A</em>.
+                    <li>If <em>P</em> is settled, then <a>fire</a> an event
+                    named <code>change</code> at <em>A</em>.
                     </li>
-                    <li>If <em>P</em> is not settled, then
-                    <span data-anolis-spec="promguide" title="resolve-reject">
-                      resolve</span> <em>P</em> with <em>A</em>.
+                    <li>If <em>P</em> is not settled, then <a>resolve</a> <em>
+                      P</em> with <em>A</em>.
                     </li>
                   </ol>
                 </li>
               </ol>
             </li>
-            <li>Set the <span>list of available presentation displays</span> to
-            the value of <a href="#newdisplays">newDisplays</a>.
+            <li>Set the <a>list of available presentation displays</a> to the
+            value of <em>newDisplays</em>.
             </li>
           </ol>
           <p>
-            When an <code>PresentationAvailability</code> object is no longer
-            alive (i.e., is eligible for garbage collection), the user agent
-            should run the following steps:
+            When a <a>PresentationAvailability</a> object is no longer alive
+            (i.e., is eligible for garbage collection), the user agent SHOULD
+            run the following steps:
           </p>
           <ol>
             <li>Find and remove any entry <em>(A, availabilityUrl, P)</em> in
-            the <span>set of availability objects</span> for the newly deceased
-            <em>A</em>.
+            the <a>set of availability objects</a> for the newly deceased <em>
+              A</em>.
             </li>
-            <li>If the <span>set of availability objects</span> is now empty
-            and there is no pending request to <span title="startSession">start
-            a session</span>, cancel any pending task to <span>monitor the set
-            of presentation displays</span> for power saving purposes.
+            <li>If the <a>set of availability objects</a> is now empty and
+            there is no pending request to <a for="Presentation" title=
+            "startSession">start a session</a>, cancel any pending task to <a>
+              monitor the list of available presentation displays</a> for power
+              saving purposes.
             </li>
           </ol>
           <p class="note">
-            The mechanism used to monitor <span>presentation displays</span>
-            availability and determine the compatibility of a
-            <span>presentation display</span> with a given URL is left to the
-            user agent.
+            The mechanism used to monitor <a>presentation displays</a>
+            availability and determine the compatibility of a <a>presentation
+            display</a> with a given URL is left to the user agent.
           </p>
         </section>
       </section>
       <section>
         <h3>
-          Interface <span title=
-          "presentation-interface"><code>Presentation</code></span>
+          Interface <a><code>Presentation</code></a>
         </h3>
         <pre class="idl">
-partial interface <span data-anolis-spec="w3c-html">Navigator</span> {
-  [SameObject] readonly attribute <span title=
-"presentation-interface">Presentation</span> <span title=
-"navigator-presentation">presentation</span>;
-};
+          partial interface Navigator {
+            [SameObject] readonly attribute Presentation presentation;
+          };
+        
 </pre>
         <p>
-          The <dfn title=
-          "navigator-presentation"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the <span title=
-          "presentation-interface"><code>Presentation</code></span> interface.
+          The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
+          used to retrieve an instance of the <a>Presentation</a> interface.
         </p>
-        <!-- TODO: Anolis wants to link Presentation to the term defined in Common Idioms, so we create 
-             our own definition for the interface here.  See if this can be cleaned up when we migrate from Anolis. -->
         <pre class="idl">
-interface <dfn title=
-"presentation-interface">Presentation</dfn> : EventTarget {
-  // This API used by controlling browsing context.
-  Promise&lt;<span>PresentationSession</span>&gt; <span>startSession</span>(DOMString url);
-  Promise&lt;<span>PresentationSession</span>&gt; <span>joinSession</span>(DOMString url, DOMString presentationId);
-  Promise&lt;<span>PresentationAvailability</span>&gt; <span>getAvailability</span>(DOMString url);
-  attribute <span data-anolis-spec=
-"w3c-html">EventHandler</span> <span>ondefaultsessionstart</span>;
+          interface Presentation : EventTarget {
+            // This API used by controlling browsing context.
+            Promise&lt;PresentationSession&gt; startSession(DOMString url);
+            Promise&lt;PresentationSession&gt; joinSession(DOMString url, DOMString presentationId);
+            Promise&lt;PresentationAvailability&gt; getAvailability(DOMString url);
+            attribute EventHandler ondefaultsessionstart;
 
-  // This API used by presenting browsing context.                  
-  Promise&lt;<span>PresentationSession</span>&gt; <span>getSession</span>();
-  Promise&lt;sequence&lt;<span>PresentationSession</span>&gt;&gt; <span>getSessions</span>();
-  attribute <span data-anolis-spec=
-"w3c-html">EventHandler</span> <span>onsessionavailable</span>;
-};
+            // This API used by presenting browsing context.
+            Promise&lt;PresentationSession&gt; getSession();
+            Promise&lt;sequence&lt;PresentationSession&gt;&gt; getSessions();
+            attribute EventHandler onsessionavailable;
+          };
+        
 </pre>
         <section>
           <h4>
             Starting a presentation session
           </h4>
           <p>
-            When the <code><dfn>startSession</dfn>(presentationUrl)</code>
-            method is called, the user agent must run the following steps:
+            When the <code><dfn for=
+            "Presentation">startSession</dfn>(presentationUrl)</code> method is
+            called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <span>presentation session
-              URL</span>
+              <code>presentationUrl</code>, the <a>presentation session URL</a>
             </dd>
             <dt>
               Output
             </dt>
             <dd>
-              <em>P</em>, a <span data-anolis-spec="webidl">Promise</span>
+              <em>P</em>, a <a>Promise</a>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <span data-anolis-spec=
-            "webidl">Promise</span>.
+            <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
             <li>Return <em>P</em>.
             </li>
             <li>Run the following steps:
               <ol>
                 <li>
-                  <span>Monitor the list of available presentation
-                  displays</span>.
+                  <a>Monitor the list of available presentation displays</a>.
                 </li>
                 <li>Wait until the algorithm completes.
                 </li>
@@ -1102,11 +999,11 @@ interface <dfn title=
             </li>
             <li>If either of the following is true:
               <ol>
-                <li>The <span>list of available presentation displays</span> is
+                <li>The <a>list of available presentation displays</a> is
                 empty;
                 </li>
                 <li>No member if the list of available presentation displays is
-                a <span>compatible presentation display</span> for
+                a <a>compatible presentation display</a> for
                 <code>presentationUrl</code>;
                 </li>
               </ol>
@@ -1114,10 +1011,7 @@ interface <dfn title=
             <li>Then run the following steps:
               <ol>
                 <li>
-                  <span data-anolis-spec="promguide" title=
-                  "resolve-reject">Reject</span> <em>P</em> with a
-                  <span data-anolis-spec="webidl" title=
-                  "domexception">DOMException</span> named
+                  <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
                   <code>"NotFoundError"</code>.
                 </li>
                 <li>Abort all remaining steps.
@@ -1125,60 +1019,51 @@ interface <dfn title=
               </ol>
             </li>
             <li>
-              <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
-              to request user permission for the use of a
-              <span data-anolis-ref="presentation">presentation display</span>
-              and selection of one presentation display.
+              <a>Queue a task</a> <em>T</em> to request user permission for the
+              use of a <a>presentation display</a> and selection of one
+              presentation display.
               <ol>
                 <li>If <em>T</em> completes with the user <em>granting
                 permission</em> to use a display, run the following steps:
                   <ol>
-                    <li>Let <var>I</var> be a new <span>valid presentation
-                    session identifier</span> unique among all
-                    <span>presentation session identifiers</span> for known
-                    sessions in the <span>set of presentations</span>.
+                    <li>Let <var>I</var> be a new <a>valid presentation session
+                    identifier</a> unique among all <a>presentation session
+                    identifiers</a> for known sessions in the <a>set of
+                    presentations</a>.
                     </li>
-                    <li>Create a new <code>PresentationSession</code>
-                    <em>S</em>.
+                    <li>Create a new <a>PresentationSession</a> <em>S</em>.
                     </li>
-                    <li>Set the <span>presentation session identifier</span> of
-                    <var>S</var> to <var>I</var>, and set the
-                    <span>presentation session state</span> of <var>S</var> to
-                    <code>disconnected</code>.
+                    <li>Set the <a>presentation session identifier</a> of <var>
+                      S</var> to <var>I</var>, and set the <a>presentation
+                      session state</a> of <var>S</var> to
+                      <code>disconnected</code>.
                     </li>
                     <li>
-                      <span data-anolis-spec="w3c-html">Queue a task</span>
-                      <em>C</em> to create a new <span data-anolis-spec=
-                      "w3c-html">browsing context</span> on the user-selected
-                      <span>presentation display</span> and
-                      <span data-anolis-spec="w3c-html">navigate</span> to
+                      <a>Queue a task</a> <em>C</em> to create a new
+                      <a>browsing context</a> on the user-selected
+                      <a>presentation display</a> and <a>navigate</a> to
                       <code>presentationUrl</code> in it.
                       <ol>
                         <li>If <em>C</em> completes successfully, run the
                         following steps:
                           <ol>
                             <li>Add the tuple {<em>presentationUrl</em>,
-                            <em>S.id</em>, <em>S</em>} to the <span>set of
-                            presentations</span>.
+                            <em>S.id</em>, <em>S</em>} to the <a>set of
+                            presentations</a>.
                             </li>
                             <li>
-                              <span data-anolis-spec="promguide" title=
-                              "resolve-reject">Resolve</span> <em>P</em> with
+                              <a>Resolve</a> <em>P</em> with <em>S</em>.
+                            </li>
+                            <li>
+                              <a>Establish a presentation connection</a> with
                               <em>S</em>.
-                            </li>
-                            <li>
-                              <span>Establish a presentation connection</span>
-                              with <em>S</em>.
                             </li>
                           </ol>
                         </li>
                         <li>If <em>C</em> fails, run the following steps:
                           <ol>
                             <li>
-                              <span data-anolis-spec="promguide" title=
-                              "resolve-reject">Reject</span> P with a
-                              <span data-anolis-spec="webidl" title=
-                              "domexception">DOMException</span> named
+                              <a>Reject</a> P with a <a>DOMException</a> named
                               <code>"OperationError"</code>.
                             </li>
                           </ol>
@@ -1191,10 +1076,7 @@ interface <dfn title=
                 permission</em>, run the following steps:
                   <ol>
                     <li>
-                      <span data-anolis-spec="promguide" title=
-                      "resolve-reject">Reject</span> <em>P</em> with a
-                      <span data-anolis-spec="webidl" title=
-                      "domexception">DOMException</span> named
+                      <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
                       <code>"AbortError"</code>.
                     </li>
                   </ol>
@@ -1227,8 +1109,9 @@ interface <dfn title=
             Joining a presentation session
           </h4>
           <p>
-            When the <code><dfn>joinSession</dfn>(presentationUrl,
-            presentationId)</code> method is called, the user agent must run
+            When the <code><dfn for=
+            "Presentation">joinSession</dfn>(presentationUrl,
+            presentationId)</code> method is called, the user agent MUST run
             the following steps:
           </p>
           <dl>
@@ -1236,49 +1119,45 @@ interface <dfn title=
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <span>presentation session
-              URL</span>
+              <code>presentationUrl</code>, the <a>presentation session URL</a>
             </dd>
             <dd>
-              <code>presentationId</code>, the <span>presentation session
-              identifier</span>
+              <code>presentationId</code>, the <a>presentation session
+              identifier</a>
             </dd>
             <dt>
               Output
             </dt>
             <dd>
-              <em>P</em>, a <span data-anolis-spec="webidl">Promise</span>
+              <em>P</em>, a <a>Promise</a>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <span data-anolis-spec=
-            "webidl">Promise</span>.
+            <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
             <li>Return <em>P</em>.
             </li>
             <li>
-              <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
-              to run the following steps in order:
+              <a>Queue a task</a> <em>T</em> to run the following steps in
+              order:
               <ol>
-                <li>For each <var>known session</var> in the <span>set of
-                presentations</span>,
+                <li>For each <var>known session</var> in the <a>set of
+                presentations</a>,
                   <div style="margin-left: 2em">
-                    If the <span>presentation session URL</span> of <var>known
+                    If the <a>presentation session URL</a> of <var>known
                     session</var> is equal to <code>presentationUrl</code>, and
-                    the <span>presentation session identifier</span> of
-                    <var>known session</var> is equal to
-                    <code>presentationId</code>, run the following steps:
+                    the <a>presentation session identifier</a> of <var>known
+                    session</var> is equal to <code>presentationId</code>, run
+                    the following steps:
                     <ol>
-                      <li>Let <var>S</var> be the <span>presentation
-                      session</span> of <var>known session</var>.
+                      <li>Let <var>S</var> be the <a>presentation session</a>
+                      of <var>known session</var>.
                       </li>
                       <li>
-                        <span data-anolis-spec="promguide" title=
-                        "resolve-reject">Resolve</span> <var>P</var> with
-                        <var>S</var>.
+                        <a>Resolve</a> <var>P</var> with <var>S</var>.
                       </li>
                       <li>
-                        <span>Establish a presentation connection</span> with
+                        <a>Establish a presentation connection</a> with
                         <var>S</var>.
                       </li>
                       <li>Abort the remaining steps of <var>T</var>.
@@ -1287,10 +1166,7 @@ interface <dfn title=
                   </div>
                 </li>
                 <li>
-                  <span data-anolis-spec="promguide" title=
-                  "resolve-reject">Reject</span> <em>P</em> with a
-                  <span data-anolis-spec="webidl" title=
-                  "domexception">DOMException</span> named
+                  <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
                   <code>"NotFoundError"</code>.
                 </li>
               </ol>
@@ -1309,43 +1185,40 @@ interface <dfn title=
           </h4>
           <p>
             When the user agent is to <dfn>establish a presentation
-            connection</dfn> using a <span>presentation session</span>
-            <em>S</em>, it must run the following steps:
+            connection</dfn> using a <a>presentation session</a> <em>S</em>, it
+            MUST run the following steps:
           </p>
           <ol>
-            <li>If the <span>presentation session state</span> of <var>S</var>
-            is <code>connected</code>, then:
+            <li>If the <a>presentation session state</a> of <var>S</var> is
+            <code>connected</code>, then:
               <ol>
                 <li>Abort all remaining steps.
                 </li>
               </ol>
             </li>
             <li>
-              <span data-anolis-spec="w3c-html">Queue a task</span> <em>T</em>
-              to connect the <span>presentation session</span> <em>S</em> to
-              the <span>presenting browsing context</span>.
+              <a>Queue a task</a> <em>T</em> to connect the <a>presentation
+              session</a> <em>S</em> to the <a>presenting browsing context</a>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
-                <li>Set the <span>presentation session state</span> of
-                <var>S</var> to <code>connected.</code>
+                <li>Set the <a>presentation session state</a> of <var>S</var>
+                to <code>connected.</code>
                 </li>
                 <li>
-                  <span data-anolis-spec="w3c-html">Queue a task</span>
-                  <em>T</em> to run the following steps in order:
+                  <a>Queue a task</a> <em>T</em> to run the following steps in
+                  order:
                   <ol>
-                    <li>For each <var>known session</var> in the <span>set of
-                    presentations</span>:
+                    <li>For each <var>known session</var> in the <a>set of
+                    presentations</a>:
                       <ol>
-                        <li>If the <span>presentation session identifier</span>
-                        of <var>known session</var> and <var>S</var> are equal,
+                        <li>If the <a>presentation session identifier</a> of
+                        <var>known session</var> and <var>S</var> are equal,
                         then run the following steps:
                           <ol>
                             <li>
-                              <span data-anolis-spec="w3c-html">Queue a
-                              task</span> to <span data-anolis-spec="w3c-html"
-                              title="concept-event-fire">fire an event</span>
-                              named <code>statechange</code> at <em>s</em>.
+                              <a>Queue a task</a> to <a>fire</a> an event named
+                              <code>statechange</code> at <em>s</em>.
                             </li>
                           </ol>
                         </li>
@@ -1358,12 +1231,12 @@ interface <dfn title=
           </ol>
           <p class="note">
             The mechanism that is used to present on the remote display and
-            connect the <span>controlling browsing context</span> with the
-            presented document is an implementation choice of the user agent.
-            The connection must provide a two-way messaging abstraction capable
-            of carrying <code>DOMString</code> payloads in a reliable and
-            in-order fashion as described in the <em>Send Message</em> and
-            <em>Receive Message</em> steps below.
+            connect the <a>controlling browsing context</a> with the presented
+            document is an implementation choice of the user agent. The
+            connection must provide a two-way messaging abstraction capable of
+            carrying <code>DOMString</code> payloads in a reliable and in-order
+            fashion as described in the <em>Send Message</em> and <em>Receive
+            Message</em> steps below.
           </p>
           <p class="note">
             If <em>T</em> does not complete successfully, the user agent may
@@ -1381,42 +1254,37 @@ interface <dfn title=
         </section>
         <section>
           <h4>
-            Getting the <span>presentation displays</span> availability
-            information
+            Getting the <a>presentation displays</a> availability information
           </h4>
           <p>
-            When the <code><dfn>getAvailability</dfn>(availabilityUrl)</code>
-            method is called, the user agent must run the following steps:
+            When the <code><dfn for=
+            "Presentation">getAvailability</dfn>(availabilityUrl)</code> method
+            is called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
               Input
             </dt>
             <dd>
-              <code>availabilityUrl</code>, a <span>display availability
-              URL</span>
+              <code>availabilityUrl</code>, a <a>display availability URL</a>
             </dd>
             <dt>
               Output
             </dt>
             <dd>
-              <em>P</em>, a <span data-anolis-spec="webidl">Promise</span>
+              <em>P</em>, a <a>Promise</a>
             </dd>
           </dl>
           <ol>
-            <li>Let <em>P</em> be a new <span data-anolis-spec=
-            "webidl">Promise</span>.
+            <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
             <li>Return <em>P</em>.
             </li>
-            <li>If the user agent is unable to continuously <span>monitor the
-            list of available presentation displays</span>, then:
+            <li>If the user agent is unable to continuously <a>monitor the list
+            of available presentation displays</a>, then:
               <ol>
                 <li>
-                  <span data-anolis-spec="promguide" title=
-                  "resolve-reject">Reject</span> <em>P</em> with a
-                  <span data-anolis-spec="webidl" title=
-                  "domexception">DOMException</span> named
+                  <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
                   <code>"NotSupportedError"</code>.
                 </li>
                 <li>Abort all the remaining steps.
@@ -1428,10 +1296,10 @@ interface <dfn title=
             <code>value</code> property set to <code>false</code>.
             </li>
             <li>Create a tuple <em>(A, availabilityUrl, P)</em> and add it to
-            the <span>set of availability objects</span>.
+            the <a>set of availability objects</a>.
             </li>
-            <li>Run the algorithm to <span>monitor the list of available
-            presentation displays</span>.
+            <li>Run the algorithm to <a>monitor the list of available
+            presentation displays</a>.
             </li>
           </ol>
         </section>
@@ -1446,18 +1314,15 @@ interface <dfn title=
             to the session</a>
           </p>
           <p>
-            When a new <span>presenting browsing context</span> has been
-            created and navigated to the <code>presentationUrl</code> on a
-            user-selected <span>presentation display</span>, the user agent
-            must run the following steps:
+            When a new <a>presenting browsing context</a> has been created and
+            navigated to the <code>presentationUrl</code> on a user-selected
+            <a>presentation display</a>, the user agent MUST run the following
+            steps:
           </p>
           <ol>
             <li>
-              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
-              task</span> to start <span>monitoring incoming presentation
-              sessions</span> from <span title=
-              "controlling browsing context">controlling browsing
-              contexts</span>.
+              <a>Queue a task</a> to start <a>monitoring incoming presentation
+              sessions</a> from <a>controlling browsing contexts</a>.
             </li>
           </ol>
         </section>
@@ -1468,48 +1333,44 @@ interface <dfn title=
           </h4>
           <p>
             When the user agent is to start <dfn>monitoring incoming
-            presentation sessions</dfn> in a <span>presenting browsing
-            context</span> from <span title=
-            "controlling browsing context">controlling browsing
-            contexts</span>, it must run the following steps:
+            presentation sessions</dfn> in a <a>presenting browsing context</a>
+            from <a>controlling browsing contexts</a>, it MUST run the
+            following steps:
           </p>
           <ol>
             <li>
-              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
-              task</span> <var>T</var> to wait for and accept an incoming
-              connection request from a <span>controlling browsing
-              context</span> using an implementation specific mechanism.
+              <a>Queue a task</a> <var>T</var> to wait for and accept an
+              incoming connection request from a <a>controlling browsing
+              context</a> using an implementation specific mechanism.
             </li>
-            <li>When a new connection request is received from a
-            <span>controlling browsing context</span>, run the following steps:
+            <li>When a new connection request is received from a <a>controlling
+            browsing context</a>, run the following steps:
               <ol>
-                <li>Create new <code>PresentationSession</code> <var>S</var>.
+                <li>Create a new <a>PresentationSession</a> <var>S</var>.
                 </li>
-                <li>Let <var>I</var> be a new <span>valid presentation session
-                identifier</span> unique among all <span>presentation session
-                identifier</span>s for known sessions in the <span>set of
-                presentations</span>.
+                <li>Let <var>I</var> be a new <a>valid presentation session
+                identifier</a> unique among all <a>presentation session
+                identifier</a>s for known sessions in the <a>set of
+                presentations</a>.
                 </li>
-                <li>Set the <span>presentation session identifier</span> of
+                <li>Set the <a>presentation session identifier</a> of
                 <var>S</var> to <var>I</var>.
                 </li>
                 <li>Establish the connection between the controlling and
                 presenting browsing contexts using an implementation specific
                 mechanism.
                 </li>
-                <li>Set the <span>presentation session state</span> of
-                <var>S</var> to <code>connected</code>.
+                <li>Set the <a>presentation session state</a> of <var>S</var>
+                to <code>connected</code>.
                 </li>
-                <li>Add a tuple (<code>undefined</code>, <span>presentation
-                session identifier</span> of <var>S</var>, <var>S</var>) to the
-                <span>set of presentations</span>.
+                <li>Add a tuple (<code>undefined</code>, <a>presentation
+                session identifier</a> of <var>S</var>, <var>S</var>) to the
+                <a>set of presentations</a>.
                 </li>
                 <li>
-                  <span data-anolis-spec="w3c-html" title="queue a task">Queue
-                  a task</span> to <span data-anolis-spec="w3c-html" title=
-                  "concept-event-fire">fire an event</span> named
-                  <code>sessionavailable</code> at <span title=
-                  "navigator-presentation"><code>presentation</code></span>.
+                  <a>Queue a task</a> to <a>fire</a> an event named
+                  <code>sessionavailable</code> at <a for=
+                  "Navigator"><code>presentation</code></a>.
                 </li>
               </ol>
             </li>
@@ -1521,44 +1382,40 @@ interface <dfn title=
             a presenting browsing context
           </h4>
           <p>
-            When the <code>getSession()</code> method is called, the user agent
-            must run the following steps:
+            When the <code><dfn for="Presentation">getSession</dfn>()</code>
+            method is called, the user agent MUST run the following steps:
           </p>
           <ol>
-            <li>Let <var>P</var> be a new <span data-anolis-spec=
-            "webidl">Promise</span>.
+            <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
             <li>Return <var>P</var>.
             </li>
             <li>
-              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
-              task</span> <var>T</var> to run the following steps in order:
+              <a>Queue a task</a> <var>T</var> to run the following steps in
+              order:
               <ol>
-                <li>If the <span>set of presentations</span> is empty, then
-                wait until at least one element is added to the <span>set of
-                presentations</span>.
+                <li>If the <a>set of presentations</a> is empty, then wait
+                until at least one element is added to the <a>set of
+                presentations</a>.
                 </li>
-                <li>Let <var>S</var> be the first <span>presentation
-                session</span> added to the <span>set of presentations</span>.
+                <li>Let <var>S</var> be the first <a>presentation session</a>
+                added to the <a>set of presentations</a>.
                 </li>
                 <li>
-                  <span data-anolis-spec="promguide" title=
-                  "resolve-reject">Resolve</span> <var>P</var> with
-                  <var>S</var>.
+                  <a>Resolve</a> <var>P</var> with <var>S</var>.
                 </li>
               </ol>
             </li>
           </ol>
           <p class="note">
-            If the <span>set of presentations</span> is empty, we leave the
-            <span data-anolis-spec="webidl">Promise</span> pending until
-            connecting request arrives from the <span>controlling browsing
-            context</span>. If the first <span>controlling browsing
-            context</span> disconnects after initial connection, then the
-            <span data-anolis-spec="webidl">Promise</span> returned to
-            subsequent calls to <code>getSession()</code> will resolve with a
-            <span>presentation session</span> that has its <span>presentation
-            session state</span> set to <code>disconnected</code>.
+            If the <a>set of presentations</a> is empty, we leave the
+            <a>Promise</a> pending until connecting request arrives from the
+            <a>controlling browsing context</a>. If the first <a>controlling
+            browsing context</a> disconnects after initial connection, then the
+            <a>Promise</a> returned to subsequent calls to <code><a for=
+            "Presentation">getSession</a>()</code> will resolve with a
+            <a>presentation session</a> that has its <a>presentation session
+            state</a> set to <code>disconnected</code>.
           </p>
         </section>
         <section>
@@ -1567,32 +1424,27 @@ interface <dfn title=
             browsing context
           </h4>
           <p>
-            When the <code>getSessions()</code> method is called, the user
-            agent must run the following steps:
+            When the <code><dfn for="Presentation">getSessions</dfn>()</code>
+            method is called, the user agent MUST run the following steps:
           </p>
           <ol>
-            <li>Let <var>P</var> be a new <span data-anolis-spec=
-            "webidl">Promise</span>.
+            <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
             <li>Return <var>P</var>.
             </li>
             <li>
-              <span data-anolis-spec="w3c-html" title="queue a task">Queue a
-              task</span> to run the following steps in order:
+              <a>Queue a task</a> to run the following steps in order:
               <ol>
                 <li>Let <var>array</var> be an empty array.
                 </li>
-                <li>For each known session in the <span>set of
-                presentations</span>
+                <li>For each known session in the <a>set of presentations</a>
                   <ol>
                     <li>Add known session to <var>array</var>.
                     </li>
                   </ol>
                 </li>
                 <li>
-                  <span data-anolis-spec="promguide" title=
-                  "resolve-reject">Resolve</span> <var>P</var> with
-                  <var>array</var>.
+                  <a>Resolve</a> <var>P</var> with <var>array</var>.
                 </li>
               </ol>
             </li>
@@ -1605,11 +1457,10 @@ interface <dfn title=
           <p>
             The following are the event handlers (and their corresponding event
             handler event types) that must be supported, as event handler IDL
-            attributes, by objects implementing the <span title=
-            "presentation-interface"><code>Presentation</code></span>
+            attributes, by objects implementing the <a>Presentation</a>
             interface:
           </p>
-          <table>
+          <table dfn-for="Presentation">
             <thead>
               <tr>
                 <th>
@@ -1643,27 +1494,26 @@ interface <dfn title=
       </section>
       <section>
         <h3>
-          <span>Interface <code>DefaultSessionStartEvent</code></span>
+          Interface <code>DefaultSessionStartEvent</code>
         </h3>
         <pre class="idl">
-<span>[Constructor(DOMString type, optional <span>DefaultSessionStartEventInit</span> eventInitDict)]
-interface <dfn>DefaultSessionStartEvent</dfn> : Event {
-  [SameObject] readonly attribute PresentationSession session;
-};
+          [Constructor(DOMString type, optional DefaultSessionStartEventInit eventInitDict)]
+          interface DefaultSessionStartEvent : Event {
+            [SameObject] readonly attribute PresentationSession session;
+          };
 
-dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
-  PresentationSession session;
-};
-</span>
+          dictionary DefaultSessionStartEventInit : EventInit {
+            PresentationSession session;
+          };
+        
 </pre>
         <p>
           An event named <code>defaultsessionstart</code> is fired when the UA
           initiates a presentation on behalf of the page. It is fired at the
-          <span title="navigator-presentation"><code>presentation</code></span>
-          object, using the <code>DefaultSessionStartEvent</code> interface,
-          with the <code>session</code> attribute set to the
-          <span><code>PresentationSession</code></span> object provided by the
-          UA.
+          <a for="Navigator"><code>presentation</code></a> object, using the
+          <a>DefaultSessionStartEvent</a> interface, with the <a for=
+          "DefaultSessionStartEvent">session</a> attribute set to the
+          <a><code>PresentationSession</code></a> object provided by the UA.
         </p>
       </section>
     </section>
@@ -1680,13 +1530,12 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
       </h3>
       <p>
         The <code>change</code> event fired on the
-        <code>PresentationAvailability</code> object reveals one bit of
-        information about the presence (or non-presence) of a
-        <span>presentation screen</span> typically discovered through the local
-        area network. This could be used in conjunction with other information
-        for fingerprinting the user. However, this information is also
-        dependent on the user's local network context, so the risk is
-        minimized.
+        <a>PresentationAvailability</a> object reveals one bit of information
+        about the presence (or non-presence) of a <a>presentation display</a>
+        typically discovered through the local area network. This could be used
+        in conjunction with other information for fingerprinting the user.
+        However, this information is also dependent on the user's local network
+        context, so the risk is minimized.
       </p>
       <p class="open-issue">
         If we allow the page to filter the set of presentation screens based on
@@ -1707,8 +1556,8 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
         Cross-origin access
       </h3>
       <p>
-        A <span>presentation session</span> is allowed to be accessed across
-        origins; the presentation URL and presentation ID used to create the
+        A <a>presentation session</a> is allowed to be accessed across origins;
+        the presentation URL and presentation ID used to create the
         presentation are the only information needed to join a session from any
         origin in that user agent. In other words, a presentation is not tied
         to a particular opening origin.
@@ -1721,11 +1570,10 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
       </p>
       <p>
         This specification does not prohibit a user agent from publishing
-        information about its <span>set of presentations</span>. The group
-        envisions a user agent on a another device (distinct from the
-        controller or presentation) becoming authorized to join the
-        presentation, either by user action or by discovering the
-        presentation's URL and id.
+        information about its <a>set of presentations</a>. The group envisions
+        a user agent on a another device (distinct from the controller or
+        presentation) becoming authorized to join the presentation, either by
+        user action or by discovering the presentation's URL and id.
       </p>
       <p class="open-issue">
         This section should provide informative guidance as to what constitutes
@@ -1784,22 +1632,16 @@ dictionary <dfn>DefaultSessionStartEventInit</dfn> : EventInit {
       </h3>
       <p>
         This spec will not mandate communication protocols between the
-        <span>controlling browsing context</span> and the <span>presenting
-        browsing context</span>, but it should set some guarantees of message
-        confidentiality and authenticity between corresponding <span title=
-        "presentation session">presentation sessions</span>.
+        <a>controlling browsing context</a> and the <a>presenting browsing
+        context</a>, but it should set some guarantees of message
+        confidentiality and authenticity between corresponding <a>presentation
+        sessions</a>.
       </p>
       <p class="open-issue">
         <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
         Define security requirements for messaging channel between secure
         origins</a>
       </p>
-    </section>
-    <section>
-      <h2>
-        References
-      </h2>
-      <div id="anolis-references"></div>
     </section>
     <section>
       <h2>
