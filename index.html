@@ -9,7 +9,7 @@
     "remove">
     </script>
     <script class="remove">
-      var respecConfig = {
+  var respecConfig = {
         specStatus: 'ED',
         edDraftURI: 'http://w3c.github.io/presentation-api/',
         shortName:  'presentation-api',
@@ -80,7 +80,7 @@
       };
     </script>
     <style>
-    /* Note formatting taken from HTML5 spec */
+/* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -494,10 +494,11 @@
           "controlling browsing context|controlling browsing contexts">controlling
           browsing context</dfn> (or <dfn>controller</dfn> for short) is a
           <a>browsing context</a> that has initiated or resumed a
-          <a>presentation session</a> by calling
-          <code><a for="PresentationRequest">start</a>()</code> or
-          <code><a for="PresentationRequest">join</a>()</code> or received a <a>presentation
-          session</a> via <code><a for="Presentation">defaultRequest</a></code>.
+          <a>presentation session</a> by calling <code><a for=
+          "PresentationRequest">start</a>()</code> or <code><a for=
+          "PresentationRequest">join</a>()</code> or received a <a>presentation
+          session</a> via <code><a for=
+          "Presentation">defaultRequest</a></code>.
         </p>
         <p>
           The <dfn>presenting browsing context</dfn> (or <dfn title=
@@ -792,8 +793,8 @@
             The user agent MUST keep track of the <dfn>set of availability
             objects</dfn> requested through the <code><a for=
             "PresentationRequest">getAvailability</a>()</code> method. The
-            <a>set of availability objects</a> is represented as a set of tuples
-            <em>(A, availabilityUrl, P)</em>, initially empty, where:
+            <a>set of availability objects</a> is represented as a set of
+            tuples <em>(A, availabilityUrl, P)</em>, initially empty, where:
           </p>
           <ol>
             <li>
@@ -924,10 +925,10 @@
               A</em>.
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
-            there is no pending request to <a for="PresentationRequest" title=
-            "start">start a session</a>, cancel any pending task to <a>
-              monitor the list of available presentation displays</a> for power
-              saving purposes.
+            there is no pending request to <a for="PresentationRequest"
+              title="start">start a session</a>, cancel any pending task to
+              <a>monitor the list of available presentation displays</a> for
+              power saving purposes.
             </li>
           </ol>
           <p class="note">
@@ -950,20 +951,21 @@
 
             attribute EventHandler onconnect;
           };
-        </pre>
+
+</pre>
         <p>
           When a <a><code>PresentationRequest</code></a> is constructed, the
           given <code>url</code> MUST be used as the <dfn>presentation request
-          URL</dfn> which is the <a>presentation session URL</a> for the <a><code>PresentationRequest</code></a>
-          instance.
+          URL</dfn> which is the <a>presentation session URL</a> for the
+          <a><code>PresentationRequest</code></a> instance.
         </p>
         <section>
           <h4>
             Starting a presentation session
           </h4>
           <p>
-            When the <code><dfn for="PresentationRequest">start</dfn>()</code> method is
-            called, the user agent MUST run the following steps:
+            When the <code><dfn for="PresentationRequest">start</dfn>()</code>
+            method is called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
@@ -1105,8 +1107,9 @@
             Joining a presentation session
           </h4>
           <p>
-            When the <code><dfn for="PresentationRequest">join</dfn>(presentationId)</code> method is called, the user agent MUST run
-            the following steps:
+            When the <code><dfn for=
+            "PresentationRequest">join</dfn>(presentationId)</code> method is
+            called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
@@ -1252,8 +1255,8 @@
           </h4>
           <p>
             When the <code><dfn for=
-            "PresentationRequest">getAvailability</dfn>()</code> method
-            is called, the user agent MUST run the following steps:
+            "PresentationRequest">getAvailability</dfn>()</code> method is
+            called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
@@ -1366,16 +1369,20 @@
             dictionary PresentationSessionConnectEventInit : EventInit {
               PresentationSession session;
             };
-          </pre>
+
+</pre>
           <p>
-            An event named <code>connect</code> is fired on a <a>PresentationRequest</a>
-            when a session associated with the object is initiated. It is fired at the
-            <a>PresentationRequest</a> instance, using the <a>PresentationSessionConnectEvent</a>
-            interface, with the <a for="PresentationSessionConnectEvent">session</a>
-            attribute set to the <a><code>PresentationSession</code></a> object
-            that was initiated. The event is fired regardless of how the session
-            was initiated. For example, it can come from a call to <code>start()</code>,
-            <code>join()</code> or even from a UA initiated session on <a for="Presentation"><code>defaultRequest</code></a>.
+            An event named <code>connect</code> is fired on a
+            <a>PresentationRequest</a> when a session associated with the
+            object is initiated. It is fired at the <a>PresentationRequest</a>
+            instance, using the <a>PresentationSessionConnectEvent</a>
+            interface, with the <a for=
+            "PresentationSessionConnectEvent">session</a> attribute set to the
+            <a><code>PresentationSession</code></a> object that was initiated.
+            The event is fired regardless of how the session was initiated. For
+            example, it can come from a call to <code>start()</code>,
+            <code>join()</code> or even from a UA initiated session on <a for=
+            "Presentation"><code>defaultRequest</code></a>.
           </p>
         </section>
       </section>
@@ -1387,7 +1394,8 @@
           partial interface Navigator {
             [SameObject] readonly attribute Presentation presentation;
           };
-        </pre>
+
+</pre>
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
           used to retrieve an instance of the <a>Presentation</a> interface.
@@ -1402,10 +1410,12 @@
             Promise&lt;sequence&lt;PresentationSession&gt;&gt; getSessions();
             attribute EventHandler onsessionavailable;
           };
-        </pre>
+
+</pre>
         <p>
           The <dfn for="Presentation"><code>defaultRequest</code></dfn> MUST
-          return the <a>default presentation request</a> if any, null otherwise.
+          return the <a>default presentation request</a> if any, null
+          otherwise.
         </p>
         <section>
           <h4>
@@ -1414,10 +1424,11 @@
           <p>
             If set, the <a for="Presentation">defaultRequest</a> SHOULD be used
             by the UA as the <dfn>default presentation request</dfn>. When the
-            UA wants to start or join a session from its UI, it MUST use the <a>
-            default presentation request</a>, using its internal <a>presentation
-            request url</a> and sending the <code>connect</code> event as if the
-            developer called the method itself.
+            UA wants to start or join a session from its UI, it MUST use the
+            <a>default presentation request</a>, using its internal
+            <a>presentation request url</a> and sending the
+            <code>connect</code> event as if the developer called the method
+            itself.
           </p>
         </section>
         <section>
