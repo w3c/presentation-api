@@ -1,2 +1,4 @@
+TIDY-HTML5 ?= tidy-html5
+
 tidy: index.html build/tidyconfig.txt
-	tidy-html5 -config build/tidyconfig.txt -o $< $<
+	$(TIDY-HTML5) -config build/tidyconfig.txt -o $< $<
