@@ -348,8 +348,6 @@
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
-  // It is also possible to use relative presentation URL e.g. "presentation.html".
-  var request = new PresentationRequest("http://example.com/presentation.html");
   // Start new session.
   request.start()
     // the new started session will be passed to setSession on success
@@ -370,7 +368,6 @@
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
   // presId is mandatory when joining a session.
   if (presId) {
-    var request = new PresentationRequest(presUrl);
     request.join(presId)
       // The joined session will be passed to setSession on success
       .then(setSession)
@@ -387,9 +384,8 @@
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;head&gt;
-  &lt;!-- Setting presentation.defaultResquest allows the page to specify the
-       default PresentationRequest to use when the UA initiates a presentation
-       session --&gt;
+  &lt;!-- Setting presentation.defaultRequest allows the page to specify the
+       PresentationRequest to use when the UA initiates a presentation session --&gt;
 &lt;/head&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
@@ -1383,6 +1379,10 @@
             example, it can come from a call to <code>start()</code>,
             <code>join()</code> or even from a UA initiated session on <a for=
             "Presentation"><code>defaultRequest</code></a>.
+          </p>
+          <p>
+            The UA MUST fire the event as soon as it can create the
+            <a><code>PresantiotSession</code></a> associated to the event.
           </p>
         </section>
       </section>
