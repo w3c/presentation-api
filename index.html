@@ -389,7 +389,7 @@
 &lt;/head&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
-  navigator.presentation.defaultRequest.onconnect = function(evt) {
+  navigator.presentation.defaultRequest.onsessionconnect = function(evt) {
     setSession(evt.session);
   };
 &lt;/script&gt;
@@ -945,7 +945,7 @@
             Promise&lt;PresentationSession&gt; join();
             Promise&lt;PresentationAvailability&gt; getAvailability();
 
-            attribute EventHandler onconnect;
+            attribute EventHandler onsessionconnect;
           };
 
 </pre>
@@ -1343,10 +1343,10 @@
             <tbody>
               <tr>
                 <td>
-                  <dfn><code>onconnect</code></dfn>
+                  <dfn><code>onsessionconnect</code></dfn>
                 </td>
                 <td>
-                  <code>connect</code>
+                  <code>sessionconnect</code>
                 </td>
               </tr>
             </tbody>
@@ -1368,7 +1368,7 @@
 
 </pre>
           <p>
-            An event named <code>connect</code> is fired on a
+            An event named <code>sessionconnect</code> is fired on a
             <a>PresentationRequest</a> when a session associated with the
             object is initiated. It is fired at the <a>PresentationRequest</a>
             instance, using the <a>PresentationSessionConnectEvent</a>
@@ -1427,8 +1427,8 @@
             UA wants to start or join a session from its UI, it MUST use the
             <a>default presentation request</a>, using its internal
             <a>presentation request url</a> and sending the
-            <code>connect</code> event as if the developer called the method
-            itself.
+            <code>sessionconnect</code> event as if the developer called the
+            method itself.
           </p>
         </section>
         <section>
