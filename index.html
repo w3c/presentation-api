@@ -9,7 +9,7 @@
     "remove">
     </script>
     <script class="remove">
-      var respecConfig = {
+  var respecConfig = {
         specStatus: 'ED',
         edDraftURI: 'http://w3c.github.io/presentation-api/',
         shortName:  'presentation-api',
@@ -80,7 +80,7 @@
       };
     </script>
     <style>
-    /* Note formatting taken from HTML5 spec */
+/* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -324,7 +324,8 @@
     castBtn.style.display = available ? "inline" : "none";
   };
   // Promise is resolved as soon as the presentation display availability is known.
-  navigator.presentation.getAvailability(presUrl).then(function(availability) {
+  var request = new PresentationRequest(presUrl);
+  request.getAvailability().then(function(availability) {
     // availability.value may be kept up-to-date by the UA as long as the availability
     // object is alive. It is advised for the web developers to discard the object
     // as soon as it's not needed.
@@ -332,8 +333,9 @@
     availability.onchange = function() { handleAvailabilityChange(this.value); };
   }.catch(function() {
     // Availability monitoring is not supported by the platform, discovery of presentation
-    // displays will happen only after startSession() call. Pretend the devices are
-    // available for simplicity (one could implement the third state for the button).
+    // displays will happen only after PresentationRequest.start() call. Pretend the
+    // devices are available for simplicity (one could implement the third state for the
+    // button).
     handleAvailabilityChange(true);
   });
 &lt;/script&gt;
@@ -346,10 +348,8 @@
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
-  // it is also possible to use relative presentation URL e.g. "presentation.html"
-  var presUrl = "http://example.com/presentation.html";
   // Start new session.
-  navigator.presentation.startSession(presUrl)
+  request.start()
     // the new started session will be passed to setSession on success
     .then(setSession)
     // user cancels the selection dialog or an error is occurred
@@ -366,12 +366,14 @@
 &lt;script&gt;
   // read presId from localStorage if exists
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
-  // presId is mandatory for joinSession.
-  presId &amp;&amp; navigator.presentation.joinSession(presUrl, presId)
-    // The joined session will be passed to setSession on success
-    .then(setSession)
-    // no session found for presUrl and presId or an error is occurred
-    .catch(endSession);
+  // presId is mandatory when joining a session.
+  if (presId) {
+    request.join(presId)
+      // The joined session will be passed to setSession on success
+      .then(setSession)
+      // no session found for presUrl and presId or an error is occurred
+      .catch(endSession);
+  }
 &lt;/script&gt;
 </pre>
       </section>
@@ -382,12 +384,12 @@
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;head&gt;
-  &lt;!-- the link element with rel='default-presentation' allows the page to specify --&gt;
-  &lt;!-- the presentation URL and id for when the UA initiates a presentation session --&gt;
-  &lt;link href="http://example.com/presentation.html" rel="default-presentation" &gt;
+  &lt;!-- Setting presentation.defaultRequest allows the page to specify the
+       PresentationRequest to use when the UA initiates a presentation session --&gt;
 &lt;/head&gt;
 &lt;script&gt;
-  navigator.presentation.ondefaultsessionstart = function (evt) {
+  navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
+  navigator.presentation.defaultRequest.onsessionconnect = function(evt) {
     setSession(evt.session);
   };
 &lt;/script&gt;
@@ -430,7 +432,7 @@
     localStorage &amp;&amp; delete localStorage["presId"];
   };
 &lt;/script&gt;
-        
+
 </pre>
         <pre class="example">
 &lt;!-- presentation.html --&gt;
@@ -452,7 +454,7 @@
     });
   };
 &lt;/script&gt;
-        
+
 </pre>
       </section>
     </section>
@@ -483,15 +485,16 @@
           alphanumeric ASCII characters only, is at least 16 characters long,
           and is unique within the <a>set of presentations</a>.
         </p>
-        <p link-for="Presentation">
+        <p>
           A <dfn lt=
           "controlling browsing context|controlling browsing contexts">controlling
           browsing context</dfn> (or <dfn>controller</dfn> for short) is a
           <a>browsing context</a> that has initiated or resumed a
-          <a>presentation session</a> by calling
-          <code><a>startSession</a>()</code> or
-          <code><a>joinSession</a>()</code> or received a <a>presentation
-          session</a> via <code><a>ondefaultsessionstart</a></code> event.
+          <a>presentation session</a> by calling <code><a for=
+          "PresentationRequest">start</a>()</code> or <code><a for=
+          "PresentationRequest">join</a>()</code> or received a <a>presentation
+          session</a> via <code><a for=
+          "Presentation">defaultRequest</a></code>.
         </p>
         <p>
           The <dfn>presenting browsing context</dfn> (or <dfn title=
@@ -538,7 +541,7 @@
             void send (ArrayBuffer data);
             void send (ArrayBufferView data);
           };
-        
+
 </pre>
         <div dfn-for="PresentationSession" link-for="PresentationSession">
           <p>
@@ -761,7 +764,7 @@
             readonly attribute boolean value;
             attribute EventHandler onchange;
           };
-        
+
 </pre>
         <p>
           A <a><code>PresentationAvailability</code></a> object is associated
@@ -785,9 +788,9 @@
           <p>
             The user agent MUST keep track of the <dfn>set of availability
             objects</dfn> requested through the <code><a for=
-            "Presentation">getAvailability</a>()</code> method. The <a>set of
-            availability objects</a> is represented as a set of tuples <em>(A,
-            availabilityUrl, P)</em>, initially empty, where:
+            "PresentationRequest">getAvailability</a>()</code> method. The
+            <a>set of availability objects</a> is represented as a set of
+            tuples <em>(A, availabilityUrl, P)</em>, initially empty, where:
           </p>
           <ol>
             <li>
@@ -796,12 +799,12 @@
             <li>
               <em>availabilityUrl</em> is the <code>availabilityUrl</code>
               passed to <code><a for=
-              "Presentation">getAvailability</a>()</code> to create A.
+              "PresentationRequest">getAvailability</a>()</code> to create A.
             </li>
             <li>
               <em>P</em> is the <a>Promise</a> that was returned by
-              <code><a for="Presentation">getAvailability</a>()</code> when
-              <em>A</em> was created.
+              <code><a for="PresentationRequest">getAvailability</a>()</code>
+              when <em>A</em> was created.
             </li>
           </ol>
         </section>
@@ -829,7 +832,7 @@
             <a>Promise</a> returned by <code>getAvailability()</code> is
             <a title="reject">rejected</a> and the algorithm to <a>monitor the
             list of available presentation displays</a> will only run as part
-            of the <a for="Presentation" title="startSession">session start</a>
+            of the <a for="PresentationRequest" title="start">session start</a>
             algorithm.
           </p>
           <p>
@@ -861,7 +864,7 @@
           </h4>
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
-            pending request to <a for="Presentation" title="startSession">start
+            pending request to <a for="PresentationRequest" title="start">start
             a session</a>, the user agent MUST <dfn>monitor the list of
             available presentation displays</dfn> by running the following
             steps.
@@ -918,10 +921,10 @@
               A</em>.
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
-            there is no pending request to <a for="Presentation" title=
-            "startSession">start a session</a>, cancel any pending task to <a>
-              monitor the list of available presentation displays</a> for power
-              saving purposes.
+            there is no pending request to <a for="PresentationRequest"
+              title="start">start a session</a>, cancel any pending task to
+              <a>monitor the list of available presentation displays</a> for
+              power saving purposes.
             </li>
           </ol>
           <p class="note">
@@ -933,48 +936,39 @@
       </section>
       <section>
         <h3>
-          Interface <a><code>Presentation</code></a>
+          Interface <a><code>PresentationRequest</code></a>
         </h3>
         <pre class="idl">
-          partial interface Navigator {
-            [SameObject] readonly attribute Presentation presentation;
+          [Constructor(DOMString url)]
+          interface PresentationRequest : EventTarget {
+            Promise&lt;PresentationSession&gt; start();
+            Promise&lt;PresentationSession&gt; join();
+            Promise&lt;PresentationAvailability&gt; getAvailability();
+
+            attribute EventHandler onsessionconnect;
           };
-        
+
 </pre>
         <p>
-          The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the <a>Presentation</a> interface.
+          When a <a><code>PresentationRequest</code></a> is constructed, the
+          given <code>url</code> MUST be used as the <dfn>presentation request
+          URL</dfn> which is the <a>presentation session URL</a> for the
+          <a><code>PresentationRequest</code></a> instance.
         </p>
-        <pre class="idl">
-          interface Presentation : EventTarget {
-            // This API used by controlling browsing context.
-            Promise&lt;PresentationSession&gt; startSession(DOMString url);
-            Promise&lt;PresentationSession&gt; joinSession(DOMString url, DOMString presentationId);
-            Promise&lt;PresentationAvailability&gt; getAvailability(DOMString url);
-            attribute EventHandler ondefaultsessionstart;
-
-            // This API used by presenting browsing context.
-            Promise&lt;PresentationSession&gt; getSession();
-            Promise&lt;sequence&lt;PresentationSession&gt;&gt; getSessions();
-            attribute EventHandler onsessionavailable;
-          };
-        
-</pre>
         <section>
           <h4>
             Starting a presentation session
           </h4>
           <p>
-            When the <code><dfn for=
-            "Presentation">startSession</dfn>(presentationUrl)</code> method is
-            called, the user agent MUST run the following steps:
+            When the <code><dfn for="PresentationRequest">start</dfn>()</code>
+            method is called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <a>presentation session URL</a>
+              <code>presentationUrl</code>, the <a>presentation request URL</a>
             </dd>
             <dt>
               Output
@@ -1110,16 +1104,15 @@
           </h4>
           <p>
             When the <code><dfn for=
-            "Presentation">joinSession</dfn>(presentationUrl,
-            presentationId)</code> method is called, the user agent MUST run
-            the following steps:
+            "PresentationRequest">join</dfn>(presentationId)</code> method is
+            called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
               Input
             </dt>
             <dd>
-              <code>presentationUrl</code>, the <a>presentation session URL</a>
+              <code>presentationUrl</code>, the <a>presentation request URL</a>
             </dd>
             <dd>
               <code>presentationId</code>, the <a>presentation session
@@ -1258,15 +1251,15 @@
           </h4>
           <p>
             When the <code><dfn for=
-            "Presentation">getAvailability</dfn>(availabilityUrl)</code> method
-            is called, the user agent MUST run the following steps:
+            "PresentationRequest">getAvailability</dfn>()</code> method is
+            called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
               Input
             </dt>
             <dd>
-              <code>availabilityUrl</code>, a <a>display availability URL</a>
+              <code>presentationUrl</code>, the <a>presentation request URL</a>
             </dd>
             <dt>
               Output
@@ -1295,7 +1288,7 @@
             <code>PresentationAvailability</code> object with its
             <code>value</code> property set to <code>false</code>.
             </li>
-            <li>Create a tuple <em>(A, availabilityUrl, P)</em> and add it to
+            <li>Create a tuple <em>(A, presentationUrl, P)</em> and add it to
             the <a>set of availability objects</a>.
             </li>
             <li>Run the algorithm to <a>monitor the list of available
@@ -1325,6 +1318,118 @@
               sessions</a> from <a>controlling browsing contexts</a>.
             </li>
           </ol>
+        </section>
+        <section>
+          <h4>
+            Event Handlers
+          </h4>
+          <p>
+            The following are the event handlers (and their corresponding event
+            handler event types) that must be supported, as event handler IDL
+            attributes, by objects implementing the <a>PresentationRequest</a>
+            interface:
+          </p>
+          <table dfn-for="PresentationRequest">
+            <thead>
+              <tr>
+                <th>
+                  Event handler
+                </th>
+                <th>
+                  Event handler event type
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <dfn><code>onsessionconnect</code></dfn>
+                </td>
+                <td>
+                  <code>sessionconnect</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section>
+          <h3>
+            Interface <code>PresentationSessionConnectEvent</code>
+          </h3>
+          <pre class="idl">
+            [Constructor(DOMString type, optional PresentationSessionConnectEventInit eventInitDict)]
+            interface PresentationSessionConnectEvent : Event {
+              [SameObject] readonly attribute PresentationSession session;
+            };
+
+            dictionary PresentationSessionConnectEventInit : EventInit {
+              PresentationSession session;
+            };
+
+</pre>
+          <p>
+            An event named <code>sessionconnect</code> is fired on a
+            <a>PresentationRequest</a> when a session associated with the
+            object is initiated. It is fired at the <a>PresentationRequest</a>
+            instance, using the <a>PresentationSessionConnectEvent</a>
+            interface, with the <a for=
+            "PresentationSessionConnectEvent">session</a> attribute set to the
+            <a><code>PresentationSession</code></a> object that was initiated.
+            The event is fired regardless of how the session was initiated. For
+            example, it can come from a call to <code>start()</code>,
+            <code>join()</code> or even from a UA initiated session on <a for=
+            "Presentation"><code>defaultRequest</code></a>.
+          </p>
+          <p>
+            The UA MUST fire the event as soon as it can create the
+            <a><code>PresantiotSession</code></a> associated to the event.
+          </p>
+        </section>
+      </section>
+      <section>
+        <h3>
+          Interface <a><code>Presentation</code></a>
+        </h3>
+        <pre class="idl">
+          partial interface Navigator {
+            [SameObject] readonly attribute Presentation presentation;
+          };
+
+</pre>
+        <p>
+          The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
+          used to retrieve an instance of the <a>Presentation</a> interface.
+        </p>
+        <pre class="idl">
+          interface Presentation : EventTarget {
+            // This API used by controlling browsing context.
+            attribute PresentationRequest? defaultRequest;
+
+            // This API used by presenting browsing context.
+            Promise&lt;PresentationSession&gt; getSession();
+            Promise&lt;sequence&lt;PresentationSession&gt;&gt; getSessions();
+            attribute EventHandler onsessionavailable;
+          };
+
+</pre>
+        <p>
+          The <dfn for="Presentation"><code>defaultRequest</code></dfn> MUST
+          return the <a>default presentation request</a> if any, null
+          otherwise.
+        </p>
+        <section>
+          <h4>
+            Default presentation request
+          </h4>
+          <p>
+            If set, the <a for="Presentation">defaultRequest</a> SHOULD be used
+            by the UA as the <dfn>default presentation request</dfn>. When the
+            UA wants to start or join a session from its UI, it MUST use the
+            <a>default presentation request</a>, using its internal
+            <a>presentation request url</a> and sending the
+            <code>sessionconnect</code> event as if the developer called the
+            method itself.
+          </p>
         </section>
         <section>
           <h4>
@@ -1474,14 +1579,6 @@
             <tbody>
               <tr>
                 <td>
-                  <dfn><code>ondefaultsessionstart</code></dfn>
-                </td>
-                <td>
-                  <code>defaultsessionstart</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
                   <dfn><code>onsessionavailable</code></dfn>
                 </td>
                 <td>
@@ -1491,30 +1588,6 @@
             </tbody>
           </table>
         </section>
-      </section>
-      <section>
-        <h3>
-          Interface <code>DefaultSessionStartEvent</code>
-        </h3>
-        <pre class="idl">
-          [Constructor(DOMString type, optional DefaultSessionStartEventInit eventInitDict)]
-          interface DefaultSessionStartEvent : Event {
-            [SameObject] readonly attribute PresentationSession session;
-          };
-
-          dictionary DefaultSessionStartEventInit : EventInit {
-            PresentationSession session;
-          };
-        
-</pre>
-        <p>
-          An event named <code>defaultsessionstart</code> is fired when the UA
-          initiates a presentation on behalf of the page. It is fired at the
-          <a for="Navigator"><code>presentation</code></a> object, using the
-          <a>DefaultSessionStartEvent</a> interface, with the <a for=
-          "DefaultSessionStartEvent">session</a> attribute set to the
-          <a><code>PresentationSession</code></a> object provided by the UA.
-        </p>
       </section>
     </section>
     <section>
