@@ -5,11 +5,11 @@
     <title>
       Presentation API
     </title>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" async class=
-    "remove">
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" async
+    class="remove">
     </script>
     <script class="remove">
-  var respecConfig = {
+    var respecConfig = {
         specStatus: 'ED',
         edDraftURI: 'http://w3c.github.io/presentation-api/',
         shortName:  'presentation-api',
@@ -80,7 +80,7 @@
       };
     </script>
     <style>
-/* Note formatting taken from HTML5 spec */
+    /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
     p.note, div.note { padding: 0.5em 2em; }
@@ -332,10 +332,10 @@
     handleAvailabilityChange(availability.value);
     availability.onchange = function() { handleAvailabilityChange(this.value); };
   }.catch(function() {
-    // Availability monitoring is not supported by the platform, discovery of presentation
-    // displays will happen only after PresentationRequest.start() call. Pretend the
-    // devices are available for simplicity (one could implement the third state for the
-    // button).
+    // Availability monitoring is not supported by the platform, so discovery of presentation
+    // displays will happen only after request.start() is called.  Pretend the
+    // devices are available for simplicity; or, one could implement the third state for the
+    // button.
     handleAvailabilityChange(true);
   });
 &lt;/script&gt;
@@ -385,7 +385,7 @@
 &lt;!-- controller.html --&gt;
 &lt;head&gt;
   &lt;!-- Setting presentation.defaultRequest allows the page to specify the
-       PresentationRequest to use when the UA initiates a presentation session --&gt;
+       PresentationRequest to use when the UA initiates a presentation session. --&gt;
 &lt;/head&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
@@ -489,12 +489,11 @@
           A <dfn lt=
           "controlling browsing context|controlling browsing contexts">controlling
           browsing context</dfn> (or <dfn>controller</dfn> for short) is a
-          <a>browsing context</a> that has initiated or resumed a
-          <a>presentation session</a> by calling <code><a for=
+          <a>browsing context</a> that has connected to a <a>presentation
+          session</a> by calling <code><a for=
           "PresentationRequest">start</a>()</code> or <code><a for=
-          "PresentationRequest">join</a>()</code> or received a <a>presentation
-          session</a> via <code><a for=
-          "Presentation">defaultRequest</a></code>.
+          "PresentationRequest">join</a>()</code>, or received a
+          <a>presentation session</a> via a <code>sessionconnect</code> event.
         </p>
         <p>
           The <dfn>presenting browsing context</dfn> (or <dfn title=
@@ -968,6 +967,10 @@
               Input
             </dt>
             <dd>
+              <code>presentationRequest</code>, the
+              <code>PresentationRequest</code> object
+            </dd>
+            <dd>
               <code>presentationUrl</code>, the <a>presentation request URL</a>
             </dd>
             <dt>
@@ -1049,6 +1052,12 @@
                               <a>Resolve</a> <em>P</em> with <em>S</em>.
                             </li>
                             <li>
+                              <a>Queue a task</a> to <a>fire an event</a> named
+                              <code>sessionconnect</code> at
+                              <code>presentationRequest</code> with <em>S</em>
+                              as its <code>session</code> attribute.
+                            </li>
+                            <li>
                               <a>Establish a presentation connection</a> with
                               <em>S</em>.
                             </li>
@@ -1112,6 +1121,10 @@
               Input
             </dt>
             <dd>
+              <code>presentationRequest</code>, the
+              <code>PresentationRequest</code> object
+            </dd>
+            <dd>
               <code>presentationUrl</code>, the <a>presentation request URL</a>
             </dd>
             <dd>
@@ -1148,6 +1161,12 @@
                       </li>
                       <li>
                         <a>Resolve</a> <var>P</var> with <var>S</var>.
+                      </li>
+                      <li>
+                        <a>Queue a task</a> to <a>fire an event</a> named
+                        <code>sessionconnect</code> at
+                        <code>presentationRequest</code> with <em>S</em> as its
+                        <code>session</code> attribute.
                       </li>
                       <li>
                         <a>Establish a presentation connection</a> with
@@ -1370,19 +1389,20 @@
           <p>
             An event named <code>sessionconnect</code> is fired on a
             <a>PresentationRequest</a> when a session associated with the
-            object is initiated. It is fired at the <a>PresentationRequest</a>
+            object is created. It is fired at the <a>PresentationRequest</a>
             instance, using the <a>PresentationSessionConnectEvent</a>
             interface, with the <a for=
             "PresentationSessionConnectEvent">session</a> attribute set to the
-            <a><code>PresentationSession</code></a> object that was initiated.
-            The event is fired regardless of how the session was initiated. For
-            example, it can come from a call to <code>start()</code>,
-            <code>join()</code> or even from a UA initiated session on <a for=
+            <a><code>PresentationSession</code></a> object that was created.
+            The event is fired for all sessions that are created for the
+            <a>controller</a>, either by the <a>controller</a> calling
+            <code>start()</code> or <code>join()</code>, or by the UA creating
+            a session on the controller's behalf via <a for=
             "Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
             The UA MUST fire the event as soon as it can create the
-            <a><code>PresantiotSession</code></a> associated to the event.
+            <a><code>PresentationSession</code></a> associated with the event.
           </p>
         </section>
       </section>
@@ -1419,16 +1439,28 @@
         </p>
         <section>
           <h4>
-            Default presentation request
+            Setting the default presentation request
           </h4>
           <p>
-            If set, the <a for="Presentation">defaultRequest</a> SHOULD be used
-            by the UA as the <dfn>default presentation request</dfn>. When the
-            UA wants to start or join a session from its UI, it MUST use the
-            <a>default presentation request</a>, using its internal
-            <a>presentation request url</a> and sending the
-            <code>sessionconnect</code> event as if the developer called the
-            method itself.
+            If set by the <a>controller</a>, the <a for=
+            "Presentation">defaultRequest</a> SHOULD be used by the UA as the
+            <dfn>default presentation request</dfn> for the controller. When
+            the UA starts a <a>PresentationSession</a> on the controller's
+            behalf, it MUST follow the steps in <a>starting a presentation
+            session</a> using the default presentation request for the
+            controller if as the <code>PresentationRequest</code> (as if the
+            controller had called <code>defaultRequest.start()</code>).
+          </p>
+          <p>
+            The user agent SHOULD initiate presentation using the <a>default
+            presentation request</a> only when the user has expressed an
+            intention to do so, for example by clicking a button in the
+            browser.
+          </p>
+          <p class="note">
+            Not all user agents may support initiation of a presentation
+            session outside of the content area. In this case setting
+            <code>defaultRequest</code> has no effect.
           </p>
         </section>
         <section>
