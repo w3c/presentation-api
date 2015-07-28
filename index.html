@@ -1446,11 +1446,11 @@
           <p>
             If set by the <a>controller</a>, the <a for=
             "Presentation">defaultRequest</a> SHOULD be used by the UA as the
-            <dfn>default presentation request</dfn> for the controller. When
-            the UA starts a <a>PresentationSession</a> on the controller's
-            behalf, it MUST <a>start a presentation session</a> using the
-            <a>default presentation request</a> for the <a>controller</a> (as
-            if the <a>controller</a> had called
+            <dfn>default presentation request</dfn> for that controller. When
+            the UA wishes to initiate a <a>PresentationSession</a> on the
+            controller's behalf, it MUST <a>start a presentation session</a>
+            using the <a>default presentation request</a> for the
+            <a>controller</a> (as if the controller had called
             <code>defaultRequest.start()</code>).
           </p>
           <p>
@@ -1463,6 +1463,13 @@
             Not all user agents may support initiation of a presentation
             session outside of the content area. In this case setting
             <code>defaultRequest</code> has no effect.
+          </p>
+          <p class="issue">
+            It should be clear that user-intiated presentation via the user
+            agent may have pre-selected the presentation display. In this case
+            step 6 of <a>start a presentation session</a> is optional. It may
+            be cleaner to define a separate set of steps for initiating a
+            default presentation.
           </p>
         </section>
         <section>
