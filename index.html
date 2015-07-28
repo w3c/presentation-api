@@ -864,9 +864,9 @@
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
             pending request to <a for="PresentationRequest" title="start">start
-            a session</a>, the user agent MUST <dfn>monitor the list of
-            available presentation displays</dfn> by running the following
-            steps.
+            a presentation session</a>, the user agent MUST <dfn>monitor the
+            list of available presentation displays</dfn> by running the
+            following steps.
           </p>
           <ol link-for="PresentationAvailability">
             <li>
@@ -921,9 +921,9 @@
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
             there is no pending request to <a for="PresentationRequest"
-              title="start">start a session</a>, cancel any pending task to
-              <a>monitor the list of available presentation displays</a> for
-              power saving purposes.
+              title="start">start a presentation session</a>, cancel any
+              pending task to <a>monitor the list of available presentation
+              displays</a> for power saving purposes.
             </li>
           </ol>
           <p class="note">
@@ -959,8 +959,9 @@
             Starting a presentation session
           </h4>
           <p>
-            When the <code><dfn for="PresentationRequest">start</dfn>()</code>
-            method is called, the user agent MUST run the following steps:
+            When the <code><dfn for="PresentationRequest">start</dfn></code>
+            method is called, the user agent MUST run the following steps to
+            <dfn>start a presentation session</dfn>:
           </p>
           <dl>
             <dt>
@@ -1052,7 +1053,7 @@
                               <a>Resolve</a> <em>P</em> with <em>S</em>.
                             </li>
                             <li>
-                              <a>Queue a task</a> to <a>fire an event</a> named
+                              <a>Queue a task</a> to <a>fire</a> an event named
                               <code>sessionconnect</code> at
                               <code>presentationRequest</code> with <em>S</em>
                               as its <code>session</code> attribute.
@@ -1114,7 +1115,8 @@
           <p>
             When the <code><dfn for=
             "PresentationRequest">join</dfn>(presentationId)</code> method is
-            called, the user agent MUST run the following steps:
+            called, the user agent MUST run the following steps to <dfn>join a
+            presentation session</dfn>:
           </p>
           <dl>
             <dt>
@@ -1163,7 +1165,7 @@
                         <a>Resolve</a> <var>P</var> with <var>S</var>.
                       </li>
                       <li>
-                        <a>Queue a task</a> to <a>fire an event</a> named
+                        <a>Queue a task</a> to <a>fire</a> an event named
                         <code>sessionconnect</code> at
                         <code>presentationRequest</code> with <em>S</em> as its
                         <code>session</code> attribute.
@@ -1446,10 +1448,10 @@
             "Presentation">defaultRequest</a> SHOULD be used by the UA as the
             <dfn>default presentation request</dfn> for the controller. When
             the UA starts a <a>PresentationSession</a> on the controller's
-            behalf, it MUST follow the steps in <a>starting a presentation
-            session</a> using the default presentation request for the
-            controller if as the <code>PresentationRequest</code> (as if the
-            controller had called <code>defaultRequest.start()</code>).
+            behalf, it MUST <a>start a presentation session</a> using the
+            <a>default presentation request</a> for the <a>controller</a> (as
+            if the <a>controller</a> had called
+            <code>defaultRequest.start()</code>).
           </p>
           <p>
             The user agent SHOULD initiate presentation using the <a>default
