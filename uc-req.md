@@ -132,6 +132,23 @@ presents a list of the top players.
 
 **Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07)
 
+### <a name="uc06"></a>UC06: Presenting to local and remote screens
+
+Alice enters a conference room with two flat screen TVs.  She opens a slide
+presentation site and initiates presentation of a deck of slides on the first
+TV.  The presentation connects automatically to the second TV to show a video
+accompanying her slides.
+
+Alice wishes to present simultaneously to Bob, who at a remote site.  She
+initiates a connection via the presentation site to Bob's conference room, which
+causes the presentation running in Alice's room to start showing on the TVs in
+Bob's room.  As Alice moves through the slides in her room, the content in Bob's
+room remains in sync.
+
+When Alice is done presenting, she stops presentation locally, which also
+terminates presentation on Bob's TVs.
+
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req08)
 
 ## Requirements
 
