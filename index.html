@@ -941,7 +941,7 @@
           [Constructor(DOMString url)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationSession&gt; start();
-            Promise&lt;PresentationSession&gt; join();
+            Promise&lt;PresentationSession&gt; join(DOMString presentationId);
             Promise&lt;PresentationAvailability&gt; getAvailability();
 
             attribute EventHandler onsessionconnect;
