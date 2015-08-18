@@ -257,7 +257,9 @@
         <dfn><a href="http://www.w3.org/TR/html5/webappapis.html">queue a
         task</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/infrastructure.html#concept-events-trusted">
-        trusted event</a></dfn> are defined in [[!HTML5]].
+        trusted event</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/browsers.html#allowed-to-show-a-popup">allowed
+        to show a popup</a></dfn> are defined in [[!HTML5]].
       </p>
       <p>
         This document provides interface definitions using the Web IDL standard
@@ -982,6 +984,10 @@
             </dd>
           </dl>
           <ol>
+            <li>If the algorithm isn't <a>allowed to show a popup</a>, return a
+            <a>Promise</a> rejected with a <a>DOMException</a> named
+            <code>"InvalidAccessError"</code> and abort these steps.
+            </li>
             <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
             <li>Return <em>P</em>.
