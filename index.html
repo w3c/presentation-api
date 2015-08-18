@@ -824,8 +824,8 @@
             <a>Promise</a> returned by <code>getAvailability()</code> is
             <a title="reject">rejected</a> and the algorithm to <a>monitor the
             list of available presentation displays</a> will only run as part
-            of the <a for="PresentationRequest" title="start">session start</a>
-            algorithm.
+            of the <a for="PresentationRequest" title="start">start a
+            presentation session</a> algorithm.
           </p>
           <p>
             When there are no live <a>PresentationAvailability</a> objects
@@ -834,7 +834,7 @@
             displays</a> to satisfy the <a href=
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#nf-req01-power-saving-friendly">
             power saving non-functional requirement</a>. To further save power,
-            the user agent MAY also keep track of whether the page holding an
+            the user agent MAY also keep track of whether the page holding a
             <a>PresentationAvailability</a> object is in the foreground. Using
             this information, implementation specific discovery of
             <a>presentation displays</a> can be resumed or suspended.
@@ -1661,7 +1661,7 @@
       <p>
         This specification does not prohibit a user agent from publishing
         information about its <a>set of presentations</a>. The group envisions
-        a user agent on a another device (distinct from the controller or
+        a user agent on another device (distinct from the controller or
         presentation) becoming authorized to join the presentation, either by
         user action or by discovering the presentation's URL and id.
       </p>
