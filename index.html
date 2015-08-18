@@ -76,7 +76,9 @@
             status: 'finding',
             publisher: 'W3C'
           }
-        }
+        },
+        issueBase: "https://www.github.com/w3c/presentation-api/issues/",
+        githubAPI: "https://api.github.com/repos/w3c/presentation-api"
       };
     </script>
     <style>
@@ -88,14 +90,6 @@
     .note p:first-child { margin-top: 0; }
     .note p:last-child { margin-bottom: 0; }
     p.note:before { content: 'NOTE: '; }
-
-    .open-issue { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #fbfbe9; border-color: #faf9a5; }
-    .open-issue em, .warning em, .open-issue i, .warning i { font-style: normal; }
-    p.open-issue, div.open-issue { padding: 0.5em 2em; }
-    span.open-issue { padding: 0 2em; }
-    .open-issue p:first-child { margin-top: 0; }
-    .open-issue p:last-child { margin-bottom: 0; }
-
     .non-normative { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     p.non-normative:before { content: 'Non-normative: '; font-weight: bolder;}
     p.non-normative, div.non-normative { padding: 0.5em 2em; }
@@ -573,7 +567,7 @@
           <h4>
             Sending a message through <code>PresentationSession</code>
           </h4>
-          <p class="note">
+          <div class="note">
             No specific transport for the connection between the <a>controlling
             browsing context</a> and the <a>presenting browsing context</a> is
             mandated, except that for multiple calls to <code><a for=
@@ -581,7 +575,7 @@
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
             <a><code>RTCDataChannel</code></a> in reliable mode.
-          </p>
+          </div>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
             transmitted between two browsing contexts. Let <dfn>presentation
@@ -709,10 +703,7 @@
               </ol>
             </li>
           </ol>
-          <p class="open-issue">
-            <a href="https://github.com/w3c/presentation-api/issues/35">ISSUE
-            35: Refine how to do session teardown/disconnect/closing</a>
-          </p>
+          <div class="issue" data-number="35"></div>
         </section>
         <section>
           <h4>
@@ -928,11 +919,11 @@
               displays</a> for power saving purposes.
             </li>
           </ol>
-          <p class="note">
+          <div class="note">
             The mechanism used to monitor <a>presentation displays</a>
             availability and determine the compatibility of a <a>presentation
             display</a> with a given URL is left to the user agent.
-          </p>
+          </div>
         </section>
       </section>
       <section>
@@ -1094,25 +1085,25 @@
               </ol>
             </li>
           </ol>
-          <p class="note">
+          <div class="note">
             The details of implementing the permission request and display
             selection are left to the user agent; for example it may show the
             user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
             permission).
-          </p>
-          <p class="note">
+          </div>
+          <div class="note">
             The <code>presentationUrl</code> should name a resource accessible
             to the local or a remote user agent. This specification defines
             behavior for <code>presentationUrl</code> using the
             <code>http</code> or <code>https</code> schemes; behavior for other
             schemes is not defined by this specification.
-          </p>
-          <p class="open-issue">
-            ISSUE: Do we want to distinguish the permission-denied outcome from
-            the no-screens-available outcome? Developers would be able to infer
-            it anyway from <code>getAvailability()</code>.
-          </p>
+          </div>
+          <div class="issue">
+            Do we want to distinguish the permission-denied outcome from the
+            no-screens-available outcome? Developers would be able to infer it
+            anyway from <code>getAvailability()</code>.
+          </div>
         </section>
         <section>
           <h4>
@@ -1192,11 +1183,10 @@
               </ol>
             </li>
           </ol>
-          <p class="open-issue">
-            ISSUE: If no matching presentation is found, we could leave the
-            Promise pending in case a matching presentation is started in the
-            future.
-          </p>
+          <div class="issue">
+            If no matching presentation is found, we could leave the Promise
+            pending in case a matching presentation is started in the future.
+          </div>
         </section>
         <section>
           <h4>
@@ -1249,7 +1239,7 @@
               </ol>
             </li>
           </ol>
-          <p class="note">
+          <div class="note">
             The mechanism that is used to present on the remote display and
             connect the <a>controlling browsing context</a> with the presented
             document is an implementation choice of the user agent. The
@@ -1257,20 +1247,20 @@
             carrying <code>DOMString</code> payloads in a reliable and in-order
             fashion as described in the <em>Send Message</em> and <em>Receive
             Message</em> steps below.
-          </p>
-          <p class="note">
+          </div>
+          <div class="note">
             If <em>T</em> does not complete successfully, the user agent may
             choose to re-execute the Presentation Connection algorithm at a
             later time.
-          </p>
-          <p class="open-issue">
-            ISSUE: Do we want to notify the caller of a failure to connect,
-            i.e. with an "error" onstatechange?
-          </p>
-          <p class="open-issue">
-            ISSUE: Do we want to pass the new state as a property of the
-            statechange event?
-          </p>
+          </div>
+          <div class="issue">
+            Do we want to notify the caller of a failure to connect, i.e. with
+            an "error" onstatechange?
+          </div>
+          <div class="issue">
+            Do we want to pass the new state as a property of the statechange
+            event?
+          </div>
         </section>
         <section>
           <h4>
@@ -1328,11 +1318,7 @@
             Establishing a presentation connection in a presenting browsing
             context
           </h4>
-          <p class="open-issue">
-            <a href="https://github.com/w3c/presentation-api/issues/19">ISSUE
-            19: Specify behavior when multiple controlling pages are connected
-            to the session</a>
-          </p>
+          <div class="issue" data-number="19"></div>
           <p>
             When a new <a>presenting browsing context</a> has been created and
             navigated to the <code>presentationUrl</code> on a user-selected
@@ -1465,18 +1451,18 @@
             intention to do so, for example by clicking a button in the
             browser.
           </p>
-          <p class="note">
+          <div class="note">
             Not all user agents may support initiation of a presentation
             session outside of the content area. In this case setting
             <code>defaultRequest</code> has no effect.
-          </p>
-          <p class="issue">
+          </div>
+          <div class="issue">
             It should be clear that user-intiated presentation via the user
             agent may have pre-selected the presentation display. In this case
             step 6 of <a>start a presentation session</a> is optional. It may
             be cleaner to define a separate set of steps for initiating a
             default presentation.
-          </p>
+          </div>
         </section>
         <section>
           <h4>
@@ -1559,7 +1545,7 @@
               </ol>
             </li>
           </ol>
-          <p class="note">
+          <div class="note">
             If the <a>set of presentations</a> is empty, we leave the
             <a>Promise</a> pending until connecting request arrives from the
             <a>controlling browsing context</a>. If the first <a>controlling
@@ -1568,7 +1554,7 @@
             "Presentation">getSession</a>()</code> will resolve with a
             <a>presentation session</a> that has its <a>presentation session
             state</a> set to <code>disconnected</code>.
-          </p>
+          </div>
         </section>
         <section>
           <h4>
@@ -1641,10 +1627,7 @@
       <h2>
         Security and privacy considerations
       </h2>
-      <p class="open-issue">
-        <a href="https://github.com/w3c/presentation-api/issues/45">ISSUE 45:
-        Security and privacy considerations section</a>
-      </p>
+      <div class="issue" data-number="45"></div>
       <h3>
         Personally identifiable information
       </h3>
@@ -1657,21 +1640,8 @@
         However, this information is also dependent on the user's local network
         context, so the risk is minimized.
       </p>
-      <p class="open-issue">
-        If we allow the page to filter the set of presentation screens based on
-        capabilities, then more bits of more information would be revealed.
-        This feature, if implemented, should take privacy into consideration.
-        See <a href="https://github.com/w3c/presentation-api/issues/9">ISSUE 9:
-        How to filter available screens according to the content being
-        presented?</a>
-      </p>
-      <p class="open-issue">
-        We do not want to require user permission before disclosing the
-        presence of a presentation display, as it is counter to the initial
-        purpose of improving the user experience. See <a href=
-        "https://github.com/w3c/presentation-api/issues/10">ISSUE 10: Is user
-        permission required to prompt for screen availability information?</a>
-      </p>
+      <div class="issue" data-number="9"></div>
+      <div class="issue" data-number="10"></div>
       <h3>
         Cross-origin access
       </h3>
@@ -1695,11 +1665,11 @@
         presentation) becoming authorized to join the presentation, either by
         user action or by discovering the presentation's URL and id.
       </p>
-      <p class="open-issue">
+      <div class="issue">
         This section should provide informative guidance as to what constitutes
         a reasonable context for a Web page to become authorized to control a
         presentation session.
-      </p>
+      </div>
       <h3>
         Device Access
       </h3>
@@ -1719,9 +1689,9 @@
         intercepted if an attacker can inject content into the controlling
         page.
       </p>
-      <p class="open-issue">
+      <div class="issue">
         Should we restrict the API to some extent in non secure contexts?
-      </p>
+      </div>
       <h3>
         Incognito mode and clearing of browsing data
       </h3>
@@ -1737,16 +1707,11 @@
         The set of presentations known to the user agent should be cleared when
         the user requests to "clear browsing data."
       </p>
-      <p class="open-issue">
-        The spec should specify any restrictions on the presenting browsing
-        context when the opening browsing context is in "incognito" mode. See
-        <a href="https://github.com/w3c/presentation-api/issues/14">ISSUE 14:
-        Define user agent context for rendering the presentation</a>
-      </p>
-      <p class="open-issue">
+      <div class="issue" data-number="14"></div>
+      <div class="issue">
         The spec should clarify what is to happen to the set of known
         presentations in "incognito" (private browsing context) mode.
-      </p>
+      </div>
       <h3>
         Messaging between presentation sessions
       </h3>
@@ -1757,11 +1722,7 @@
         confidentiality and authenticity between corresponding <a>presentation
         sessions</a>.
       </p>
-      <p class="open-issue">
-        <a href="https://github.com/w3c/presentation-api/issues/80">ISSUE 80:
-        Define security requirements for messaging channel between secure
-        origins</a>
-      </p>
+      <div class="issue" data-number="80"></div>
     </section>
     <section>
       <h2>
