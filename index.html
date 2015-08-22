@@ -327,7 +327,7 @@
     // as soon as it's not needed.
     handleAvailabilityChange(availability.value);
     availability.onchange = function() { handleAvailabilityChange(this.value); };
-  }.catch(function() {
+  }).catch(function() {
     // Availability monitoring is not supported by the platform, so discovery of presentation
     // displays will happen only after request.start() is called.  Pretend the
     // devices are available for simplicity; or, one could implement the third state for the
