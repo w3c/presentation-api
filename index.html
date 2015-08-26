@@ -1305,8 +1305,22 @@
             </li>
             <li>Return <em>P</em>.
             </li>
+            <li>If the user agent is unable to monitor presentation displays
+            for the entire duration of the controlling browsing context (e.g.,
+            because the user has disabled this feature), then:
+              <ol>
+                <li>
+                  <a>Resolve</a> <em>P</em> with a new <code>PresentationAvailability</code>
+                  object with its <code>value</code> property set to <code>false</code>.
+                </li>
+                <li>
+                  Abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
             <li>If the user agent is unable to continuously <a>monitor the list
-            of available presentation displays</a>, then:
+            of available presentation displays</a> but can find presentation
+            displays in order to start a session, then:
               <ol>
                 <li>
                   <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
