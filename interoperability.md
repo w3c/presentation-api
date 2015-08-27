@@ -1,10 +1,8 @@
 # Assess interoperability of Presentation API implementations
 
 This document discusses the interoperability of potential Presentation API implementations in particular interoperability
-between user agents in case of [2-UA implementations][2ua] and between user agents and wireless/dump displays in case of [1-UA implementations][1ua].
+between user agents in case of [2-UA implementations][2ua] and between user agents and presentation displays in case of [1-UA implementations][1ua].
 For this, state of the art technologies and standards that may be useful to implement the Presentation API will be considered.
-
-> TODO: fix links of 1-UA and 2-UA implementations in the text
 
 ## Interoperability between user agents
 
@@ -13,11 +11,11 @@ part of the Presentation API (for controlling browsing context or presenting bro
 between user agents running on controller devices and user agents running on presentation devices the following aspects should be considered:
 
 * **Discovery**: To discover presentation devices, the controlling user agent should use the same technology as the presenting
-user agent use to advertise itself. Potential technologies: SSDP, mDNS or BLE (BLE Beacon)
+user agent use to advertise itself. **Potential technologies**: SSDP, mDNS or BLE (BLE Beacon)
 * **Launch**: After discovery, the controlling user agent should know how to launch a new presentation or join an existing one.
-Common message formats should be also used. Potential technologies: DIAL (uses SSDP for discovery), Google Cast (part of it).
+Common message formats should be also used. **Potential technologies**: DIAL (uses SSDP for discovery), Google Cast (part of it).
 * **Communication**: Also for communication both user agents should use same technologies/protocols to ensure interoperability.
-Potential technologies: WebSockets, WebRTC, Raw Socket, Google Cast (part of it)
+**Potential technologies**: WebSockets, WebRTC, Raw Socket, Google Cast (part of it)
 * **Signaling**: common language and message formats (e.g. using JSON or XML) should be used to exchange signaling information between the two user agents.
 
 ![2-UA implementation][2ua-img]
@@ -31,12 +29,11 @@ page is rendered in silent mode (not visible for the user). The user agent captu
 in silent mode and sends the frames to a presentation device like a projector or wireless display. This means the user agent and the
 presentation device should use a common streaming technology to ensure interoperability. More than likely, the user agent will use System APIs
 offered by the OS to show content on the presentation device. But other technologies not offered directly by the OS are also possible, for example
- Google Cast extension for chrome support Tab cast to Chromecast using WebRTC. **Potentials Technologies**: HDMI, Intel WiDi, Miracast, Airplay, MHL.
-
+ Google Cast extension for chrome supports Tab cast to Chromecast using WebRTC. **Potentials Technologies**: HDMI, Intel WiDi, Miracast, Airplay, MHL.
 
 ![1-UA implementation][1ua-img]
 
-[1ua]: http://w3c.github.io/presentation-api/#1-UA
-[2ua]: http://w3c.github.io/presentation-api/#2-UA
+[1ua]: http://w3c.github.io/presentation-api/#1-ua
+[2ua]: http://w3c.github.io/presentation-api/#2-ua
 [1ua-img]: ./images/interoperability-1ua.png
 [2ua-img]: ./images/interoperability-2ua.png
