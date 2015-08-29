@@ -14,33 +14,33 @@ This section collects relevant use cases for the [Presentation API][pres-api].
 
 ### <a name="uc01"></a>UC01: Presentation
 
-A user is preparing a set of slides for a talk. Using a web-based service, she
-is editing her slides and speaker notes on the primary screen while the
-secondary larger screen shows a preview of the current slide. When the slides
-are done, her mobile phone allows her to access them from an online service
-while on the go. Coming to the conference, using wireless display technology,
-she would like to present her slides on the stage screen from her mobile phone.
-The phone's touch screen helps her to navigate slides and presents a slide
-preview while the projector shows her slides to the audience.
+A user is preparing a set of slides for a talk. Using a Web-based service, she
+edits her slides and speaker notes on the primary screen while the secondary
+larger screen shows a preview of the current slide.  When the slides are done,
+her mobile phone allows her to access them from an online service while on the
+go.  At the conference, using wireless display technology, she presents her
+slides on the stage screen from her mobile phone.  The phone's touch screen
+helps her to navigate slides and presents a slide preview while the stage screen
+shows her slides to the audience.
 
 **Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ05](#req05), [REQ06](#req06)
 
 ### <a name="uc02"></a>UC02: Video and image sharing
 
 Using an online video or image sharing service, a user would like to show
-memorable moments to her friends. Using a device with a small screen, however, a
-user cannot show the content to a large group of people. Connecting an external
-TV screen or projector to her device - with a cable or wirelessly - the online
+memorable moments to her friends.  However, she cannot show the content to a
+large group of people using her smartphone with its small screen.  She connects
+an external TV screen to her mobile device (wired or wirelessly); the online
 sharing service now makes use of the connected display, allowing a wider
-audience to enjoy the content. The web page shows UI elements that allow the
-user to trigger displaying content on the secondary display (e.g., a "send to
-second screen") only if there is at least one presentation display available.
-The user selects a set of videos and images to show on the second display. The playback
-starts on the secondary display and will continue even if the user navigates to another
-web page on his mobile device. The user can navigate back to the online sharing service
-and the controlling page will connect automatically to the running session on the
-presentation display.
+audience to enjoy the content.  After the connection is made, the Web page adds
+a button (e.g., "send to second screen") that allows her to send content to
+the TV screen.
 
+She clicks the "send to second screen" button to start display on her
+TV screen, then selects a set of videos and images to show there. The playback
+starts on the TV screen and continues even after she navigates to another Web
+page on her mobile device.  She navigates back to the online sharing service and
+the site reconnects automatically to the content shown on the TV screen.
 
 **Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ03](#req03), [REQ05](#req05), [REQ06](#req06)
 
@@ -51,14 +51,15 @@ selects the option "create new game" to start a game session for two
 players. The poker site detects that there is display available and asks Bob to
 extend the game UI by keeping his personal cards and control UI on the
 smartphone and displaying the poker table on the large display. Bob confirms and
-waits for other players to join. Alice is visiting Bob and decides to join the
-game.  She opens the same poker site in the browser on her smartphone and
-selects the option "join game". The browser shows a dialog with a list of
-running poker sessions. She selects the session started by Bob and joins the
-game. The game starts immediately after two players are joined. Now Alice and
-Bob can see their personal cards on their smartphones and the large screen
-displays the poker table with shared cards, current bets, and remaining money of
-each player.
+waits for other players to join.
+
+Alice is visiting Bob and decides to join the game.  She opens the same poker
+site in the browser on her smartphone and selects the option "join game". The
+browser shows a dialog with a list of running poker sessions. She selects the
+session started by Bob and joins the game. The game starts immediately after two
+players are joined. Now Alice and Bob can see their personal cards on their
+smartphones and the large screen displays the poker table with shared cards,
+current bets, and remaining money of each player.
 
 **Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07)
 
@@ -100,6 +101,54 @@ on "Alice's kitchen TV".
 
 > ISSUE #40: [Screen availability mechanism for multiple
 > sessions](https://github.com/w3c/presentation-api/issues/40)
+
+### <a name="uc05"></a>UC05: Multiplayer gaming - Pictionary
+
+Bob visits a Pictionary game [[PICTIONARYGAME]](#ref-PICTIONARYGAME) site on his
+smartphone. He clicks the "Start on TV" button and selects his TV’s name from
+the list of presentation displays that pops up on the phone's screen. The
+Pictionary site opens on the TV screen.
+
+Bob now waits for Ann and Joe to join the game from their smartphones by opening
+the same site and connecting to the TV. After all the players have joined, Bob
+presses the "start game" button on his smartphone and receives the first word to
+draw: "blanket."
+
+Bob draws a picture of a blanket on the touch screen of his smartphone. The
+picture is mirrored on the TV screen as he draws. At the same time, Ann
+and Joe are trying to guess what Bob is drawing by typing answers on their own
+smartphones and sending them to the TV screen. The TV shows the answers coming
+from all users and the game continues until Ann provides the correct answer.
+Ann gets points for the correct answer.  The next round of the game starts with
+Ann drawing a new word.
+
+Joe then decides to exit the game by pressing the "exit game" button.  That
+information is passed to the TV and Joe's name disappears from the list of the
+players on the TV screen. Bob and Ann play one more round of the game with Ann
+drawing and Bob guessing the correct word. After that round is over, they decide
+to stop playing and both press the "exit game" button on their smartphones.  The
+site on the TV is notified that all the players have left the game, and it
+presents a list of the top players.
+
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07)
+
+### <a name="uc06"></a>UC06: Presenting to local and remote screens
+
+Alice enters a conference room with two flat screen TVs.  She opens a slide
+presentation site and initiates presentation of a deck of slides on the first
+TV.  The presentation connects automatically to the second TV to show a video
+accompanying her slides.
+
+Alice wishes to present simultaneously to Bob, who at a remote site.  She
+initiates a connection via the presentation site to Bob's conference room, which
+causes the presentation running in Alice's room to start showing on the TVs in
+Bob's room.  As Alice moves through the slides in her room, the content in Bob's
+room remains in sync.
+
+When Alice is done presenting, she stops presentation locally, which also
+terminates presentation on Bob's TVs.
+
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req08)
 
 ## Requirements
 
@@ -189,3 +238,7 @@ needed.
 [uc03-img1]: ./images/uc-multiplayer-game-poker-table.png
 [uc03-img2]: ./images/uc-multiplayer-game-player-alice.png
 [uc03-img3]: ./images/uc-multiplayer-game-player-bob.png
+
+## References
+
+<a name="ref-PICTIONARYGAME">[PICTIONARYGAME]</a> https://en.wikipedia.org/wiki/Pictionary
