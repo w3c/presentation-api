@@ -262,6 +262,8 @@
         handler event type</a></dfn>, <dfn title="fire"><a href=
         "http://www.w3.org/TR/html5/infrastructure.html#concept-event-fire">firing
         an event</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/webappapis.html#fire-a-simple-event">firing
+        a simple event</a></dfn> <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#navigate">navigate</a></dfn>,
         <dfn><a href="http://www.w3.org/TR/html5/webappapis.html">queue a
         task</a></dfn>, <dfn><a href=
@@ -903,11 +905,9 @@
                     <li>Set <em>A</em>'s <a>value</a> property to
                     <em>newAvailability</em>.
                     </li>
-                    <li>If <em>P</em> is settled, then <a>fire</a> an event
-                    named <code>change</code> at <em>A</em>.
-                    </li>
-                    <li>If <em>P</em> is not settled, then <a>resolve</a> <em>
-                      P</em> with <em>A</em>.
+                    <li>
+                      <a title='firing a simple event'>Fire a simple event</a>
+                      named <code>change</code> at <em>A</em>.
                     </li>
                   </ol>
                 </li>
@@ -1305,8 +1305,22 @@
             </li>
             <li>Return <em>P</em>.
             </li>
+            <li>If the user agent is unable to monitor presentation displays
+            for the entire duration of the controlling browsing context (e.g.,
+            because the user has disabled this feature), then:
+              <ol>
+                <li>
+                  <a>Resolve</a> <em>P</em> with a new <code>PresentationAvailability</code>
+                  object with its <code>value</code> property set to <code>false</code>.
+                </li>
+                <li>
+                  Abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
             <li>If the user agent is unable to continuously <a>monitor the list
-            of available presentation displays</a>, then:
+            of available presentation displays</a> but can find presentation
+            displays in order to start a session, then:
               <ol>
                 <li>
                   <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
@@ -1319,13 +1333,16 @@
             <li>Let <em>A</em> be a new <code>PresentationAvailability</code>
             object with its <code>value</code> property set to
             <code>false</code> if the <a>list of available presentation
-            displays</a> is empty and <code>true</code> otherwise.
+            displays</a> is empty or non of them is a <a>compatible
+            presentation display</a>, <code>true</code> otherwise.
             </li>
             <li>Create a tuple <em>(A, presentationUrl, P)</em> and add it to
             the <a>set of availability objects</a>.
             </li>
             <li>Run the algorithm to <a>monitor the list of available
             presentation displays</a>.
+            </li>
+            <li><a>Resolve</a> <em>P</em> with <em>A</em>.
             </li>
           </ol>
         </section>
