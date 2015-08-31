@@ -188,18 +188,18 @@
       <p>
         At its core, this specification enables an exchange of messages between
         a page that acts as the <a>controller</a> and another page that
-        represents the <a title="presenting browsing context">presentation</a>
+        represents the <a data-lt="presenting browsing context">presentation</a>
         shown in the <a>presentation display</a>. How the messages are
         transmitted is left to the UA in order to allow the use of
         <a>presentation display</a> devices that can be attached in a wide
         variety of ways. For example, when a <a>presentation display</a> device
         is attached using HDMI or Miracast, the same UA that acts as the
-        <a>controller</a> renders the <a title=
+        <a>controller</a> renders the <a data-lt=
         "presenting browsing context">presentation</a>. Instead of displaying
-        the <a title="presenting browsing context">presentation</a> in another
+        the <a data-lt="presenting browsing context">presentation</a> in another
         window on the same device, however, it can use whatever means the
         operating system provides for using the external <a>presentation
-        displays</a>. In such a case, both the <a>controller</a> and <a title=
+        displays</a>. In such a case, both the <a>controller</a> and <a data-lt=
         "presenting browsing context">presentation</a> run on the same UA and
         the operating system is used to route the <a>presentation display</a>
         output to the <a>presentation display</a>. This is commonly referred to
@@ -210,10 +210,10 @@
       <p>
         If the <a>presentation display</a> is able to render HTML documents and
         communicate with the <a>controller</a>, the <a>controller</a> does not
-        need to render the <a title=
+        need to render the <a data-lt=
         "presenting browsing context">presentation</a>. In this case, the UA
         acts as a proxy that requests the <a>presentation display</a> to show
-        and render the <a title="presenting browsing context">presentation</a>
+        and render the <a data-lt="presenting browsing context">presentation</a>
         itself. This is commonly referred to as the <b id="2-ua">2-UA</b> case.
         This way of attaching to displays could be enhanced in the future by
         defining a standard protocol for delivering these types of messages
@@ -259,7 +259,7 @@
         "http://www.w3.org/TR/html5/webappapis.html#event-handlers">event
         handler</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#event-handler-event-type">event
-        handler event type</a></dfn>, <dfn title="fire"><a href=
+        handler event type</a></dfn>, <dfn data-lt="fire"><a href=
         "http://www.w3.org/TR/html5/infrastructure.html#concept-event-fire">firing
         an event</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#fire-a-simple-event">firing
@@ -285,9 +285,9 @@
         are defined in [[!WEBIDL]].
       </p>
       <p>
-        The terms <dfn title="resolve"><a href=
+        The terms <dfn data-lt="resolve"><a href=
         "http://www.w3.org/2001/tag/doc/promises-guide#resolve-promise">resolving
-        a Promise</a></dfn>, and <dfn title="reject"><a href=
+        a Promise</a></dfn>, and <dfn data-lt="reject"><a href=
         "http://www.w3.org/2001/tag/doc/promises-guide#reject-promise">rejecting
         a Promise</a></dfn> are used as explained in [[!PROMGUIDE]].
       </p>
@@ -509,7 +509,7 @@
           <a>presentation session</a> via a <code>sessionconnect</code> event.
         </p>
         <p>
-          The <dfn>presenting browsing context</dfn> (or <dfn title=
+          The <dfn>presenting browsing context</dfn> (or <dfn data-lt=
           "presentation context">presentation</dfn> for short) is the browsing
           context responsible for rendering to a <a>presentation display</a>. A
           <a>presenting browsing context</a> can reside in the same user agent
@@ -570,13 +570,13 @@
           <p>
             When the <code><dfn>send</dfn>()</code> method is called on a
             <a>PresentationSession</a> object with a <code>message</code>, the
-            user agent MUST run the algorithm to <a title="algorithm-send">send
+            user agent MUST run the algorithm to <a data-lt="algorithm-send">send
             a message through a <code>PresentationSession</code></a>.
           </p>
           <p>
             When the <code><dfn>close</dfn>()</code> method is called on a
             <a>PresentationSession</a>, the user agent MUST run the algorithm
-            to <a title="close-algorithm">close a presentation session</a> with
+            to <a data-lt="close-algorithm">close a presentation session</a> with
             <a>PresentationSession</a>.
           </p>
         </div>
@@ -600,7 +600,7 @@
             <code>text</code> and <code>binary</code>.
           </p>
           <p>
-            When the user agent is to <dfn title="algorithm-send">send a
+            When the user agent is to <dfn data-lt="algorithm-send">send a
             message through a <code>PresentationSession</code> S</dfn>, it MUST
             run the following steps:
           </p>
@@ -688,7 +688,7 @@
             Closing a <code>PresentationSession</code>
           </h4>
           <p>
-            When the user agent is to <dfn title="close-algorithm">close a
+            When the user agent is to <dfn data-lt="close-algorithm">close a
             presentation session</dfn> using <em>session</em>, it MUST run the
             following steps:
           </p>
@@ -834,9 +834,9 @@
             support continuous availability monitoring; for example, because of
             platform or power consumption restrictions. In this case the
             <a>Promise</a> returned by <code>getAvailability()</code> MUST be
-            <a title="reject">rejected</a> and the algorithm to <a>monitor the
+            <a data-lt="reject">rejected</a> and the algorithm to <a>monitor the
             list of available presentation displays</a> will only run as part
-            of the <a for="PresentationRequest" title="start">start a
+            of the <a for="PresentationRequest" data-lt="start">start a
             presentation session</a> algorithm.
           </p>
           <p>
@@ -868,7 +868,7 @@
           </h4>
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
-            pending request to <a for="PresentationRequest" title="start">start
+            pending request to <a for="PresentationRequest" data-lt="start">start
             a presentation session</a>, the user agent MUST <dfn>monitor the
             list of available presentation displays</dfn> by running the
             following steps.
@@ -901,7 +901,7 @@
                     <em>newAvailability</em>.
                     </li>
                     <li>
-                      <a title='firing a simple event'>Fire a simple event</a>
+                      <a data-lt='firing a simple event'>Fire a simple event</a>
                       named <code>change</code> at <em>A</em>.
                     </li>
                   </ol>
@@ -923,7 +923,7 @@
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
             there is no pending request to <a for="PresentationRequest"
-              title="start">start a presentation session</a>, cancel any
+              data-lt="start">start a presentation session</a>, cancel any
               pending task to <a>monitor the list of available presentation
               displays</a> for power saving purposes.
             </li>
