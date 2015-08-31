@@ -372,17 +372,17 @@
       </section>
       <section>
         <h3>
-          Joining a presentation session example
+          Reconnect to a presentation session example
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
   // read presId from localStorage if exists
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
-  // presId is mandatory when joining a session.
+  // presId is mandatory when reconnecting to a session.
   if (presId) {
-    request.join(presId)
-      // The joined session will be passed to setSession on success
+    request.reconnect(presId)
+      // The reconnected session will be passed to setSession on success
       .then(setSession)
       // no session found for presUrl and presId or an error is occurred
       .catch(endSession);
@@ -505,7 +505,7 @@
           <a>browsing context</a> that has connected to a <a>presentation
           session</a> by calling <code><a for=
           "PresentationRequest">start</a>()</code> or <code><a for=
-          "PresentationRequest">join</a>()</code>, or received a
+          "PresentationRequest">reconnect</a>()</code>, or received a
           <a>presentation session</a> via a <code>sessionconnect</code> event.
         </p>
         <p>
@@ -943,7 +943,7 @@
           [Constructor(DOMString url)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationSession&gt; start();
-            Promise&lt;PresentationSession&gt; join(DOMString presentationId);
+            Promise&lt;PresentationSession&gt; reconnect(DOMString presentationId);
             Promise&lt;PresentationAvailability&gt; getAvailability();
 
             attribute EventHandler onsessionconnect;
@@ -1116,13 +1116,13 @@
         </section>
         <section>
           <h4>
-            Joining a presentation session
+            Reconnect to a presentation session
           </h4>
           <p>
             When the <code><dfn for=
-            "PresentationRequest">join</dfn>(presentationId)</code> method is
-            called, the user agent MUST run the following steps to <dfn>join a
-            presentation session</dfn>:
+            "PresentationRequest">reconnect</dfn>(presentationId)</code> method
+            is called, the user agent MUST run the following steps to <dfn>reconnect
+            to a presentation session</dfn>:
           </p>
           <dl>
             <dt>
@@ -1416,7 +1416,7 @@
             <a><code>PresentationSession</code></a> object that was created.
             The event is fired for all sessions that are created for the
             <a>controller</a>, either by the <a>controller</a> calling
-            <code>start()</code> or <code>join()</code>, or by the UA creating
+            <code>start()</code> or <code>reconnect()</code>, or by the UA creating
             a session on the controller's behalf via <a for=
             "Presentation"><code>defaultRequest</code></a>.
           </p>
@@ -1672,9 +1672,9 @@
       <p>
         A <a>presentation session</a> is allowed to be accessed across origins;
         the presentation URL and presentation ID used to create the
-        presentation are the only information needed to join a session from any
-        origin in that user agent. In other words, a presentation is not tied
-        to a particular opening origin.
+        presentation are the only information needed to reconnect to a session
+        from any origin in that user agent. In other words, a presentation is
+        not tied to a particular opening origin.
       </p>
       <p>
         This design allows controlling contexts from different domains to
@@ -1686,8 +1686,8 @@
         This specification does not prohibit a user agent from publishing
         information about its <a>set of presentations</a>. The group envisions
         a user agent on another device (distinct from the controller or
-        presentation) becoming authorized to join the presentation, either by
-        user action or by discovering the presentation's URL and id.
+        presentation) becoming authorized to reconnect to the presentation,
+        either by user action or by discovering the presentation's URL and id.
       </p>
       <div class="issue">
         This section should provide informative guidance as to what constitutes
