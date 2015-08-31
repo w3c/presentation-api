@@ -65,7 +65,6 @@
         wgURI: 'http://www.w3.org/2014/secondscreen/',
         wgPublicList: 'public-secondscreen',
         wgPatentURI: 'http://www.w3.org/2004/01/pp-impl/74168/status',
-        issueBase: 'https://www.github.com/w3c/presentation-api/issues/',
         localBiblio: {
           PROMGUIDE: {
             title: 'Writing Promise-Using Specifications',
@@ -78,7 +77,20 @@
           }
         },
         issueBase: "https://www.github.com/w3c/presentation-api/issues/",
-        githubAPI: "https://api.github.com/repos/w3c/presentation-api"
+        githubAPI: "https://api.github.com/repos/w3c/presentation-api",
+
+        // Temp fix for ReSpec issue #483:
+        // https://github.com/w3c/respec/issues/483
+        afterEnd: function () {
+          Array.prototype.forEach.call(
+            document.querySelectorAll("[for],[dfn-for],[link-for]"),
+            function (element) {
+              element.removeAttribute('for');
+              element.removeAttribute('dfn-for');
+              element.removeAttribute('link-for');
+            }
+          );
+        }
       };
     </script>
     <style>
