@@ -799,7 +799,7 @@
             objects</dfn> requested through the <code><a for=
             "PresentationRequest">getAvailability</a>()</code> method. The
             <a>set of availability objects</a> is represented as a set of
-            tuples <em>(A, availabilityUrl, P)</em>, initially empty, where:
+            tuples <em>(A, availabilityUrl)</em>, initially empty, where:
           </p>
           <ol>
             <li>
@@ -809,11 +809,6 @@
               <em>availabilityUrl</em> is the <code>availabilityUrl</code>
               passed to <code><a for=
               "PresentationRequest">getAvailability</a>()</code> to create A.
-            </li>
-            <li>
-              <em>P</em> is the <a>Promise</a> that was returned by
-              <code><a for="PresentationRequest">getAvailability</a>()</code>
-              when <em>A</em> was created.
             </li>
           </ol>
         </section>
@@ -886,7 +881,7 @@
             </li>
             <li>Wait for the completion of that task.
             </li>
-            <li>For each member <em>(A, availabilityUrl, P)</em> of the <a>set
+            <li>For each member <em>(A, availabilityUrl)</em> of the <a>set
             of availability objects</a>:
               <ol>
                 <li>Set <em>previousAvailability</em> to the value of
@@ -923,9 +918,8 @@
             run the following steps:
           </p>
           <ol>
-            <li>Find and remove any entry <em>(A, availabilityUrl, P)</em> in
-            the <a>set of availability objects</a> for the newly deceased <em>
-              A</em>.
+            <li>Find and remove any entry <em>(A, availabilityUrl)</em> in the
+            <a>set of availability objects</a> for the newly deceased <em>A</em>.
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
             there is no pending request to <a for="PresentationRequest"
@@ -1336,8 +1330,8 @@
             displays</a> is empty or non of them is a <a>compatible
             presentation display</a>, <code>true</code> otherwise.
             </li>
-            <li>Create a tuple <em>(A, presentationUrl, P)</em> and add it to
-            the <a>set of availability objects</a>.
+            <li>Create a tuple <em>(A, presentationUrl)</em> and add it to the
+            <a>set of availability objects</a>.
             </li>
             <li>Run the algorithm to <a>monitor the list of available
             presentation displays</a>.
