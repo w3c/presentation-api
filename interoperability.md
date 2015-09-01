@@ -35,7 +35,7 @@ technologies/protocols to ensure interoperability.
   should be used to exchange signaling information between the two user agents.
 - **Security**: Means of authenticatating the presenting user agent to the
   controlling user agent (and vice versa), and ensuring privacy of communication.
-  - **Potential technologies**: [TLS](https://tools.ietf.org/html/rfc5246), [DTLS-SRTP](https://tools.ietf.org/html/rfc5764), [X.509 Certificates](http://tools.ietf.org/html/rfc5280).
+  - **Potential technologies**: [TLS](https://tools.ietf.org/html/rfc5246), [DTLS-SRTP](https://tools.ietf.org/html/rfc5764), [X.509 Certificates](https://tools.ietf.org/html/rfc5280).
 
 
 ## Interoperability between user agents and presentation displays (1-UA)
@@ -45,7 +45,7 @@ implementation.  There are fewer requirements than the 2-UA case for
 interoperability between controlling user agents and presentation displays.  The
 controlling user agent implements the Presentation API for both controlling and
 presenting browsing contexts and the presentation page is rendered in silent
-mode (not visible for the user).  The controllint user agent captures the UI
+mode (not visible for the user).  The controlling user agent captures the UI
 output of the presentation page and sends the frames to a presentation device
 like a projector or wireless display.
 
