@@ -1396,13 +1396,13 @@
             Interface <code>PresentationSessionConnectEvent</code>
           </h3>
           <pre class="idl">
-            [Constructor(DOMString type, optional PresentationSessionConnectEventInit eventInitDict)]
+            [Constructor(DOMString type, PresentationSessionConnectEventInit eventInitDict)]
             interface PresentationSessionConnectEvent : Event {
               [SameObject] readonly attribute PresentationSession session;
             };
 
             dictionary PresentationSessionConnectEventInit : EventInit {
-              PresentationSession session;
+              required PresentationSession session;
             };
 
 </pre>
