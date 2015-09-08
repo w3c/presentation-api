@@ -347,7 +347,7 @@
   }).catch(function() {
     // Availability monitoring is not supported by the platform, so discovery of presentation
     // displays will happen only after request.start() is called.  Pretend the
-    // devices are available for simplicity; or, one could implement the third state for the
+    // devices are available for simplicity; or, one could implement a third state for the
     // button.
     handleAvailabilityChange(true);
   });
@@ -664,14 +664,14 @@
                 </li>
                 <li>If the <a>presentation message type</a> is
                 <code>binary</code>, and <a>binaryType</a> is set to
-                <code>blob</code>, then initialise <em>event</em>'s
+                <code>blob</code>, then initialize <em>event</em>'s
                 <code>data</code> attribute to a new <code>Blob</code> object
                 that represents <a>presentation message data</a> as its raw
                 data.
                 </li>
                 <li>If the <a>presentation message type</a> is
                 <code>binary</code>, and <a>binaryType</a> is set to
-                <code>arraybuffer</code>, then initialise <em>event</em>'s
+                <code>arraybuffer</code>, then initialize <em>event</em>'s
                 <code>data</code> attribute to a new <code>ArrayBuffer</code>
                 object whose contents are <a>presentation message data</a>.
                 </li>
