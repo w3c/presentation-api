@@ -427,8 +427,14 @@
       localStorage &amp;&amp; (localStorage["presId"] = session.id);
       // monitor session's state
       session.onstatechange = function () {
-        if (this == session &amp;&amp; this.state == "disconnected")
-          endSession();
+        if (this == session) {
+          if (this.state == "closed") {
+            // Offer the user a chance to reconnect(), e.g. if there was a
+            // network disruption, or the user wishes to resume control.
+          } else if (this.state == "terminated") {
+            // The presentation has terminated.  Offer the user a chance to
+            // start a new presentation.
+          }
       };
       // register message handler
       session.onmessage = function (evt) {
@@ -438,9 +444,12 @@
       session.send("say hello");
     }
   };
-  var endSession = function () {
+  var disconnectController = function () {
     // close old session if exists
     session &amp;&amp; session.close();
+  };
+  var endPresentation = function () {
+    session &amp;&amp; session.terminate();
     // remove old presId from localStorage if exists
     localStorage &amp;&amp; delete localStorage["presId"];
   };
@@ -452,7 +461,7 @@
 &lt;script&gt;
   var addSession = function(session) {
     session.onstatechange = function () {
-      // session.state is either 'connected' or 'disconnected'
+      // session.state is either 'connected,' 'closed,' or 'terminated'
       console.log("session's state is now", session.state);
     };
     session.onmessage = function (evt) {
@@ -536,13 +545,14 @@
           <a>PresentationSession</a> object.
         </p>
         <pre class="idl">
-          enum PresentationSessionState { "connected", "disconnected" /*, "resumed" */ };
+          enum PresentationSessionState { "connected", "closed", "terminated" };
           enum BinaryType { "blob", "arraybuffer" };
 
           interface PresentationSession : EventTarget {
             readonly attribute DOMString? id;
             readonly attribute PresentationSessionState state;
             void close();
+            void terminate();
             attribute EventHandler onstatechange;
 
             // Communication
@@ -605,8 +615,8 @@
             run the following steps:
           </p>
           <ol link-for="PresentationSession">
-            <li>If the <a>state</a> property of <a>PresentationSession</a> is
-            <code>"disconnected"</code>, throw an
+            <li>If the <a>state</a> property of <a>PresentationSession</a> is not
+            <code>"connected"</code>, throw an
             <code>InvalidStateError</code> exception.
             </li>
             <li>Let <a>presentation message type</a> <em>messageType</em> be
@@ -647,8 +657,8 @@
             <a>presentation message type</a>, it MUST run the following steps:
           </p>
           <ol link-for="PresentationSession">
-            <li>If the <a>state</a> property of <a>PresentationSession</a> is
-            <code>"disconnected"</code>, abort these steps.
+            <li>If the <a>state</a> property of <a>PresentationSession</a> is not
+            <code>"connected"</code>, abort these steps.
             </li>
             <li>Let <em>event</em> be a newly created <a>trusted event</a> that
             uses the <code>MessageEvent</code> interface, with the event type
@@ -689,38 +699,100 @@
           </h4>
           <p>
             When the user agent is to <dfn data-lt="close-algorithm">close a
+            presentation session</dfn> using <em>session</em>, it MUST do the
+            following:
+          </p>
+          <ol>
+            <li> <a>Queue a task</a> to run the following steps in order:
+              <ol>
+                <li>If the <a>presentation session state</a> of <em>session</em> is
+                  not <code>connected</code>, then abort these steps.
+                <li>Set <a>presentation session state</a> of <em>session</em> to
+                  <code>closed</code>.</li>
+                <li><a>Fire</a> an event named
+                  <code>statechange</code> at <em>session</em>.</li>
+                <li>If <em>session</em> is owned by a <a>controlling browsing
+                    context</a>, signal the <a>presenting browsing context</a>
+                    to <a title="close-algorithm">close the presentation session</a> that was created when
+                    <em>session</em> was used to <a>establish a presentation
+                    connection</a> with the presentation via <em>session</em>, using an
+                    implementation-specific mechanism.</li>
+                <li>If <em>session</em> is owned by a <a>presenting browsing
+                    context</a>, signal the <a>controlling browsing context</a>
+                    to <a title="close-algorithm">close the presentation session</a> that was used
+                    to <a>establish a presentation connection</a> with the
+                    presentation via <em>session</em>, using an implementation-specific
+                    mechanism.</li>
+              </ol>
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
+            Terminating a <code>PresentationSession</code>
+          </h4>
+          <p>
+            When the user agent is to <dfn data-lt="terminate-algorithm">terminate a
             presentation session</dfn> using <em>session</em>, it MUST run the
             following steps:
           </p>
           <ol>
-            <li>If <a>presentation session state</a> of <em>session</em> is not
-            <code>connected</code>, then abort these steps.
-            </li>
-            <li>Set <a>presentation session state</a> of <em>session</em> to
-            <code>disconnected</code>.
-            </li>
             <li>
               <a>Queue a task</a> to run the following steps in order:
               <ol>
+                <li>If the <a>presentation session state</a> of <em>session</em> is
+                  not <code>connected</code>, then abort these steps.</li>
+                <li>If <em>session</em> is owned by a <a>presenting browsing
+                    context</a>, close that context (equivalent
+                    to <code>window.close()</code>) and abort the following
+                    steps.</li>
                 <li>For each <em>known session</em> in the <a>set of
-                presentations</a>:
+                    presentations</a>:
                   <ol>
                     <li>If the <a>presentation session identifier</a> of
-                    <em>known session</em> and <em>session</em> are equal, run
-                    the following steps:
-                      <ol>
-                        <li>
-                          <a>Queue a task</a> to <a>fire</a> an event named
-                          <code>statechange</code> at <em>session</em>.
-                        </li>
-                      </ol>
+                    <em>known session</em> and <em>session</em> are equal, and
+                    the <a>presentation session state</a> of <em>known
+                    session</em> is <code>connected</code>, then run the
+                    following steps:
+                    <ol>
+                      <li>Set <a>presentation session state</a> of <em>known session</em> to
+                        <code>terminated</code>.</li>
+                      <li><a>Fire</a> an event named
+                        <code>statechange</code> at <em>known session</em>.</li>
+                    </ol>
                     </li>
+                  </ol>
+                </li>
+                <li>Close the <a>presenting browsing context</a>, using an
+                  implementation specific mechanism.</li>
+              </ol>
+            </li>
+          </ol>
+          <p>
+            The user agent hosting the <a>presenting browsing context</a> MAY
+            run the following steps when closing that context in response
+            to <code>terminate()</code>:
+          </p>
+          <ol>
+            <li><a>Queue a task</a> to run the following steps:
+              <ol>
+                <li>For each <em>session</em> that was connected to
+                  the <a>presenting browsing context</a>:
+                  <ol>
+                    <li>If the <a>presentation session state</a>
+                      of <em>session</em> is not <code>connected</code>, then
+                      abort the following steps.</li>
+                    <li>Let <em>controllingSession</em> be the <a>presentation
+                            session</a> in the <a>controlling browsing context</a> that
+                          was used to <a>establish a presentation session</a> via <em>session</em>.</li>
+                    <li>Set the <a>presentation session state</a>
+                      of <em>controllingSession</em> to <code>terminated</code>. </li>
+                    <li><a>Fire</a> an event named <code>statechange</code> at <em>controllingSession</em>.</li>
                   </ol>
                 </li>
               </ol>
             </li>
           </ol>
-          <div class="issue" data-number="35"></div>
         </section>
         <section>
           <h4>
@@ -1040,7 +1112,7 @@
                     <li>Set the <a>presentation session identifier</a> of <var>
                       S</var> to <var>I</var>, and set the <a>presentation
                       session state</a> of <var>S</var> to
-                      <code>disconnected</code>.
+                      <code>connected</code>.
                     </li>
                     <li>
                       <a>Queue a task</a> <em>C</em> to create a new
@@ -1208,13 +1280,6 @@
             MUST run the following steps:
           </p>
           <ol>
-            <li>If the <a>presentation session state</a> of <var>S</var> is
-            <code>connected</code>, then:
-              <ol>
-                <li>Abort all remaining steps.
-                </li>
-              </ol>
-            </li>
             <li>
               <a>Queue a task</a> <em>T</em> to connect the <a>presentation
               session</a> <em>S</em> to the <a>presenting browsing context</a>.
@@ -1579,7 +1644,7 @@
             <a>Promise</a> returned to subsequent calls to <code><a for=
             "Presentation">getSession</a>()</code> will resolve with a
             <a>presentation session</a> that has its <a>presentation session
-            state</a> set to <code>disconnected</code>.
+            state</a> set to <code>closed</code>.
           </div>
         </section>
         <section>
