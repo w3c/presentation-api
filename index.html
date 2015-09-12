@@ -447,6 +447,11 @@
 &lt;/script&gt;
 
 </pre>
+      </section>
+      <section>
+        <h3>
+          Presenting context: monitor available session(s) and say hello.
+        </h3>
         <pre class="example highlight">
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
@@ -460,9 +465,9 @@
         session.send("hello");
     }
   });
-  navigator.presentation.getSession().then(addSession);
-  navigator.presentation.onsessionavailable = function(evt) {
-    navigator.presentation.getSessions().then(function(sessions) {
+  navigator.presentation.receiver.getSession().then(addSession);
+  navigator.presentation.receiver.onsessionavailable = function(evt) {
+    navigator.presentation.receiver.getSessions().then(function(sessions) {
       addSession(sessions[sessions.length-1]);
     });
   };
@@ -1428,24 +1433,10 @@
       </section>
       <section>
         <h3>
-          Interface <a><code>Presentation</code></a>
+          Interface <a><code>PresentationReceiver</code></a>
         </h3>
         <pre class="idl">
-          partial interface Navigator {
-            [SameObject] readonly attribute Presentation presentation;
-          };
-
-</pre>
-        <p>
-          The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the <a>Presentation</a> interface.
-        </p>
-        <pre class="idl">
-          interface Presentation : EventTarget {
-            // This API used by controlling browsing context.
-            attribute PresentationRequest? defaultRequest;
-
-            // This API used by presenting browsing context.
+          interface PresentationReceiver : EventTarget {
             Promise&lt;PresentationSession&gt; getSession();
             Promise&lt;sequence&lt;PresentationSession&gt;&gt; getSessions();
             attribute EventHandler onsessionavailable;
@@ -1453,43 +1444,11 @@
 
 </pre>
         <p>
-          The <dfn for="Presentation"><code>defaultRequest</code></dfn> MUST
-          return the <a>default presentation request</a> if any, null
-          otherwise.
+          The <a>PresentationReceiver</a> object is available to a <a>presenting
+          browsing context</a> in order to access the <a data-lt=
+          "controlling browsing context">controlling browsing context</a> and
+          communicate with them.
         </p>
-        <section>
-          <h4>
-            Setting the default presentation request
-          </h4>
-          <p>
-            If set by the <a>controller</a>, the <a for=
-            "Presentation">defaultRequest</a> SHOULD be used by the UA as the
-            <dfn>default presentation request</dfn> for that controller. When
-            the UA wishes to initiate a <a>PresentationSession</a> on the
-            controller's behalf, it MUST <a>start a presentation session</a>
-            using the <a>default presentation request</a> for the
-            <a>controller</a> (as if the controller had called
-            <code>defaultRequest.start()</code>).
-          </p>
-          <p>
-            The user agent SHOULD initiate presentation using the <a>default
-            presentation request</a> only when the user has expressed an
-            intention to do so, for example by clicking a button in the
-            browser.
-          </p>
-          <div class="note">
-            Not all user agents may support initiation of a presentation
-            session outside of the content area. In this case setting
-            <code>defaultRequest</code> has no effect.
-          </div>
-          <div class="issue">
-            It should be clear that user-intiated presentation via the user
-            agent may have pre-selected the presentation display. In this case
-            step 6 of <a>start a presentation session</a> is optional. It may
-            be cleaner to define a separate set of steps for initiating a
-            default presentation.
-          </div>
-        </section>
         <section>
           <h4>
             Monitoring incoming presentation sessions in a presenting browsing
@@ -1534,7 +1493,7 @@
                 <li>
                   <a>Queue a task</a> to <a>fire</a> an event named
                   <code>sessionavailable</code> at <a for=
-                  "Navigator"><code>presentation</code></a>.
+                  "Navigator"><code>presentation.receiver</code></a>.
                 </li>
               </ol>
             </li>
@@ -1546,7 +1505,7 @@
             a presenting browsing context
           </h4>
           <p>
-            When the <code><dfn for="Presentation">getSession</dfn>()</code>
+            When the <code><dfn for="PresentationReceiver">getSession</dfn>()</code>
             method is called, the user agent MUST run the following steps:
           </p>
           <ol>
@@ -1577,7 +1536,7 @@
             <a>controlling browsing context</a>. If the first <a>controlling
             browsing context</a> disconnects after initial connection, then the
             <a>Promise</a> returned to subsequent calls to <code><a for=
-            "Presentation">getSession</a>()</code> will resolve with a
+            "PresentationReceiver">getSession</a>()</code> will resolve with a
             <a>presentation session</a> that has its <a>presentation session
             state</a> set to <code>disconnected</code>.
           </div>
@@ -1588,7 +1547,7 @@
             browsing context
           </h4>
           <p>
-            When the <code><dfn for="Presentation">getSessions</dfn>()</code>
+            When the <code><dfn for="PresentationReceiver">getSessions</dfn>()</code>
             method is called, the user agent MUST run the following steps:
           </p>
           <ol>
@@ -1621,10 +1580,10 @@
           <p>
             The following are the event handlers (and their corresponding event
             handler event types) that must be supported, as event handler IDL
-            attributes, by objects implementing the <a>Presentation</a>
+            attributes, by objects implementing the <a>PresentationReceiver</a>
             interface:
           </p>
-          <table dfn-for="Presentation">
+          <table dfn-for="PresentationReceiver">
             <thead>
               <tr>
                 <th>
@@ -1646,6 +1605,76 @@
               </tr>
             </tbody>
           </table>
+        </section>
+      </section>
+      <section>
+        <h3>
+          Interface <a><code>Presentation</code></a>
+        </h3>
+        <pre class="idl">
+          partial interface Navigator {
+            [SameObject] readonly attribute Presentation presentation;
+          };
+
+</pre>
+        <p>
+          The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
+          used to retrieve an instance of the <a>Presentation</a> interface.
+        </p>
+        <pre class="idl">
+          interface Presentation {
+            // This API used by the controlling browsing context.
+            attribute PresentationRequest? defaultRequest;
+
+            // This API is available on the presenting browsing context.
+            [SameObject]
+            readonly attribute PresentationReceiver? receiver;
+          };
+
+</pre>
+        <p>
+          The <dfn for="Presentation"><code>defaultRequest</code></dfn> MUST
+          return the <a>default presentation request</a> if any, <code>null</code>
+          otherwise.
+        </p>
+        <p>
+          The <dfn for="Presentation"><code>receiver</code></dfn> MUST return
+          <code>null</code> if the current <a>browsing context</a> is not a <a>
+          presenting browsing context</a> and return a <a>PresentationReceiver</a>
+          instance otherwise.
+        </p>
+        <section>
+          <h4>
+            Setting the default presentation request
+          </h4>
+          <p>
+            If set by the <a>controller</a>, the <a for=
+            "Presentation">defaultRequest</a> SHOULD be used by the UA as the
+            <dfn>default presentation request</dfn> for that controller. When
+            the UA wishes to initiate a <a>PresentationSession</a> on the
+            controller's behalf, it MUST <a>start a presentation session</a>
+            using the <a>default presentation request</a> for the
+            <a>controller</a> (as if the controller had called
+            <code>defaultRequest.start()</code>).
+          </p>
+          <p>
+            The user agent SHOULD initiate presentation using the <a>default
+            presentation request</a> only when the user has expressed an
+            intention to do so, for example by clicking a button in the
+            browser.
+          </p>
+          <div class="note">
+            Not all user agents may support initiation of a presentation
+            session outside of the content area. In this case setting
+            <code>defaultRequest</code> has no effect.
+          </div>
+          <div class="issue">
+            It should be clear that user-intiated presentation via the user
+            agent may have pre-selected the presentation display. In this case
+            step 6 of <a>start a presentation session</a> is optional. It may
+            be cleaner to define a separate set of steps for initiating a
+            default presentation.
+          </div>
         </section>
       </section>
     </section>
