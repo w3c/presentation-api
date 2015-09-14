@@ -188,18 +188,19 @@
       <p>
         At its core, this specification enables an exchange of messages between
         a page that acts as the <a>controller</a> and another page that
-        represents the <a data-lt="presenting browsing context">presentation</a>
-        shown in the <a>presentation display</a>. How the messages are
-        transmitted is left to the UA in order to allow the use of
-        <a>presentation display</a> devices that can be attached in a wide
-        variety of ways. For example, when a <a>presentation display</a> device
-        is attached using HDMI or Miracast, the same UA that acts as the
-        <a>controller</a> renders the <a data-lt=
-        "presenting browsing context">presentation</a>. Instead of displaying
-        the <a data-lt="presenting browsing context">presentation</a> in another
-        window on the same device, however, it can use whatever means the
-        operating system provides for using the external <a>presentation
-        displays</a>. In such a case, both the <a>controller</a> and <a data-lt=
+        represents the <a data-lt=
+        "presenting browsing context">presentation</a> shown in the
+        <a>presentation display</a>. How the messages are transmitted is left
+        to the UA in order to allow the use of <a>presentation display</a>
+        devices that can be attached in a wide variety of ways. For example,
+        when a <a>presentation display</a> device is attached using HDMI or
+        Miracast, the same UA that acts as the <a>controller</a> renders the
+        <a data-lt="presenting browsing context">presentation</a>. Instead of
+        displaying the <a data-lt=
+        "presenting browsing context">presentation</a> in another window on the
+        same device, however, it can use whatever means the operating system
+        provides for using the external <a>presentation displays</a>. In such a
+        case, both the <a>controller</a> and <a data-lt=
         "presenting browsing context">presentation</a> run on the same UA and
         the operating system is used to route the <a>presentation display</a>
         output to the <a>presentation display</a>. This is commonly referred to
@@ -213,11 +214,12 @@
         need to render the <a data-lt=
         "presenting browsing context">presentation</a>. In this case, the UA
         acts as a proxy that requests the <a>presentation display</a> to show
-        and render the <a data-lt="presenting browsing context">presentation</a>
-        itself. This is commonly referred to as the <b id="2-ua">2-UA</b> case.
-        This way of attaching to displays could be enhanced in the future by
-        defining a standard protocol for delivering these types of messages
-        that display devices could choose to implement.
+        and render the <a data-lt=
+        "presenting browsing context">presentation</a> itself. This is commonly
+        referred to as the <b id="2-ua">2-UA</b> case. This way of attaching to
+        displays could be enhanced in the future by defining a standard
+        protocol for delivering these types of messages that display devices
+        could choose to implement.
       </p>
       <p>
         The API defined here is intended to be used with UAs that attach to
@@ -585,14 +587,15 @@
           <p>
             When the <code><dfn>send</dfn>()</code> method is called on a
             <a>PresentationSession</a> object with a <code>message</code>, the
-            user agent MUST run the algorithm to <a data-lt="algorithm-send">send
-            a message through a <code>PresentationSession</code></a>.
+            user agent MUST run the algorithm to <a data-lt=
+            "algorithm-send">send a message through a
+            <code>PresentationSession</code></a>.
           </p>
           <p>
             When the <code><dfn>close</dfn>()</code> method is called on a
             <a>PresentationSession</a>, the user agent MUST run the algorithm
-            to <a data-lt="close-algorithm">close a presentation session</a> with
-            <a>PresentationSession</a>.
+            to <a data-lt="close-algorithm">close a presentation session</a>
+            with <a>PresentationSession</a>.
           </p>
         </div>
         <section>
@@ -620,8 +623,8 @@
             run the following steps:
           </p>
           <ol link-for="PresentationSession">
-            <li>If the <a>state</a> property of <a>PresentationSession</a> is not
-            <code>"connected"</code>, throw an
+            <li>If the <a>state</a> property of <a>PresentationSession</a> is
+            not <code>"connected"</code>, throw an
             <code>InvalidStateError</code> exception.
             </li>
             <li>Let <a>presentation message type</a> <em>messageType</em> be
@@ -662,8 +665,8 @@
             <a>presentation message type</a>, it MUST run the following steps:
           </p>
           <ol link-for="PresentationSession">
-            <li>If the <a>state</a> property of <a>PresentationSession</a> is not
-            <code>"connected"</code>, abort these steps.
+            <li>If the <a>state</a> property of <a>PresentationSession</a> is
+            not <code>"connected"</code>, abort these steps.
             </li>
             <li>Let <em>event</em> be a newly created <a>trusted event</a> that
             uses the <code>MessageEvent</code> interface, with the event type
@@ -708,26 +711,34 @@
             following:
           </p>
           <ol>
-            <li> <a>Queue a task</a> to run the following steps in order:
+            <li>
+              <a>Queue a task</a> to run the following steps in order:
               <ol>
-                <li>If the <a>presentation session state</a> of <em>session</em> is
-                  not <code>connected</code>, then abort these steps.
-                <li>Set <a>presentation session state</a> of <em>session</em> to
-                  <code>closed</code>.</li>
-                <li><a>Fire</a> an event named
-                  <code>statechange</code> at <em>session</em>.</li>
+                <li>If the <a>presentation session state</a> of
+                <em>session</em> is not <code>connected</code>, then abort
+                these steps.
+                </li>
+                <li>Set <a>presentation session state</a> of <em>session</em>
+                to <code>closed</code>.
+                </li>
+                <li>
+                  <a>Fire</a> an event named <code>statechange</code> at
+                  <em>session</em>.
+                </li>
                 <li>If <em>session</em> is owned by a <a>controlling browsing
-                    context</a>, signal the <a>presenting browsing context</a>
-                    to <a title="close-algorithm">close the presentation session</a> that was created when
-                    <em>session</em> was used to <a>establish a presentation
-                    connection</a> with the presentation via <em>session</em>, using an
-                    implementation-specific mechanism.</li>
+                context</a>, signal the <a>presenting browsing context</a> to
+                <a title="close-algorithm">close the presentation session</a>
+                that was created when <em>session</em> was used to <a>establish
+                a presentation connection</a> with the presentation via
+                <em>session</em>, using an implementation-specific mechanism.
+                </li>
                 <li>If <em>session</em> is owned by a <a>presenting browsing
-                    context</a>, signal the <a>controlling browsing context</a>
-                    to <a title="close-algorithm">close the presentation session</a> that was used
-                    to <a>establish a presentation connection</a> with the
-                    presentation via <em>session</em>, using an implementation-specific
-                    mechanism.</li>
+                context</a>, signal the <a>controlling browsing context</a> to
+                <a title="close-algorithm">close the presentation session</a>
+                that was used to <a>establish a presentation connection</a>
+                with the presentation via <em>session</em>, using an
+                implementation-specific mechanism.
+                </li>
               </ol>
             </li>
           </ol>
@@ -737,62 +748,76 @@
             Terminating a <code>PresentationSession</code>
           </h4>
           <p>
-            When the user agent is to <dfn data-lt="terminate-algorithm">terminate a
-            presentation session</dfn> using <em>session</em>, it MUST run the
-            following steps:
+            When the user agent is to <dfn data-lt=
+            "terminate-algorithm">terminate a presentation session</dfn> using
+            <em>session</em>, it MUST run the following steps:
           </p>
           <ol>
             <li>
               <a>Queue a task</a> to run the following steps in order:
               <ol>
-                <li>If the <a>presentation session state</a> of <em>session</em> is
-                  not <code>connected</code>, then abort these steps.</li>
+                <li>If the <a>presentation session state</a> of
+                <em>session</em> is not <code>connected</code>, then abort
+                these steps.
+                </li>
                 <li>If <em>session</em> is owned by a <a>presenting browsing
-                    context</a>, close that context (equivalent
-                    to <code>window.close()</code>) and abort the following
-                    steps.</li>
+                context</a>, close that context (equivalent to
+                <code>window.close()</code>) and abort the following steps.
+                </li>
                 <li>For each <em>known session</em> in the <a>set of
-                    presentations</a>:
+                presentations</a>:
                   <ol>
                     <li>If the <a>presentation session identifier</a> of
                     <em>known session</em> and <em>session</em> are equal, and
                     the <a>presentation session state</a> of <em>known
                     session</em> is <code>connected</code>, then run the
                     following steps:
-                    <ol>
-                      <li>Set <a>presentation session state</a> of <em>known session</em> to
-                        <code>terminated</code>.</li>
-                      <li><a>Fire</a> an event named
-                        <code>statechange</code> at <em>known session</em>.</li>
-                    </ol>
+                      <ol>
+                        <li>Set <a>presentation session state</a> of <em>known
+                        session</em> to <code>terminated</code>.
+                        </li>
+                        <li>
+                          <a>Fire</a> an event named <code>statechange</code>
+                          at <em>known session</em>.
+                        </li>
+                      </ol>
                     </li>
                   </ol>
                 </li>
                 <li>Close the <a>presenting browsing context</a>, using an
-                  implementation specific mechanism.</li>
+                implementation specific mechanism.
+                </li>
               </ol>
             </li>
           </ol>
           <p>
             The user agent hosting the <a>presenting browsing context</a> MAY
-            run the following steps when closing that context in response
-            to <code>terminate()</code>:
+            run the following steps when closing that context in response to
+            <code>terminate()</code> or <code>window.close()</code>:
           </p>
           <ol>
-            <li><a>Queue a task</a> to run the following steps:
+            <li>
+              <a>Queue a task</a> to run the following steps:
               <ol>
-                <li>For each <em>session</em> that was connected to
-                  the <a>presenting browsing context</a>:
+                <li>For each <em>session</em> that was connected to the
+                <a>presenting browsing context</a>:
                   <ol>
-                    <li>If the <a>presentation session state</a>
-                      of <em>session</em> is not <code>connected</code>, then
-                      abort the following steps.</li>
+                    <li>If the <a>presentation session state</a> of
+                    <em>session</em> is not <code>connected</code>, then abort
+                    the following steps.
+                    </li>
                     <li>Let <em>controllingSession</em> be the <a>presentation
-                            session</a> in the <a>controlling browsing context</a> that
-                          was used to <a>establish a presentation session</a> via <em>session</em>.</li>
-                    <li>Set the <a>presentation session state</a>
-                      of <em>controllingSession</em> to <code>terminated</code>. </li>
-                    <li><a>Fire</a> an event named <code>statechange</code> at <em>controllingSession</em>.</li>
+                    session</a> in the <a>controlling browsing context</a> that
+                    was used to <a>establish a presentation session</a> via
+                    <em>session</em>.
+                    </li>
+                    <li>Set the <a>presentation session state</a> of
+                    <em>controllingSession</em> to <code>terminated</code>.
+                    </li>
+                    <li>
+                      <a>Fire</a> an event named <code>statechange</code> at
+                      <em>controllingSession</em>.
+                    </li>
                   </ol>
                 </li>
               </ol>
@@ -911,9 +936,9 @@
             support continuous availability monitoring; for example, because of
             platform or power consumption restrictions. In this case the
             <a>Promise</a> returned by <code>getAvailability()</code> MUST be
-            <a data-lt="reject">rejected</a> and the algorithm to <a>monitor the
-            list of available presentation displays</a> will only run as part
-            of the <a for="PresentationRequest" data-lt="start">start a
+            <a data-lt="reject">rejected</a> and the algorithm to <a>monitor
+            the list of available presentation displays</a> will only run as
+            part of the <a for="PresentationRequest" data-lt="start">start a
             presentation session</a> algorithm.
           </p>
           <p>
@@ -945,10 +970,10 @@
           </h4>
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
-            pending request to <a for="PresentationRequest" data-lt="start">start
-            a presentation session</a>, the user agent MUST <dfn>monitor the
-            list of available presentation displays</dfn> by running the
-            following steps.
+            pending request to <a for="PresentationRequest" data-lt=
+            "start">start a presentation session</a>, the user agent MUST
+            <dfn>monitor the list of available presentation displays</dfn> by
+            running the following steps.
           </p>
           <ol link-for="PresentationAvailability">
             <li>
@@ -958,8 +983,8 @@
             </li>
             <li>Wait for the completion of that task.
             </li>
-            <li>For each member <em>(A, availabilityUrl)</em> of the <a>set
-            of availability objects</a>:
+            <li>For each member <em>(A, availabilityUrl)</em> of the <a>set of
+            availability objects</a>:
               <ol>
                 <li>Set <em>previousAvailability</em> to the value of
                 <em>A</em>'s <a>value</a> property.
@@ -978,8 +1003,8 @@
                     <em>newAvailability</em>.
                     </li>
                     <li>
-                      <a data-lt='firing a simple event'>Fire a simple event</a>
-                      named <code>change</code> at <em>A</em>.
+                      <a data-lt='firing a simple event'>Fire a simple
+                      event</a> named <code>change</code> at <em>A</em>.
                     </li>
                   </ol>
                 </li>
@@ -996,7 +1021,8 @@
           </p>
           <ol>
             <li>Find and remove any entry <em>(A, availabilityUrl)</em> in the
-            <a>set of availability objects</a> for the newly deceased <em>A</em>.
+            <a>set of availability objects</a> for the newly deceased
+            <em>A</em>.
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
             there is no pending request to <a for="PresentationRequest"
@@ -1193,8 +1219,8 @@
           <p>
             When the <code><dfn for=
             "PresentationRequest">reconnect</dfn>(presentationId)</code> method
-            is called, the user agent MUST run the following steps to <dfn>reconnect
-            to a presentation session</dfn>:
+            is called, the user agent MUST run the following steps to
+            <dfn>reconnect to a presentation session</dfn>:
           </p>
           <dl>
             <dt>
@@ -1369,11 +1395,11 @@
             because the user has disabled this feature), then:
               <ol>
                 <li>
-                  <a>Resolve</a> <em>P</em> with a new <code>PresentationAvailability</code>
-                  object with its <code>value</code> property set to <code>false</code>.
+                  <a>Resolve</a> <em>P</em> with a new
+                  <code>PresentationAvailability</code> object with its
+                  <code>value</code> property set to <code>false</code>.
                 </li>
-                <li>
-                  Abort all the remaining steps.
+                <li>Abort all the remaining steps.
                 </li>
               </ol>
             </li>
@@ -1401,7 +1427,8 @@
             <li>Run the algorithm to <a>monitor the list of available
             presentation displays</a>.
             </li>
-            <li><a>Resolve</a> <em>P</em> with <em>A</em>.
+            <li>
+              <a>Resolve</a> <em>P</em> with <em>A</em>.
             </li>
           </ol>
         </section>
@@ -1481,8 +1508,8 @@
             <a><code>PresentationSession</code></a> object that was created.
             The event is fired for all sessions that are created for the
             <a>controller</a>, either by the <a>controller</a> calling
-            <code>start()</code> or <code>reconnect()</code>, or by the UA creating
-            a session on the controller's behalf via <a for=
+            <code>start()</code> or <code>reconnect()</code>, or by the UA
+            creating a session on the controller's behalf via <a for=
             "Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
@@ -1504,8 +1531,8 @@
 
 </pre>
         <p>
-          The <a>PresentationReceiver</a> object is available to a <a>presenting
-          browsing context</a> in order to access the <a data-lt=
+          The <a>PresentationReceiver</a> object is available to a
+          <a>presenting browsing context</a> in order to access the <a data-lt=
           "controlling browsing context">controlling browsing context</a> and
           communicate with them.
         </p>
@@ -1565,8 +1592,9 @@
             a presenting browsing context
           </h4>
           <p>
-            When the <code><dfn for="PresentationReceiver">getSession</dfn>()</code>
-            method is called, the user agent MUST run the following steps:
+            When the <code><dfn for=
+            "PresentationReceiver">getSession</dfn>()</code> method is called,
+            the user agent MUST run the following steps:
           </p>
           <ol>
             <li>Let <var>P</var> be a new <a>Promise</a>.
@@ -1607,8 +1635,9 @@
             browsing context
           </h4>
           <p>
-            When the <code><dfn for="PresentationReceiver">getSessions</dfn>()</code>
-            method is called, the user agent MUST run the following steps:
+            When the <code><dfn for=
+            "PresentationReceiver">getSessions</dfn>()</code> method is called,
+            the user agent MUST run the following steps:
           </p>
           <ol>
             <li>Let <var>P</var> be a new <a>Promise</a>.
@@ -1694,14 +1723,14 @@
 </pre>
         <p>
           The <dfn for="Presentation"><code>defaultRequest</code></dfn> MUST
-          return the <a>default presentation request</a> if any, <code>null</code>
-          otherwise.
+          return the <a>default presentation request</a> if any,
+          <code>null</code> otherwise.
         </p>
         <p>
           The <dfn for="Presentation"><code>receiver</code></dfn> MUST return
-          <code>null</code> if the current <a>browsing context</a> is not a <a>
-          presenting browsing context</a> and return a <a>PresentationReceiver</a>
-          instance otherwise.
+          <code>null</code> if the current <a>browsing context</a> is not a
+          <a>presenting browsing context</a> and return a
+          <a>PresentationReceiver</a> instance otherwise.
         </p>
         <section>
           <h4>
