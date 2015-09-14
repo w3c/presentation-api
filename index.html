@@ -1033,55 +1033,50 @@
               presentation display.
               <ol>
                 <li>If <em>T</em> completes with the user <em>granting
-                permission</em> to use a display, run the following steps:
+                permission</em> to use a display, <a>queue a task</a>
+                <em>C</em> to create a new <a>browsing context</a> on the
+                user-selected <a>presentation display</a> and <a>navigate</a>
+                to <code>presentationUrl</code> in it.
                   <ol>
-                    <li>Let <var>I</var> be a new <a>valid presentation session
-                    identifier</a> unique among all <a>presentation session
-                    identifiers</a> for known sessions in the <a>set of
-                    presentations</a>.
-                    </li>
-                    <li>Create a new <a>PresentationSession</a> <em>S</em>.
-                    </li>
-                    <li>Set the <a>presentation session identifier</a> of <var>
-                      S</var> to <var>I</var>, and set the <a>presentation
-                      session state</a> of <var>S</var> to
-                      <code>disconnected</code>.
-                    </li>
-                    <li>
-                      <a>Queue a task</a> <em>C</em> to create a new
-                      <a>browsing context</a> on the user-selected
-                      <a>presentation display</a> and <a>navigate</a> to
-                      <code>presentationUrl</code> in it.
+                    <li>If <em>C</em> completes successfully, run the following
+                    steps:
                       <ol>
-                        <li>If <em>C</em> completes successfully, run the
-                        following steps:
-                          <ol>
-                            <li>Add the tuple {<em>presentationUrl</em>,
-                            <em>S.id</em>, <em>S</em>} to the <a>set of
-                            presentations</a>.
-                            </li>
-                            <li>
-                              <a>Resolve</a> <em>P</em> with <em>S</em>.
-                            </li>
-                            <li>
-                              <a>Queue a task</a> to <a>fire</a> an event named
-                              <code>sessionconnect</code> at
-                              <code>presentationRequest</code> with <em>S</em>
-                              as its <code>session</code> attribute.
-                            </li>
-                            <li>
-                              <a>Establish a presentation connection</a> with
-                              <em>S</em>.
-                            </li>
-                          </ol>
+                        <li>Let <var>I</var> be a new <a>valid presentation
+                        session identifier</a> unique among all <a>presentation
+                        session identifiers</a> for known sessions in the
+                        <a>set of presentations</a>.
                         </li>
-                        <li>If <em>C</em> fails, run the following steps:
-                          <ol>
-                            <li>
-                              <a>Reject</a> P with a <a>DOMException</a> named
-                              <code>"OperationError"</code>.
-                            </li>
-                          </ol>
+                        <li>Create a new <a>PresentationSession</a> <em>S</em>.
+                        </li>
+                        <li>Set the <a>presentation session identifier</a> of
+                        <var>S</var> to <var>I</var>, and set the
+                        <a>presentation session state</a> of <var>S</var> to
+                        <code>disconnected</code>.
+                        </li>
+                        <li>Add the tuple {<em>presentationUrl</em>,
+                        <em>S.id</em>, <em>S</em>} to the <a>set of
+                        presentations</a>.
+                        </li>
+                        <li>
+                          <a>Resolve</a> <em>P</em> with <em>S</em>.
+                        </li>
+                        <li>
+                          <a>Queue a task</a> to <a>fire</a> an event named
+                          <code>sessionconnect</code> at
+                          <code>presentationRequest</code> with <em>S</em> as
+                          its <code>session</code> attribute.
+                        </li>
+                        <li>
+                          <a>Establish a presentation connection</a> with
+                          <em>S</em>.
+                        </li>
+                      </ol>
+                    </li>
+                    <li>If <em>C</em> fails, run the following steps:
+                      <ol>
+                        <li>
+                          <a>Reject</a> P with a <a>DOMException</a> named
+                          <code>"OperationError"</code>.
                         </li>
                       </ol>
                     </li>
