@@ -189,19 +189,19 @@
         At its core, this specification enables an exchange of messages between
         a page that acts as the <a>controller</a> and another page that
         represents the <a data-lt=
-        "presenting browsing context">presentation</a> shown in the
+        "receiving browsing context">presentation</a> shown in the
         <a>presentation display</a>. How the messages are transmitted is left
         to the UA in order to allow the use of <a>presentation display</a>
         devices that can be attached in a wide variety of ways. For example,
         when a <a>presentation display</a> device is attached using HDMI or
         Miracast, the same UA that acts as the <a>controller</a> renders the
-        <a data-lt="presenting browsing context">presentation</a>. Instead of
+        <a data-lt="receiving browsing context">presentation</a>. Instead of
         displaying the <a data-lt=
-        "presenting browsing context">presentation</a> in another window on the
+        "receiving browsing context">presentation</a> in another window on the
         same device, however, it can use whatever means the operating system
         provides for using the external <a>presentation displays</a>. In such a
         case, both the <a>controller</a> and <a data-lt=
-        "presenting browsing context">presentation</a> run on the same UA and
+        "receiving browsing context">presentation</a> run on the same UA and
         the operating system is used to route the <a>presentation display</a>
         output to the <a>presentation display</a>. This is commonly referred to
         as the <b id="1-ua">1-UA</b> case. This specification imposes no
@@ -212,10 +212,10 @@
         If the <a>presentation display</a> is able to render HTML documents and
         communicate with the <a>controller</a>, the <a>controller</a> does not
         need to render the <a data-lt=
-        "presenting browsing context">presentation</a>. In this case, the UA
+        "receiving browsing context">presentation</a>. In this case, the UA
         acts as a proxy that requests the <a>presentation display</a> to show
         and render the <a data-lt=
-        "presenting browsing context">presentation</a> itself. This is commonly
+        "receiving browsing context">presentation</a> itself. This is commonly
         referred to as the <b id="2-ua">2-UA</b> case. This way of attaching to
         displays could be enhanced in the future by defining a standard
         protocol for delivering these types of messages that display devices
@@ -461,7 +461,7 @@
       </section>
       <section>
         <h3>
-          Presenting context: monitor available session(s) and say hello.
+          Presentation: monitor available session(s) and say hello.
         </h3>
         <pre class="example highlight">
 &lt;!-- presentation.html --&gt;
@@ -503,7 +503,7 @@
         <p>
           A <dfn lt="presentation session|presentation sessions">presentation
           session</dfn> is an object relating a <a>controlling browsing
-          context</a> to its <a>presenting browsing context</a> and enables
+          context</a> to its <a>receiving browsing context</a> and enables
           two-way-messaging between them. Each <a>presentation session</a> has
           a <dfn>presentation session state</dfn>, a <dfn lt=
           "presentation session identifier|presentation session identifiers">presentation
@@ -525,11 +525,14 @@
           <a>presentation session</a> via a <code>sessionconnect</code> event.
         </p>
         <p>
-          The <dfn>presenting browsing context</dfn> (or <dfn data-lt=
-          "presentation context">presentation</dfn> for short) is the browsing
-          context responsible for rendering to a <a>presentation display</a>. A
-          <a>presenting browsing context</a> can reside in the same user agent
-          as the <a>controlling browsing context</a> or a different one.
+          The <dfn data-lt=
+          "receiving browsing context|receiving browsing contexts">receiving
+          browsing context</dfn> (or <a data-lt=
+          "receiving browsing context">presentation</a> for short) is the
+          browsing context responsible for rendering to a <a>presentation
+          display</a>. A <a>receiving browsing context</a> can reside in the
+          same user agent as the <a>controlling browsing context</a> or a
+          different one.
         </p>
         <p>
           The <dfn>set of presentations</dfn>, initially empty, contains the
@@ -604,7 +607,7 @@
           </h4>
           <div class="note">
             No specific transport for the connection between the <a>controlling
-            browsing context</a> and the <a>presenting browsing context</a> is
+            browsing context</a> and the <a>receiving browsing context</a> is
             mandated, except that for multiple calls to <code><a for=
             "PresentationSession">send</a>()</code> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
@@ -637,13 +640,12 @@
               <ol>
                 <li>Let the <a>destination browsing context</a> be the
                 <a>controlling browsing context</a> if
-                <code><a>send</a>()</code> is called in the <a>presenting
+                <code><a>send</a>()</code> is called in the <a>receiving
                 browsing context</a>.
                 </li>
                 <li>Let <a>destination browsing context</a> be the
-                <a>presenting browsing context</a> if
-                <code><a>send</a>()</code> is called from the <a>controlling
-                browsing context</a>.
+                <a>receiving browsing context</a> if <code><a>send</a>()</code>
+                is called from the <a>controlling browsing context</a>.
                 </li>
               </ol>
             </li>
@@ -726,13 +728,13 @@
                   <em>session</em>.
                 </li>
                 <li>If <em>session</em> is owned by a <a>controlling browsing
-                context</a>, signal the <a>presenting browsing context</a> to
+                context</a>, signal the <a>receiving browsing context</a> to
                 <a title="close-algorithm">close the presentation session</a>
                 that was created when <em>session</em> was used to <a>establish
                 a presentation connection</a> with the presentation via
                 <em>session</em>, using an implementation-specific mechanism.
                 </li>
-                <li>If <em>session</em> is owned by a <a>presenting browsing
+                <li>If <em>session</em> is owned by a <a>receiving browsing
                 context</a>, signal the <a>controlling browsing context</a> to
                 <a title="close-algorithm">close the presentation session</a>
                 that was used to <a>establish a presentation connection</a>
@@ -760,7 +762,7 @@
                 <em>session</em> is not <code>connected</code>, then abort
                 these steps.
                 </li>
-                <li>If <em>session</em> is owned by a <a>presenting browsing
+                <li>If <em>session</em> is owned by a <a>receiving browsing
                 context</a>, close that context (equivalent to
                 <code>window.close()</code>) and abort the following steps.
                 </li>
@@ -784,14 +786,14 @@
                     </li>
                   </ol>
                 </li>
-                <li>Close the <a>presenting browsing context</a>, using an
+                <li>Close the <a>receiving browsing context</a>, using an
                 implementation specific mechanism.
                 </li>
               </ol>
             </li>
           </ol>
           <p>
-            The user agent hosting the <a>presenting browsing context</a> MAY
+            The user agent hosting the <a>receiving browsing context</a> MAY
             run the following steps when closing that context in response to
             <code>terminate()</code> or <code>window.close()</code>:
           </p>
@@ -800,7 +802,7 @@
               <a>Queue a task</a> to run the following steps:
               <ol>
                 <li>For each <em>session</em> that was connected to the
-                <a>presenting browsing context</a>:
+                <a>receiving browsing context</a>:
                   <ol>
                     <li>If the <a>presentation session state</a> of
                     <em>session</em> is not <code>connected</code>, then abort
@@ -1308,7 +1310,7 @@
           <ol>
             <li>
               <a>Queue a task</a> <em>T</em> to connect the <a>presentation
-              session</a> <em>S</em> to the <a>presenting browsing context</a>.
+              session</a> <em>S</em> to the <a>receiving browsing context</a>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
@@ -1434,11 +1436,11 @@
         </section>
         <section>
           <h4>
-            Establishing a presentation connection in a presenting browsing
+            Establishing a presentation connection in a receiving browsing
             context
           </h4>
           <p>
-            When a new <a>presenting browsing context</a> has been created and
+            When a new <a>receiving browsing context</a> has been created and
             navigated to the <code>presentationUrl</code> on a user-selected
             <a>presentation display</a>, the user agent MUST run the following
             steps:
@@ -1532,18 +1534,18 @@
 </pre>
         <p>
           The <a>PresentationReceiver</a> object is available to a
-          <a>presenting browsing context</a> in order to access the <a data-lt=
+          <a>receiving browsing context</a> in order to access the <a data-lt=
           "controlling browsing context">controlling browsing context</a> and
           communicate with them.
         </p>
         <section>
           <h4>
-            Monitoring incoming presentation sessions in a presenting browsing
+            Monitoring incoming presentation sessions in a receiving browsing
             context
           </h4>
           <p>
             When the user agent is to start <dfn>monitoring incoming
-            presentation sessions</dfn> in a <a>presenting browsing context</a>
+            presentation sessions</dfn> in a <a>receiving browsing context</a>
             from <a>controlling browsing contexts</a>, it MUST run the
             following steps:
           </p>
@@ -1566,8 +1568,8 @@
                 <li>Set the <a>presentation session identifier</a> of
                 <var>S</var> to <var>I</var>.
                 </li>
-                <li>Establish the connection between the controlling and
-                presenting browsing contexts using an implementation specific
+                <li>Establish the connection between the controlling and <a>
+                receiving browsing contexts</a> using an implementation specific
                 mechanism.
                 </li>
                 <li>Set the <a>presentation session state</a> of <var>S</var>
@@ -1589,7 +1591,7 @@
         <section>
           <h4>
             Getting the first connected presentation session on the startup of
-            a presenting browsing context
+            a receiving browsing context
           </h4>
           <p>
             When the <code><dfn for=
@@ -1631,7 +1633,7 @@
         </section>
         <section>
           <h4>
-            Getting all connected presentation sessions in a presenting
+            Getting all connected presentation sessions in a receiving
             browsing context
           </h4>
           <p>
@@ -1715,7 +1717,7 @@
             // This API used by the controlling browsing context.
             attribute PresentationRequest? defaultRequest;
 
-            // This API is available on the presenting browsing context.
+            // This API is available on the receiving browsing context.
             [SameObject]
             readonly attribute PresentationReceiver? receiver;
           };
@@ -1729,7 +1731,7 @@
         <p>
           The <dfn for="Presentation"><code>receiver</code></dfn> MUST return
           <code>null</code> if the current <a>browsing context</a> is not a
-          <a>presenting browsing context</a> and return a
+          <a>receiving browsing context</a> and return a
           <a>PresentationReceiver</a> instance otherwise.
         </p>
         <section>
@@ -1840,8 +1842,8 @@
       <p>
         The content displayed on the presentation is different from the
         controller. In particular, if the user is logged in in both contexts,
-        then logs out of the controlling browsing context, she will not be
-        automatically logged out from the presenting browsing context.
+        then logs out of the <a>controlling browsing context</a>, she will not
+        be automatically logged out from the <a>receiving browsing context</a>.
         Applications that use authentication should pay extra care when
         communicating between devices.
       </p>
@@ -1859,7 +1861,7 @@
       </h3>
       <p>
         This spec will not mandate communication protocols between the
-        <a>controlling browsing context</a> and the <a>presenting browsing
+        <a>controlling browsing context</a> and the <a>receiving browsing
         context</a>, but it should set some guarantees of message
         confidentiality and authenticity between corresponding <a>presentation
         sessions</a>.
