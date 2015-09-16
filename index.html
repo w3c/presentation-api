@@ -729,14 +729,14 @@
                 </li>
                 <li>If <em>session</em> is owned by a <a>controlling browsing
                 context</a>, signal the <a>receiving browsing context</a> to
-                <a title="close-algorithm">close the presentation session</a>
+                <a data-lt="close-algorithm">close the presentation session</a>
                 that was created when <em>session</em> was used to <a>establish
                 a presentation connection</a> with the presentation via
                 <em>session</em>, using an implementation-specific mechanism.
                 </li>
                 <li>If <em>session</em> is owned by a <a>receiving browsing
                 context</a>, signal the <a>controlling browsing context</a> to
-                <a title="close-algorithm">close the presentation session</a>
+                <a data-lt="close-algorithm">close the presentation session</a>
                 that was used to <a>establish a presentation connection</a>
                 with the presentation via <em>session</em>, using an
                 implementation-specific mechanism.
@@ -810,7 +810,7 @@
                     </li>
                     <li>Let <em>controllingSession</em> be the <a>presentation
                     session</a> in the <a>controlling browsing context</a> that
-                    was used to <a>establish a presentation session</a> via
+                    was used to <a>establish a presentation connection</a> via
                     <em>session</em>.
                     </li>
                     <li>Set the <a>presentation session state</a> of
