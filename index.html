@@ -475,7 +475,7 @@
       if (evt.data == "say hello")
         session.send("hello");
     }
-  });
+  };
   navigator.presentation.receiver.getSession().then(addSession);
   navigator.presentation.receiver.onsessionavailable = function(evt) {
     navigator.presentation.receiver.getSessions().then(function(sessions) {
