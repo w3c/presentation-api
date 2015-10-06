@@ -363,30 +363,30 @@
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
-  // Start new connection.
+  // Start new presentation.
   request.start()
-    // the new started connection will be passed to setConnection on success
+    // The connection to the presentation will be passed to setConnection on success.
     .then(setConnection)
-    // user cancels the selection dialog or an error is occurred
+    // User canceled the selection dialog or an error occurred.
     .catch(endConnection);
 &lt;/script&gt;
 </pre>
       </section>
       <section>
         <h3>
-          Reconnect to a presentation connection example
+          Reconnect to a presentation example
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
   // read presId from localStorage if exists
   var presId = localStorage &amp;&amp; localStorage["presId"] || null;
-  // presId is mandatory when reconnecting to a connection.
+  // presId is mandatory when reconnecting to a presentation.
   if (presId) {
     request.reconnect(presId)
-      // The reconnected connection will be passed to setConnection on success
+      // The resumed connection to the presentation will be passed to setConnection on success.
       .then(setConnection)
-      // no connection found for presUrl and presId or an error is occurred
+      // No connection found for presUrl and presId, or an error occurred.
       .catch(endConnection);
   }
 &lt;/script&gt;
@@ -394,13 +394,13 @@
       </section>
       <section>
         <h3>
-          Handling an event for a UA initiated presentation connection example
+          Handling an event for a UA initiated presentation example
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
 &lt;head&gt;
   &lt;!-- Setting presentation.defaultRequest allows the page to specify the
-       PresentationRequest to use when the UA initiates a presentation connection. --&gt;
+       PresentationRequest to use when the UA initiates a presentation. --&gt;
 &lt;/head&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
@@ -506,11 +506,11 @@
           context</a> to its <a>receiving browsing context</a> and enables
           two-way-messaging between them. Each <a>presentation connection</a> has
           a <dfn>presentation connection state</dfn>, a <dfn lt=
-          "presentation connection identifier|presentation connection identifiers">presentation
-          connection identifier</dfn> to distinguish it from other <a>presentation
-          connections</a>, and a <dfn>presentation connection URL</dfn> that is a
-          <a>URL</a> used to create or resume the <a>presentation connection</a>.
-          A <dfn>valid presentation connection identifier</dfn> consists of
+          "presentation identifier|presentation identifiers">presentation
+          identifier</dfn> to distinguish it from other <a>presentations</a>,
+          and a <dfn>presentation URL</dfn> that is a
+          <a>URL</a> used to create or resume the <a>presentation</a>.
+          A <dfn>valid presentation identifier</dfn> consists of
           alphanumeric ASCII characters only, is at least 16 characters long,
           and is unique within the <a>set of presentations</a>.
         </p>
@@ -518,8 +518,7 @@
           A <dfn lt=
           "controlling browsing context|controlling browsing contexts">controlling
           browsing context</dfn> (or <dfn>controller</dfn> for short) is a
-          <a>browsing context</a> that has connected to a <a>presentation
-          connection</a> by calling <code><a for=
+          <a>browsing context</a> that has connected to a <a>presentation</a> by calling <code><a for=
           "PresentationRequest">start</a>()</code> or <code><a for=
           "PresentationRequest">reconnect</a>()</code>, or received a
           <a>presentation connection</a> via a <code>connectionavailable</code> event.
@@ -536,14 +535,14 @@
         </p>
         <p>
           The <dfn>set of presentations</dfn>, initially empty, contains the
-          <a>presentation connection</a>s created by the <a>controlling browsing
+          <a>presentation</a>s created by the <a>controlling browsing
           contexts</a> for the user agent (or a specific user profile within
           the user agent). The <a>set of presentations</a> is represented by a
           list of tuples, where each tuple consists of a <a>presentation
-          connection URL</a>, a <a>presentation connection identifier</a>, and the
+          connection URL</a>, a <a>presentation identifier</a>, and the
           <a>presentation connection</a> itself. The <a>presentation connection
-          URL</a> and <a>presentation connection identifier</a> uniquely identify
-          the <a>presentation connection</a>.
+          URL</a> and <a>presentation identifier</a> uniquely identify
+          the <a>presentation</a>.
         </p>
       </section>
       <section>
@@ -578,7 +577,7 @@
         <div dfn-for="PresentationConnection" link-for="PresentationConnection">
           <p>
             The <dfn><code>id</code></dfn> attribute specifies the
-            <a>presentation connection</a>'s <a>presentation connection
+            <a>presentation connection</a>'s <a>presentation
             identifier</a>.
           </p>
           <p>
@@ -747,11 +746,11 @@
         </section>
         <section>
           <h4>
-            Terminating a <code>PresentationConnection</code>
+            Terminating a presentation
           </h4>
           <p>
             When the user agent is to <dfn data-lt=
-            "terminate-algorithm">terminate a presentation connection</dfn> using
+            "terminate-algorithm">terminate a presentation</dfn> using
             <em>connection</em>, it MUST run the following steps:
           </p>
           <ol>
@@ -762,14 +761,14 @@
                 <em>connection</em> is not <code>connected</code>, then abort
                 these steps.
                 </li>
-                <li>If <em>connection</em> is owned by a <a>receiving browsing
+                <li>If <em>connection</em> is connected to a <a>receiving browsing
                 context</a>, close that context (equivalent to
                 <code>window.close()</code>) and abort the following steps.
                 </li>
-                <li>For each <em>known connection</em> in the <a>set of
-                presentations</a>:
+                <li>Otherwise, for each <em>known connection</em> in the <a>set of
+                presentations</a> in the <a>controller</a>:
                   <ol>
-                    <li>If the <a>presentation connection identifier</a> of
+                    <li>If the <a>presentation identifier</a> of
                     <em>known connection</em> and <em>connection</em> are equal, and
                     the <a>presentation connection state</a> of <em>known
                     connection</em> is <code>connected</code>, then run the
@@ -793,8 +792,9 @@
             </li>
           </ol>
           <p>
-            The user agent hosting the <a>receiving browsing context</a> MAY
-            run the following steps when closing that context in response to
+            The user agent hosting the <a>receiving browsing context</a> MAY run
+            the following steps on the <a>controller</a> when closing that
+            context in response to
             <code>terminate()</code> or <code>window.close()</code>:
           </p>
           <ol>
@@ -1058,7 +1058,7 @@
         <p>
           When a <a><code>PresentationRequest</code></a> is constructed, the
           given <code>url</code> MUST be used as the <dfn>presentation request
-          URL</dfn> which is the <a>presentation connection URL</a> for the
+          URL</dfn> which is the <a>presentation URL</a> for the
           <a><code>PresentationRequest</code></a> instance.
         </p>
         <section>
@@ -1142,13 +1142,13 @@
                     steps:
                       <ol>
                         <li>Let <var>I</var> be a new <a>valid presentation
-                        connection identifier</a> unique among all <a>presentation
-                        connection identifiers</a> for known connections in the
+                        identifier</a> unique among all <a>presentation
+                        identifiers</a> for known presentations in the
                         <a>set of presentations</a>.
                         </li>
                         <li>Create a new <a>PresentationConnection</a> <em>S</em>.
                         </li>
-                        <li>Set the <a>presentation connection identifier</a> of
+                        <li>Set the <a>presentation identifier</a> of
                         <var>S</var> to <var>I</var>, and set the
                         <a>presentation connection state</a> of <var>S</var> to
                         <code>disconnected</code>.
@@ -1222,7 +1222,7 @@
             When the <code><dfn for=
             "PresentationRequest">reconnect</dfn>(presentationId)</code> method
             is called, the user agent MUST run the following steps to
-            <dfn>reconnect to a presentation connection</dfn>:
+            <dfn>reconnect to a presentation</dfn>:
           </p>
           <dl>
             <dt>
@@ -1236,7 +1236,7 @@
               <code>presentationUrl</code>, the <a>presentation request URL</a>
             </dd>
             <dd>
-              <code>presentationId</code>, the <a>presentation connection
+              <code>presentationId</code>, the <a>presentation 
               identifier</a>
             </dd>
             <dt>
@@ -1260,7 +1260,7 @@
                   <div style="margin-left: 2em">
                     If the <a>presentation connection URL</a> of <var>known
                     connection</var> is equal to <code>presentationUrl</code>, and
-                    the <a>presentation connection identifier</a> of <var>known
+                    the <a>presentation identifier</a> of <var>known
                     connection</var> is equal to <code>presentationId</code>, run
                     the following steps:
                     <ol>
@@ -1324,7 +1324,7 @@
                     <li>For each <var>known connection</var> in the <a>set of
                     presentations</a>:
                       <ol>
-                        <li>If the <a>presentation connection identifier</a> of
+                        <li>If the <a>presentation identifier</a> of
                         <var>known connection</var> and <var>S</var> are equal,
                         then run the following steps:
                           <ol>
@@ -1560,12 +1560,12 @@
               <ol>
                 <li>Create a new <a>PresentationConnection</a> <var>S</var>.
                 </li>
-                <li>Let <var>I</var> be a new <a>valid presentation connection
-                identifier</a> unique among all <a>presentation connection
-                identifier</a>s for known connections in the <a>set of
+                <li>Let <var>I</var> be a new <a>valid presentation
+                identifier</a> unique among all <a>presentation
+                identifier</a>s for known presentations in the <a>set of
                 presentations</a>.
                 </li>
-                <li>Set the <a>presentation connection identifier</a> of
+                <li>Set the <a>presentation identifier</a> of
                 <var>S</var> to <var>I</var>.
                 </li>
                 <li>Establish the connection between the controlling and <a>
@@ -1576,7 +1576,7 @@
                 to <code>connected</code>.
                 </li>
                 <li>Add a tuple (<code>undefined</code>, <a>presentation
-                connection identifier</a> of <var>S</var>, <var>S</var>) to the
+                identifier</a> of <var>S</var>, <var>S</var>) to the
                 <a>set of presentations</a>.
                 </li>
                 <li>
@@ -1590,7 +1590,7 @@
         </section>
         <section>
           <h4>
-            Getting the first connected presentation connection on the startup of
+            Getting the first presentation connection on the startup of
             a receiving browsing context
           </h4>
           <p>
@@ -1790,7 +1790,7 @@
         Cross-origin access
       </h3>
       <p>
-        A <a>presentation connection</a> is allowed to be accessed across origins;
+        A <a>presentation</a> is allowed to be accessed across origins;
         the presentation URL and presentation ID used to create the
         presentation are the only information needed to reconnect to a connection
         from any origin in that user agent. In other words, a presentation is
@@ -1829,7 +1829,7 @@
       </h3>
       <p>
         The presentation URL and presentation ID can be used to connect to a
-        presentation connection from another browsing context. They can be
+        presentation from another browsing context. They can be
         intercepted if an attacker can inject content into the controlling
         page.
       </p>
