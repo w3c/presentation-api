@@ -203,9 +203,9 @@
         <a data-lt="receiving browsing context">presentation</a> run on the
         same UA and the operating system is used to route the <a>presentation
         display</a> output to the <a>presentation display</a>. This is commonly
-        referred to as the <b id="1-ua">1-UA</b> case. This specification
-        imposes no requirements on the <a>presentation display</a> devices
-        connected in such a manner.
+        referred to as the <dfn><b id="1-ua">1-UA</b></dfn> case. This
+        specification imposes no requirements on the <a>presentation
+        display</a> devices connected in such a manner.
       </p>
       <p>
         If the <a>presentation display</a> is able to render HTML documents and
@@ -247,6 +247,54 @@
         particular, the algorithms defined in this specification are intended
         to be easy to follow, and not intended to be performant.)
       </p>
+      <section>
+        <h3>
+          Conformance Classes
+        </h3>
+        <p>
+          This specification describes the conformance criteria for two classes
+          of user agents.
+        </p>
+        <dl>
+          <dt>
+            <dfn>Controlling user agent</dfn>
+          </dt>
+          <dd>
+            <p>
+              Web browsers that conform to the specifications of a
+              <a>controlling user agent</a> must be able to start and control
+              presentations by providing a <a>controlling browsing context</a>
+              as described in this specification. This context MUST implement
+              the <code>PresentationConnection</code>,
+              <code>PresentationConnectionAvailable</code>, and
+              <code>PresentationRequest</code> interfaces.
+            </p>
+          </dd>
+          <dt>
+            <dfn>Receiving user agent</dfn>
+          </dt>
+          <dd>
+            <p>
+              Web browsers that conform to the specifications of a <a>receiving
+              user agent</a> must be able to render presentations by providing
+              a <a>receiving browsing context</a> as described in this
+              specification. This context must implement the
+              <code>PresentationConnection</code>,
+              <code>PresentationConnectionAvailable</code>, and
+              <code>PresentationReceiver</code> interfaces.
+            </p>
+          </dd>
+        </dl>
+        <p>
+          One user agent may act both as an <a>controlling user agent</a> and
+          as a <a>receiving user agent</a>, if it provides both browsing
+          contexts and implements all of their required interfaces. This can
+          happen when the the same user agent is able to host the
+          <a>controlling browsing context</a> and the <a>receiving browsing
+          context</a> for a presentation, as in the <a>1-UA</a> implementation
+          of the API.
+        </p>
+      </section>
     </section>
     <section>
       <h2>
@@ -339,16 +387,16 @@
   // Promise is resolved as soon as the presentation display availability is known.
   var request = new PresentationRequest(presUrl);
   request.getAvailability().then(function(availability) {
-    // availability.value may be kept up-to-date by the UA as long as the availability
-    // object is alive. It is advised for the web developers to discard the object
-    // as soon as it's not needed.
+    // availability.value may be kept up-to-date by the controlling UA as long
+    // as the availability object is alive. It is advised for the web developers
+    // to discard the object as soon as it's not needed.
     handleAvailabilityChange(availability.value);
     availability.onchange = function() { handleAvailabilityChange(this.value); };
   }).catch(function() {
-    // Availability monitoring is not supported by the platform, so discovery of presentation
-    // displays will happen only after request.start() is called.  Pretend the
-    // devices are available for simplicity; or, one could implement a third state for the
-    // button.
+    // Availability monitoring is not supported by the platform, so discovery of
+    // presentation displays will happen only after request.start() is called.
+    // Pretend the devices are available for simplicity; or, one could implement
+    // a third state for the button.
     handleAvailabilityChange(true);
   });
 &lt;/script&gt;
@@ -392,13 +440,13 @@
       </section>
       <section>
         <h3>
-          Handling an event for a UA initiated presentation example
+          Handling an event for a controlling UA initiated presentation example
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
 &lt;head&gt;
   &lt;!-- Setting presentation.defaultRequest allows the page to specify the
-       PresentationRequest to use when the UA initiates a presentation. --&gt;
+       PresentationRequest to use when the controlling UA initiates a presentation. --&gt;
 &lt;/head&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
@@ -536,12 +584,12 @@
         <p>
           The <dfn>set of presentations</dfn>, initially empty, contains the
           <a>presentation</a>s created by the <a>controlling browsing
-          contexts</a> for the user agent (or a specific user profile within
-          the user agent). The <a>set of presentations</a> is represented by a
-          list of tuples, where each tuple consists of a <a>presentation
-          URL</a>, a <a>presentation identifier</a>, and the <a>presentation
-          connection</a> itself. The <a>presentation URL</a> and
-          <a>presentation identifier</a> uniquely identify the
+          contexts</a> for the controlling user agent (or a specific user
+          profile within that user agent). The <a>set of presentations</a> is
+          represented by a list of tuples, where each tuple consists of a
+          <a>presentation URL</a>, a <a>presentation identifier</a>, and the
+          <a>presentation connection</a> itself. The <a>presentation URL</a>
+          and <a>presentation identifier</a> uniquely identify the
           <a>presentation</a>.
         </p>
       </section>
@@ -551,7 +599,9 @@
         </h3>
         <p>
           Each <a>presentation connection</a> is represented by a
-          <a>PresentationConnection</a> object.
+          <a>PresentationConnection</a> object. Both the <a>controlling user
+          agent</a> and <a>receiving user agent</a> must implement
+          <a>PresentationConnection</a>.
         </p>
         <pre class="idl">
           enum PresentationConnectionState { "connected", "closed", "terminated" };
@@ -750,7 +800,7 @@
             Terminating a presentation
           </h4>
           <p>
-            When the user agent is to <dfn data-lt=
+            When a user agent is to <dfn data-lt=
             "terminate-algorithm">terminate a presentation</dfn> using
             <em>connection</em>, it MUST run the following steps:
           </p>
@@ -826,6 +876,12 @@
               </ol>
             </li>
           </ol>
+          <p class="note">
+            This algorithm needs to be refined with different implementations
+            on the controlling browsing context and the receiving browsing
+            context. Alternatively, <code>terminate</code> needs to move to a
+            controller-only interface.
+          </p>
         </section>
         <section>
           <h4>
@@ -876,14 +932,20 @@
         <pre class="idl">
           interface PresentationAvailability : EventTarget {
             readonly attribute boolean value;
+
             attribute EventHandler onchange;
           };
-
-</pre>
+        </pre>
         <p>
           A <a><code>PresentationAvailability</code></a> object is associated
-          with a <a>presentation display</a> and represents its
-          <dfn>presentation display availability</dfn>.
+          with available <a>presentation displays</a> and represents the
+          <dfn>presentation display availability</dfn> for a presentation
+          request. The <a><code>PresentationAvailability</code></a> object
+          SHOULD be implemented in a <a>controlling browsing context</a> by a
+          <a>controlling user agent</a>, but may be omitted if the
+          <a>controlling user agent</a> cannot <a>monitor the list of available
+          presentation displays</a> without a pending request to <a>start a
+          presentation connection</a>.
         </p>
         <p>
           The <dfn for="PresentationAvailability">value</dfn> attribute MUST
@@ -1055,7 +1117,15 @@
             attribute EventHandler onconnectionavailable;
           };
 
-</pre>
+        </pre>
+        <p>
+          A <a><code>PresentationRequest</code></a> object is associated with a
+          request to initiate or reconnect to a presentation made by a
+          <a>controlling browsing context</a>. The
+          <a><code>PresentationRequest</code></a> object MUST be implemented in
+          a <a>controlling browsing context</a> provided by a <a>controlling
+          user agent</a>.
+        </p>
         <p>
           When a <a><code>PresentationRequest</code></a> is constructed, the
           given <code>url</code> MUST be used as the <dfn>presentation request
@@ -1501,7 +1571,7 @@
               required PresentationConnection connection;
             };
 
-</pre>
+          </pre>
           <p>
             An event named <code>connectionavailable</code> is fired on a
             <a>PresentationRequest</a> when a connection associated with the
@@ -1512,14 +1582,19 @@
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for all connections that are created
             for the <a>controller</a>, either by the <a>controller</a> calling
-            <code>start()</code> or <code>reconnect()</code>, or by the UA
-            creating a connection on the controller's behalf via <a for=
+            <code>start()</code> or <code>reconnect()</code>, or by the
+            <a>controlling user agent</a> creating a connection on the
+            controller's behalf via <a for=
             "Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
-            The UA MUST fire the event as soon as it can create the
-            <a><code>PresentationConnection</code></a> associated with the
-            event.
+            The <a>controlling user agent</a> MUST fire the event as soon as it
+            can create the <a><code>PresentationConnection</code></a>
+            associated with the event.
+          </p>
+          <p class="note">
+            This section needs to be split and written from the point of view
+            of both the controlling user agent and the presenting user agent.
           </p>
         </section>
       </section>
@@ -1534,12 +1609,14 @@
             attribute EventHandler onconnectionavailable;
           };
 
-</pre>
+        </pre>
         <p>
           The <a>PresentationReceiver</a> object is available to a <a>receiving
           browsing context</a> in order to access the <a data-lt=
           "controlling browsing context">controlling browsing context</a> and
-          communicate with them.
+          communicate with it. The <a><code>PresentationReceiver</code></a>
+          object MUST be implemented in a <a>receiving browsing context</a>
+          provided by a <a>receiving user agent</a>.
         </p>
         <section>
           <h4>
@@ -1743,9 +1820,10 @@
           </h4>
           <p>
             If set by the <a>controller</a>, the <a for=
-            "Presentation">defaultRequest</a> SHOULD be used by the UA as the
-            <dfn>default presentation request</dfn> for that controller. When
-            the UA wishes to initiate a <a>PresentationConnection</a> on the
+            "Presentation">defaultRequest</a> SHOULD be used by the
+            <a>controlling user agent</a> as the <dfn>default presentation
+            request</dfn> for that controller. When the <a>controlling user
+            agent</a> wishes to initiate a <a>PresentationConnection</a> on the
             controller's behalf, it MUST <a>start a presentation connection</a>
             using the <a>default presentation request</a> for the
             <a>controller</a> (as if the controller had called
@@ -1769,6 +1847,11 @@
             may be cleaner to define a separate set of steps for initiating a
             default presentation.
           </div>
+          <p class="note">
+            This section needs to be updated to split the interface into two
+            partial interfaces, one for the presenting user agent and one for
+            the receiving user agent.
+          </p>
         </section>
       </section>
     </section>
