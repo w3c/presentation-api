@@ -1489,15 +1489,15 @@
         </section>
         <section>
           <h3>
-            Interface <code>PresentationConnectEvent</code>
+            Interface <code>PresentationConnectionAvailableEvent</code>
           </h3>
           <pre class="idl">
-            [Constructor(DOMString type, PresentationConnectEventInit eventInitDict)]
-            interface PresentationConnectEvent : Event {
+            [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
+            interface PresentationConnectionAvailableEvent : Event {
               [SameObject] readonly attribute PresentationConnection connection;
             };
 
-            dictionary PresentationConnectEventInit : EventInit {
+            dictionary PresentationConnectionAvailableEventInit : EventInit {
               required PresentationConnection connection;
             };
 
@@ -1506,8 +1506,9 @@
             An event named <code>connectionavailable</code> is fired on a
             <a>PresentationRequest</a> when a connection associated with the
             object is created. It is fired at the <a>PresentationRequest</a>
-            instance, using the <a>PresentationConnectEvent</a> interface, with
-            the <a for="PresentationConnectEvent">connection</a> attribute set
+            instance, using the <a>PresentationConnectionAvailableEvent</a>
+            interface, with the <a for=
+            "PresentationConnectionAvailableEvent">connection</a> attribute set
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for all connections that are created
             for the <a>controller</a>, either by the <a>controller</a> calling
