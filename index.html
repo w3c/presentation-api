@@ -265,9 +265,9 @@
               <a>controlling user agent</a> must be able to start and control
               presentations by providing a <a>controlling browsing context</a>
               as described in this specification. This context MUST implement
-              the <code>PresentationConnection</code>,
-              <code>PresentationConnectionAvailable</code>, and
-              <code>PresentationRequest</code> interfaces.
+              the <a><code>PresentationConnection</code></a>,
+              <a><code>PresentationConnectionAvailable</code></a>, and
+              <a><code>PresentationRequest</code></a> interfaces.
             </p>
           </dd>
           <dt>
@@ -279,9 +279,9 @@
               user agent</a> must be able to render presentations by providing
               a <a>receiving browsing context</a> as described in this
               specification. This context must implement the
-              <code>PresentationConnection</code>,
-              <code>PresentationConnectionAvailable</code>, and
-              <code>PresentationReceiver</code> interfaces.
+              <a><code>PresentationConnection</code></a>,
+              <a><code>PresentationConnectionAvailable</code></a>, and
+              <a><code>PresentationReceiver</code></a> interfaces.
             </p>
           </dd>
         </dl>
@@ -1650,7 +1650,7 @@
                 </li>
                 <li>
                   <a>Queue a task</a> to <a>fire</a> an event named
-                  <code>connectionavailable</code> at <a for=
+                  <code>connectionavailable</code> at <a data-lt=
                   "PresentationReceiver"><code>presentation.receiver</code></a>.
                 </li>
               </ol>
@@ -1867,7 +1867,7 @@
             The <dfn for="Presentation"><code>receiver</code></dfn> MUST return
             <code>null</code> if the current <a>browsing context</a> is not a
             <a>receiving browsing context</a> and return a
-            <a>PresentationReceiver</a> instance otherwise.
+            <a><code>PresentationReceiver</code></a> instance otherwise.
           </p>
         </section>
       </section>
