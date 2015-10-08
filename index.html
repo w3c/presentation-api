@@ -1871,115 +1871,115 @@
           </p>
         </section>
       </section>
-      <section>
-        <h2>
-          Security and privacy considerations
-        </h2>
-        <div class="issue" data-number="45"></div>
-        <h3>
-          Personally identifiable information
-        </h3>
-        <p>
-          The <code>change</code> event fired on the
-          <a>PresentationAvailability</a> object reveals one bit of information
-          about the presence (or non-presence) of a <a>presentation display</a>
-          typically discovered through the local area network. This could be
-          used in conjunction with other information for fingerprinting the
-          user. However, this information is also dependent on the user's local
-          network context, so the risk is minimized.
-        </p>
-        <h3>
-          Cross-origin access
-        </h3>
-        <p>
-          A <a>presentation</a> is allowed to be accessed across origins; the
-          presentation URL and presentation ID used to create the presentation
-          are the only information needed to reconnect to a connection from any
-          origin in that user agent. In other words, a presentation is not tied
-          to a particular opening origin.
-        </p>
-        <p>
-          This design allows controlling contexts from different domains to
-          connect to a shared presentation resource. The security of the
-          presentation ID prevents arbitrary pages from connecting to an
-          existing presentation.
-        </p>
-        <p>
-          This specification does not prohibit a user agent from publishing
-          information about its <a>set of presentations</a>. The group
-          envisions a user agent on another device (distinct from the
-          controller or presentation) becoming authorized to reconnect to the
-          presentation, either by user action or by discovering the
-          presentation's URL and id.
-        </p>
-        <div class="issue">
-          This section should provide informative guidance as to what
-          constitutes a reasonable context for a Web page to become authorized
-          to control a presentation connection.
-        </div>
-        <h3>
-          Device Access
-        </h3>
-        <p>
-          The presentation API abstracts away what "local" means for displays,
-          meaning that it exposes network-accessible displays as though they
-          were local displays. The Presentation API requires user permission
-          for a page to access any display to mitigate issues that could arise,
-          such as showing unwanted content on a display viewable by others.
-        </p>
-        <h3>
-          Temporary identifiers and browser state
-        </h3>
-        <p>
-          The presentation URL and presentation ID can be used to connect to a
-          presentation from another browsing context. They can be intercepted
-          if an attacker can inject content into the controlling page.
-        </p>
-        <div class="issue">
-          Should we restrict the API to some extent in non secure contexts?
-        </div>
-        <h3>
-          Incognito mode and clearing of browsing data
-        </h3>
-        <p>
-          The content displayed on the presentation is different from the
-          controller. In particular, if the user is logged in in both contexts,
-          then logs out of the <a>controlling browsing context</a>, she will
-          not be automatically logged out from the <a>receiving browsing
+    </section>
+    <section>
+      <h2>
+        Security and privacy considerations
+      </h2>
+      <div class="issue" data-number="45"></div>
+      <h3>
+        Personally identifiable information
+      </h3>
+      <p>
+        The <code>change</code> event fired on the
+        <a>PresentationAvailability</a> object reveals one bit of information
+        about the presence (or non-presence) of a <a>presentation display</a>
+        typically discovered through the local area network. This could be
+        used in conjunction with other information for fingerprinting the
+        user. However, this information is also dependent on the user's local
+        network context, so the risk is minimized.
+      </p>
+      <h3>
+        Cross-origin access
+      </h3>
+      <p>
+        A <a>presentation</a> is allowed to be accessed across origins; the
+        presentation URL and presentation ID used to create the presentation
+        are the only information needed to reconnect to a connection from any
+        origin in that user agent. In other words, a presentation is not tied
+        to a particular opening origin.
+      </p>
+      <p>
+        This design allows controlling contexts from different domains to
+        connect to a shared presentation resource. The security of the
+        presentation ID prevents arbitrary pages from connecting to an
+        existing presentation.
+      </p>
+      <p>
+        This specification does not prohibit a user agent from publishing
+        information about its <a>set of presentations</a>. The group
+        envisions a user agent on another device (distinct from the
+        controller or presentation) becoming authorized to reconnect to the
+        presentation, either by user action or by discovering the
+        presentation's URL and id.
+      </p>
+      <div class="issue">
+        This section should provide informative guidance as to what
+        constitutes a reasonable context for a Web page to become authorized
+        to control a presentation connection.
+      </div>
+      <h3>
+        Device Access
+      </h3>
+      <p>
+        The presentation API abstracts away what "local" means for displays,
+        meaning that it exposes network-accessible displays as though they
+        were local displays. The Presentation API requires user permission
+        for a page to access any display to mitigate issues that could arise,
+        such as showing unwanted content on a display viewable by others.
+      </p>
+      <h3>
+        Temporary identifiers and browser state
+      </h3>
+      <p>
+        The presentation URL and presentation ID can be used to connect to a
+        presentation from another browsing context. They can be intercepted
+        if an attacker can inject content into the controlling page.
+      </p>
+      <div class="issue">
+        Should we restrict the API to some extent in non secure contexts?
+      </div>
+      <h3>
+        Incognito mode and clearing of browsing data
+      </h3>
+      <p>
+        The content displayed on the presentation is different from the
+        controller. In particular, if the user is logged in in both contexts,
+        then logs out of the <a>controlling browsing context</a>, she will
+        not be automatically logged out from the <a>receiving browsing
           context</a>. Applications that use authentication should pay extra
-          care when communicating between devices.
-        </p>
-        <p>
-          The set of presentations known to the user agent should be cleared
-          when the user requests to "clear browsing data."
-        </p>
-        <div class="issue" data-number="14"></div>
-        <div class="issue">
-          The spec should clarify what is to happen to the set of known
-          presentations in "incognito" (private browsing context) mode.
-        </div>
-        <h3>
-          Messaging between presentation connections
-        </h3>
-        <p>
-          This spec will not mandate communication protocols between the
-          <a>controlling browsing context</a> and the <a>receiving browsing
+        care when communicating between devices.
+      </p>
+      <p>
+        The set of presentations known to the user agent should be cleared
+        when the user requests to "clear browsing data."
+      </p>
+      <div class="issue" data-number="14"></div>
+      <div class="issue">
+        The spec should clarify what is to happen to the set of known
+        presentations in "incognito" (private browsing context) mode.
+      </div>
+      <h3>
+        Messaging between presentation connections
+      </h3>
+      <p>
+        This spec will not mandate communication protocols between the
+        <a>controlling browsing context</a> and the <a>receiving browsing
           context</a>, but it should set some guarantees of message
-          confidentiality and authenticity between corresponding
-          <a>presentation connections</a>.
-        </p>
-        <div class="issue" data-number="80"></div>
-      </section>
-      <section>
-        <h2>
-          Acknowledgments
-        </h2>
-        <p>
-          Thanks to Wayne Carr, Louay Bassbouss, Anssi Kostiainen, 闵洪波 (Hongbo
-          Min), Anton Vayvod, and Mark Foltz for help with editing, reviews and
-          feedback to this draft.
-        </p>
-      </section>
+        confidentiality and authenticity between corresponding
+        <a>presentation connections</a>.
+      </p>
+      <div class="issue" data-number="80"></div>
+    </section>
+    <section>
+      <h2>
+        Acknowledgments
+      </h2>
+      <p>
+        Thanks to Wayne Carr, Louay Bassbouss, Anssi Kostiainen, 闵洪波 (Hongbo
+        Min), Anton Vayvod, and Mark Foltz for help with editing, reviews and
+        feedback to this draft.
+      </p>
     </section>
   </body>
 </html>
