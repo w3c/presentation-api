@@ -1884,10 +1884,10 @@
         The <code>change</code> event fired on the
         <a>PresentationAvailability</a> object reveals one bit of information
         about the presence (or non-presence) of a <a>presentation display</a>
-        typically discovered through the local area network. This could be
-        used in conjunction with other information for fingerprinting the
-        user. However, this information is also dependent on the user's local
-        network context, so the risk is minimized.
+        typically discovered through the local area network. This could be used
+        in conjunction with other information for fingerprinting the user.
+        However, this information is also dependent on the user's local network
+        context, so the risk is minimized.
       </p>
       <h3>
         Cross-origin access
@@ -1902,39 +1902,38 @@
       <p>
         This design allows controlling contexts from different domains to
         connect to a shared presentation resource. The security of the
-        presentation ID prevents arbitrary pages from connecting to an
-        existing presentation.
+        presentation ID prevents arbitrary pages from connecting to an existing
+        presentation.
       </p>
       <p>
         This specification does not prohibit a user agent from publishing
-        information about its <a>set of presentations</a>. The group
-        envisions a user agent on another device (distinct from the
-        controller or presentation) becoming authorized to reconnect to the
-        presentation, either by user action or by discovering the
-        presentation's URL and id.
+        information about its <a>set of presentations</a>. The group envisions
+        a user agent on another device (distinct from the controller or
+        presentation) becoming authorized to reconnect to the presentation,
+        either by user action or by discovering the presentation's URL and id.
       </p>
       <div class="issue">
-        This section should provide informative guidance as to what
-        constitutes a reasonable context for a Web page to become authorized
-        to control a presentation connection.
+        This section should provide informative guidance as to what constitutes
+        a reasonable context for a Web page to become authorized to control a
+        presentation connection.
       </div>
       <h3>
         Device Access
       </h3>
       <p>
         The presentation API abstracts away what "local" means for displays,
-        meaning that it exposes network-accessible displays as though they
-        were local displays. The Presentation API requires user permission
-        for a page to access any display to mitigate issues that could arise,
-        such as showing unwanted content on a display viewable by others.
+        meaning that it exposes network-accessible displays as though they were
+        local displays. The Presentation API requires user permission for a
+        page to access any display to mitigate issues that could arise, such as
+        showing unwanted content on a display viewable by others.
       </p>
       <h3>
         Temporary identifiers and browser state
       </h3>
       <p>
         The presentation URL and presentation ID can be used to connect to a
-        presentation from another browsing context. They can be intercepted
-        if an attacker can inject content into the controlling page.
+        presentation from another browsing context. They can be intercepted if
+        an attacker can inject content into the controlling page.
       </p>
       <div class="issue">
         Should we restrict the API to some extent in non secure contexts?
@@ -1945,14 +1944,14 @@
       <p>
         The content displayed on the presentation is different from the
         controller. In particular, if the user is logged in in both contexts,
-        then logs out of the <a>controlling browsing context</a>, she will
-        not be automatically logged out from the <a>receiving browsing
-          context</a>. Applications that use authentication should pay extra
-        care when communicating between devices.
+        then logs out of the <a>controlling browsing context</a>, she will not
+        be automatically logged out from the <a>receiving browsing context</a>.
+        Applications that use authentication should pay extra care when
+        communicating between devices.
       </p>
       <p>
-        The set of presentations known to the user agent should be cleared
-        when the user requests to "clear browsing data."
+        The set of presentations known to the user agent should be cleared when
+        the user requests to "clear browsing data."
       </p>
       <div class="issue" data-number="14"></div>
       <div class="issue">
@@ -1965,9 +1964,9 @@
       <p>
         This spec will not mandate communication protocols between the
         <a>controlling browsing context</a> and the <a>receiving browsing
-          context</a>, but it should set some guarantees of message
-        confidentiality and authenticity between corresponding
-        <a>presentation connections</a>.
+        context</a>, but it should set some guarantees of message
+        confidentiality and authenticity between corresponding <a>presentation
+        connections</a>.
       </p>
       <div class="issue" data-number="80"></div>
     </section>
