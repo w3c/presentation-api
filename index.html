@@ -800,8 +800,7 @@
             Terminating a presentation
           </h4>
           <p>
-            When a <a>controlling user agent</a> is to <dfn data-lt=
-            "terminate-algorithm-controller">terminate a presentation</dfn>
+            When a <a>controlling user agent</a> is to terminate a presentation
             using <em>connection</em>, it MUST run the following steps:
           </p>
           <ol>
@@ -832,17 +831,15 @@
                     </li>
                   </ol>
                 </li>
-                <li>Signal the <a>receiving user agent</a> to <a data-lt=
-                "terminate-algorithm-receiver">terminate the presentation</a>
-                using an implementation specific mechanism.
+                <li>Signal the <a>receiving user agent</a> to terminate the
+                presentation using an implementation specific mechanism.
                 </li>
               </ol>
             </li>
           </ol>
           <p>
-            When a <a>receiving user agent</a> is to <dfn data-lt=
-            "terminate-algorithm-receiver">terminate a presentation</dfn> using
-            <em>connection</em>, it MUST close the <a>receiving browsing
+            When a <a>receiving user agent</a> is to terminate a presentation
+            using <em>connection</em>, it MUST close the <a>receiving browsing
             context</a> (equivalent to calling <code>window.close()</code>).
           </p>
           <p>
@@ -1654,7 +1651,7 @@
                 <li>
                   <a>Queue a task</a> to <a>fire</a> an event named
                   <code>connectionavailable</code> at <a for=
-                  "Navigator"><code>presentation.receiver</code></a>.
+                  "PresentationReceiver"><code>presentation.receiver</code></a>.
                 </li>
               </ol>
             </li>
