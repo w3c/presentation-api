@@ -800,8 +800,8 @@
             Terminating a presentation
           </h4>
           <p>
-            When a user agent is to <dfn data-lt=
-            "terminate-algorithm">terminate a presentation</dfn> using
+            When a <a>controlling user agent</a> is to <dfn data-lt=
+            "terminate-algorithm-controller">terminate a presentation</dfn> using
             <em>connection</em>, it MUST run the following steps:
           </p>
           <ol>
@@ -812,12 +812,8 @@
                 <em>connection</em> is not <code>connected</code>, then abort
                 these steps.
                 </li>
-                <li>If <em>connection</em> is connected to a <a>receiving
-                browsing context</a>, close that context (equivalent to <code>
-                  window.close()</code>) and abort the following steps.
-                </li>
                 <li>Otherwise, for each <em>known connection</em> in the <a>set
-                of presentations</a> in the <a>controller</a>:
+                of presentations</a> in the <a>controlling user agent</a>:
                   <ol>
                     <li>If the <a>presentation identifier</a> of <em>known
                     connection</em> and <em>connection</em> are equal, and the
@@ -836,17 +832,25 @@
                     </li>
                   </ol>
                 </li>
-                <li>Close the <a>receiving browsing context</a>, using an
-                implementation specific mechanism.
+                <li>Signal the <a>receiving user agent</a>
+                to <a data-lt="terminate-algorithm-receiver">terminate the
+                presentation</a> using an implementation specific mechanism.</a>
                 </li>
               </ol>
             </li>
           </ol>
           <p>
-            The user agent hosting the <a>receiving browsing context</a> MAY
-            run the following steps on the <a>controller</a> when closing that
-            context in response to <code>terminate()</code> or
-            <code>window.close()</code>:
+            When a <a>receiving user agent</a> is to <dfn data-lt=
+            "terminate-algorithm-receiver">terminate a presentation</dfn>
+            using <em>connection</em>, it MUST close the <a>receiving browsing
+            context</a> (equivalent to calling <code> window.close()</code>).
+          </p>
+          <p>
+            In addition, the <a>receiving user agent</a> hosting
+            the <a>receiving browsing context</a> that was closed SHOULD signal
+            each <a>controlling user agent</a> that was connected to
+            the <a>presentation</a>.  In response, each <a>controlling user
+            agent</a> SHOULD run the following steps:
           </p>
           <ol>
             <li>
@@ -876,12 +880,6 @@
               </ol>
             </li>
           </ol>
-          <p class="note">
-            This algorithm needs to be refined with different implementations
-            on the controlling browsing context and the receiving browsing
-            context. Alternatively, <code>terminate</code> needs to move to a
-            controller-only interface.
-          </p>
         </section>
         <section>
           <h4>
