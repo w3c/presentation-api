@@ -264,8 +264,9 @@
               Web browsers that conform to the specifications of a
               <a>controlling user agent</a> must be able to start and control
               presentations by providing a <a>controlling browsing context</a>
-              as described in this specification. This context MUST implement
-              the <a><code>PresentationConnection</code></a>,
+              as described in this specification. This context implements the
+              <a><code>Presentation</code></a>,
+              <a><code>PresentationConnection</code></a>,
               <a><code>PresentationConnectionAvailableEvent</code></a>, and
               <a><code>PresentationRequest</code></a> interfaces.
             </p>
@@ -278,7 +279,8 @@
               Web browsers that conform to the specifications of a <a>receiving
               user agent</a> must be able to render presentations by providing
               a <a>receiving browsing context</a> as described in this
-              specification. This context must implement the
+              specification. This context implements the
+              <a><code>Presentation</code></a>,
               <a><code>PresentationConnection</code></a>,
               <a><code>PresentationConnectionAvailableEvent</code></a>, and
               <a><code>PresentationReceiver</code></a> interfaces.
@@ -286,13 +288,12 @@
           </dd>
         </dl>
         <p>
-          One user agent may act both as an <a>controlling user agent</a> and
-          as a <a>receiving user agent</a>, if it provides both browsing
-          contexts and implements all of their required interfaces. This can
-          happen when the the same user agent is able to host the
-          <a>controlling browsing context</a> and the <a>receiving browsing
-          context</a> for a presentation, as in the <a>1-UA</a> implementation
-          of the API.
+          One user agent may act both as a <a>controlling user agent</a> and as
+          a <a>receiving user agent</a>, if it provides both browsing contexts
+          and implements all of their required interfaces. This can happen when
+          the same user agent is able to host the <a>controlling browsing
+          context</a> and the <a>receiving browsing context</a> for a
+          presentation, as in the <a>1-UA</a> implementation of the API.
         </p>
       </section>
     </section>
@@ -600,7 +601,7 @@
         <p>
           Each <a>presentation connection</a> is represented by a
           <a>PresentationConnection</a> object. Both the <a>controlling user
-          agent</a> and <a>receiving user agent</a> must implement
+          agent</a> and <a>receiving user agent</a> MUST implement
           <a>PresentationConnection</a>.
         </p>
         <pre class="idl">
@@ -936,12 +937,12 @@
           A <a><code>PresentationAvailability</code></a> object is associated
           with available <a>presentation displays</a> and represents the
           <dfn>presentation display availability</dfn> for a presentation
-          request. The <a><code>PresentationAvailability</code></a> object
-          SHOULD be implemented in a <a>controlling browsing context</a> by a
-          <a>controlling user agent</a>, but may be omitted if the
-          <a>controlling user agent</a> cannot <a>monitor the list of available
-          presentation displays</a> without a pending request to <a>start a
-          presentation connection</a>.
+          request. If the <a>controlling user agent</a> can <a>monitor the list
+          of available presentation displays</a> in the background (without a
+          pending request to <code><a for=
+          "PresentationRequest">start</a>()</code>), the
+          <a><code>PresentationAvailability</code></a> object MUST be
+          implemented in a <a>controlling browsing context</a>.
         </p>
         <p>
           The <dfn for="PresentationAvailability">value</dfn> attribute MUST
@@ -1793,6 +1794,11 @@
           partial interface Navigator {
             [SameObject] readonly attribute Presentation presentation;
           };
+
+          interface Presentation {
+            attribute PresentationRequest? defaultRequest;
+            [SameObject] readonly attribute PresentationReceiver? receiver;
+          };
         
 </pre>
         <p>
@@ -1804,19 +1810,10 @@
             Controlling user agent
           </h4>
           <p>
-            The following partial interface MUST be implemented by a
-            <a>controlling user agent</a>:
-          </p>
-          <pre class="idl">
-            partial interface Presentation {
-              attribute PresentationRequest? defaultRequest;
-            };
-          
-</pre>
-          <p>
-            The <dfn for="Presentation"><code>defaultRequest</code></dfn> MUST
-            return the <a>default presentation request</a> if any,
-            <code>null</code> otherwise.
+            In a <a>controlling user agent</a>, the <dfn for=
+            "Presentation"><code>defaultRequest</code></dfn> MUST return the
+            <a>default presentation request</a> if any, <code>null</code>
+            otherwise.
           </p>
           <p>
             If set by the <a>controller</a>, the <a for=
@@ -1853,21 +1850,11 @@
             Receiving user agent
           </h4>
           <p>
-            The following partial interface MUST be implemented by a
-            <a>receiving user agent</a>:
-          </p>
-          <pre>
-          partial interface Presentation {
-            [SameObject]
-            readonly attribute PresentationReceiver? receiver;
-          };
-          
-</pre>
-          <p>
-            The <dfn for="Presentation"><code>receiver</code></dfn> MUST return
-            <code>null</code> if the current <a>browsing context</a> is not a
-            <a>receiving browsing context</a> and return a
-            <a><code>PresentationReceiver</code></a> instance otherwise.
+            In a <a>receiving user agent</a>, <dfn for=
+            "Presentation"><code>receiver</code></dfn> MUST return
+            <a><code>PresentationReceiver</code></a> instance in a <a>receiving
+            browsing context</a>. In any other <a>browsing context</a>, it MUST
+            return <code>null</code>.
           </p>
         </section>
       </section>
