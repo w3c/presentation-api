@@ -385,7 +385,8 @@
   var handleAvailabilityChange = function(available) {
     castBtn.style.display = available ? "inline" : "none";
   };
-  // Promise is resolved as soon as the presentation display availability is known.
+  // Promise is resolved as soon as the presentation display availability is
+  // known.
   var request = new PresentationRequest(presUrl);
   request.getAvailability().then(function(availability) {
     // availability.value may be kept up-to-date by the controlling UA as long
@@ -412,7 +413,8 @@
 &lt;script&gt;
   // Start new presentation.
   request.start()
-    // The connection to the presentation will be passed to setConnection on success.
+    // The connection to the presentation will be passed to setConnection on
+    // success.
     .then(setConnection)
     // User canceled the selection dialog or an error occurred.
     .catch(endConnection);
@@ -431,7 +433,8 @@
   // presId is mandatory when reconnecting to a presentation.
   if (presId) {
     request.reconnect(presId)
-      // The resumed connection to the presentation will be passed to setConnection on success.
+      // The resumed connection to the presentation will be passed to
+      // setConnection on success.
       .then(setConnection)
       // No connection found for presUrl and presId, or an error occurred.
       .catch(endConnection);
@@ -445,8 +448,9 @@
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
-  &lt;!-- Setting presentation.defaultRequest allows the page to specify the
-       PresentationRequest to use when the controlling UA initiates a presentation. --&gt;
+&lt;!-- Setting presentation.defaultRequest allows the page to specify the
+     PresentationRequest to use when the controlling UA initiates a
+     presentation. --&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
   navigator.presentation.defaultRequest.onconnectionavailable = function(evt) {
@@ -1135,7 +1139,7 @@
           </h4>
           <p>
             When the <code>PresentationRequest</code> constructor is called,
-            the <a>controlling user agent</a> must run these steps:
+            the <a>controlling user agent</a> MUST run these steps:
           </p>
           <dl>
             <dt>
@@ -1164,6 +1168,8 @@
             <em>presentationUrl</em> as the constructor argument and return it.
             </li>
           </ol>
+        </section>
+        <section>
           <h4>
             Starting a presentation connection
           </h4>
