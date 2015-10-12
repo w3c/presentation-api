@@ -1131,11 +1131,12 @@
         </p>
         <section>
           <h4>
+            Constructing a PresentationRequest
           </h4>
           <p>
             When the <code>PresentationRequest</code> constructor is called,
             the <a>controlling user agent</a> must run these steps:
-            </p>
+          </p>
           <dl>
             <dt>
               Input
@@ -1151,14 +1152,17 @@
             </dd>
           </dl>
           <ol>
-            <li>Resolve <em>url</em> relative to the API base URL
-            specified by entry settings, and let <em>presentationUrl</em> be the resulting
-            absolute URL, if any.</li>
-            <li>If the resolve a URL algorithm failed, then throw a <a>DOMException</a> named
-                  <code>"SyntaxError"</code> and abort the remaining steps.</li>
-            <li>Construct a new <code>PresentationRequest</code> object
-            with <em>presentationUrl</em> as the constructor argument and return
-            it.</li>
+            <li>Resolve <em>url</em> relative to the API base URL specified by
+            entry settings, and let <em>presentationUrl</em> be the resulting
+            absolute URL, if any.
+            </li>
+            <li>If the resolve a URL algorithm failed, then throw a
+            <a>DOMException</a> named <code>"SyntaxError"</code> and abort the
+            remaining steps.
+            </li>
+            <li>Construct a new <code>PresentationRequest</code> object with
+            <em>presentationUrl</em> as the constructor argument and return it.
+            </li>
           </ol>
           <h4>
             Starting a presentation connection
@@ -1191,9 +1195,11 @@
             <a>Promise</a> rejected with a <a>DOMException</a> named
             <code>"InvalidAccessError"</code> and abort these steps.
             </li>
-            <li>If there is already an unsettled <a>Promise</a> from a previous call to <code>start</code> for the same <a>controlling browsing context</a>, return a
-            <a>Promise</a> rejected with a <a>DOMException</a> named
-            <code>"OperationError"</code> and abort these steps.
+            <li>If there is already an unsettled <a>Promise</a> from a previous
+            call to <code>start</code> for the same <a>controlling browsing
+            context</a>, return a <a>Promise</a> rejected with a
+            <a>DOMException</a> named <code>"OperationError"</code> and abort
+            these steps.
             </li>
             <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
@@ -1204,10 +1210,10 @@
                 <li>
                   <a>Monitor the list of available presentation displays</a>.
                 </li>
-                <li>
-                  Wait until the algorithm completes.
+                <li>Wait until the algorithm completes.
                 </li>
               </ol>
+            </li>
             <li>If either of the following is true:
               <ol>
                 <li>The <a>list of available presentation displays</a> is
@@ -1324,10 +1330,9 @@
           <p>
             When the <code><dfn for=
             "PresentationRequest">reconnect</dfn>(presentationId)</code> method
-            is called on
-            a <code>PresentationRequest</code> <em>presentationRequest</em>, the
-            user agent MUST run the following steps to
-            <dfn>reconnect to a presentation</dfn>:
+            is called on a <code>PresentationRequest</code>
+            <em>presentationRequest</em>, the user agent MUST run the following
+            steps to <dfn>reconnect to a presentation</dfn>:
           </p>
           <dl>
             <dt>
@@ -1335,8 +1340,8 @@
             </dt>
             <dd>
               <code>presentationRequest</code>, the
-              <code>PresentationRequest</code> object
-              that <code>reconnect()</code> was called on.
+              <code>PresentationRequest</code> object that
+              <code>reconnect()</code> was called on.
             </dd>
             <dd>
               <code>presentationId</code>, a <a>presentation identifier</a>
@@ -1361,10 +1366,11 @@
                 presentations</a>,
                   <div style="margin-left: 2em">
                     If the <a>presentation URL</a> of <var>known
-                    connection</var> is equal to the <code>presentationUrl</code> of <em>presentationRequest</em>,
-                    and the <a>presentation identifier</a> of <var>known
-                    connection</var> is equal to <code>presentationId</code>,
-                    run the following steps:
+                    connection</var> is equal to the
+                    <code>presentationUrl</code> of
+                    <em>presentationRequest</em>, and the <a>presentation
+                    identifier</a> of <var>known connection</var> is equal to
+                    <code>presentationId</code>, run the following steps:
                     <ol>
                       <li>Let <var>S</var> be the <a>presentation
                       connection</a> of <var>known connection</var>.
