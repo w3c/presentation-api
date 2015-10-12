@@ -445,10 +445,8 @@
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
-&lt;head&gt;
   &lt;!-- Setting presentation.defaultRequest allows the page to specify the
        PresentationRequest to use when the controlling UA initiates a presentation. --&gt;
-&lt;/head&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
   navigator.presentation.defaultRequest.onconnectionavailable = function(evt) {
@@ -483,14 +481,15 @@
           } else if (this.state == "terminated") {
             // The presentation has terminated.  Offer the user a chance to
             // start a new presentation.
+          } else if (this.state == "connected") {
+            // send initial message to presentation page
+            connection.send("say hello");
           }
       };
       // register message handler
       connection.onmessage = function (evt) {
         console.log("receive message", evt.data);
       };
-      // send message to presentation page
-      connection.send("say hello");
     }
   };
   var disconnectController = function () {
@@ -1132,6 +1131,36 @@
         </p>
         <section>
           <h4>
+          </h4>
+          <p>
+            When the <code>PresentationRequest</code> constructor is called,
+            the <a>controlling user agent</a> must run these steps:
+            </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>url</code>, the <a>presentation request URL</a>
+            </dd>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              A <code>PresentationRequest</code> object
+            </dd>
+          </dl>
+          <ol>
+            <li>Resolve <em>url</em> relative to the API base URL
+            specified by entry settings, and let <em>presentationUrl</em> be the resulting
+            absolute URL, if any.</li>
+            <li>If the resolve a URL algorithm failed, then throw a <a>DOMException</a> named
+                  <code>"SyntaxError"</code> and abort the remaining steps.</li>
+            <li>Construct a new <code>PresentationRequest</code> object
+            with <em>presentationUrl</em> as the constructor argument and return
+            it.</li>
+          </ol>
+          <h4>
             Starting a presentation connection
           </h4>
           <p>
@@ -1162,6 +1191,10 @@
             <a>Promise</a> rejected with a <a>DOMException</a> named
             <code>"InvalidAccessError"</code> and abort these steps.
             </li>
+            <li>If there is already an unsettled <a>Promise</a> from a previous call to <code>start</code> for the same <a>controlling browsing context</a>, return a
+            <a>Promise</a> rejected with a <a>DOMException</a> named
+            <code>"OperationError"</code> and abort these steps.
+            </li>
             <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
             <li>Return <em>P</em>.
@@ -1171,10 +1204,10 @@
                 <li>
                   <a>Monitor the list of available presentation displays</a>.
                 </li>
-                <li>Wait until the algorithm completes.
+                <li>
+                  Wait until the algorithm completes.
                 </li>
               </ol>
-            </li>
             <li>If either of the following is true:
               <ol>
                 <li>The <a>list of available presentation displays</a> is
@@ -1291,7 +1324,9 @@
           <p>
             When the <code><dfn for=
             "PresentationRequest">reconnect</dfn>(presentationId)</code> method
-            is called, the user agent MUST run the following steps to
+            is called on
+            a <code>PresentationRequest</code> <em>presentationRequest</em>, the
+            user agent MUST run the following steps to
             <dfn>reconnect to a presentation</dfn>:
           </p>
           <dl>
@@ -1301,12 +1336,10 @@
             <dd>
               <code>presentationRequest</code>, the
               <code>PresentationRequest</code> object
+              that <code>reconnect()</code> was called on.
             </dd>
             <dd>
-              <code>presentationUrl</code>, the <a>presentation request URL</a>
-            </dd>
-            <dd>
-              <code>presentationId</code>, the <a>presentation identifier</a>
+              <code>presentationId</code>, a <a>presentation identifier</a>
             </dd>
             <dt>
               Output
@@ -1328,7 +1361,7 @@
                 presentations</a>,
                   <div style="margin-left: 2em">
                     If the <a>presentation URL</a> of <var>known
-                    connection</var> is equal to <code>presentationUrl</code>,
+                    connection</var> is equal to the <code>presentationUrl</code> of <em>presentationRequest</em>,
                     and the <a>presentation identifier</a> of <var>known
                     connection</var> is equal to <code>presentationId</code>,
                     run the following steps:
