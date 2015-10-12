@@ -385,7 +385,8 @@
   var handleAvailabilityChange = function(available) {
     castBtn.style.display = available ? "inline" : "none";
   };
-  // Promise is resolved as soon as the presentation display availability is known.
+  // Promise is resolved as soon as the presentation display availability is
+  // known.
   var request = new PresentationRequest(presUrl);
   request.getAvailability().then(function(availability) {
     // availability.value may be kept up-to-date by the controlling UA as long
@@ -412,7 +413,8 @@
 &lt;script&gt;
   // Start new presentation.
   request.start()
-    // The connection to the presentation will be passed to setConnection on success.
+    // The connection to the presentation will be passed to setConnection on
+    // success.
     .then(setConnection)
     // User canceled the selection dialog or an error occurred.
     .catch(endConnection);
@@ -431,7 +433,8 @@
   // presId is mandatory when reconnecting to a presentation.
   if (presId) {
     request.reconnect(presId)
-      // The resumed connection to the presentation will be passed to setConnection on success.
+      // The resumed connection to the presentation will be passed to
+      // setConnection on success.
       .then(setConnection)
       // No connection found for presUrl and presId, or an error occurred.
       .catch(endConnection);
@@ -445,10 +448,9 @@
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
-&lt;head&gt;
-  &lt;!-- Setting presentation.defaultRequest allows the page to specify the
-       PresentationRequest to use when the controlling UA initiates a presentation. --&gt;
-&lt;/head&gt;
+&lt;!-- Setting presentation.defaultRequest allows the page to specify the
+     PresentationRequest to use when the controlling UA initiates a
+     presentation. --&gt;
 &lt;script&gt;
   navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
   navigator.presentation.defaultRequest.onconnectionavailable = function(evt) {
@@ -483,14 +485,15 @@
           } else if (this.state == "terminated") {
             // The presentation has terminated.  Offer the user a chance to
             // start a new presentation.
+          } else if (this.state == "connected") {
+            // send initial message to presentation page
+            connection.send("say hello");
           }
       };
       // register message handler
       connection.onmessage = function (evt) {
         console.log("receive message", evt.data);
       };
-      // send message to presentation page
-      connection.send("say hello");
     }
   };
   var disconnectController = function () {
@@ -1132,6 +1135,42 @@
         </p>
         <section>
           <h4>
+            Constructing a PresentationRequest
+          </h4>
+          <p>
+            When the <code>PresentationRequest</code> constructor is called,
+            the <a>controlling user agent</a> MUST run these steps:
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>url</code>, the <a>presentation request URL</a>
+            </dd>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              A <code>PresentationRequest</code> object
+            </dd>
+          </dl>
+          <ol>
+            <li>Resolve <em>url</em> relative to the API base URL specified by
+            entry settings, and let <em>presentationUrl</em> be the resulting
+            absolute URL, if any.
+            </li>
+            <li>If the resolve a URL algorithm failed, then throw a
+            <a>DOMException</a> named <code>"SyntaxError"</code> and abort the
+            remaining steps.
+            </li>
+            <li>Construct a new <code>PresentationRequest</code> object with
+            <em>presentationUrl</em> as the constructor argument and return it.
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
             Starting a presentation connection
           </h4>
           <p>
@@ -1161,6 +1200,12 @@
             <li>If the algorithm isn't <a>allowed to show a popup</a>, return a
             <a>Promise</a> rejected with a <a>DOMException</a> named
             <code>"InvalidAccessError"</code> and abort these steps.
+            </li>
+            <li>If there is already an unsettled <a>Promise</a> from a previous
+            call to <code>start</code> for the same <a>controlling browsing
+            context</a>, return a <a>Promise</a> rejected with a
+            <a>DOMException</a> named <code>"OperationError"</code> and abort
+            these steps.
             </li>
             <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
@@ -1291,8 +1336,9 @@
           <p>
             When the <code><dfn for=
             "PresentationRequest">reconnect</dfn>(presentationId)</code> method
-            is called, the user agent MUST run the following steps to
-            <dfn>reconnect to a presentation</dfn>:
+            is called on a <code>PresentationRequest</code>
+            <em>presentationRequest</em>, the user agent MUST run the following
+            steps to <dfn>reconnect to a presentation</dfn>:
           </p>
           <dl>
             <dt>
@@ -1300,13 +1346,11 @@
             </dt>
             <dd>
               <code>presentationRequest</code>, the
-              <code>PresentationRequest</code> object
+              <code>PresentationRequest</code> object that
+              <code>reconnect()</code> was called on.
             </dd>
             <dd>
-              <code>presentationUrl</code>, the <a>presentation request URL</a>
-            </dd>
-            <dd>
-              <code>presentationId</code>, the <a>presentation identifier</a>
+              <code>presentationId</code>, a <a>presentation identifier</a>
             </dd>
             <dt>
               Output
@@ -1328,10 +1372,11 @@
                 presentations</a>,
                   <div style="margin-left: 2em">
                     If the <a>presentation URL</a> of <var>known
-                    connection</var> is equal to <code>presentationUrl</code>,
-                    and the <a>presentation identifier</a> of <var>known
-                    connection</var> is equal to <code>presentationId</code>,
-                    run the following steps:
+                    connection</var> is equal to the
+                    <code>presentationUrl</code> of
+                    <em>presentationRequest</em>, and the <a>presentation
+                    identifier</a> of <var>known connection</var> is equal to
+                    <code>presentationId</code>, run the following steps:
                     <ol>
                       <li>Let <var>S</var> be the <a>presentation
                       connection</a> of <var>known connection</var>.
