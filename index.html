@@ -653,6 +653,12 @@
             algorithm to <a data-lt="close-algorithm">close a presentation
             connection</a> with <a>PresentationConnection</a>.
           </p>
+          <p>
+            When the <code><dfn>terminate</dfn>()</code> method is called on a
+            <a>PresentationConnection</a>, the user agent MUST run the
+            algorithm to <a data-lt="terminate-algorithm">terminate a presentation
+            </a> with <a>PresentationConnection</a>.
+          </p>
         </div>
         <section>
           <h4>
@@ -801,11 +807,12 @@
         </section>
         <section>
           <h4>
-            Terminating a presentation
+            Terminating a <code>PresentationConnection</code>
           </h4>
           <p>
-            When a <a>controlling user agent</a> is to terminate a presentation
-            using <em>connection</em>, it MUST run the following steps:
+            When a <a>controlling user agent</a> is to <dfn data-lt="terminate-algorithm">
+            terminate a presentation</dfn> using <em>connection</em>, it MUST run
+            the following steps:
           </p>
           <ol>
             <li>
