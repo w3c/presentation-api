@@ -312,12 +312,12 @@
         "http://www.w3.org/TR/html5/infrastructure.html#concept-event-fire">firing
         an event</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#fire-a-simple-event">firing
-        a simple event</a></dfn> <dfn><a href=
+        a simple event</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#navigate">navigate</a></dfn>,
         <dfn><a href="http://www.w3.org/TR/html5/webappapis.html">queue a
         task</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/infrastructure.html#concept-events-trusted">
-        trusted event</a></dfn>, <dfn><a href=
+        trusted event</a></dfn>, and <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#allowed-to-show-a-popup">allowed
         to show a popup</a></dfn> are defined in [[!HTML5]].
       </p>
@@ -352,7 +352,7 @@
       <p>
         The term <dfn><a href=
         "http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a></dfn>
-        is defined in the WebRTC API specification ([[WEBRTC]]).
+        is defined in the WebRTC API specification [[WEBRTC]].
       </p>
     </section>
     <section>
@@ -500,7 +500,7 @@
     // close old connection if exists
     connection &amp;&amp; connection.close();
   };
-  var endPresentation = function () {
+  var endConnection = function () {
     connection &amp;&amp; connection.terminate();
     // remove old presId from localStorage if exists
     localStorage &amp;&amp; delete localStorage["presId"];
@@ -511,7 +511,7 @@
       </section>
       <section>
         <h3>
-          Monitor available connection(s) and say hello.
+          Monitor available connection(s) and say hello
         </h3>
         <pre class="example highlight">
 &lt;!-- receiver.html --&gt;
@@ -641,13 +641,6 @@
             connection state.
           </p>
           <p>
-            When the <code><dfn>send</dfn>()</code> method is called on a
-            <a>PresentationConnection</a> object with a <code>message</code>,
-            the user agent MUST run the algorithm to <a data-lt=
-            "algorithm-send">send a message through a
-            <code>PresentationConnection</code></a>.
-          </p>
-          <p>
             When the <code><dfn>close</dfn>()</code> method is called on a
             <a>PresentationConnection</a>, the user agent MUST run the
             algorithm to <a data-lt="close-algorithm">close a presentation
@@ -658,6 +651,13 @@
             <a>PresentationConnection</a>, the user agent MUST run the
             algorithm to <a data-lt="terminate-algorithm">terminate a presentation
             </a> with <a>PresentationConnection</a>.
+          </p>
+          <p>
+            When the <code><dfn>send</dfn>()</code> method is called on a
+            <a>PresentationConnection</a> object with a <code>message</code>,
+            the user agent MUST run the algorithm to <a data-lt=
+            "algorithm-send">send a message through a
+            <code>PresentationConnection</code></a>.
           </p>
         </div>
         <section>
@@ -1002,7 +1002,7 @@
             While there are live <a>PresentationAvailability</a> objects, the
             user agent MAY <a>monitor the list of available presentation
             displays</a> continuously, so that pages can use the <a for=
-            "PresentationAvailability">value</a> property of an
+            "PresentationAvailability">value</a> property of a
             <a>PresentationAvailability</a> object to offer presentation only
             when there are available displays. However, the user agent may not
             support continuous availability monitoring; for example, because of
@@ -1038,7 +1038,7 @@
         </section>
         <section>
           <h4>
-            Monitor the list of available presentation displays
+            Monitoring the list of available presentation displays
           </h4>
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
@@ -1142,7 +1142,7 @@
         </p>
         <section>
           <h4>
-            Constructing a PresentationRequest
+            Constructing a <code>PresentationRequest</code>
           </h4>
           <p>
             When the <code>PresentationRequest</code> constructor is called,
@@ -1164,8 +1164,8 @@
           </dl>
           <ol>
             <li>Resolve <em>url</em> relative to the API base URL specified by
-            entry settings, and let <em>presentationUrl</em> be the resulting
-            absolute URL, if any.
+            the entry settings object, and let <em>presentationUrl</em> be the
+            resulting absolute URL, if any.
             </li>
             <li>If the resolve a URL algorithm failed, then throw a
             <a>DOMException</a> named <code>"SyntaxError"</code> and abort the
@@ -1338,7 +1338,7 @@
         </section>
         <section>
           <h4>
-            Reconnect to a presentation connection
+            Reconnecting to a presentation connection
           </h4>
           <p>
             When the <code><dfn for=
