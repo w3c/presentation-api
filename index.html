@@ -329,10 +329,33 @@
         "http://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></dfn>,
         <dfn><a href=
         "http://heycam.github.io/webidl/#idl-ArrayBufferView">ArrayBufferView</a></dfn>
-        and <dfn><a href=
-        "http://heycam.github.io/webidl/#idl-DOMException">DOMException</a></dfn>
         are defined in [[!WEBIDL]].
       </p>
+      <p>
+        The <dfn>term</dfn> throw in this specification is used as defined in
+        [[!WEBIDL]]. The following exception names are defined by WebIDL and
+        used by this specification:
+      </p>
+      <ul>
+        <li>
+          <dfn><code>AbortError</code></dfn>
+        </li>
+        <li>
+          <dfn><code>InvalidAccessError</code></dfn>
+        </li>
+        <li>
+          <dfn><code>NotFoundError</code></dfn>
+        </li>
+        <li>
+          <dfn><code>NotSupportedError</code></dfn>
+        </li>
+        <li>
+          <dfn><code>OperationError</code></dfn>
+        </li>
+        <li>
+          <dfn><code>SyntaxError</code></dfn>
+        </li>
+      </ul>
       <p>
         The terms <dfn data-lt="resolve"><a href=
         "http://www.w3.org/2001/tag/doc/promises-guide#resolve-promise">resolving
@@ -1168,8 +1191,7 @@
             resulting absolute URL, if any.
             </li>
             <li>If the resolve a URL algorithm failed, then throw a
-            <a>DOMException</a> named <code>"SyntaxError"</code> and abort the
-            remaining steps.
+            <a>SyntaxError</a> exception and abort the remaining steps.
             </li>
             <li>Construct a new <code>PresentationRequest</code> object with
             <em>presentationUrl</em> as the constructor argument and return it.
@@ -1205,14 +1227,13 @@
           </dl>
           <ol>
             <li>If the algorithm isn't <a>allowed to show a popup</a>, return a
-            <a>Promise</a> rejected with a <a>DOMException</a> named
-            <code>"InvalidAccessError"</code> and abort these steps.
+            <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
+            and abort these steps.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
             call to <code>start</code> for the same <a>controlling browsing
-            context</a>, return a <a>Promise</a> rejected with a
-            <a>DOMException</a> named <code>"OperationError"</code> and abort
-            these steps.
+            context</a>, return a <a>Promise</a> rejected with an
+            <a>OperationError</a> exception and abort these steps.
             </li>
             <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
@@ -1241,8 +1262,8 @@
             <li>Then run the following steps:
               <ol>
                 <li>
-                  <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
-                  <code>"NotFoundError"</code>.
+                  <a>Reject</a> <em>P</em> with a <a>NotFoundError</a>
+                  exception.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
@@ -1297,8 +1318,8 @@
                     <li>If <em>C</em> fails, run the following steps:
                       <ol>
                         <li>
-                          <a>Reject</a> P with a <a>DOMException</a> named
-                          <code>"OperationError"</code>.
+                          <a>Reject</a> P with an <a>OperationError</a>
+                          exception.
                         </li>
                       </ol>
                     </li>
@@ -1308,8 +1329,8 @@
                 permission</em>, run the following steps:
                   <ol>
                     <li>
-                      <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
-                      <code>"AbortError"</code>.
+                      <a>Reject</a> <em>P</em> with an <a>AbortError</a>
+                      exception.
                     </li>
                   </ol>
                 </li>
@@ -1407,8 +1428,8 @@
                   </div>
                 </li>
                 <li>
-                  <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
-                  <code>"NotFoundError"</code>.
+                  <a>Reject</a> <em>P</em> with a <a>NotFoundError</a>
+                  exception.
                 </li>
               </ol>
             </li>
@@ -1532,8 +1553,8 @@
             displays in order to start a connection, then:
               <ol>
                 <li>
-                  <a>Reject</a> <em>P</em> with a <a>DOMException</a> named
-                  <code>"NotSupportedError"</code>.
+                  <a>Reject</a> <em>P</em> with a <a>NotSupportedError</a>
+                  exception.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
