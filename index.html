@@ -519,10 +519,6 @@
       };
     }
   };
-  var disconnectController = function () {
-    // close old connection if exists
-    connection &amp;&amp; connection.close();
-  };
   var endConnection = function () {
     connection &amp;&amp; connection.terminate();
     // remove old presId from localStorage if exists
