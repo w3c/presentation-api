@@ -319,14 +319,17 @@
         "http://www.w3.org/TR/html5/infrastructure.html#concept-events-trusted">
         trusted event</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#allowed-to-show-a-popup">allowed
-        to show a
-        popup</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level
-        browsing
-        context</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/browsers.html#session-history">session history</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">sandboxed
-        auxiliary navigation browsing context flag</a></dfn>,
-        and <dfn><a href="http://www.w3.org/TR/html5/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">sandboxed
-        top-level navigation browsing context flag</a></dfn> are defined in
-        [[!HTML5]].
+        to show a popup</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level
+        browsing context</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/browsers.html#session-history">session
+        history</a></dfn>, <dfn><a href=
+        "http://www.w3.org/TR/html5/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">
+        sandboxed auxiliary navigation browsing context flag</a></dfn>, and
+        <dfn><a href=
+        "http://www.w3.org/TR/html5/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">
+        sandboxed top-level navigation browsing context flag</a></dfn> are
+        defined in [[!HTML5]].
       </p>
       <p>
         This document provides interface definitions using the Web IDL standard
@@ -385,16 +388,28 @@
         is defined in the WebRTC API specification [[WEBRTC]].
       </p>
       <p>
-        The term <dfn><a href="http://tools.ietf.org/html/rfc6265#section-4.2">cookie store</a></dfn> is defined in RFC 6265 [[COOKIES]].
+        The term <dfn><a href=
+        "http://tools.ietf.org/html/rfc6265#section-4.2">cookie store</a></dfn>
+        is defined in RFC 6265 [[COOKIES]].
       </p>
       <p>
-        The terms <dfn data-lt="permission|permissions"><a href="https://w3c.github.io/permissions/#idl-def-Permission">permission</a></dfn> and <dfn><a href="https://w3c.github.io/permissions/#idl-def-PermissionState">permission state</a></dfn> are defined in [[PERMISSIONS]].
+        The terms <dfn data-lt="permission|permissions"><a href=
+        "https://w3c.github.io/permissions/#idl-def-Permission">permission</a></dfn>
+        and <dfn><a href=
+        "https://w3c.github.io/permissions/#idl-def-PermissionState">permission
+        state</a></dfn> are defined in [[PERMISSIONS]].
       </p>
       <p>
-        The term <dfn data-lt="database|databases"><a href="http://www.w3.org/TR/IndexedDB/#database-concept">database</a></dfn> is defined in [[INDEXEDDB]].
+        The term <dfn data-lt="database|databases"><a href=
+        "http://www.w3.org/TR/IndexedDB/#database-concept">database</a></dfn>
+        is defined in [[INDEXEDDB]].
       </p>
       <p>
-        The terms <dfn><a href="http://www.w3.org/TR/webstorage/#the-localstorage-attribute"><code>localStorage</code></a></dfn> and <dfn><a href="http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute"><code>sessionStorage</code></a></dfn> are defined in [[WEBSTORAGE]].
+        The terms <dfn><a href=
+        "http://www.w3.org/TR/webstorage/#the-localstorage-attribute"><code>localStorage</code></a></dfn>
+        and <dfn><a href=
+        "http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute"><code>sessionStorage</code></a></dfn>
+        are defined in [[WEBSTORAGE]].
       </p>
     </section>
     <section>
@@ -618,13 +633,14 @@
           <code>connectionavailable</code> event.
         </p>
         <p>
-          The <dfn data-lt="receiving browsing context|receiving browsing
-          contexts">receiving browsing context</dfn> (or <a data-lt= "receiving
-          browsing context">presentation</a> for short) is the browsing context
-          responsible for rendering to a <a>presentation
+          The <dfn data-lt=
+          "receiving browsing context|receiving browsing contexts">receiving
+          browsing context</dfn> (or <a data-lt=
+          "receiving browsing context">presentation</a> for short) is the
+          browsing context responsible for rendering to a <a>presentation
           display</a>. A <a>receiving browsing context</a> can reside in the
           same user agent as the <a>controlling browsing context</a> or a
-          different one.  A <a>receiving browsing context</a> is created by
+          different one. A <a>receiving browsing context</a> is created by
           following the steps to <a>create a receiving browsing context</a>.
         </p>
         <p>
@@ -1264,23 +1280,23 @@
                   <a>Monitor the list of available presentation displays</a>.
                 </li>
                 <li>
-                  <a>Queue a task</a> <em>T</em> to request user permission for the
-                  use of a <a>presentation display</a> and selection of one
+                  <a>Queue a task</a> <em>T</em> to request user permission for
+                  the use of a <a>presentation display</a> and selection of one
                   presentation display.
                 </li>
               </ol>
             </li>
             <li>If either of the following is true:
               <ol>
-                <li>The <a>list of available presentation displays</a> is
-                empty and will remain so before the request for user permission is completed.
+                <li>The <a>list of available presentation displays</a> is empty
+                and will remain so before the request for user permission is
+                completed.
                 </li>
-                <li>No member if the <a>list of available presentation displays</a> is
-                a <a>compatible presentation display</a> for
+                <li>No member if the <a>list of available presentation
+                displays</a> is a <a>compatible presentation display</a> for
                 <code>presentationUrl</code>.
                 </li>
-              </ol>
-              Then run the following steps:
+              </ol>Then run the following steps:
               <ol>
                 <li>
                   <a>Reject</a> <em>P</em> with a <a>NotFoundError</a>
@@ -1291,39 +1307,39 @@
               </ol>
             </li>
             <li>If <em>T</em> completes with the user <em>denying
-                permission</em>, reject</a> <em>P</em> with an <a>AbortError</a>
-                  exception, and abort all remaining steps.
+            permission</em>, reject <em>P</em> with an <a>AbortError</a>
+            exception, and abort all remaining steps.
             </li>
             <li>Otherwise, <em>T</em> has completed with the user <em>granting
-                  permission</em> to use a display; let <em>D</em> be that display.</li>
-            <li><a>Queue a task</a> <em>C</em> to run the following steps:
+            permission</em> to use a display; let <em>D</em> be that display.
+            </li>
+            <li>
+              <a>Queue a task</a> <em>C</em> to run the following steps:
               <ol>
-                <li><a>Create a receiving browsing context</a> on <em>D</em> and
-                  let <em>R</em> be the result.</li>
-                <li><a>Navigate</a> <em>R</em> to <code>presentationUrl</code>.</li>
+                <li>
+                  <a>Create a receiving browsing context</a> on <em>D</em> and
+                  let <em>R</em> be the result.
+                </li>
+                <li>
+                  <a>Navigate</a> <em>R</em> to <code>presentationUrl</code>.
+                </li>
               </ol>
             </li>
-            <li>
-              If <em>C</em> fails, <a>reject</a> P with an <a>OperationError</a>
-              exception and abort all remaining steps.
+            <li>If <em>C</em> fails, <a>reject</a> P with an
+            <a>OperationError</a> exception and abort all remaining steps.
             </li>
-            <li>
-              Let <var>I</var> be a new <a>valid presentation
-                identifier</a> unique among all <a>presentation
-                identifiers</a> for known presentations in the <a>set
-                of presentations</a>.
+            <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
+            unique among all <a>presentation identifiers</a> for known
+            presentations in the <a>set of presentations</a>.
             </li>
-            <li>Create a new <a>PresentationConnection</a>
-              <em>S</em>.
+            <li>Create a new <a>PresentationConnection</a> <em>S</em>.
             </li>
-            <li>Set the <a>presentation identifier</a> of
-              <var>S</var> to <var>I</var>, and set the
-              <a>presentation connection state</a> of <var>S</var> to
-              <code>disconnected</code>.
+            <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
+              I</var>, and set the <a>presentation connection state</a> of
+              <var>S</var> to <code>disconnected</code>.
             </li>
-            <li>Add the tuple {<em>presentationUrl</em>,
-              <em>S.id</em>, <em>S</em>} to the <a>set of
-                presentations</a>.
+            <li>Add the tuple {<em>presentationUrl</em>, <em>S.id</em>,
+            <em>S</em>} to the <a>set of presentations</a>.
             </li>
             <li>
               <a>Resolve</a> <em>P</em> with <em>S</em>.
@@ -1331,12 +1347,11 @@
             <li>
               <a>Queue a task</a> to <a>fire</a> an event named
               <code>connectionavailable</code> at
-              <code>presentationRequest</code> with <em>S</em> as
-              its <code>connection</code> attribute.
+              <code>presentationRequest</code> with <em>S</em> as its
+              <code>connection</code> attribute.
             </li>
             <li>
-              <a>Establish a presentation connection</a> with
-              <em>S</em>.
+              <a>Establish a presentation connection</a> with <em>S</em>.
             </li>
           </ol>
           <div class="note">
@@ -1378,51 +1393,44 @@
             </dd>
           </dl>
           <p>
-            When the user agent is to <dfn>create a receiving
-            browsing context</dfn>, it must run the following steps:
+            When the user agent is to <dfn>create a receiving browsing
+            context</dfn>, it must run the following steps:
           </p>
           <ol>
-            <li>
-              Create a new <a>top-level browsing context</a> <em>C</em>.
+            <li>Create a new <a>top-level browsing context</a> <em>C</em>.
             </li>
-            <li>
-              Set the <a>session history</a> of <em>C</em> to be the empty list.
+            <li>Set the <a>session history</a> of <em>C</em> to be the empty
+            list.
             </li>
-            <li>
-              Set the <a>sandboxed auxiliary navigation browsing context flag</a> on <em>C</em>.
+            <li>Set the <a>sandboxed auxiliary navigation browsing context
+            flag</a> on <em>C</em>.
             </li>
-            <li>
-              Set the <a><code>sessionStorage</code></a> attribute for
-              the <code>Window</code> object associated with <em>C</em> to a new, empty
-              storage area.
+            <li>Set the <a><code>sessionStorage</code></a> attribute for the
+            <code>Window</code> object associated with <em>C</em> to a new,
+            empty storage area.
             </li>
-            <li>
-              Set the <a><code>localStorage</code></a> attribute for
-              the <code>Window</code> object associated with <em>C</em> to a new, empty
-              storage area.
+            <li>Set the <a><code>localStorage</code></a> attribute for the
+            <code>Window</code> object associated with <em>C</em> to a new,
+            empty storage area.
             </li>
-            <li>
-              Set the <a>cookie store</a> for <em>C</em> to an empty <a>cookie
-              store</a>.
+            <li>Set the <a>cookie store</a> for <em>C</em> to an empty
+            <a>cookie store</a>.
             </li>
-            <li>
-              Set the <a>permission state</a> of all <a>Permissions</a> for
-              <em>C</em> to <code>"denied"</code>.
+            <li>Set the <a>permission state</a> of all <a>Permissions</a> for
+            <em>C</em> to <code>"denied"</code>.
             </li>
-            <li>
-              Set the IndexedDB <a>databases</a> for <em>C</em> to an empty 
-              set of <a>databases</a>.
+            <li>Set the IndexedDB <a>databases</a> for <em>C</em> to an empty
+            set of <a>databases</a>.
             </li>
-            <li>
-              Return <em>C</em>.
+            <li>Return <em>C</em>.
             </li>
           </ol>
           <p>
-            When the <a>receiving browsing context</a> is closed, any associated
-            browsing state, including <a>session
-            history</a>, <code>sessionStorage</code>, <code>localStorage</code>,
-            the <a>cookie store</a>, and <a>databases</a> must be discarded and
-            not used for any other <a>receiving browsing context</a>.
+            When the <a>receiving browsing context</a> is closed, any
+            associated browsing state, including <a>session history</a>,
+            <code>sessionStorage</code>, <code>localStorage</code>, the
+            <a>cookie store</a>, and <a>databases</a> must be discarded and not
+            used for any other <a>receiving browsing context</a>.
           </p>
         </section>
         <section>
