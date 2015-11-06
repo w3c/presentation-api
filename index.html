@@ -319,9 +319,14 @@
         "http://www.w3.org/TR/html5/infrastructure.html#concept-events-trusted">
         trusted event</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#allowed-to-show-a-popup">allowed
-        to show a popup</a></dfn>,
-        and <dfn><a href="http://www.w3.org/TR/html5/browsers.html#navigate">navigate</a></dfn>
-        are defined in [[!HTML5]].
+        to show a
+        popup</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level
+        browsing
+        context</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/browsers.html#session-history">session history</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">sandboxed
+        auxiliary navigation browsing context flag</a></dfn>,
+        and <dfn><a href="http://www.w3.org/TR/html5/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">sandboxed
+        top-level navigation browsing context flag</a></dfn> are defined in
+        [[!HTML5]].
       </p>
       <p>
         This document provides interface definitions using the Web IDL standard
@@ -378,6 +383,18 @@
         The term <dfn><a href=
         "http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a></dfn>
         is defined in the WebRTC API specification [[WEBRTC]].
+      </p>
+      <p>
+        The term <dfn><a href="http://tools.ietf.org/html/rfc6265#section-4.2">cookie store</a></dfn> is defined in RFC 6265 [[COOKIES]].
+      </p>
+      <p>
+        The terms <dfn data-lt="permission|permissions"><a href="https://w3c.github.io/permissions/#idl-def-Permission">permission</a></dfn> and <dfn><a href="https://w3c.github.io/permissions/#idl-def-PermissionState">permission state</a></dfn> are defined in [[PERMISSIONS]].
+      </p>
+      <p>
+        The term <dfn data-lt="database|databases"><a href="http://www.w3.org/TR/IndexedDB/#database-concept">database</a></dfn> is defined in [[INDEXEDDB]].
+      </p>
+      <p>
+        The terms <dfn><a href="http://www.w3.org/TR/webstorage/#the-localstorage-attribute"><code>localStorage</code></a></dfn> and <dfn><a href="http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute"><code>sessionStorage</code></a></dfn> are defined in [[WEBSTORAGE]].
       </p>
     </section>
     <section>
@@ -1361,49 +1378,51 @@
             </dd>
           </dl>
           <p>
-            When the user agent is to <dfn data-lt="create a receiving browsing
-            context|creating a receiving browsing context">create a receiving
-            browsing context, it must run the following steps:
+            When the user agent is to <dfn>create a receiving
+            browsing context</dfn>, it must run the following steps:
           </p>
           <ol>
             <li>
               Create a new <a>top-level browsing context</a> <em>C</em>.
+            </li>
             <li>
-            <li>
-              Set the <a>sesson history</a> of <em>C</em> to be the empty list.
-            <li>
+              Set the <a>session history</a> of <em>C</em> to be the empty list.
+            </li>
             <li>
               Set the <a>sandboxed auxiliary navigation browsing context flag</a> on <em>C</em>.
             </li>
             <li>
-              Set the <code>sessionStorage</code> attribute for
-              the <code>Window</code> object associated with <em>C</em> to a new
+              Set the <a><code>sessionStorage</code></a> attribute for
+              the <code>Window</code> object associated with <em>C</em> to a new, empty
               storage area.
             </li>
             <li>
-              Set the <code>localStorage</code> attribute for
-              the <code>Window</code> object associated with <em>C</em> to a new
+              Set the <a><code>localStorage</code></a> attribute for
+              the <code>Window</code> object associated with <em>C</em> to a new, empty
               storage area.
             </li>
             <li>
-              Set the <a>cookie store</a> for <em>C</em> to an empty cookie
-              store.
+              Set the <a>cookie store</a> for <em>C</em> to an empty <a>cookie
+              store</a>.
             </li>
             <li>
               Set the <a>permission state</a> of all <a>Permissions</a> for
               <em>C</em> to <code>"denied"</code>.
             </li>
             <li>
-              Set the set of IndexedDB <a>databases</a> for <em>C</em> to the
-              empty set.
+              Set the IndexedDB <a>databases</a> for <em>C</em> to an empty 
+              set of <a>databases</a>.
+            </li>
+            <li>
+              Return <em>C</em>.
             </li>
           </ol>
-          <p class="note">
-            It may be advantagous to block navigation of the top-level browsing
-            context to only navigate among fragment identifiers.  However,
-            setting the <a>sandboxed top-level navigation browsing context
-            flag</a> prevents all navigation, as well as the browsing context
-            from closing itself.
+          <p>
+            When the <a>receiving browsing context</a> is closed, any associated
+            browsing state, including <a>session
+            history</a>, <code>sessionStorage</code>, <code>localStorage</code>,
+            the <a>cookie store</a>, and <a>databases</a> must be discarded and
+            not used for any other <a>receiving browsing context</a>.
           </p>
         </section>
         <section>
