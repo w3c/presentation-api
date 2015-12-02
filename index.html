@@ -995,7 +995,7 @@
 
             attribute EventHandler onchange;
           };
-        
+
 </pre>
         <p>
           A <a><code>PresentationAvailability</code></a> object is associated
@@ -1178,7 +1178,7 @@
             attribute EventHandler onconnectionavailable;
           };
 
-        
+
 </pre>
         <p>
           A <a><code>PresentationRequest</code></a> object is associated with a
@@ -1652,24 +1652,6 @@
         </section>
         <section>
           <h4>
-            Establishing a presentation connection in a receiving browsing
-            context
-          </h4>
-          <p>
-            When a new <a>receiving browsing context</a> has been created and
-            navigated to the <code>presentationUrl</code> on a user-selected
-            <a>presentation display</a>, the user agent MUST run the following
-            steps:
-          </p>
-          <ol>
-            <li>
-              <a>Queue a task</a> to start <a>monitoring incoming presentation
-              connections</a> from <a>controlling browsing contexts</a>.
-            </li>
-          </ol>
-        </section>
-        <section>
-          <h4>
             Event Handlers
           </h4>
           <p>
@@ -1715,7 +1697,7 @@
               required PresentationConnection connection;
             };
 
-          
+
 </pre>
           <p>
             A <a>controlling user agent</a> MUST fire an event named
@@ -1725,8 +1707,8 @@
             <a>PresentationConnectionAvailableEvent</a> interface, with the
             <a for="PresentationConnectionAvailableEvent">connection</a>
             attribute set to the <a><code>PresentationConnection</code></a>
-            object that was created. The event is fired for all connections
-            that are created for the <a>controller</a>, either by the
+            object that was created. The event is fired for each connection
+            that is created for the <a>controller</a>, either by the
             <a>controller</a> calling <code>start()</code> or
             <code>reconnect()</code>, or by the <a>controlling user agent</a>
             creating a connection on the controller's behalf via <a for=
@@ -1736,24 +1718,20 @@
       </section>
       <section>
         <h3>
-          Interface <a><code>PresentationReceiver</code></a>
+          Interface <a><code>PresentationConnectionList</code></a>
         </h3>
         <pre class="idl">
-          interface PresentationReceiver : EventTarget {
-            Promise&lt;PresentationConnection&gt; getConnection();
-            Promise&lt;sequence&lt;PresentationConnection&gt;&gt; getConnections();
+          interface PresentationConnectionList : EventTarget {
+            readonly attribute FrozenArray&lt;PresentationConnection&gt; connections;
             attribute EventHandler onconnectionavailable;
           };
 
-        
+
 </pre>
         <p>
-          The <a>PresentationReceiver</a> object is available to a <a>receiving
-          browsing context</a> in order to access the <a data-lt=
-          "controlling browsing context">controlling browsing context</a> and
-          communicate with it. The <a><code>PresentationReceiver</code></a>
-          object MUST be implemented in a <a>receiving browsing context</a>
-          provided by a <a>receiving user agent</a>.
+          The <a for="PresentationConnectionList">connections</a> attribute
+          MUST return a non-terminated <a>set of presentations</a> connections
+          available for the <a>receiving browsing context</a>.
         </p>
         <section>
           <h4>
@@ -1797,23 +1775,22 @@
                 </li>
                 <li>
                   <a>Queue a task</a> to <a>fire</a> an event named
-                  <code>connectionavailable</code> at <a data-lt=
-                  "PresentationReceiver"><code>presentation.receiver</code></a>.
+                  <code>connectionavailable</code> at all
+                  <a>PresentationConnectionList</a>.
                 </li>
               </ol>
             </li>
           </ol>
           <p>
             A <a>receiving user agent</a> MUST fire an event named
-            <code>connectionavailable</code> on a <a>PresentationReceiver</a>
-            when a connection associated with the object is created. It is
-            fired at the <a>PresentationReceiver</a> instance, using the
-            <a>PresentationConnectionAvailableEvent</a> interface, with the
-            <a for="PresentationConnectionAvailableEvent">connection</a>
-            attribute set to the <a><code>PresentationConnection</code></a>
-            object that was created. The event is fired for all connections
-            that are created for the <a>presentation</a> when <a>monitoring
-            incoming presentation connections</a>.
+            <code>connectionavailable</code> on all
+            <a>PresentationConnectionList</a> when a connection is created. It
+            is fired using the <a>PresentationConnectionAvailableEvent</a>
+            interface, with the <a for=
+            "PresentationConnectionAvailableEvent">connection</a> attribute set
+            to the <a><code>PresentationConnection</code></a> object that was
+            created. The event is fired for all connections that are created
+            when <a>monitoring incoming presentation connections</a>.
           </p>
           <p>
             The <a>receiving user agent</a> MUST fire the event as soon as it
@@ -1823,92 +1800,15 @@
         </section>
         <section>
           <h4>
-            Getting the first presentation connection on the startup of a
-            receiving browsing context
-          </h4>
-          <p>
-            When the <code><dfn for=
-            "PresentationReceiver">getConnection</dfn>()</code> method is
-            called, the user agent MUST run the following steps:
-          </p>
-          <ol>
-            <li>Let <var>P</var> be a new <a>Promise</a>.
-            </li>
-            <li>Return <var>P</var>.
-            </li>
-            <li>
-              <a>Queue a task</a> <var>T</var> to run the following steps in
-              order:
-              <ol>
-                <li>If the <a>set of presentations</a> is empty, then wait
-                until at least one element is added to the <a>set of
-                presentations</a>.
-                </li>
-                <li>Let <var>S</var> be the first <a>presentation
-                connection</a> added to the <a>set of presentations</a>.
-                </li>
-                <li>
-                  <a>Resolve</a> <var>P</var> with <var>S</var>.
-                </li>
-              </ol>
-            </li>
-          </ol>
-          <div class="note">
-            If the <a>set of presentations</a> is empty, we leave the
-            <a>Promise</a> pending until connecting request arrives from the
-            <a>controlling browsing context</a>. If the first <a>controlling
-            browsing context</a> disconnects after initial connection, then the
-            <a>Promise</a> returned to subsequent calls to <code><a for=
-            "PresentationReceiver">getConnection</a>()</code> will resolve with
-            a <a>presentation connection</a> that has its <a>presentation
-            connection state</a> set to <code>closed</code>.
-          </div>
-        </section>
-        <section>
-          <h4>
-            Getting all connected presentation connections in a receiving
-            browsing context
-          </h4>
-          <p>
-            When the <code><dfn for=
-            "PresentationReceiver">getConnections</dfn>()</code> method is
-            called, the user agent MUST run the following steps:
-          </p>
-          <ol>
-            <li>Let <var>P</var> be a new <a>Promise</a>.
-            </li>
-            <li>Return <var>P</var>.
-            </li>
-            <li>
-              <a>Queue a task</a> to run the following steps in order:
-              <ol>
-                <li>Let <var>array</var> be an empty array.
-                </li>
-                <li>For each known connection in the <a>set of
-                presentations</a>
-                  <ol>
-                    <li>Add known connection to <var>array</var>.
-                    </li>
-                  </ol>
-                </li>
-                <li>
-                  <a>Resolve</a> <var>P</var> with <var>array</var>.
-                </li>
-              </ol>
-            </li>
-          </ol>
-        </section>
-        <section>
-          <h4>
             Event Handlers
           </h4>
           <p>
             The following are the event handlers (and their corresponding event
             handler event types) that must be supported, as event handler IDL
-            attributes, by objects implementing the <a>PresentationReceiver</a>
-            interface:
+            attributes, by objects implementing the
+            <a>PresentationConnectionList</a> interface:
           </p>
-          <table dfn-for="PresentationReceiver">
+          <table dfn-for="PresentationConnectionList">
             <thead>
               <tr>
                 <th>
@@ -1934,6 +1834,74 @@
       </section>
       <section>
         <h3>
+          Interface <a><code>PresentationReceiver</code></a>
+        </h3>
+        <pre class="idl">
+          interface PresentationReceiver {
+            [SameObject] readonly attribute Promise&lt;PresentationConnectionList&gt; connections;
+          };
+
+
+</pre>
+        <div class='issue'>
+          <p>
+            The text about "PresentationReceiver object" should probably move
+            to the section about the Presentation interface. This section is
+            about the interface, not its instance (the object).
+          </p>
+          <p>
+            Furthermore, we probably need a better way to explain how
+            PresentationConnectionList is initialized -- how the set of
+            presentations is populated. This is addressed in <a href=
+            'https://github.com/w3c/presentation-api/issues/193'>issue
+            #193</a>.
+          </p>
+        </div>
+        <p>
+          The <a>PresentationReceiver</a> object is available to a <a>receiving
+          browsing context</a> in order to access the <a data-lt=
+          "controlling browsing context">controlling browsing context</a> and
+          communicate with it. The <a><code>PresentationReceiver</code></a>
+          object MUST be implemented in a <a>receiving browsing context</a>
+          provided by a <a>receiving user agent</a>.
+        </p>
+        <p>
+          For each <a>PresentationReceiver</a>, there is a <dfn>connection list
+          promise</dfn> which is initially set to <code>null</code>. It is a
+          <a>Promise</a> object which holds a
+          <a>PresentationConnectionList</a>.
+        </p>
+        <ol>
+          <li>If <a>connection list promise</a> is not <code>null</code>,
+          return <a>connection list promise</a> and abort these steps.
+          </li>
+          <li>Otherwise, set <a>connection list promise</a> be a new
+          <a>Promise</a>.
+          </li>
+          <li>Return <var>p</var>.
+          </li>
+          <li>Run the following substeps asynchronously:
+            <ol>
+              <li>Let <var>list</var> be a new
+              <a>PresentationConnectionList</a>.
+              </li>
+              <li>Initialize <var>list</var> with the <a>set of
+              presentations</a> associated with the <a>receiving browsing
+              context</a>.
+              </li>
+              <li>If the user agent is not <a>monitoring incoming presentation
+              connections</a>, <a>queue a task</a> to start <a>monitoring
+              incoming presentation connections</a> from <a>controlling
+              browsing contexts</a>.
+              </li>
+              <li>Resolve <var>p</var> with <var>list</var>.
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h3>
           Interface <a><code>Presentation</code></a>
         </h3>
         <pre class="idl">
@@ -1945,7 +1913,7 @@
             attribute PresentationRequest? defaultRequest;
             [SameObject] readonly attribute PresentationReceiver? receiver;
           };
-        
+
 </pre>
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
