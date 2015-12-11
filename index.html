@@ -686,7 +686,7 @@
             <a>controlling user agent</a> as the <dfn>default presentation
             request</dfn> for that controller. When the <a>controlling user
             agent</a> wishes to initiate a <a>PresentationConnection</a> on the
-            controller's behalf, it MUST <a>start a presentation connection</a>
+            controller's behalf, it MUST <a>start a presentation</a>
             using the <a>default presentation request</a> for the
             <a>controller</a> (as if the controller had called
             <code>defaultRequest.start()</code>).
@@ -705,7 +705,7 @@
           <div class="issue">
             It should be clear that user-intiated presentation via the user
             agent may have pre-selected the presentation display. In this case
-            step 6 of <a>start a presentation connection</a> is optional. It
+            step 6 of <a>start a presentation</a> is optional. It
             may be cleaner to define a separate set of steps for initiating a
             default presentation.
           </div>
@@ -790,12 +790,12 @@
         </section>
         <section>
           <h4>
-            Starting a presentation connection
+            Starting a presentation
           </h4>
           <p>
             When the <code><dfn for="PresentationRequest">start</dfn></code>
             method is called, the user agent MUST run the following steps to
-            <dfn>start a presentation connection</dfn>:
+            <dfn>start a presentation</dfn>:
           </p>
           <dl>
             <dt>
@@ -931,67 +931,7 @@
         </section>
         <section>
           <h4>
-            Creating a receiving browsing context
-          </h4>
-          <dl>
-            <dt>
-              Input
-            </dt>
-            <dd>
-              <em>D</em>, a <a>presentation display</a> chosen by the user
-            </dd>
-            <dt>
-              Output
-            </dt>
-            <dd>
-              <em>R</em>, a <a>receiving browsing context</a>
-            </dd>
-          </dl>
-          <p>
-            When the user agent is to <dfn>create a receiving browsing
-            context</dfn>, it must run the following steps:
-          </p>
-          <ol>
-            <li>Create a new <a>top-level browsing context</a> <em>C</em> on
-            the user agent connected to <em>D</em>.
-            </li>
-            <li>Set the <a>session history</a> of <em>C</em> to be the empty
-            list.
-            </li>
-            <li>Set the <a>sandboxed auxiliary navigation browsing context
-            flag</a> on <em>C</em>.
-            </li>
-            <li>Set the <a><code>sessionStorage</code></a> attribute for the
-            <code>Window</code> object associated with <em>C</em> to a new,
-            empty storage area.
-            </li>
-            <li>Set the <a><code>localStorage</code></a> attribute for the
-            <code>Window</code> object associated with <em>C</em> to a new,
-            empty storage area.
-            </li>
-            <li>Set the <a>cookie store</a> for <em>C</em> to an empty
-            <a>cookie store</a>.
-            </li>
-            <li>Set the <a>permission state</a> of all <a>Permissions</a> for
-            <em>C</em> to <code>"denied"</code>.
-            </li>
-            <li>Set the IndexedDB <a>databases</a> for <em>C</em> to an empty
-            set of <a>databases</a>.
-            </li>
-            <li>Return <em>C</em>.
-            </li>
-          </ol>
-          <p>
-            When the <a>receiving browsing context</a> is closed, any
-            associated browsing state, including <a>session history</a>,
-            <code>sessionStorage</code>, <code>localStorage</code>, the
-            <a>cookie store</a>, and <a>databases</a> must be discarded and not
-            used for any other <a>receiving browsing context</a>.
-          </p>
-        </section>
-        <section>
-          <h4>
-            Reconnecting to a presentation connection
+            Reconnecting to a presentation
           </h4>
           <p>
             When the <code><dfn for=
@@ -1073,8 +1013,7 @@
         </section>
         <section>
           <h4>
-            Establishing a presentation connection in a controlling browsing
-            context
+            Establishing a presentation connection
           </h4>
           <p>
             When the user agent is to <dfn>establish a presentation
@@ -1141,76 +1080,6 @@
         </section>
         <section>
           <h4>
-            Getting the <a>presentation displays</a> availability information
-          </h4>
-          <p>
-            When the <code><dfn for=
-            "PresentationRequest">getAvailability</dfn>()</code> method is
-            called, the user agent MUST run the following steps:
-          </p>
-          <dl>
-            <dt>
-              Input
-            </dt>
-            <dd>
-              <code>presentationUrl</code>, the <a>presentation request URL</a>
-            </dd>
-            <dt>
-              Output
-            </dt>
-            <dd>
-              <em>P</em>, a <a>Promise</a>
-            </dd>
-          </dl>
-          <ol>
-            <li>Let <em>P</em> be a new <a>Promise</a>.
-            </li>
-            <li>Return <em>P</em>.
-            </li>
-            <li>If the user agent is unable to monitor presentation displays
-            for the entire duration of the controlling browsing context (e.g.,
-            because the user has disabled this feature), then:
-              <ol>
-                <li>
-                  <a>Resolve</a> <em>P</em> with a new
-                  <code>PresentationAvailability</code> object with its
-                  <code>value</code> property set to <code>false</code>.
-                </li>
-                <li>Abort all the remaining steps.
-                </li>
-              </ol>
-            </li>
-            <li>If the user agent is unable to continuously <a>monitor the list
-            of available presentation displays</a> but can find presentation
-            displays in order to start a connection, then:
-              <ol>
-                <li>
-                  <a>Reject</a> <em>P</em> with a <a>NotSupportedError</a>
-                  exception.
-                </li>
-                <li>Abort all the remaining steps.
-                </li>
-              </ol>
-            </li>
-            <li>Let <em>A</em> be a new <code>PresentationAvailability</code>
-            object with its <code>value</code> property set to
-            <code>false</code> if the <a>list of available presentation
-            displays</a> is empty or non of them is a <a>compatible
-            presentation display</a>, <code>true</code> otherwise.
-            </li>
-            <li>Create a tuple <em>(A, presentationUrl)</em> and add it to the
-            <a>set of availability objects</a>.
-            </li>
-            <li>Run the algorithm to <a>monitor the list of available
-            presentation displays</a>.
-            </li>
-            <li>
-              <a>Resolve</a> <em>P</em> with <em>A</em>.
-            </li>
-          </ol>
-        </section>
-        <section>
-          <h4>
             Event Handlers
           </h4>
           <p>
@@ -1241,38 +1110,6 @@
               </tr>
             </tbody>
           </table>
-        </section>
-        <section>
-          <h3>
-            Interface <code>PresentationConnectionAvailableEvent</code>
-          </h3>
-          <pre class="idl">
-            [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
-            interface PresentationConnectionAvailableEvent : Event {
-              [SameObject] readonly attribute PresentationConnection connection;
-            };
-
-            dictionary PresentationConnectionAvailableEventInit : EventInit {
-              required PresentationConnection connection;
-            };
-
-
-</pre>
-          <p>
-            A <a>controlling user agent</a> MUST fire an event named
-            <code>connectionavailable</code> on a <a>PresentationRequest</a>
-            when a connection associated with the object is created. It is
-            fired at the <a>PresentationRequest</a> instance, using the
-            <a>PresentationConnectionAvailableEvent</a> interface, with the
-            <a for="PresentationConnectionAvailableEvent">connection</a>
-            attribute set to the <a><code>PresentationConnection</code></a>
-            object that was created. The event is fired for each connection
-            that is created for the <a>controller</a>, either by the
-            <a>controller</a> calling <code>start()</code> or
-            <code>reconnect()</code>, or by the <a>controlling user agent</a>
-            creating a connection on the controller's behalf via <a for=
-            "Presentation"><code>defaultRequest</code></a>.
-          </p>
         </section>
       </section>
       <section>
@@ -1387,7 +1224,7 @@
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
             pending request to <a for="PresentationRequest" data-lt=
-            "start">start a presentation connection</a>, the user agent MUST
+            "start">start a presentation</a>, the user agent MUST
             <dfn>monitor the list of available presentation displays</dfn> by
             running the following steps.
           </p>
@@ -1442,7 +1279,7 @@
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
             there is no pending request to <a for="PresentationRequest"
-              data-lt="start">start a presentation connection</a>, cancel any
+              data-lt="start">start a presentation</a>, cancel any
               pending task to <a>monitor the list of available presentation
               displays</a> for power saving purposes.
             </li>
@@ -1452,6 +1289,38 @@
             availability and determine the compatibility of a <a>presentation
             display</a> with a given URL is left to the user agent.
           </div>
+        </section>
+        <section>
+          <h3>
+            Interface <code>PresentationConnectionAvailableEvent</code>
+          </h3>
+          <pre class="idl">
+            [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
+            interface PresentationConnectionAvailableEvent : Event {
+              [SameObject] readonly attribute PresentationConnection connection;
+            };
+
+            dictionary PresentationConnectionAvailableEventInit : EventInit {
+              required PresentationConnection connection;
+            };
+
+
+</pre>
+          <p>
+            A <a>controlling user agent</a> MUST fire an event named
+            <code>connectionavailable</code> on a <a>PresentationRequest</a>
+            when a connection associated with the object is created. It is
+            fired at the <a>PresentationRequest</a> instance, using the
+            <a>PresentationConnectionAvailableEvent</a> interface, with the
+            <a for="PresentationConnectionAvailableEvent">connection</a>
+            attribute set to the <a><code>PresentationConnection</code></a>
+            object that was created. The event is fired for each connection
+            that is created for the <a>controller</a>, either by the
+            <a>controller</a> calling <code>start()</code> or
+            <code>reconnect()</code>, or by the <a>controlling user agent</a>
+            creating a connection on the controller's behalf via <a for=
+            "Presentation"><code>defaultRequest</code></a>.
+          </p>
         </section>
       </section>
       <section>
@@ -1842,8 +1711,67 @@
             </ol>
           </li>
         </ol>
+        <section>
+          <h4>
+            Creating a receiving browsing context
+          </h4>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <em>D</em>, a <a>presentation display</a> chosen by the user
+            </dd>
+            <dt>
+              Output
+            </dt>
+            <dd>
+              <em>R</em>, a <a>receiving browsing context</a>
+            </dd>
+          </dl>
+          <p>
+            When the user agent is to <dfn>create a receiving browsing
+            context</dfn>, it must run the following steps:
+          </p>
+          <ol>
+            <li>Create a new <a>top-level browsing context</a> <em>C</em> on
+            the user agent connected to <em>D</em>.
+            </li>
+            <li>Set the <a>session history</a> of <em>C</em> to be the empty
+            list.
+            </li>
+            <li>Set the <a>sandboxed auxiliary navigation browsing context
+            flag</a> on <em>C</em>.
+            </li>
+            <li>Set the <a><code>sessionStorage</code></a> attribute for the
+            <code>Window</code> object associated with <em>C</em> to a new,
+            empty storage area.
+            </li>
+            <li>Set the <a><code>localStorage</code></a> attribute for the
+            <code>Window</code> object associated with <em>C</em> to a new,
+            empty storage area.
+            </li>
+            <li>Set the <a>cookie store</a> for <em>C</em> to an empty
+            <a>cookie store</a>.
+            </li>
+            <li>Set the <a>permission state</a> of all <a>Permissions</a> for
+            <em>C</em> to <code>"denied"</code>.
+            </li>
+            <li>Set the IndexedDB <a>databases</a> for <em>C</em> to an empty
+            set of <a>databases</a>.
+            </li>
+            <li>Return <em>C</em>.
+            </li>
+          </ol>
+          <p>
+            When the <a>receiving browsing context</a> is closed, any
+            associated browsing state, including <a>session history</a>,
+            <code>sessionStorage</code>, <code>localStorage</code>, the
+            <a>cookie store</a>, and <a>databases</a> must be discarded and not
+            used for any other <a>receiving browsing context</a>.
+          </p>
+        </section>
       </section>
-    </section>
       <section>
         <h3>
           Interface <a><code>PresentationConnectionList</code></a>
@@ -1863,8 +1791,7 @@
         </p>
         <section>
           <h4>
-            Monitoring incoming presentation connections in a receiving
-            browsing context
+            Monitoring incoming presentation connections
           </h4>
           <p>
             When the <a>receiving user agent</a> is to start <dfn>monitoring
@@ -1960,6 +1887,7 @@
           </table>
         </section>
       </section>
+    </section>
     <section>
       <h2>
         Security and privacy considerations
