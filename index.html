@@ -1665,7 +1665,7 @@
         </h3>
         <pre class="idl">
           interface PresentationReceiver {
-            [SameObject] readonly attribute Promise&lt;PresentationConnectionList&gt; connections;
+            [SameObject] readonly attribute Promise&lt;PresentationConnectionList&gt; connectionList;
           };
 
 
@@ -1680,8 +1680,8 @@
           provided by a <a>receiving user agent</a>.
         </p>
         <p>
-          The <dfn for="PresentationReceiver">connections</dfn> attribute MUST
-          return the <a>connection list promise</a>.
+          The <dfn for="PresentationReceiver">connectionList</dfn> attribute
+          MUST return the <a>connection list promise</a>.
         </p>
         <p>
           For each <a>PresentationReceiver</a>, there is a <dfn>connection list
