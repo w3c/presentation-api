@@ -534,27 +534,26 @@
       // save presId in localStorage
       localStorage &amp;&amp; (localStorage["presId"] = connection.id);
       // monitor connection's state
-      connection.onstatechange = function () {
-        if (this == connection) {
-          if (this.state == "closed") {
-            // Offer the user a chance to reconnect(), e.g. if there was a
-            // network disruption, or the user wishes to resume control.
-          } else if (this.state == "terminated") {
-            // The presentation has terminated.  Offer the user a chance to
-            // start a new presentation.
-          } else if (this.state == "connected") {
-            // send initial message to presentation page
-            connection.send("say hello");
-          }
+      connection.onclosed = function () {
+        // Offer the user a chance to reconnect, e.g. if there was a
+        // network disruption, or the user wishes to resume control.
       };
-      // register message handler
-      connection.onmessage = function (evt) {
-        console.log("receive message", evt.data);
+      connection.onconnected = function () {
+        // register message handler
+        this.onmessage = function (message) {
+          console.log("receive message", message.data);
+        };
+        // send initial message to presentation page
+        this.send("say hello");
+      };
+      connection.onterminated = function () {
+        // The presentation has terminated.  Offer the user a chance to
+        // start a new presentation.
       };
     }
   };
   var endConnection = function () {
-    connection &amp;&amp; connection.terminate();
+    connection &amp;&amp; connection.close();
     // remove old presId from localStorage if exists
     localStorage &amp;&amp; delete localStorage["presId"];
   };
@@ -570,13 +569,11 @@
 &lt;!-- receiver.html --&gt;
 &lt;script&gt;
   var addConnection = function(connection) {
-    connection.onstatechange = function () {
-      // connection.state is either 'connected,' 'closed,' or 'terminated'
-      console.log("connection's state is now", connection.state);
-    };
-    connection.onmessage = function (evt) {
-      if (evt.data == "say hello")
-        connection.send("hello");
+    connection.onconnected = function () {
+      this.onmessage = function (message) {
+        if (message.data == "say hello")
+          this.send("hello");
+      };
     };
   };
   navigator.presentation.receiver.getConnection().then(addConnection);
@@ -891,7 +888,7 @@
             </li>
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
               I</var>, and set the <a>presentation connection state</a> of
-              <var>S</var> to <code>disconnected</code>.
+              <var>S</var> to <code>connecting</code>.
             </li>
             <li>Add the tuple {<em>presentationUrl</em>, <em>S.id</em>,
             <em>S</em>} to the <a>set of presentations</a>.
@@ -1015,40 +1012,44 @@
           <h4>
             Establishing a presentation connection
           </h4>
+          <!-- TODO(mfoltz): Move this to 6.5.1, under the
+               PresentationConnection interface.  Leaving here for now to simplify
+               the diff. -->
           <p>
             When the user agent is to <dfn>establish a presentation
-            connection</dfn> using a <a>presentation connection</a> <em>S</em>,
+            connection</dfn> using a <a>presentation connection</a>,
             it MUST run the following steps:
           </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <em>presentationConnection</em>, the
+              <code>PresentationConnection</code> object that is to be connected.
+              The <a>presentation connection state</a>
+              of <em>presentationConnection</em> must
+              be <code>connecting.</code>
+            </dd>
+          </dl>
           <ol>
             <li>
-              <a>Queue a task</a> <em>T</em> to connect the <a>presentation
-              connection</a> <em>S</em> to the <a>receiving browsing
-              context</a>.
+              <a>Queue a task</a> <em>T</em> to
+              connect <em>presentationConnection</em> to the <a>receiving
+              browsing context</a>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
                 <li>Set the <a>presentation connection state</a> of
-                <var>S</var> to <code>connected.</code>
+                <var>presentationConnection</var> to <code>connected.</code>
                 </li>
-                <li>
-                  <a>Queue a task</a> <em>T</em> to run the following steps in
-                  order:
-                  <ol>
-                    <li>For each <var>known connection</var> in the <a>set of
+                <li>For each <var>known connection</var> in the <a>set of
                     presentations</a>:
-                      <ol>
-                        <li>If the <a>presentation identifier</a> of <var>known
-                        connection</var> and <var>S</var> are equal, then run
-                        the following steps:
-                          <ol>
-                            <li>
-                              <a>Queue a task</a> to <a>fire</a> an event named
-                              <code>statechange</code> at <em>s</em>.
-                            </li>
-                          </ol>
-                        </li>
-                      </ol>
+                  <ol>
+                    <li>If the <a>presentation identifier</a> of <var>known
+                        connection</var> and <var>presentationConnection</var>
+                      are equal, then <a>fire</a> an event named
+                      <code>connected</code> at <em>s</em>.
                     </li>
                   </ol>
                 </li>
@@ -1291,9 +1292,9 @@
           </div>
         </section>
         <section>
-          <h3>
+          <h4>
             Interface <code>PresentationConnectionAvailableEvent</code>
-          </h3>
+          </h4>
           <pre class="idl">
             [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
             interface PresentationConnectionAvailableEvent : Event {
@@ -1334,7 +1335,7 @@
           <a>PresentationConnection</a>.
         </p>
         <pre class="idl">
-          enum PresentationConnectionState { "connected", "closed", "terminated" };
+          enum PresentationConnectionState { "connecting", "connected", "closed", "terminated" };
           enum BinaryType { "blob", "arraybuffer" };
 
           interface PresentationConnection : EventTarget {
@@ -1342,7 +1343,9 @@
             readonly attribute PresentationConnectionState state;
             void close();
             void terminate();
-            attribute EventHandler onstatechange;
+            attribute EventHandler onconnected;
+            attribute EventHandler onclosed;
+            attribute EventHandler onterminated;
 
             // Communication
             attribute BinaryType binaryType;
@@ -1490,6 +1493,44 @@
         </section>
         <section>
           <h4>
+            Interface <code>PresentationConnectionClosedEvent</code>
+          </h4>
+          <pre class="idl">
+            enum PresentationConnectionClosedReason { "error", "closed", "wentAway" };
+            
+            [Constructor(DOMString type, PresentationConnectionClosedEventInit eventInitDict)]
+            interface PresentationConnectionClosedEvent : Event {
+              readonly attribute PresentationConnectionCloseReason reason;
+              readonly optional attribute DOMString errorMessage;
+            };
+
+            dictionary PresentationConnectionClosedEventInit : EventInit {
+              required PresentationConnectionCloseReason reason;
+              optional DOMString errorMessage = "";
+            };
+
+
+</pre>
+          <p>
+            A <code>PresentationConnectionClosedEvent</code> is fired when
+            a <a>presentation connection</a> enters a <code>closed<code> state.
+            The <code>reason</code> attribute provides the reason why the
+            connection was closed:
+          </p>
+          <ul>
+            <li> <code>error</code> means that the underlying communication channel entered an error state. </li>
+            <li> <code>closed<code> means that either the <a>controlling browsing context</a> or the <a>receiving browsing context</a> that were connected by the <code>PresentationConnection</code> called <code>close()</code>. </li>
+            <li> "wentAway" means that the browser closed the connection, for
+              example, because either the controlling or receiving browsing context navigated. </li>
+          </ul>
+          <p>
+            When the <code>reason</code> attribute is <code>error</code>, the
+            user agent SHOULD set the error message to a human readable
+            description of how the communication channel encountered an error.
+          </p>
+        </section>
+        <section>
+          <h4>
             Closing a <code>PresentationConnection</code>
           </h4>
           <p>
@@ -1502,15 +1543,18 @@
               <a>Queue a task</a> to run the following steps in order:
               <ol>
                 <li>If the <a>presentation connection state</a> of
-                <em>connection</em> is not <code>connected</code>, then abort
-                these steps.
+                <em>connection</em> is not <code>connected</code>
+                or <code>connecting</code>, then abort these steps.
                 </li>
                 <li>Set <a>presentation connection state</a> of
                 <em>connection</em> to <code>closed</code>.
                 </li>
                 <li>
-                  <a>Fire</a> an event named <code>statechange</code> at
-                  <em>connection</em>.
+                  Construct a new <code>PresentationConnectionClosedEvent</code>
+                    <var>E</var> with <code>reason</code> set to <code>closed</code>.
+                </li>
+                </li>
+                  <a>Fire</a> <var>E</var> at <em>connection</em>.
                 </li>
                 <li>If <em>connection</em> is owned by a <a>controlling
                 browsing context</a>, signal the <a>receiving browsing
@@ -1647,10 +1691,26 @@
               </tr>
               <tr>
                 <td>
-                  <dfn><code>onstatechange</code></dfn>
+                  <dfn><code>onconnected</code></dfn>
                 </td>
                 <td>
-                  <code>statechange</code>
+                  <code>connected</code>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>onclosed</code></dfn>
+                </td>
+                <td>
+                  <code>closed</code>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>onterminated</code></dfn>
+                </td>
+                <td>
+                  <code>terminated</code>
                 </td>
               </tr>
             </tbody>
