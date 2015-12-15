@@ -1680,6 +1680,10 @@
           provided by a <a>receiving user agent</a>.
         </p>
         <p>
+          The <dfn for="PresentationReceiver">connections</dfn> attribute MUST
+          return the <a>connection list promise</a>.
+        </p>
+        <p>
           For each <a>PresentationReceiver</a>, there is a <dfn>connection list
           promise</dfn> which is initially set to <code>null</code>. It is a
           <a>Promise</a> object which holds a
@@ -1787,7 +1791,7 @@
 
 </pre>
         <p>
-          The <a for="PresentationConnectionList">connections</a> attribute
+          The <dfn for="PresentationConnectionList">connections</dfn> attribute
           MUST return a non-terminated <a>set of presentations</a> connections
           available for the <a>receiving browsing context</a>.
         </p>
