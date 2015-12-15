@@ -579,12 +579,15 @@
         connection.send("hello");
     };
   };
-  navigator.presentation.receiver.getConnection().then(addConnection);
-  navigator.presentation.receiver.onconnectionavailable = function(evt) {
-    navigator.presentation.receiver.getConnections().then(function(connections) {
-      addConnection(connections[connections.length-1]);
+
+  navigator.presentation.receiver.connections.then(function (list) {
+    list.connections.map(function (connection) {
+      addConnection(connection);
     });
-  };
+    list.connections.onconnectionavailable = function (connections) {
+      addConnection(connections[connections.length - 1]);
+    };
+  });
 &lt;/script&gt;
 
 </pre>
