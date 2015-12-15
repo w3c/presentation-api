@@ -689,10 +689,9 @@
             <a>controlling user agent</a> as the <dfn>default presentation
             request</dfn> for that controller. When the <a>controlling user
             agent</a> wishes to initiate a <a>PresentationConnection</a> on the
-            controller's behalf, it MUST <a>start a presentation</a>
-            using the <a>default presentation request</a> for the
-            <a>controller</a> (as if the controller had called
-            <code>defaultRequest.start()</code>).
+            controller's behalf, it MUST <a>start a presentation</a> using the
+            <a>default presentation request</a> for the <a>controller</a> (as
+            if the controller had called <code>defaultRequest.start()</code>).
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
@@ -708,9 +707,9 @@
           <div class="issue">
             It should be clear that user-intiated presentation via the user
             agent may have pre-selected the presentation display. In this case
-            step 6 of <a>start a presentation</a> is optional. It
-            may be cleaner to define a separate set of steps for initiating a
-            default presentation.
+            step 6 of <a>start a presentation</a> is optional. It may be
+            cleaner to define a separate set of steps for initiating a default
+            presentation.
           </div>
         </section>
         <section>
@@ -1227,9 +1226,9 @@
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
             pending request to <a for="PresentationRequest" data-lt=
-            "start">start a presentation</a>, the user agent MUST
-            <dfn>monitor the list of available presentation displays</dfn> by
-            running the following steps.
+            "start">start a presentation</a>, the user agent MUST <dfn>monitor
+            the list of available presentation displays</dfn> by running the
+            following steps.
           </p>
           <ol link-for="PresentationAvailability">
             <li>
@@ -1282,9 +1281,9 @@
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
             there is no pending request to <a for="PresentationRequest"
-              data-lt="start">start a presentation</a>, cancel any
-              pending task to <a>monitor the list of available presentation
-              displays</a> for power saving purposes.
+              data-lt="start">start a presentation</a>, cancel any pending task
+              to <a>monitor the list of available presentation displays</a> for
+              power saving purposes.
             </li>
           </ol>
           <div class="note">
