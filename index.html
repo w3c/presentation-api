@@ -77,6 +77,7 @@
           }
         },
         issueBase: "https://www.github.com/w3c/presentation-api/issues/",
+        // TODO: Uncomment when https://github.com/w3c/presentation-api/issues/228 is fixed
         // githubAPI: "https://api.github.com/repos/w3c/presentation-api",
 
         // Temp fix for ReSpec issue #483:
@@ -498,7 +499,7 @@
   }
 &lt;/script&gt;
 </pre>
-      </section>
+      </section><!-- TODO: Add an example for terminating a presentation. -->
       <section>
         <h3>
           Handling an event for a controlling UA initiated presentation example
@@ -979,7 +980,6 @@
                     identifier</a> of <var>known connection</var> is equal to
                     <code>presentationId</code>, run the following steps:
                     <ol>
-                      <!-- TODO(mfoltz): We should explicitly construct a new connection if necessary. -->
                       <li>Let <var>S</var> be the <a>presentation
                       connection</a> of <var>known connection</var>.
                       </li>
@@ -992,9 +992,9 @@
                         <code>presentationRequest</code> with <em>S</em> as its
                         <code>connection</code> attribute.
                       </li>
-                      <li>If the <a>presentation connection state</a> of <var>
-                        S</var> is <code>closed</code>, then <a>establish a
-                        presentation connection</a> with <var>S</var>.
+                      <li>
+                        <a>Establish a presentation connection</a> with
+                        <var>S</var>.
                       </li>
                       <li>Abort the remaining steps of <var>T</var>.
                       </li>
@@ -1008,6 +1008,7 @@
               </ol>
             </li>
           </ol>
+          <div class="issue" data-number="229"></div>
           <div class="issue">
             If no matching presentation is found, we could leave the Promise
             pending in case a matching presentation is started in the future.
@@ -1033,7 +1034,7 @@
               <code>PresentationConnection</code> object that is to be
               connected. The <a>presentation connection state</a> of
               <code>presentationConnection</code> must be
-              <code>connecting.</code>
+              <code>connecting</code>.
             </dd>
           </dl>
           <ol>
