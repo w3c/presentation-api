@@ -683,10 +683,9 @@
             <a>controlling user agent</a> as the <dfn>default presentation
             request</dfn> for that controller. When the <a>controlling user
             agent</a> wishes to initiate a <a>PresentationConnection</a> on the
-            controller's behalf, it MUST <a>start a presentation</a>
-            using the <a>default presentation request</a> for the
-            <a>controller</a> (as if the controller had called
-            <code>defaultRequest.start()</code>).
+            controller's behalf, it MUST <a>start a presentation</a> using the
+            <a>default presentation request</a> for the <a>controller</a> (as
+            if the controller had called <code>defaultRequest.start()</code>).
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
@@ -702,9 +701,9 @@
           <div class="issue">
             It should be clear that user-intiated presentation via the user
             agent may have pre-selected the presentation display. In this case
-            step 6 of <a>start a presentation</a> is optional. It
-            may be cleaner to define a separate set of steps for initiating a
-            default presentation.
+            step 6 of <a>start a presentation</a> is optional. It may be
+            cleaner to define a separate set of steps for initiating a default
+            presentation.
           </div>
         </section>
         <section>
@@ -902,12 +901,12 @@
                 </li>
               </ol>
             </li>
-            <li>If any step of <em>C</em> fails, run the steps to 
-              <a data-lt="close-algorithm">close the presentation connection</a> with
-                  <var>S</var>
-                  as <code>presentationConnection</code>, <code>error</code>
-                  as <code>closeReason</code>, and a human readable message
-                  describing the failure as <code>closeMessage</code>.
+            <li>If any step of <em>C</em> fails, run the steps to <a data-lt=
+            "close-algorithm">close the presentation connection</a> with <var>
+              S</var> as <code>presentationConnection</code>,
+              <code>error</code> as <code>closeReason</code>, and a human
+              readable message describing the failure as
+              <code>closeMessage</code>.
             </li>
           </ol>
           <div class="note">
@@ -972,13 +971,15 @@
                 <li>For each <var>known connection</var> in the <a>set of
                 presentations</a>,
                   <div style="margin-left: 2em">
-                    If the <a>presentation URL</a> of <var>known
-                    connection</var> is equal to the
-                    <code>presentationUrl</code> of
+                    If <a>presentation connection state</a> of <var>known
+                    presentation</var> is not <code>terminated</code>, the
+                    <a>presentation URL</a> of <var>known connection</var> is
+                    equal to the <code>presentationUrl</code> of
                     <em>presentationRequest</em>, and the <a>presentation
                     identifier</a> of <var>known connection</var> is equal to
                     <code>presentationId</code>, run the following steps:
                     <ol>
+                      <!-- TODO(mfoltz): We should explicitly construct a new connection if necessary. -->
                       <li>Let <var>S</var> be the <a>presentation
                       connection</a> of <var>known connection</var>.
                       </li>
@@ -991,9 +992,9 @@
                         <code>presentationRequest</code> with <em>S</em> as its
                         <code>connection</code> attribute.
                       </li>
-                      <li>
-                        <a>Establish a presentation connection</a> with
-                        <var>S</var>.
+                      <li>If the <a>presentation connection state</a> of <var>
+                        S</var> is <code>closed</code>, then <a>establish a
+                        presentation connection</a> with <var>S</var>.
                       </li>
                       <li>Abort the remaining steps of <var>T</var>.
                       </li>
@@ -1015,14 +1016,13 @@
         <section>
           <h4>
             Establishing a presentation connection
-          </h4>
-          <!-- TODO(mfoltz): Move this to 6.5.1, under the
+          </h4><!-- TODO(mfoltz): Move this to 6.5.1, under the
                PresentationConnection interface.  Leaving here for now to simplify
                the diff. -->
           <p>
             When the user agent is to <dfn>establish a presentation
-            connection</dfn> using a <a>presentation connection</a>,
-            it MUST run the following steps:
+            connection</dfn> using a <a>presentation connection</a>, it MUST
+            run the following steps:
           </p>
           <dl>
             <dt>
@@ -1030,17 +1030,17 @@
             </dt>
             <dd>
               <code>presentationConnection</code>, the
-              <code>PresentationConnection</code> object that is to be connected.
-              The <a>presentation connection state</a>
-              of <code>presentationConnection</code> must
-              be <code>connecting.</code>
+              <code>PresentationConnection</code> object that is to be
+              connected. The <a>presentation connection state</a> of
+              <code>presentationConnection</code> must be
+              <code>connecting.</code>
             </dd>
           </dl>
           <ol>
             <li>
-              <a>Queue a task</a> <em>T</em> to
-              connect <code>presentationConnection</code> to the <a>receiving
-              browsing context</a>.
+              <a>Queue a task</a> <em>T</em> to connect
+              <code>presentationConnection</code> to the <a>receiving browsing
+              context</a>.
             </li>
             <li>If <em>T</em> completes successfully, run the following steps:
               <ol>
@@ -1048,12 +1048,12 @@
                 <var>presentationConnection</var> to <code>connected.</code>
                 </li>
                 <li>For each <var>known connection</var> in the <a>set of
-                    presentations</a>:
+                presentations</a>:
                   <ol>
                     <li>If the <a>presentation identifier</a> of <var>known
-                        connection</var> and <var>presentationConnection</var>
-                      are equal, then <a>fire</a> an event named
-                      <code>connected</code> at <em>s</em>.
+                    connection</var> and <var>presentationConnection</var> are
+                    equal, then <a>fire</a> an event named
+                    <code>connected</code> at <em>s</em>.
                     </li>
                   </ol>
                 </li>
@@ -1221,9 +1221,9 @@
           <p>
             If <a>set of availability objects</a> is non-empty, or there is a
             pending request to <a for="PresentationRequest" data-lt=
-            "start">start a presentation</a>, the user agent MUST
-            <dfn>monitor the list of available presentation displays</dfn> by
-            running the following steps.
+            "start">start a presentation</a>, the user agent MUST <dfn>monitor
+            the list of available presentation displays</dfn> by running the
+            following steps.
           </p>
           <ol link-for="PresentationAvailability">
             <li>
@@ -1276,9 +1276,9 @@
             </li>
             <li>If the <a>set of availability objects</a> is now empty and
             there is no pending request to <a for="PresentationRequest"
-              data-lt="start">start a presentation</a>, cancel any
-              pending task to <a>monitor the list of available presentation
-              displays</a> for power saving purposes.
+              data-lt="start">start a presentation</a>, cancel any pending task
+              to <a>monitor the list of available presentation displays</a> for
+              power saving purposes.
             </li>
           </ol>
           <div class="note">
@@ -1367,10 +1367,11 @@
           </p>
           <p>
             When the <code><dfn>close</dfn>()</code> method is called on a
-            <a>PresentationConnection</a>, the user agent MUST run the algorithm
-            to <a data-lt="close-algorithm">close a presentation connection</a>
-            with <a>PresentationConnection</a>, a <code>reason</code>
-            of <code>closed</code>, and an empty <code>message</code>.
+            <a>PresentationConnection</a>, the user agent MUST run the
+            algorithm to <a data-lt="close-algorithm">close a presentation
+            connection</a> with <a>PresentationConnection</a>, a
+            <code>reason</code> of <code>closed</code>, and an empty
+            <code>message</code>.
           </p>
           <p>
             When the <code><dfn>terminate</dfn>()</code> method is called on a
@@ -1388,11 +1389,11 @@
           <p>
             When the a <a>PresentationConnection</a> object is discarded
             (because the document owning it is navigating or is closed), the
-            user agent SHOULD run steps 1 and 4 or 5 of the algorithm
-            to <a data-lt="close-algorithm">close a presentation
-            connection</a> with the <a>PresentationConnection</a> object
-            as <code>presentationConnection</code>, <code>wentAway</code>
-            as <code>closeReason</code>, and an empty <code>closeMessage</code>.
+            user agent SHOULD run steps 1 and 4 or 5 of the algorithm to
+            <a data-lt="close-algorithm">close a presentation connection</a>
+            with the <a>PresentationConnection</a> object as
+            <code>presentationConnection</code>, <code>wentAway</code> as
+            <code>closeReason</code>, and an empty <code>closeMessage</code>.
           </p>
         </div>
         <section>
@@ -1416,24 +1417,32 @@
           </p>
           <p>
             When the user agent is to <dfn data-lt="send-algorithm">send a
-            message</dfn> through a <a>presentation connection</a>, it
-            MUST run the following steps:
+            message</dfn> through a <a>presentation connection</a>, it MUST run
+            the following steps:
           </p>
           <dl>
-            <dt>Input</dt>
-            <dd><code>presentationConnection</code>, the <a>presentation connection</a> connected to the other browsing context
-            <dd><code>messageOrData</code>, the <a>presentation message data</a> to send to the other browsing context
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>presentationConnection</code>, the <a>presentation
+              connection</a> connected to the other browsing context
+            </dd>
+            <dd>
+              <code>messageOrData</code>, the <a>presentation message data</a>
+              to send to the other browsing context
+            </dd>
           </dl>
           <ol link-for="PresentationConnection">
-            <li>If the <a>state</a> property of <code>presentationConnection</code>
-            is not <code>connected</code>, throw an
-            <code>InvalidStateError</code> exception.
+            <li>If the <a>state</a> property of
+            <code>presentationConnection</code> is not <code>connected</code>,
+            throw an <code>InvalidStateError</code> exception.
             </li>
             <li>Let <a>presentation message type</a> <em>messageType</em> be
-            <code>binary</code> if <code>messageOrData</code> is of type
-            <code>ArrayBuffer</code>, <code>ArrayBufferView</code>, or
-            <code>Blob</code>. Let <em>messageType</em> be <code>text</code> if
-            <code>messageOrData</code> is of type <code>DOMString</code>.
+            <code>binary</code> if <code>messageOrData</code> is of type <code>
+              ArrayBuffer</code>, <code>ArrayBufferView</code>, or
+              <code>Blob</code>. Let <em>messageType</em> be <code>text</code>
+              if <code>messageOrData</code> is of type <code>DOMString</code>.
             </li>
             <li>Assign the <dfn>destination browsing context</dfn> as follows:
               <ol>
@@ -1448,32 +1457,38 @@
                 </li>
               </ol>
             </li>
-            <li>
-              Using an implementation specific mechanism, transmit the
-              contents of <code>messageOrData</code> as the <a>presentation
-                message data</a> and <em>messageType</em> as the <a>presentation message type</a>
-              to the <a>destination browsing context</a>.
+            <li>Using an implementation specific mechanism, transmit the
+            contents of <code>messageOrData</code> as the <a>presentation
+            message data</a> and <em>messageType</em> as the <a>presentation
+            message type</a> to the <a>destination browsing context</a>.
             </li>
-            <li>
-              If the previous step encounters an unrecoverable error,
-              then <a data-lt="close-algorithm">close the presentation
-              connection</a>
-              with <code>presentationConnection</code>, <code>error</code>
-              as <code>closeReason</code>, and a <code>closeMessage</code>
-              describing the error encountered.
+            <li>If the previous step encounters an unrecoverable error, then
+            <a data-lt="close-algorithm">close the presentation connection</a>
+            with <code>presentationConnection</code>, <code>error</code> as
+            <code>closeReason</code>, and a <code>closeMessage</code>
+            describing the error encountered.
             </li>
           </ol>
           <div class="note">
             <p>
-            To assist applications in recovery from a an error sending a message through
-            a <a>presentation connection</a>, the user agent should include
-            details of which attempt failed in <code>closeMessage</code>. 
-            Example renditions of <code>closeMessage</code>:
-            <ul>
-              <li><code>Unable to send message: "hello"</code> for <code>DOMString</code> messages, where <code>"hello"</code> is the first 256 characters of the failed message.</li>
-              <li><code>Unable to send binary message</code> for <code>ArrayBuffer</code>, <code>ArrayBufferView</code> and <code>Blob</code> messages.</li>
-            </ul>
+              To assist applications in recovery from a an error sending a
+              message through a <a>presentation connection</a>, the user agent
+              should include details of which attempt failed in
+              <code>closeMessage</code>. Example renditions of
+              <code>closeMessage</code>:
             </p>
+            <ul>
+              <li>
+                <code>Unable to send message: "hello"</code> for
+                <code>DOMString</code> messages, where <code>"hello"</code> is
+                the first 256 characters of the failed message.
+              </li>
+              <li>
+                <code>Unable to send binary message</code> for
+                <code>ArrayBuffer</code>, <code>ArrayBufferView</code> and
+                <code>Blob</code> messages.
+              </li>
+            </ul>
           </div>
         </section>
         <section>
@@ -1488,14 +1503,26 @@
             a <code>PresentationConnection</code>:
           </p>
           <dl>
-            <dt>Input</dt>
-            <dd><code>presentationConnection</code>, the <a>presentation connection</a> receiving the message</dd>
-            <dd><code>messageType</code>, the <a>presentation message type</a> of the message</dd>
-            <dd><code>messageData</code>, the <a>presentation message data</a> of the message</dd>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>presentationConnection</code>, the <a>presentation
+              connection</a> receiving the message
+            </dd>
+            <dd>
+              <code>messageType</code>, the <a>presentation message type</a> of
+              the message
+            </dd>
+            <dd>
+              <code>messageData</code>, the <a>presentation message data</a> of
+              the message
+            </dd>
           </dl>
           <ol link-for="PresentationConnection">
-            <li>If the <a>state</a> property of <code>presentationConnection</code>
-            is not <code>connected</code>, abort these steps.
+            <li>If the <a>state</a> property of
+            <code>presentationConnection</code> is not <code>connected</code>,
+            abort these steps.
             </li>
             <li>Let <em>event</em> be a newly created <a>trusted event</a> that
             uses the <code>MessageEvent</code> interface, with the event type
@@ -1504,22 +1531,21 @@
             </li>
             <li>Initialize the <em>event's</em> data attribute as follows:
               <ol>
-                <li>If <code>messageType</code> is
-                <code>text</code>, then initialize <em>event's</em>
-                <code>data</code> attribute to <code>messageData</code> with type <code>DOMString</code>.
+                <li>If <code>messageType</code> is <code>text</code>, then
+                initialize <em>event's</em> <code>data</code> attribute to
+                <code>messageData</code> with type <code>DOMString</code>.
                 </li>
-                <li>If <code>messageType</code> is
-                <code>binary</code>, and <a>binaryType</a> is set to
-                <code>blob</code>, then initialize <em>event</em>'s
-                <code>data</code> attribute to a new <code>Blob</code> object
-                with <code>messageData</code> its raw
-                data.
+                <li>If <code>messageType</code> is <code>binary</code>, and <a>
+                  binaryType</a> is set to <code>blob</code>, then initialize
+                  <em>event</em>'s <code>data</code> attribute to a new
+                  <code>Blob</code> object with <code>messageData</code> its
+                  raw data.
                 </li>
-                <li>If <code>messageType</code> is
-                <code>binary</code>, and <a>binaryType</a> is set to
-                <code>arraybuffer</code>, then initialize <em>event</em>'s
-                <code>data</code> attribute to a new <code>ArrayBuffer</code>
-                object whose contents are <code>messageData</code>.
+                <li>If <code>messageType</code> is <code>binary</code>, and <a>
+                  binaryType</a> is set to <code>arraybuffer</code>, then
+                  initialize <em>event</em>'s <code>data</code> attribute to a
+                  new <code>ArrayBuffer</code> object whose contents are
+                  <code>messageData</code>.
                 </li>
               </ol>
             </li>
@@ -1529,13 +1555,13 @@
             </li>
           </ol>
           <p>
-            If the user agent encounters an unrecoverable error
-            while <a data-lt="receive-algorithm">receiving a message</a>
-            through <code>presentationConnection</code>, it
-            should <a data-lt="close-algorithm">close the presentation
-            connection</a> with <code>presentationConnection</code>,
-            <code>error</code> as <code>closeReason</code>, and a human readable
-            description of the error encountered as <code>closeMessage</code>.
+            If the user agent encounters an unrecoverable error while
+            <a data-lt="receive-algorithm">receiving a message</a> through
+            <code>presentationConnection</code>, it should <a data-lt=
+            "close-algorithm">close the presentation connection</a> with
+            <code>presentationConnection</code>, <code>error</code> as
+            <code>closeReason</code>, and a human readable description of the
+            error encountered as <code>closeMessage</code>.
           </p>
         </section>
         <section>
@@ -1559,16 +1585,27 @@
 
 </pre>
           <p>
-            A <code>PresentationConnectionClosedEvent</code> is fired when
-            a <a>presentation connection</a> enters a <code>closed</code> state.
+            A <code>PresentationConnectionClosedEvent</code> is fired when a
+            <a>presentation connection</a> enters a <code>closed</code> state.
             The <code>reason</code> attribute provides the reason why the
             connection was closed:
           </p>
           <ul>
-            <li> <code>error</code> means that the mechanism for connecting or communicating with a presentation entered an unrecoverable error.</li>
-            <li> <code>closed</code> means that either the <a>controlling browsing context</a> or the <a>receiving browsing context</a> that were connected by the <code>PresentationConnection</code> called <code>close()</code>. </li>
-            <li> <code>wentAway</code> means that the browser closed the connection, for
-              example, because the browsing context that owned the connection navigated or was discarded.</li>
+            <li>
+              <code>error</code> means that the mechanism for connecting or
+              communicating with a presentation entered an unrecoverable error.
+            </li>
+            <li>
+              <code>closed</code> means that either the <a>controlling browsing
+              context</a> or the <a>receiving browsing context</a> that were
+              connected by the <code>PresentationConnection</code> called
+              <code>close()</code>.
+            </li>
+            <li>
+              <code>wentAway</code> means that the browser closed the
+              connection, for example, because the browsing context that owned
+              the connection navigated or was discarded.
+            </li>
           </ul>
           <p>
             When the <code>reason</code> attribute is <code>error</code>, the
@@ -1586,46 +1623,59 @@
             the following:
           </p>
           <dl>
-            <dt>Input</dt>
-            <dd><code>presentationConnection</code>, the <em>presentation connection</em> to be closed</dd>
-            <dd><code>closeReason</code>, the <code>PresenentationConnectionClosedReason</code> describing why the connection is to be closed</dd>
-            <dd><code>closeMessage</code>, a human-readable message with details of why the connection was closed.</dd>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>presentationConnection</code>, the <em>presentation
+              connection</em> to be closed
+            </dd>
+            <dd>
+              <code>closeReason</code>, the
+              <code>PresenentationConnectionClosedReason</code> describing why
+              the connection is to be closed
+            </dd>
+            <dd>
+              <code>closeMessage</code>, a human-readable message with details
+              of why the connection was closed.
+            </dd>
           </dl>
           <ol>
             <li>
               <a>Queue a task</a> to run the following steps in order:
               <ol>
                 <li>If the <a>presentation connection state</a> of
-                <code>presentationConnection</code> is not <code>connected</code>
-                or <code>connecting</code>, then abort these steps.
+                <code>presentationConnection</code> is not
+                <code>connected</code> or <code>connecting</code>, then abort
+                these steps.
                 </li>
                 <li>Set <a>presentation connection state</a> of
                 <code>presentationConnection</code> to <code>closed</code>.
                 </li>
-                <li>
-                  Construct a new <code>PresentationConnectionClosedEvent</code>
-                    <var>E</var> with <code>reason</code> set to <var>closeReason</var> and
-                    <code>message</code> set to <var>closeMessage</var>.
+                <li>Construct a new
+                <code>PresentationConnectionClosedEvent</code> <var>E</var>
+                with <code>reason</code> set to <var>closeReason</var> and
+                <code>message</code> set to <var>closeMessage</var>.
                 </li>
-                </li>
-                  <a>Fire</a> <var>E</var> at <code>presentationConnection</code>.
-                </li>
-                <li>If <code>presentationConnection</code> is owned by a <a>controlling
-                browsing context</a>, signal the <a>receiving browsing
-                context</a> to <a data-lt="close-algorithm">close the
-                presentation connection</a> that was created when
-                <code>presentationConnection</code> was used to <a>establish a presentation
-                connection</a> with the presentation via <code>presentationConnection</code>,
-                using an implementation-specific mechanism.
-                </li>
-                <li>If <code>presentationConnection</code> is owned by a <a>receiving browsing
-                context</a>, signal the <a>controlling browsing context</a> to
-                <a data-lt="close-algorithm">close the presentation
-                connection</a> that was used to <a>establish a presentation
-                connection</a> with the presentation via <code>presentationConnection</code>,
-                using an implementation-specific mechanism.
-                </li>
-              </ol>
+              </ol><a>Fire</a> <var>E</var> at
+              <code>presentationConnection</code>.
+            </li>
+            <li>If <code>presentationConnection</code> is owned by a
+            <a>controlling browsing context</a>, signal the <a>receiving
+            browsing context</a> to <a data-lt="close-algorithm">close the
+            presentation connection</a> that was created when
+            <code>presentationConnection</code> was used to <a>establish a
+            presentation connection</a> with the presentation via
+            <code>presentationConnection</code>, using an
+            implementation-specific mechanism.
+            </li>
+            <li>If <code>presentationConnection</code> is owned by a
+            <a>receiving browsing context</a>, signal the <a>controlling
+            browsing context</a> to <a data-lt="close-algorithm">close the
+            presentation connection</a> that was used to <a>establish a
+            presentation connection</a> with the presentation via
+            <code>presentationConnection</code>, using an
+            implementation-specific mechanism.
             </li>
           </ol>
         </section>
