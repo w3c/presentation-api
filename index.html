@@ -580,7 +580,7 @@
     };
   };
 
-  navigator.presentation.receiver.connections.then(function (list) {
+  navigator.presentation.receiver.connectionList.then(function (list) {
     list.connections.map(function (connection) {
       addConnection(connection);
     });
