@@ -424,8 +424,9 @@
         <code>presentation.html</code> implements the presentation. Both pages
         are served from the domain <code>http://example.org</code>
         (<code>http://example.org/controller.html</code> and
-        <code>http://example.org/presentation.html</code>). Please refer to the
-        comments in the code examples for further details.
+        <code>http://example.org/presentation.html</code>). These examples
+        assume that the controlling page is managing one presentation at a time.
+        Please refer to the comments in the code examples for further details.
       </p>
       <section>
         <h3>
@@ -433,15 +434,15 @@
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
-&lt;button id="castBtn" style="display: none;"&gt;Cast&lt;/button&gt;
+&lt;button id="presentBtn" style="display: none;"&gt;Present&lt;/button&gt;
 &lt;script&gt;
-  // it is also possible to use relative presentation URL e.g. "presentation.html"
+  // The Present button is visible if at least one presentation display is available
+  var presentBtn = document.getElementById("presentBtn");
+  // It is also possible to use relative presentation URL e.g. "presentation.html"
   var presUrl = "http://example.com/presentation.html";
-  // the cast button is visible if at least one presentation display is available
-  var castBtn = document.getElementById("castBtn");
-  // show or hide cast button depending on display availability
+  // show or hide present button depending on display availability
   var handleAvailabilityChange = function(available) {
-    castBtn.style.display = available ? "inline" : "none";
+    presentBtn.style.display = available ? "inline" : "none";
   };
   // Promise is resolved as soon as the presentation display availability is
   // known.
@@ -469,13 +470,15 @@
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
-  // Start new presentation.
-  request.start()
-    // The connection to the presentation will be passed to setConnection on
-    // success.
-    .then(setConnection)
-    // User canceled the selection dialog or an error occurred.
-    .catch(endConnection);
+  presentBtn.onclick = function () {
+    // Start new presentation.
+    request.start()
+      // The connection to the presentation will be passed to setConnection on
+      // success.
+      .then(setConnection);
+      // Otherwise, the user canceled the selection dialog or no screens were
+      // found.
+  };
 &lt;/script&gt;
 </pre>
       </section>
@@ -485,24 +488,30 @@
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
+&lt;button id="reconnectBtn" style="display: none;"&gt;Reconnect&lt;/button&gt;
 &lt;script&gt;
-  // read presId from localStorage if exists
-  var presId = localStorage &amp;&amp; localStorage["presId"] || null;
-  // presId is mandatory when reconnecting to a presentation.
-  if (presId) {
-    request.reconnect(presId)
-      // The resumed connection to the presentation will be passed to
-      // setConnection on success.
-      .then(setConnection)
-      // No connection found for presUrl and presId, or an error occurred.
-      .catch(endConnection);
-  }
+  var reconnect = function () {
+    // read presId from localStorage if exists
+    var presId = localStorage["presId"];
+    // presId is mandatory when reconnecting to a presentation.
+    if (!!presId) {
+      request.reconnect(presId)
+        // The new connection to the presentation will be passed to
+        // setConnection on success.
+        .then(setConnection);
+        // No connection found for presUrl and presId, or an error occurred.
+    }
+  };
+  // On navigation of the controller, reconnect automatically.
+  document.addEventListener("DOMContentLoaded", reconnect);
+  // Or allow manual reconnection.
+  reconnectBtn.onclick = reconnect;
 &lt;/script&gt;
 </pre>
-      </section><!-- TODO: Add an example for terminating a presentation. -->
+      </section>
       <section>
         <h3>
-          Handling an event for a controlling UA initiated presentation example
+          Presentation initation by the controlling UA example
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
@@ -524,42 +533,56 @@
         </h3>
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
+&lt;button id="disconnectBtn" style="display: none;"&gt;Disconnect&lt;/button&gt;
+&lt;button id="terminateBtn" style="display: none;"&gt;Stop&lt;/button&gt;
 &lt;script&gt;
   var connection;
-  var setConnection = function (theConnection) {
-    // end existing connection, if any
-    endConnection();
-    // set the new connection
-    connection = theConnection;
-    if (connection) {
-      // save presId in localStorage
-      localStorage &amp;&amp; (localStorage["presId"] = connection.id);
-      // monitor connection's state
-      connection.onclosed = function () {
-        // Offer the user a chance to reconnect, e.g. if there was a
-        // network disruption, or the user wishes to resume control.
-      };
-      connection.onconnected = function () {
-        // register message handler
-        this.onmessage = function (message) {
-          console.log("receive message", message.data);
-        };
-        // send initial message to presentation page
-        this.send("say hello");
-      };
-      connection.onterminated = function () {
-        // The presentation has terminated.  Offer the user a chance to
-        // start a new presentation.
-      };
-    }
-  };
-  var endConnection = function () {
-    connection &amp;&amp; connection.close();
-    // remove old presId from localStorage if exists
-    localStorage &amp;&amp; delete localStorage["presId"];
-  };
-&lt;/script&gt;
 
+  // The Disconnect and Stop buttons are visible if there is a connected presentation
+  var disconnectBtn = document.getElementById("disconnectBtn");
+  var stopBtn = document.getElementById("stopBtn");
+  stopBtn.onclick = function () { connection && connection.terminate(); };
+
+  var setConnection = function (theConnection) {
+    // Disconnect from existing presentation, if any
+    close();
+    // Set the new connection and save the presentation ID
+    connection = theConnection;
+    localStorage["presId"] = connection.id;
+
+    // monitor connection's state
+    connection.onconnected = function () {
+      // Allow the user to disconnect from or terminate the presentation
+      disconnectBtn.style.display = "inline";
+      stopBtn.style.display = "inline";
+      reconnectBtn.style.display = "none";
+
+      // register message handler
+      this.onmessage = function (message) {
+        console.log("receive message", message.data);
+      };
+      // send initial message to presentation page
+      this.send("say hello");
+    };
+    connection.onclosed = reset;
+    connection.onterminated = function () {
+      // remove presId from localStorage if exists
+      delete localStorage["presId"];
+      // Reset the UI
+      reset();
+    };
+  };
+
+  var reset = function () {
+    connection = null;
+    disconnectBtn.style.display = "none";
+    stopBtn.style.display = "none";
+    reconnectBtn.style.display = localStorage["presId"] ? "inline" : "none";
+  };
+
+  var close = function () { connection &amp;&amp; connection.close(); };
+  disconnectBtn.onclick = close;
+&lt;/script&gt;
 </pre>
       </section>
       <section>
@@ -584,7 +607,6 @@
     });
   };
 &lt;/script&gt;
-
 </pre>
       </section>
     </section>
@@ -873,7 +895,7 @@
             </li>
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
               I</var>, and set the <a>presentation connection state</a> of
-              <var>S</var> to <code>connecting</code>.
+              <var>S</var> to <!-- <code>connecting</code>. -->
             </li>
             <li>Add the tuple {<em>presentationUrl</em>, <em>S.id</em>,
             <em>S</em>} to the <a>set of presentations</a>.
@@ -1012,69 +1034,6 @@
           <div class="issue">
             If no matching presentation is found, we could leave the Promise
             pending in case a matching presentation is started in the future.
-          </div>
-        </section>
-        <section>
-          <h4>
-            Establishing a presentation connection
-          </h4><!-- TODO(mfoltz): Move this to 6.5.1, under the
-               PresentationConnection interface.  Leaving here for now to simplify
-               the diff. -->
-          <p>
-            When the user agent is to <dfn>establish a presentation
-            connection</dfn> using a <a>presentation connection</a>, it MUST
-            run the following steps:
-          </p>
-          <dl>
-            <dt>
-              Input
-            </dt>
-            <dd>
-              <code>presentationConnection</code>, the
-              <code>PresentationConnection</code> object that is to be
-              connected. The <a>presentation connection state</a> of
-              <code>presentationConnection</code> must be
-              <code>connecting</code>.
-            </dd>
-          </dl>
-          <ol>
-            <li>
-              <a>Queue a task</a> <em>T</em> to connect
-              <code>presentationConnection</code> to the <a>receiving browsing
-              context</a>.
-            </li>
-            <li>If <em>T</em> completes successfully, run the following steps:
-              <ol>
-                <li>Set the <a>presentation connection state</a> of
-                <var>presentationConnection</var> to <code>connected.</code>
-                </li>
-                <li>For each <var>known connection</var> in the <a>set of
-                presentations</a>:
-                  <ol>
-                    <li>If the <a>presentation identifier</a> of <var>known
-                    connection</var> and <var>presentationConnection</var> are
-                    equal, then <a>fire</a> an event named
-                    <code>connected</code> at
-                    <var>presentationConnection</var>.
-                    </li>
-                  </ol>
-                </li>
-              </ol>
-            </li>
-          </ol>
-          <div class="note">
-            The mechanism that is used to present on the remote display and
-            connect the <a>controlling browsing context</a> with the presented
-            document is an implementation choice of the user agent. The
-            connection must provide a two-way messaging abstraction capable of
-            carrying <code>DOMString</code> payloads in a reliable and in-order
-            fashion as described in the <em>Send Message</em> and <em>Receive
-            Message</em> steps below.
-          </div>
-          <div class="note">
-            If <em>T</em> does not complete successfully, the user agent may
-            choose to re-execute the Presentation Connection algorithm at a
-            later time.
           </div>
         </section>
         <section>
@@ -1398,6 +1357,67 @@
             <code>closeReason</code>, and an empty <code>closeMessage</code>.
           </p>
         </div>
+        <section>
+          <h4>
+            Establishing a presentation connection
+          </h4>
+          <p>
+            When the user agent is to <dfn>establish a presentation
+            connection</dfn> using a <a>presentation connection</a>, it MUST
+            run the following steps:
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <code>presentationConnection</code>, the
+              <code>PresentationConnection</code> object that is to be
+              connected. The <a>presentation connection state</a> of
+              <code>presentationConnection</code> must be
+              <code>connecting</code>.
+            </dd>
+          </dl>
+          <ol>
+            <li>
+              <a>Queue a task</a> <em>T</em> to connect
+              <code>presentationConnection</code> to the <a>receiving browsing
+              context</a>.
+            </li>
+            <li>If <em>T</em> completes successfully, run the following steps:
+              <ol>
+                <li>Set the <a>presentation connection state</a> of
+                <var>presentationConnection</var> to <code>connected.</code>
+                </li>
+                <li>For each <var>known connection</var> in the <a>set of
+                presentations</a>:
+                  <ol>
+                    <li>If the <a>presentation identifier</a> of <var>known
+                    connection</var> and <var>presentationConnection</var> are
+                    equal, then <a>fire</a> an event named
+                    <code>connected</code> at
+                    <var>presentationConnection</var>.
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+          <div class="note">
+            The mechanism that is used to present on the remote display and
+            connect the <a>controlling browsing context</a> with the presented
+            document is an implementation choice of the user agent. The
+            connection must provide a two-way messaging abstraction capable of
+            carrying <code>DOMString</code> payloads in a reliable and in-order
+            fashion as described in the <em>Send Message</em> and <em>Receive
+            Message</em> steps below.
+          </div>
+          <div class="note">
+            If <em>T</em> does not complete successfully, the user agent may
+            choose to re-execute the Presentation Connection algorithm at a
+            later time.
+          </div>
+        </section>
         <section>
           <h4>
             Sending a message through <code>PresentationConnection</code>
