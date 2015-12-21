@@ -425,8 +425,9 @@
         are served from the domain <code>http://example.org</code>
         (<code>http://example.org/controller.html</code> and
         <code>http://example.org/presentation.html</code>). These examples
-        assume that the controlling page is managing one presentation at a time.
-        Please refer to the comments in the code examples for further details.
+        assume that the controlling page is managing one presentation at a
+        time. Please refer to the comments in the code examples for further
+        details.
       </p>
       <section>
         <h3>
@@ -541,7 +542,7 @@
   // The Disconnect and Stop buttons are visible if there is a connected presentation
   var disconnectBtn = document.getElementById("disconnectBtn");
   var stopBtn = document.getElementById("stopBtn");
-  stopBtn.onclick = function () { connection && connection.terminate(); };
+  stopBtn.onclick = function () { connection &amp;&amp; connection.terminate(); };
 
   var setConnection = function (theConnection) {
     // Disconnect from existing presentation, if any
