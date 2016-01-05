@@ -315,7 +315,8 @@
         "http://www.w3.org/TR/html5/webappapis.html#fire-a-simple-event">firing
         a simple event</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#navigate">navigate</a></dfn>,
-        <dfn><a href="http://www.w3.org/TR/html5/webappapis.html">queue a
+        <dfn><a href=
+        "http://www.w3.org/TR/html5/webappapis.html#queue-a-task">queue a
         task</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/infrastructure.html#concept-events-trusted">
         trusted event</a></dfn>, <dfn><a href=
@@ -850,19 +851,14 @@
             </li>
             <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
-            <li>Return <em>P</em>.
+            <li>Return <em>P</em>, but continue running these steps in
+            parallel.
             </li>
-            <li>Run the following steps in parallel:
-              <ol>
-                <li>
-                  <a>Monitor the list of available presentation displays</a>.
-                </li>
-                <li>
-                  <a>Queue a task</a> <em>T</em> to request user permission for
-                  the use of a <a>presentation display</a> and selection of one
-                  presentation display.
-                </li>
-              </ol>
+            <li>Run the steps to <a>monitor the list of available presentation
+            displays</a> in parallel.
+            </li>
+            <li>Request user permission for the use of a <a>presentation
+            display</a> and selection of one presentation display.
             </li>
             <li>If either of the following is true:
               <ol>
@@ -870,7 +866,7 @@
                 and will remain so before the request for user permission is
                 completed.
                 </li>
-                <li>No member if the <a>list of available presentation
+                <li>No member in the <a>list of available presentation
                 displays</a> is a <a>compatible presentation display</a> for
                 <code>presentationUrl</code>.
                 </li>
@@ -884,12 +880,12 @@
                 </li>
               </ol>
             </li>
-            <li>If <em>T</em> completes with the user <em>denying
-            permission</em>, reject <em>P</em> with an <a>AbortError</a>
-            exception, and abort all remaining steps.
+            <li>If the user <em>denied permission</em> to use a display, reject
+            <em>P</em> with an <a>AbortError</a> exception, and abort all
+            remaining steps.
             </li>
-            <li>Otherwise, <em>T</em> has completed with the user <em>granting
-            permission</em> to use a display; let <em>D</em> be that display.
+            <li>Otherwise, the user <em>granted permission</em> to use a
+            display; let <em>D</em> be that display.
             </li>
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
@@ -899,7 +895,7 @@
             </li>
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
               I</var>, and set the <a>presentation connection state</a> of
-              <var>S</var> to <!-- <code>connecting</code>. -->
+              <var>S</var> to <code>connecting</code>.
             </li>
             <li>Add the tuple {<em>presentationUrl</em>, <em>S.id</em>,
             <em>S</em>} to the <a>set of presentations</a>.
@@ -913,27 +909,22 @@
               <code>presentationRequest</code> with <em>S</em> as its
               <code>connection</code> attribute.
             </li>
-            <li>
-              <a>Queue a task</a> <em>C</em> to run the following steps:
-              <ol>
-                <li>
-                  <a>Create a receiving browsing context</a> on <em>D</em> and
-                  let <em>R</em> be the result.
-                </li>
-                <li>
-                  <a>Navigate</a> <em>R</em> to <code>presentationUrl</code>.
-                </li>
-                <li>
-                  <a>Establish a presentation connection</a> with <em>S</em>.
-                </li>
-              </ol>
+            <li>If any of the following steps fails, abort all remaining steps
+            and <a>queue a task</a> to <a data-lt="close-algorithm">close the
+            presentation connection</a> with <var>S</var> as
+            <code>presentationConnection</code>, <code>error</code> as
+            <code>closeReason</code>, and a human readable message describing
+            the failure as <code>closeMessage</code>.
             </li>
-            <li>If any step of <em>C</em> fails, run the steps to <a data-lt=
-            "close-algorithm">close the presentation connection</a> with <var>
-              S</var> as <code>presentationConnection</code>,
-              <code>error</code> as <code>closeReason</code>, and a human
-              readable message describing the failure as
-              <code>closeMessage</code>.
+            <li>
+              <a>Create a receiving browsing context</a> on <em>D</em> and let
+              <em>R</em> be the result.
+            </li>
+            <li>
+              <a>Navigate</a> <em>R</em> to <code>presentationUrl</code>.
+            </li>
+            <li>
+              <a>Establish a presentation connection</a> with <em>S</em>.
             </li>
           </ol>
           <div class="note">
@@ -989,49 +980,43 @@
           <ol>
             <li>Let <em>P</em> be a new <a>Promise</a>.
             </li>
-            <li>Return <em>P</em>.
+            <li>Return <em>P</em>, but continue running these steps in
+            parallel.
+            </li>
+            <li>For each <var>known connection</var> in the <a>set of
+            presentations</a>,
+              <div style="margin-left: 2em">
+                If <a>presentation connection state</a> of <var>known
+                presentation</var> is not <code>terminated</code>, the
+                <a>presentation URL</a> of <var>known connection</var> is equal
+                to the <code>presentationUrl</code> of
+                <em>presentationRequest</em>, and the <a>presentation
+                identifier</a> of <var>known connection</var> is equal to
+                <code>presentationId</code>, run the following steps:
+                <ol>
+                  <li>Let <var>S</var> be the <a>presentation connection</a> of
+                  <var>known connection</var>.
+                  </li>
+                  <li>
+                    <a>Resolve</a> <var>P</var> with <var>S</var>.
+                  </li>
+                  <li>
+                    <a>Queue a task</a> to <a>fire</a> an event named
+                    <code>connectionavailable</code> at
+                    <code>presentationRequest</code> with <em>S</em> as its
+                    <code>connection</code> attribute.
+                  </li>
+                  <li>
+                    <a>Establish a presentation connection</a> with
+                    <var>S</var>.
+                  </li>
+                  <li>Abort all remaining steps.
+                  </li>
+                </ol>
+              </div>
             </li>
             <li>
-              <a>Queue a task</a> <em>T</em> to run the following steps in
-              order:
-              <ol>
-                <li>For each <var>known connection</var> in the <a>set of
-                presentations</a>,
-                  <div style="margin-left: 2em">
-                    If <a>presentation connection state</a> of <var>known
-                    presentation</var> is not <code>terminated</code>, the
-                    <a>presentation URL</a> of <var>known connection</var> is
-                    equal to the <code>presentationUrl</code> of
-                    <em>presentationRequest</em>, and the <a>presentation
-                    identifier</a> of <var>known connection</var> is equal to
-                    <code>presentationId</code>, run the following steps:
-                    <ol>
-                      <li>Let <var>S</var> be the <a>presentation
-                      connection</a> of <var>known connection</var>.
-                      </li>
-                      <li>
-                        <a>Resolve</a> <var>P</var> with <var>S</var>.
-                      </li>
-                      <li>
-                        <a>Queue a task</a> to <a>fire</a> an event named
-                        <code>connectionavailable</code> at
-                        <code>presentationRequest</code> with <em>S</em> as its
-                        <code>connection</code> attribute.
-                      </li>
-                      <li>
-                        <a>Establish a presentation connection</a> with
-                        <var>S</var>.
-                      </li>
-                      <li>Abort the remaining steps of <var>T</var>.
-                      </li>
-                    </ol>
-                  </div>
-                </li>
-                <li>
-                  <a>Reject</a> <em>P</em> with a <a>NotFoundError</a>
-                  exception.
-                </li>
-              </ol>
+              <a>Reject</a> <em>P</em> with a <a>NotFoundError</a> exception.
             </li>
           </ol>
           <div class="issue" data-number="229"></div>
@@ -1191,12 +1176,9 @@
             following steps.
           </p>
           <ol link-for="PresentationAvailability">
-            <li>
-              <a>Queue a task</a> to retrieve available presentation displays
-              (using an implementation specific mechanism) and let
-              <em>newDisplays</em> be this list.
-            </li>
-            <li>Wait for the completion of that task.
+            <li>Retrieve available presentation displays (using an
+            implementation specific mechanism) and let <em>newDisplays</em> be
+            this list.
             </li>
             <li>For each member <em>(A, availabilityUrl)</em> of the <a>set of
             availability objects</a>:
@@ -1352,9 +1334,9 @@
             <code>PresentationConnection</code></a>.
           </p>
           <p>
-            When the a <a>PresentationConnection</a> object is discarded
+            When a <a>PresentationConnection</a> object is discarded
             (because the document owning it is navigating or is closed), the
-            user agent SHOULD run steps 1 and 4 or 5 of the algorithm to
+            user agent SHOULD run steps 1 and 5 or 6 of the algorithm to
             <a data-lt="close-algorithm">close a presentation connection</a>
             with the <a>PresentationConnection</a> object as
             <code>presentationConnection</code>, <code>wentAway</code> as
@@ -1383,12 +1365,11 @@
             </dd>
           </dl>
           <ol>
-            <li>
-              <a>Queue a task</a> <em>T</em> to connect
-              <code>presentationConnection</code> to the <a>receiving browsing
-              context</a>.
+            <li>Connect <code>presentationConnection</code> to the <a>receiving
+            browsing context</a>.
             </li>
-            <li>If <em>T</em> completes successfully, run the following steps:
+            <li>If connection completes successfully, <a>queue a task</a> to
+            run the following steps:
               <ol>
                 <li>Set the <a>presentation connection state</a> of
                 <var>presentationConnection</var> to <code>connected.</code>
@@ -1417,9 +1398,9 @@
             Message</em> steps below.
           </div>
           <div class="note">
-            If <em>T</em> does not complete successfully, the user agent may
-            choose to re-execute the Presentation Connection algorithm at a
-            later time.
+            If the connection step does not complete successfully, the user
+            agent may choose to re-execute the Presentation Connection
+            algorithm at a later time.
           </div>
         </section>
         <section>
@@ -1489,8 +1470,9 @@
             message type</a> to the <a>destination browsing context</a>.
             </li>
             <li>If the previous step encounters an unrecoverable error, then
-            <a data-lt="close-algorithm">close the presentation connection</a>
-            with <code>presentationConnection</code>, <code>error</code> as
+            <a>queue a task</a> to <a data-lt="close-algorithm">close the
+            presentation connection</a> with
+            <code>presentationConnection</code>, <code>error</code> as
             <code>closeReason</code>, and a <code>closeMessage</code>
             describing the error encountered.
             </li>
@@ -1583,11 +1565,12 @@
           <p>
             If the user agent encounters an unrecoverable error while
             <a data-lt="receive-algorithm">receiving a message</a> through
-            <code>presentationConnection</code>, it should <a data-lt=
-            "close-algorithm">close the presentation connection</a> with
-            <code>presentationConnection</code>, <code>error</code> as
-            <code>closeReason</code>, and a human readable description of the
-            error encountered as <code>closeMessage</code>.
+            <code>presentationConnection</code>, it SHOULD <a>queue a task</a>
+            to <a data-lt="close-algorithm">close the presentation
+            connection</a> with <code>presentationConnection</code>,
+            <code>error</code> as <code>closeReason</code>, and a human
+            readable description of the error encountered as
+            <code>closeMessage</code>.
           </p>
         </section>
         <section>
@@ -1599,12 +1582,12 @@
 
             [Constructor(DOMString type, PresentationConnectionClosedEventInit eventInitDict)]
             interface PresentationConnectionClosedEvent : Event {
-              readonly attribute PresentationConnectionCloseReason reason;
+              readonly attribute PresentationConnectionClosedReason reason;
               readonly attribute DOMString message;
             };
 
             dictionary PresentationConnectionClosedEventInit : EventInit {
-              required PresentationConnectionCloseReason reason;
+              required PresentationConnectionClosedReason reason;
               DOMString message;
             };
 
@@ -1658,8 +1641,8 @@
             </dd>
             <dd>
               <code>closeReason</code>, the
-              <code>PresenentationConnectionClosedReason</code> describing why
-              the connection is to be closed
+              <a>PresentationConnectionClosedReason</a> describing why the
+              connection is to be closed
             </dd>
             <dd>
               <code>closeMessage</code>, a human-readable message with details
@@ -1667,40 +1650,36 @@
             </dd>
           </dl>
           <ol>
+            <li>If the <a>presentation connection state</a> of
+            <code>presentationConnection</code> is not <code>connected</code>
+            or <code>connecting</code>, then abort these steps.
+            </li>
+            <li>Set <a>presentation connection state</a> of
+            <code>presentationConnection</code> to <code>closed</code>.
+            </li>
+            <li>Construct a new <code>PresentationConnectionClosedEvent</code>
+            <var>E</var> with <code>reason</code> set to <var>closeReason</var>
+            and <code>message</code> set to <var>closeMessage</var>.
+            </li>
             <li>
-              <a>Queue a task</a> to run the following steps in order:
-              <ol>
-                <li>If the <a>presentation connection state</a> of
-                <code>presentationConnection</code> is not
-                <code>connected</code> or <code>connecting</code>, then abort
-                these steps.
-                </li>
-                <li>Set <a>presentation connection state</a> of
-                <code>presentationConnection</code> to <code>closed</code>.
-                </li>
-                <li>Construct a new
-                <code>PresentationConnectionClosedEvent</code> <var>E</var>
-                with <code>reason</code> set to <var>closeReason</var> and
-                <code>message</code> set to <var>closeMessage</var>.
-                </li>
-              </ol><a>Fire</a> <var>E</var> at
+              <a>Queue a task</a> to <a>fire</a> <var>E</var> at
               <code>presentationConnection</code>.
             </li>
             <li>If <code>presentationConnection</code> is owned by a
             <a>controlling browsing context</a>, signal the <a>receiving
-            browsing context</a> to <a data-lt="close-algorithm">close the
-            presentation connection</a> that was created when
-            <code>presentationConnection</code> was used to <a>establish a
-            presentation connection</a> with the presentation via
-            <code>presentationConnection</code>, using an
+            browsing context</a> to <a>queue a task</a> to <a data-lt=
+            "close-algorithm">close the presentation connection</a> that was
+            created when <code>presentationConnection</code> was used to
+            <a>establish a presentation connection</a> with the presentation
+            via <code>presentationConnection</code>, using an
             implementation-specific mechanism.
             </li>
             <li>If <code>presentationConnection</code> is owned by a
             <a>receiving browsing context</a>, signal the <a>controlling
-            browsing context</a> to <a data-lt="close-algorithm">close the
-            presentation connection</a> that was used to <a>establish a
-            presentation connection</a> with the presentation via
-            <code>presentationConnection</code>, using an
+            browsing context</a> to <a>queue a task</a> to <a data-lt=
+            "close-algorithm">close the presentation connection</a> that was
+            used to <a>establish a presentation connection</a> with the
+            presentation via <code>presentationConnection</code>, using an
             implementation-specific mechanism.
             </li>
           </ol>
@@ -1715,37 +1694,32 @@
             <em>connection</em>, it MUST run the following steps:
           </p>
           <ol>
-            <li>
-              <a>Queue a task</a> to run the following steps in order:
+            <li>If the <a>presentation connection state</a> of
+            <em>connection</em> is not <code>connected</code>, then abort these
+            steps.
+            </li>
+            <li>Otherwise, for each <em>known connection</em> in the <a>set of
+            presentations</a> in the <a>controlling user agent</a>:
               <ol>
-                <li>If the <a>presentation connection state</a> of
-                <em>connection</em> is not <code>connected</code>, then abort
-                these steps.
-                </li>
-                <li>Otherwise, for each <em>known connection</em> in the <a>set
-                of presentations</a> in the <a>controlling user agent</a>:
+                <li>If the <a>presentation identifier</a> of <em>known
+                connection</em> and <em>connection</em> are equal, and the <a>
+                  presentation connection state</a> of <em>known
+                  connection</em> is <code>connected</code>, then run the
+                  following steps:
                   <ol>
-                    <li>If the <a>presentation identifier</a> of <em>known
-                    connection</em> and <em>connection</em> are equal, and the
-                    <a>presentation connection state</a> of <em>known
-                    connection</em> is <code>connected</code>, then run the
-                    following steps:
-                      <ol>
-                        <li>Set <a>presentation connection state</a> of
-                        <em>known connection</em> to <code>terminated</code>.
-                        </li>
-                        <li>
-                          <a>Fire</a> an event named <code>statechange</code>
-                          at <em>known connection</em>.
-                        </li>
-                      </ol>
+                    <li>Set <a>presentation connection state</a> of <em>known
+                    connection</em> to <code>terminated</code>.
+                    </li>
+                    <li>
+                      <a>Queue a task</a> to <a>fire</a> an event named
+                      <code>statechange</code> at <em>known connection</em>.
                     </li>
                   </ol>
                 </li>
-                <li>Signal the <a>receiving user agent</a> to terminate the
-                presentation using an implementation specific mechanism.
-                </li>
               </ol>
+            </li>
+            <li>Signal the <a>receiving user agent</a> to terminate the
+            presentation using an implementation specific mechanism.
             </li>
           </ol>
           <p>
@@ -1761,29 +1735,24 @@
             agent</a> SHOULD run the following steps:
           </p>
           <ol>
-            <li>
-              <a>Queue a task</a> to run the following steps:
+            <li>For each <em>connection</em> that was connected to the
+            <a>receiving browsing context</a>:
               <ol>
-                <li>For each <em>connection</em> that was connected to the <a>
-                  receiving browsing context</a>:
-                  <ol>
-                    <li>If the <a>presentation connection state</a> of
-                    <em>connection</em> is not <code>connected</code>, then
-                    abort the following steps.
-                    </li>
-                    <li>Let <em>controllingConnection</em> be the
-                    <a>presentation connection</a> in the <a>controlling
-                    browsing context</a> that was used to <a>establish a
-                    presentation connection</a> via <em>connection</em>.
-                    </li>
-                    <li>Set the <a>presentation connection state</a> of
-                    <em>controllingConnection</em> to <code>terminated</code>.
-                    </li>
-                    <li>
-                      <a>Fire</a> an event named <code>statechange</code> at
-                      <em>controllingConnection</em>.
-                    </li>
-                  </ol>
+                <li>If the <a>presentation connection state</a> of
+                <em>connection</em> is not <code>connected</code>, then abort
+                the following steps.
+                </li>
+                <li>Let <em>controllingConnection</em> be the <a>presentation
+                connection</a> in the <a>controlling browsing context</a> that
+                was used to <a>establish a presentation connection</a> via <em>
+                  connection</em>.
+                </li>
+                <li>Set the <a>presentation connection state</a> of
+                <em>controllingConnection</em> to <code>terminated</code>.
+                </li>
+                <li>
+                  <a>Queue a task</a> to <a>fire</a> an event named
+                  <code>statechange</code> at <em>controllingConnection</em>.
                 </li>
               </ol>
             </li>
@@ -1881,28 +1850,22 @@
           <li>If <a>connection list promise</a> is not <code>null</code>,
           return <a>connection list promise</a> and abort these steps.
           </li>
-          <li>Otherwise, set <a>connection list promise</a> be a new
+          <li>Otherwise, let <a>connection list promise</a> be a new
           <a>Promise</a>.
           </li>
-          <li>Return <a>connection list promise</a>.
+          <li>Return <a>connection list promise</a>, but continue running these
+          steps in parallel.
           </li>
-          <li>Run the following substeps asynchronously:
-            <ol>
-              <li>Let <var>list</var> be a new
-              <a>PresentationConnectionList</a>.
-              </li>
-              <li>Initialize <var>list</var> with the <a>set of
-              presentations</a> associated with the <a>receiving browsing
-              context</a>.
-              </li>
-              <li>If the user agent is not <a>monitoring incoming presentation
-              connections</a>, <a>queue a task</a> to start <a>monitoring
-              incoming presentation connections</a> from <a>controlling
-              browsing contexts</a>.
-              </li>
-              <li>Resolve <a>connection list promise</a> with <var>list</var>.
-              </li>
-            </ol>
+          <li>Let <var>list</var> be a new <a>PresentationConnectionList</a>.
+          </li>
+          <li>Initialize <var>list</var> with the <a>set of presentations</a>
+          associated with the <a>receiving browsing context</a>.
+          </li>
+          <li>Resolve <a>connection list promise</a> with <var>list</var>.
+          </li>
+          <li>If the user agent is not <a>monitoring incoming presentation
+          connections</a>,start <a>monitoring incoming presentation
+          connections</a> from <a>controlling browsing contexts</a>.
           </li>
         </ol>
         <section>
@@ -1925,7 +1888,7 @@
           </dl>
           <p>
             When the user agent is to <dfn>create a receiving browsing
-            context</dfn>, it must run the following steps:
+            context</dfn>, it MUST run the following steps:
           </p>
           <ol>
             <li>Create a new <a>top-level browsing context</a> <em>C</em> on
@@ -1961,7 +1924,7 @@
             When the <a>receiving browsing context</a> is closed, any
             associated browsing state, including <a>session history</a>,
             <code>sessionStorage</code>, <code>localStorage</code>, the
-            <a>cookie store</a>, and <a>databases</a> must be discarded and not
+            <a>cookie store</a>, and <a>databases</a> MUST be discarded and not
             used for any other <a>receiving browsing context</a>.
           </p>
         </section>
@@ -1990,44 +1953,38 @@
           <p>
             When the <a>receiving user agent</a> is to start <dfn>monitoring
             incoming presentation connections</dfn> in a <a>receiving browsing
-            context</a> from <a>controlling browsing contexts</a>, it MUST run
-            the following steps:
+            context</a> from <a>controlling browsing contexts</a>, it MUST wait
+            for and accept incoming connection requests from a <a>controlling
+            browsing context</a> using an implementation specific mechanism.
+            When a new connection request is received from a <a>controlling
+            browsing context</a>, the <a>receiving user agent</a> MUST run the
+            following steps:
           </p>
           <ol>
-            <li>
-              <a>Queue a task</a> <var>T</var> to wait for and accept an
-              incoming connection request from a <a>controlling browsing
-              context</a> using an implementation specific mechanism.
+            <li>Create a new <a>PresentationConnection</a> <var>S</var>.
             </li>
-            <li>When a new connection request is received from a <a>controlling
-            browsing context</a>, run the following steps:
-              <ol>
-                <li>Create a new <a>PresentationConnection</a> <var>S</var>.
-                </li>
-                <li>Let <var>I</var> be a new <a>valid presentation
-                identifier</a> unique among all <a>presentation identifier</a>s
-                for known presentations in the <a>set of presentations</a>.
-                </li>
-                <li>Set the <a>presentation identifier</a> of <var>S</var> to
-                <var>I</var>.
-                </li>
-                <li>Establish the connection between the controlling and
-                <a>receiving browsing contexts</a> using an implementation
-                specific mechanism.
-                </li>
-                <li>Set the <a>presentation connection state</a> of
-                <var>S</var> to <code>connected</code>.
-                </li>
-                <li>Add a tuple (<code>undefined</code>, <a>presentation
-                identifier</a> of <var>S</var>, <var>S</var>) to the <a>set of
-                presentations</a>.
-                </li>
-                <li>
-                  <a>Queue a task</a> to <a>fire</a> an event named
-                  <code>connectionavailable</code> at all
-                  <a>PresentationConnectionList</a>.
-                </li>
-              </ol>
+            <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
+            unique among all <a>presentation identifier</a>s for known
+            presentations in the <a>set of presentations</a>.
+            </li>
+            <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
+              I</var>.
+            </li>
+            <li>Establish the connection between the controlling and
+            <a>receiving browsing contexts</a> using an implementation specific
+            mechanism.
+            </li>
+            <li>Set the <a>presentation connection state</a> of <var>S</var> to
+            <code>connected</code>.
+            </li>
+            <li>Add a tuple (<code>undefined</code>, <a>presentation
+            identifier</a> of <var>S</var>, <var>S</var>) to the <a>set of
+            presentations</a>.
+            </li>
+            <li>
+              <a>Queue a task</a> to <a>fire</a> an event named
+              <code>connectionavailable</code> at all
+              <a>PresentationConnectionList</a>.
             </li>
           </ol>
           <p>
