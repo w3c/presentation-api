@@ -334,6 +334,11 @@
         defined in [[!HTML5]].
       </p>
       <p>
+        The term <dfn><a href=
+        "http://www.w3.org/TR/html51/infrastructure.html#in-parallel">in
+        parallel</a></dfn> is defined in [[!HTML51]].
+      </p>
+      <p>
         This document provides interface definitions using the Web IDL standard
         ([[!WEBIDL]]). The terms <dfn><a href=
         "https://heycam.github.io/webidl/#idl-promise">Promise</a></dfn>,
@@ -854,8 +859,11 @@
             <li>Return <em>P</em>, but continue running these steps in
             parallel.
             </li>
-            <li>Run the steps to <a>monitor the list of available presentation
-            displays</a> in parallel.
+            <li>If the user agent is not <a data-lt=
+            "monitor the list of available presentation displays">monitoring
+            the list of available presentation displays</a>, run the steps to
+            <a>monitor the list of available presentation displays</a> <a>in
+            parallel</a>.
             </li>
             <li>Request user permission for the use of a <a>presentation
             display</a> and selection of one presentation display.
@@ -1169,8 +1177,8 @@
             Monitoring the list of available presentation displays
           </h4>
           <p>
-            If <a>set of availability objects</a> is non-empty, or there is a
-            pending request to <a for="PresentationRequest" data-lt=
+            If the <a>set of availability objects</a> is non-empty, or there is
+            a pending request to <a for="PresentationRequest" data-lt=
             "start">start a presentation</a>, the user agent MUST <dfn>monitor
             the list of available presentation displays</dfn> by running the
             following steps.
@@ -1334,11 +1342,11 @@
             <code>PresentationConnection</code></a>.
           </p>
           <p>
-            When a <a>PresentationConnection</a> object is discarded
-            (because the document owning it is navigating or is closed), the
-            user agent SHOULD run steps 1 and 5 or 6 of the algorithm to
-            <a data-lt="close-algorithm">close a presentation connection</a>
-            with the <a>PresentationConnection</a> object as
+            When a <a>PresentationConnection</a> object is discarded (because
+            the document owning it is navigating or is closed), the user agent
+            SHOULD run steps 1 and 5 or 6 of the algorithm to <a data-lt=
+            "close-algorithm">close a presentation connection</a> with the
+            <a>PresentationConnection</a> object as
             <code>presentationConnection</code>, <code>wentAway</code> as
             <code>closeReason</code>, and an empty <code>closeMessage</code>.
           </p>
@@ -1712,7 +1720,7 @@
                     </li>
                     <li>
                       <a>Queue a task</a> to <a>fire</a> an event named
-                      <code>statechange</code> at <em>known connection</em>.
+                      <code>terminated</code> at <em>known connection</em>.
                     </li>
                   </ol>
                 </li>
@@ -1752,7 +1760,7 @@
                 </li>
                 <li>
                   <a>Queue a task</a> to <a>fire</a> an event named
-                  <code>statechange</code> at <em>controllingConnection</em>.
+                  <code>terminated</code> at <em>controllingConnection</em>.
                 </li>
               </ol>
             </li>
@@ -1837,34 +1845,30 @@
           provided by a <a>receiving user agent</a>.
         </p>
         <p>
-          The <dfn for="PresentationReceiver">connectionList</dfn> attribute
-          MUST return the <a>connection list promise</a>.
-        </p>
-        <p>
-          For each <a>PresentationReceiver</a>, there is a <dfn>connection list
-          promise</dfn> which is initially set to <code>null</code>. It is a
-          <a>Promise</a> object which holds a
-          <a>PresentationConnectionList</a>.
+          On getting, the <dfn for="PresentationReceiver">connectionList</dfn>
+          attribute MUST return the result of running the following steps:
         </p>
         <ol>
-          <li>If <a>connection list promise</a> is not <code>null</code>,
-          return <a>connection list promise</a> and abort these steps.
+          <li>If there is already an unsettled <a>Promise</a> <var>P</var> from
+          a previous call to get the <a for=
+          "PresentationReceiver">connectionList</a> attribute for the same <a>
+            PresentationReceiver</a> object, return <var>P</var> and abort all
+            remaining steps.
           </li>
-          <li>Otherwise, let <a>connection list promise</a> be a new
-          <a>Promise</a>.
+          <li>Let <var>P</var> be a new <a>Promise</a>.
           </li>
-          <li>Return <a>connection list promise</a>, but continue running these
-          steps in parallel.
+          <li>Return <var>P</var>, but continue running these steps <a>in
+          parallel</a>.
           </li>
           <li>Let <var>list</var> be a new <a>PresentationConnectionList</a>.
           </li>
           <li>Initialize <var>list</var> with the <a>set of presentations</a>
           associated with the <a>receiving browsing context</a>.
           </li>
-          <li>Resolve <a>connection list promise</a> with <var>list</var>.
+          <li>Resolve <var>P</var> with <var>list</var>.
           </li>
           <li>If the user agent is not <a>monitoring incoming presentation
-          connections</a>,start <a>monitoring incoming presentation
+          connections</a>, start <a>monitoring incoming presentation
           connections</a> from <a>controlling browsing contexts</a>.
           </li>
         </ol>
