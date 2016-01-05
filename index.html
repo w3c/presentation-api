@@ -1340,9 +1340,18 @@
           </p>
           <p>
             When the <code><dfn>terminate</dfn>()</code> method is called on a
-            <a>PresentationConnection</a>, the user agent MUST run the
-            algorithm to <a data-lt="terminate-algorithm">terminate a
-            presentation</a> with <a>PresentationConnection</a>.
+            <a>PresentationConnection</a> in a <a>controlling browsing
+            context</a>, the user agent MUST run the algorithm to <a data-lt=
+            "terminate-algorithm-controlling">terminate the presentation in a
+            controlling browsing context</a> with
+            <a>PresentationConnection</a>.
+          </p>
+          <p>
+            When the <code>terminate()</code> method is called on a
+            <a>PresentationConnection</a> in a <a>receiving browsing
+            context</a>, the user agent MUST run the algorithm to <a data-lt=
+            "terminate-algorithm-receiving">terminate the presentation in a
+            receiving browsing context</a> with <a>PresentationConnection</a>.
           </p>
           <p>
             When the <code><dfn>send</dfn>()</code> method is called on a
@@ -1707,12 +1716,12 @@
         </section>
         <section>
           <h4>
-            Terminating a <code>PresentationConnection</code>
+            Terminating a presentation in a controlling browsing context
           </h4>
           <p>
             When a <a>controlling user agent</a> is to <dfn data-lt=
-            "terminate-algorithm">terminate a presentation</dfn> using
-            <em>connection</em>, it MUST run the following steps:
+            "terminate-algorithm-controlling">terminate a presentation</dfn>
+            using <em>connection</em>, it MUST run the following steps:
           </p>
           <ol>
             <li>
@@ -1742,23 +1751,35 @@
                     </li>
                   </ol>
                 </li>
-                <li>Signal the <a>receiving user agent</a> to terminate the
-                presentation using an implementation specific mechanism.
+                <li>Signal the <a>receiving user agent</a> to <a data-lt=
+                "terminate-algorithm-receiving">terminate the presentation</a>
+                using an implementation specific mechanism.
                 </li>
               </ol>
             </li>
           </ol>
+        </section>
+        <section>
+          <h4>
+            Terminating a presentation in a receiving browsing context
+          </h4>
           <p>
-            When a <a>receiving user agent</a> is to terminate a presentation
+            When a <a>receiving user agent</a> is to <dfn data-lt=
+            "terminate-algorithm-receiving">terminate a presentation</dfn>
             using <em>connection</em>, it MUST close the <a>receiving browsing
-            context</a> (equivalent to calling <code>window.close()</code>).
+            context</a> that was created for the presentation associated with
+            <em>connection</em> (equivalent to calling
+            <code>window.close()</code> on it).
           </p>
           <p>
-            In addition, the <a>receiving user agent</a> hosting the
-            <a>receiving browsing context</a> that was closed SHOULD signal
-            each <a>controlling user agent</a> that was connected to the
-            <a>presentation</a>. In response, each <a>controlling user
-            agent</a> SHOULD run the following steps:
+            In addition, the <a>receiving user agent</a> SHOULD signal each
+            <a>controlling user agent</a> that was connected to the
+            <a>receiving browsing context</a> that was closed using an
+            implementation specific mechanism.
+          </p>
+          <p>
+            When a <a>controlling user agent</a> receives such a signal, it
+            SHOULD run the following steps:
           </p>
           <ol>
             <li>
@@ -1771,17 +1792,12 @@
                     <em>connection</em> is not <code>connected</code>, then
                     abort the following steps.
                     </li>
-                    <li>Let <em>controllingConnection</em> be the
-                    <a>presentation connection</a> in the <a>controlling
-                    browsing context</a> that was used to <a>establish a
-                    presentation connection</a> via <em>connection</em>.
-                    </li>
                     <li>Set the <a>presentation connection state</a> of
-                    <em>controllingConnection</em> to <code>terminated</code>.
+                    <em>connection</em> to <code>terminated</code>.
                     </li>
                     <li>
                       <a>Fire</a> an event named <code>statechange</code> at
-                      <em>controllingConnection</em>.
+                      <em>connection</em>.
                     </li>
                   </ol>
                 </li>
