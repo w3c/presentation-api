@@ -1737,8 +1737,8 @@
               </ol>
             </li>
             <li>Signal the <a>receiving user agent</a> to <a data-lt=
-                                                             "terminate-algorithm-receiving">terminate the presentation</a>
-              using an implementation specific mechanism.
+            "terminate-algorithm-receiving">terminate the presentation</a>
+            using an implementation specific mechanism.
             </li>
           </ol>
         </section>
@@ -1750,10 +1750,9 @@
             When a <a>receiving user agent</a> is to <dfn data-lt=
             "terminate-algorithm-receiving">terminate a presentation in a
             receiving browsing context</dfn> using <em>connection</em>, it MUST
-            close the <a>receiving browsing context</a> that was created for the
-            presentation associated with
-            <em>connection</em> (equivalent to calling
-            <code>window.close()</code> on it).
+            close the <a>receiving browsing context</a> that was created for
+            the presentation associated with <em>connection</em> (equivalent to
+            calling <code>window.close()</code> on it).
           </p>
           <p>
             In addition, the <a>receiving user agent</a> SHOULD signal each
@@ -1768,19 +1767,19 @@
           <ol>
             <li>For each <em>connection</em> that was connected to the
             <a>receiving browsing context</a>:
-            <ol>
-              <li>If the <a>presentation connection state</a> of
-                <em>connection</em> is not <code>connected</code>, then
-                abort the following steps.
-              </li>
-              <li>Set the <a>presentation connection state</a> of
+              <ol>
+                <li>If the <a>presentation connection state</a> of
+                <em>connection</em> is not <code>connected</code>, then abort
+                the following steps.
+                </li>
+                <li>Set the <a>presentation connection state</a> of
                 <em>connection</em> to <code>terminated</code>.
-              </li>
-              <li>
-                <a>Fire</a> an event named <code>terminated</code> at
-                <em>connection</em>.
-              </li>
-            </ol>
+                </li>
+                <li>
+                  <a>Fire</a> an event named <code>terminated</code> at
+                  <em>connection</em>.
+                </li>
+              </ol>
             </li>
           </ol>
         </section>
