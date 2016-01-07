@@ -309,9 +309,9 @@
         "http://www.w3.org/TR/html5/webappapis.html#event-handlers">event
         handler</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#event-handler-event-type">event
-        handler event type</a></dfn>, <dfn data-lt="fire"><a href=
+        handler event type</a></dfn>, <dfn data-lt="fire|fires"><a href=
         "http://www.w3.org/TR/html5/infrastructure.html#concept-event-fire">firing
-        an event</a></dfn>, <dfn><a href=
+        an event</a></dfn>, <dfn data-lt="fire a simple event"><a href=
         "http://www.w3.org/TR/html5/webappapis.html#fire-a-simple-event">firing
         a simple event</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#navigate">navigate</a></dfn>,
@@ -912,10 +912,13 @@
               <a>Resolve</a> <em>P</em> with <em>S</em>.
             </li>
             <li>
-              <a>Queue a task</a> to <a>fire</a> an event named
-              <code>connectionavailable</code> at
-              <code>presentationRequest</code> with <em>S</em> as its
-              <code>connection</code> attribute.
+              <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
+              the name <code>connectionavailable</code>, that uses the
+              <a>PresentationConnectionAvailableEvent</a> interface, with the
+              <a for="PresentationConnectionAvailableEvent">connection</a>
+              attribute initialized to <em>S</em>, at
+              <code>presentationRequest</code>. The event must not bubble, must
+              not be cancelable, and has no default action.
             </li>
             <li>If any of the following steps fails, abort all remaining steps
             and <a>queue a task</a> to <a data-lt="close-algorithm">close the
@@ -1009,10 +1012,14 @@
                     <a>Resolve</a> <var>P</var> with <var>S</var>.
                   </li>
                   <li>
-                    <a>Queue a task</a> to <a>fire</a> an event named
-                    <code>connectionavailable</code> at
-                    <code>presentationRequest</code> with <em>S</em> as its
-                    <code>connection</code> attribute.
+                    <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
+                    with the name <code>connectionavailable</code>, that uses
+                    the <a>PresentationConnectionAvailableEvent</a> interface,
+                    with the <a for=
+                    "PresentationConnectionAvailableEvent">connection</a>
+                    attribute initialized to <var>S</var>, at
+                    <code>presentationRequest</code>. The event must not
+                    bubble, must not be cancelable, and has no default action.
                   </li>
                   <li>
                     <a>Establish a presentation connection</a> with
@@ -1208,8 +1215,8 @@
                     <em>newAvailability</em>.
                     </li>
                     <li>
-                      <a data-lt='firing a simple event'>Fire a simple
-                      event</a> named <code>change</code> at <em>A</em>.
+                      <a>Fire a simple event</a> named <code>change</code> at
+                      <em>A</em>.
                     </li>
                   </ol>
                 </li>
@@ -1259,19 +1266,33 @@
 
 </pre>
           <p>
-            A <a>controlling user agent</a> MUST fire an event named
-            <code>connectionavailable</code> on a <a>PresentationRequest</a>
-            when a connection associated with the object is created. It is
-            fired at the <a>PresentationRequest</a> instance, using the
+            A <a>controlling user agent</a> <a>fires</a> a <a>trusted event</a>
+            named <code>connectionavailable</code> on a
+            <a>PresentationRequest</a> when a connection associated with the
+            object is created. It is fired at the <a>PresentationRequest</a>
+            instance, using the <a>PresentationConnectionAvailableEvent</a>
+            interface, with the <a for=
+            "PresentationConnectionAvailableEvent">connection</a> attribute set
+            to the <a><code>PresentationConnection</code></a> object that was
+            created. The event is fired for each connection that is created for
+            the <a>controller</a>, either by the <a>controller</a> calling
+            <code>start()</code> or <code>reconnect()</code>, or by the
+            <a>controlling user agent</a> creating a connection on the
+            controller's behalf via <a for=
+            "Presentation"><code>defaultRequest</code></a>.
+          </p>
+          <p>
+            A <a>receiving user agent</a> <a>fires</a> a <a>trusted event</a>
+            named <code>connectionavailable</code> on a
+            <a>PresentationReceiver</a> when an incoming connection is created.
+            It is fired at the <a>PresentationConnectionList</a> instance
+            associated with the <a>PresentationReceiver</a> instance, using the
             <a>PresentationConnectionAvailableEvent</a> interface, with the
             <a for="PresentationConnectionAvailableEvent">connection</a>
             attribute set to the <a><code>PresentationConnection</code></a>
-            object that was created. The event is fired for each connection
-            that is created for the <a>controller</a>, either by the
-            <a>controller</a> calling <code>start()</code> or
-            <code>reconnect()</code>, or by the <a>controlling user agent</a>
-            creating a connection on the controller's behalf via <a for=
-            "Presentation"><code>defaultRequest</code></a>.
+            object that was created. The event is fired for all connections
+            that are created when <a>monitoring incoming presentation
+            connections</a>.
           </p>
         </section>
       </section>
@@ -1396,7 +1417,7 @@
                   <ol>
                     <li>If the <a>presentation identifier</a> of <var>known
                     connection</var> and <var>presentationConnection</var> are
-                    equal, then <a>fire</a> an event named
+                    equal, then <a>fire a simple event</a> named
                     <code>connected</code> at
                     <var>presentationConnection</var>.
                     </li>
@@ -1674,13 +1695,16 @@
             <li>Set <a>presentation connection state</a> of
             <code>presentationConnection</code> to <code>closed</code>.
             </li>
-            <li>Construct a new <code>PresentationConnectionClosedEvent</code>
-            <var>E</var> with <code>reason</code> set to <var>closeReason</var>
-            and <code>message</code> set to <var>closeMessage</var>.
-            </li>
             <li>
-              <a>Queue a task</a> to <a>fire</a> <var>E</var> at
-              <code>presentationConnection</code>.
+              <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
+              the name <code>closed</code>, that uses the
+              <a>PresentationConnectionClosedEvent</a> interface, with the
+              <a for="PresentationConnectionClosedEvent">reason</a> attribute
+              initialized to <var>closeReason</var> and the <a for=
+              "PresentationConnectionClosedEvent">message</a> attribute
+              initialized to <var>closeMessage</var>, at
+              <code>presentationConnection</code>. The event must not bubble,
+              must not be cancelable, and has no default action.
             </li>
             <li>If <code>presentationConnection</code> is owned by a
             <a>controlling browsing context</a>, signal the <a>receiving
@@ -1729,7 +1753,7 @@
                     connection</em> to <code>terminated</code>.
                     </li>
                     <li>
-                      <a>Queue a task</a> to <a>fire</a> an event named
+                      <a>Queue a task</a> to <a>fire a simple event</a> named
                       <code>terminated</code> at <em>known connection</em>.
                     </li>
                   </ol>
@@ -1776,7 +1800,7 @@
                 <em>connection</em> to <code>terminated</code>.
                 </li>
                 <li>
-                  <a>Fire</a> an event named <code>terminated</code> at
+                  <a>Fire a simple event</a> named <code>terminated</code> at
                   <em>connection</em>.
                 </li>
               </ol>
@@ -2003,22 +2027,15 @@
             presentations</a>.
             </li>
             <li>
-              <a>Queue a task</a> to <a>fire</a> an event named
-              <code>connectionavailable</code> at all
-              <a>PresentationConnectionList</a>.
+              <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
+              the name <code>connectionavailable</code>, that uses the
+              <a>PresentationConnectionAvailableEvent</a> interface, with the
+              <a for="PresentationConnectionAvailableEvent">connection</a>
+              attribute initialized to <var>S</var>, at the
+              <a>PresentationConnectionList</a> instance associated with the
+              <a>PresentationReceiver</a> object.
             </li>
           </ol>
-          <p>
-            A <a>receiving user agent</a> MUST fire an event named
-            <code>connectionavailable</code> on all
-            <a>PresentationConnectionList</a> when a connection is created. It
-            is fired using the <a>PresentationConnectionAvailableEvent</a>
-            interface, with the <a for=
-            "PresentationConnectionAvailableEvent">connection</a> attribute set
-            to the <a><code>PresentationConnection</code></a> object that was
-            created. The event is fired for all connections that are created
-            when <a>monitoring incoming presentation connections</a>.
-          </p>
           <p>
             The <a>receiving user agent</a> MUST fire the event as soon as it
             can create the <a><code>PresentationConnection</code></a>
