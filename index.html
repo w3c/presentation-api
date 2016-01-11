@@ -1377,7 +1377,7 @@
             SHOULD run steps 1 and 5 or 6 of the algorithm to <a data-lt=
             "close-algorithm">close a presentation connection</a> with the
             <a>PresentationConnection</a> object as
-            <code>presentationConnection</code>, <code>wentAway</code> as
+            <code>presentationConnection</code>, <code>wentaway</code> as
             <code>closeReason</code>, and an empty <code>closeMessage</code>.
           </p>
         </div>
@@ -1616,7 +1616,7 @@
             Interface <code>PresentationConnectionClosedEvent</code>
           </h4>
           <pre class="idl">
-            enum PresentationConnectionClosedReason { "error", "closed", "wentAway" };
+            enum PresentationConnectionClosedReason { "error", "closed", "wentaway" };
 
             [Constructor(DOMString type, PresentationConnectionClosedEventInit eventInitDict)]
             interface PresentationConnectionClosedEvent : Event {
@@ -1649,7 +1649,7 @@
               <code>close()</code>.
             </li>
             <li>
-              <code>wentAway</code> means that the browser closed the
+              <code>wentaway</code> means that the browser closed the
               connection, for example, because the browsing context that owned
               the connection navigated or was discarded.
             </li>
