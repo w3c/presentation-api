@@ -1357,9 +1357,9 @@
             When the <code><dfn>close</dfn>()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
             MUST <a>start closing the presentation connection</a> <var>S</var>
-            with <code>closed</code> as <code>closeReason</code> and an
-            empty <code>message</code> as <code>closeMessage</code>.
-          </ol>
+            with <code>closed</code> as <code>closeReason</code> and an empty
+            <code>message</code> as <code>closeMessage</code>.
+          </p>
           <p>
             When the <code><dfn>terminate</dfn>()</code> method is called on a
             <a>PresentationConnection</a> in a <a>controlling browsing
@@ -1386,20 +1386,18 @@
           <p>
             When a <a>PresentationConnection</a> object <var>S</var> is
             discarded (because the document owning it is navigating or is
-            closed) while the <a>presentation connection state</a>
-            of <var>S</var> is <code>connecting</code>
-            or <code>connected</code>, the <a>user agent</a> SHOULD <a>start
-            closing the presentation connection</a>
-            <var>S</var> with <code>wentaway</code> as
+            closed) while the <a>presentation connection state</a> of
+            <var>S</var> is <code>connecting</code> or <code>connected</code>,
+            the <a>user agent</a> SHOULD <a>start closing the presentation
+            connection</a> <var>S</var> with <code>wentaway</code> as
             <code>closeReason</code> and an empty <code>closeMessage</code>.
           </p>
           <p>
             If the <a>user agent</a> receives a signal from the <a>destination
-            browsing context</a> that
-            a <a>PresentationConnection</a> <var>S</var> is to be closed, it
-            SHOULD <a>close the presentation connection</a> <var>S</var>
-            with <code>closed</code> or <code>wentaway</code>
-            as <code>closeReason</code> and an empty
+            browsing context</a> that a <a>PresentationConnection</a>
+            <var>S</var> is to be closed, it SHOULD <a>close the presentation
+            connection</a> <var>S</var> with <code>closed</code> or
+            <code>wentaway</code> as <code>closeReason</code> and an empty
             <code>closeMessage</code>.
           </p>
         </div>
@@ -1700,16 +1698,13 @@
             </dd>
           </dl>
           <ol>
-            <li>
-              Signal the intention to close the
-              corresponding <code>PresentationConnection</code> to
-              the <a>destination browsing context</a>, passing
-              the <code>closeReason</code> to that context.
+            <li>Signal the intention to close the corresponding
+            <code>PresentationConnection</code> to the <a>destination browsing
+            context</a>, passing the <code>closeReason</code> to that context.
             </li>
-            <li>
-              Locally, run the steps to <a>close the presentation connection</a>
-              with <code>presentationConnection</code>, <code>closeReason</code>,
-              and <code>closeMessage</code>.
+            <li>Locally, run the steps to <a>close the presentation
+            connection</a> with <code>presentationConnection</code>,
+            <code>closeReason</code>, and <code>closeMessage</code>.
             </li>
           </ol>
           <p>
@@ -1736,9 +1731,9 @@
             </dd>
           </dl>
           <ol>
-            <li>
-              If the <a>presentation connection state</a> of <code>presentationConnection</code> is
-              not <code>connecting</code> or <code>connected</code>, then abort the remaining steps.
+            <li>If the <a>presentation connection state</a> of
+            <code>presentationConnection</code> is not <code>connecting</code>
+            or <code>connected</code>, then abort the remaining steps.
             </li>
             <li>
               <a>Queue a task</a> to run the following steps:
