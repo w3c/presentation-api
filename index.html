@@ -1356,20 +1356,9 @@
           <p>
             When the <code><dfn>close</dfn>()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
-            MUST run the following steps:
-          </p>
-          <ol>
-            <li>If the <a>presentation connection state</a> of <var>S</var> is
-            <code>closed</code>, then abort these steps.
-            </li>
-            <li>If the <a>closing procedure</a> of <var>S</var> has started,
-            then abort these steps.
-            </li>
-            <li>
-              <a>Start closing the presentation connection</a> <var>S</var>
-              with <code>closed</code> as <code>closeReason</code>, and an
-              empty <code>message</code> as <code>closeMessage</code>.
-            </li>
+            MUST <a>start closing the presentation connection</a> <var>S</var>
+            with <code>closed</code> as <code>closeReason</code> and an
+            empty <code>message</code> as <code>closeMessage</code>.
           </ol>
           <p>
             When the <code><dfn>terminate</dfn>()</code> method is called on a
@@ -1397,19 +1386,21 @@
           <p>
             When a <a>PresentationConnection</a> object <var>S</var> is
             discarded (because the document owning it is navigating or is
-            closed) while its connection is still open, the <a>user agent</a>
-            SHOULD <a>start closing the presentation connection</a>
-            <var>S</var> with <code>wentAway</code> as
-            <code>closeReason</code>, and an empty <code>closeMessage</code>.
+            closed) while the <a>presentation connection state</a>
+            of <var>S</var> is <code>connecting</code>
+            or <code>connected</code>, the <a>user agent</a> SHOULD <a>start
+            closing the presentation connection</a>
+            <var>S</var> with <code>wentaway</code> as
+            <code>closeReason</code> and an empty <code>closeMessage</code>.
           </p>
           <p>
-            When the underlying connection of a <a>PresentationConnection</a>
-            object <var>S</var> has been <dfn dfn-for=
-            "PresentationConnection">closed</dfn>, the <a>user agent</a> MUST
-            <a>close the presentation connection</a> <var>S</var> with the
-            reason and message of the initiating procedure, if any, or with
-            <code>closed</code> as <code>closeReason</code>, and an empty
-            <code>closeMessage</code> otherwise.
+            If the <a>user agent</a> receives a signal from the <a>destination
+            browsing context</a> that
+            a <a>PresentationConnection</a> <var>S</var> is to be closed, it
+            SHOULD <a>close the presentation connection</a> <var>S</var>
+            with <code>closed</code> or <code>wentaway</code>
+            as <code>closeReason</code> and an empty
+            <code>closeMessage</code>.
           </p>
         </div>
         <section>
@@ -1636,7 +1627,7 @@
             Interface <code>PresentationConnectionClosedEvent</code>
           </h4>
           <pre class="idl">
-            enum PresentationConnectionClosedReason { "error", "closed", "wentAway" };
+            enum PresentationConnectionClosedReason { "error", "closed", "wentaway" };
 
             [Constructor(DOMString type, PresentationConnectionClosedEventInit eventInitDict)]
             interface PresentationConnectionClosedEvent : Event {
@@ -1669,7 +1660,7 @@
               <code>close()</code>.
             </li>
             <li>
-              <code>wentAway</code> means that the browser closed the
+              <code>wentaway</code> means that the browser closed the
               connection, for example, because the browsing context that owned
               the connection navigated or was discarded.
             </li>
@@ -1709,31 +1700,18 @@
             </dd>
           </dl>
           <ol>
-            <li>Start to tear down the underlying connection in a non abrupt
-            manner. The mechanism by which this is achieved is
-            implementation-specific but should signal the intention to tear
-            down the connection to the <a>destination browsing context</a> and
-            eventually render the connection <a link-for=
-            "PresentationConnection">closed</a>.
+            <li>
+              Signal the intention to close the
+              corresponding <code>PresentationConnection</code> to
+              the <a>destination browsing context</a>, passing
+              the <code>closeReason</code> to that context.
             </li>
-            <li>If the procedure was initiated by the <code><a link-for=
-            "PresentationConnection">close</a>()</code> method, then set the
-            <a>presentation connection state</a> of
-            <code>presentationConnection</code> to <code>closed</code>.
-            </li>
-            <li>Otherwise, <a>queue a task</a> to set the <a>presentation
-            connection state</a> of <code>presentationConnection</code> to
-            <code>closed</code>.
+            <li>
+              Locally, run the steps to <a>close the presentation connection</a>
+              with <code>presentationConnection</code>, <code>closeReason</code>,
+              and <code>closeMessage</code>.
             </li>
           </ol>
-          <p>
-            If the <a>user agent</a> receives a signal from the <a>destination
-            browsing context</a>, using an implementation-specific mechanism,
-            that a <a>PresentationConnection</a> <var>S</var> is to be closed,
-            it SHOULD <a>close the presentation connection</a> <var>S</var>
-            with <code>closed</code> as <code>closeReason</code> and an empty
-            <code>closeMessage</code>.
-          </p>
           <p>
             When the <a>user agent</a> is to <dfn data-lt=
             "close the presentation connection">close a presentation
@@ -1759,12 +1737,14 @@
           </dl>
           <ol>
             <li>
+              If the <a>presentation connection state</a> of <code>presentationConnection</code> is
+              not <code>connecting</code> or <code>connected</code>, then abort the remaining steps.
+            </li>
+            <li>
               <a>Queue a task</a> to run the following steps:
               <ol>
-                <li>If the <a>presentation connection state</a> of
-                <code>presentationConnection</code> is not <code>closed</code>,
-                set the <a>presentation connection state</a> to
-                <code>closed</code>
+                <li>Set the <a>presentation connection state</a> to
+                <code>closed</code>.
                 </li>
                 <li>
                   <a>Fire</a> a <a>trusted event</a> with the name
