@@ -1702,8 +1702,9 @@
             <code>PresentationConnection</code> to the <a>destination browsing
             context</a>, passing the <code>closeReason</code> to that context.
             </li>
-            <li>Locally, run the steps to <a>close the presentation
-            connection</a> with <code>presentationConnection</code>,
+            <li>If <code>closeReason</code> is not <code>wentaway</code>, then
+            locally run the steps to <a>close the presentation connection</a>
+            with <code>presentationConnection</code>,
             <code>closeReason</code>, and <code>closeMessage</code>.
             </li>
           </ol>
