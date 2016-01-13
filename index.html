@@ -1698,14 +1698,26 @@
             </dd>
           </dl>
           <ol>
-            <li>Signal the intention to close the corresponding
-            <code>PresentationConnection</code> to the <a>destination browsing
-            context</a>, passing the <code>closeReason</code> to that context.
+            <li>If the <a>presentation connection state</a> of
+            <code>presentationConnection</code> not <code>connecting</code> or
+            <code>connected</code> then abort the remaining steps.
+            </li>
+            <li>If there is a pending task to <a>close the presentation
+            connection</a> <code>presentationConnection</code>, then abort the
+            remaining steps.
+            </li>
+            <li>Start to signal to the <a>destination browsing context</a> the
+            intention to close the corresponding
+            <code>PresentationConnection</code>, passing the
+            <code>closeReason</code> to that context. The user agent does not
+            need to wait for acknowledgement that the corresponding
+            <code>PresentationConnection</code> was actually closed before
+            proceeding to the next step.
             </li>
             <li>If <code>closeReason</code> is not <code>wentaway</code>, then
             locally run the steps to <a>close the presentation connection</a>
-            with <code>presentationConnection</code>,
-            <code>closeReason</code>, and <code>closeMessage</code>.
+            with <code>presentationConnection</code>, <code>closeReason</code>,
+            and <code>closeMessage</code>.
             </li>
           </ol>
           <p>
@@ -1732,13 +1744,14 @@
             </dd>
           </dl>
           <ol>
-            <li>If the <a>presentation connection state</a> of
-            <code>presentationConnection</code> is not <code>connecting</code>
-            or <code>connected</code>, then abort the remaining steps.
-            </li>
             <li>
               <a>Queue a task</a> to run the following steps:
               <ol>
+                <li>If the <a>presentation connection state</a> of
+                <code>presentationConnection</code> is not
+                <code>connecting</code> or <code>connected</code>, then abort
+                the remaining steps.
+                </li>
                 <li>Set the <a>presentation connection state</a> to
                 <code>closed</code>.
                 </li>
