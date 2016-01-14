@@ -1676,8 +1676,7 @@
           <p>
             When the <a>user agent</a> is to <dfn data-lt=
             "start closing the presentation connection|closing procedure">start
-            closing a presentation connection</dfn>, it MUST run the following
-            steps:
+            closing a presentation connection</dfn>, it MUST do the following:
           </p>
           <dl>
             <dt>
@@ -1746,17 +1745,17 @@
           <ol>
             <li>
               If there is a pending <a>close the presentation connection</a>
-              task, or the <a>close the presentation connection</a>
-              task has already run
-              for <code>presentationConnection</code>, then abort the
-              remaining steps.
+              task for <code>presentationConnection</code>, or a <a>close the
+              presentation connection</a> task has already run
+              for <code>presentationConnection</code>, then abort the remaining
+              steps.
             </li>
             <li>
               <a>Queue a task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <code>presentationConnection</code> is not
-                <code>connecting</code>, <code>connected</code>
+                <code>connecting</code>, <code>connected</code>,
                 or <code>closed</code>, then abort the remaining steps.
                 </li>
                 <li>If the <a>presentation connection state</a>
