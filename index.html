@@ -1701,9 +1701,8 @@
             <code>presentationConnection</code> not <code>connecting</code> or
             <code>connected</code> then abort the remaining steps.
             </li>
-            <li>
-              Set the <a>presentation connection state</a>
-              of <code>presentationConnection</code> to <code>closed</code>.
+            <li>Set the <a>presentation connection state</a> of
+            <code>presentationConnection</code> to <code>closed</code>.
             </li>
             <li>Start to signal to the <a>destination browsing context</a> the
             intention to close the corresponding
@@ -1743,25 +1742,23 @@
             </dd>
           </dl>
           <ol>
-            <li>
-              If there is a pending <a>close the presentation connection</a>
-              task for <code>presentationConnection</code>, or a <a>close the
-              presentation connection</a> task has already run
-              for <code>presentationConnection</code>, then abort the remaining
-              steps.
+            <li>If there is a pending <a>close the presentation connection</a>
+            task for <code>presentationConnection</code>, or a <a>close the
+            presentation connection</a> task has already run for
+            <code>presentationConnection</code>, then abort the remaining
+            steps.
             </li>
             <li>
               <a>Queue a task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <code>presentationConnection</code> is not
-                <code>connecting</code>, <code>connected</code>,
-                or <code>closed</code>, then abort the remaining steps.
+                <code>connecting</code>, <code>connected</code>, or
+                <code>closed</code>, then abort the remaining steps.
                 </li>
-                <li>If the <a>presentation connection state</a>
-                of <code>presentationConnection</code> is
-                not <code>closed</code>, set it to
-                <code>closed</code>.
+                <li>If the <a>presentation connection state</a> of
+                <code>presentationConnection</code> is not <code>closed</code>,
+                set it to <code>closed</code>.
                 </li>
                 <li>
                   <a>Fire</a> a <a>trusted event</a> with the name
