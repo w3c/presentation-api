@@ -955,8 +955,10 @@
             The details of implementing the permission request and display
             selection are left to the user agent; for example it may show the
             user a dialog and allow the user to select an available display
-            (granting permission), or cancel the selection (denying
-            permission).
+            (granting permission), or cancel the selection (denying permission).
+            Implementers are encouraged to show the user whether an available
+            display is currently in use, to facilitate presentations that can
+            make use of multiple displays.
           </div>
           <div class="note">
             The <var>presentationUrl</var> should name a resource accessible to
@@ -964,11 +966,6 @@
             behavior for <var>presentationUrl</var> using the <code>http</code>
             or <code>https</code> schemes; behavior for other schemes is not
             defined by this specification.
-          </div>
-          <div class="issue">
-            Do we want to distinguish the permission-denied outcome from the
-            no-screens-available outcome? Developers would be able to infer it
-            anyway from <code>getAvailability()</code>.
           </div>
         </section>
         <section>
