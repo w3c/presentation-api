@@ -332,10 +332,10 @@
         "http://www.w3.org/TR/html5/browsers.html#session-history">session
         history</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">
-        sandboxed auxiliary navigation browsing context flag</a></dfn>, and
+        sandboxed auxiliary navigation browsing context flag</a></dfn>,
         <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">
-        sandboxed top-level navigation browsing context flag</a></dfn> are
+        sandboxed top-level navigation browsing context flag</a></dfn>, and <dfn><a href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a><dfn> are
         defined in [[!HTML5]].
       </p>
       <p>
@@ -373,6 +373,9 @@
         </li>
         <li>
           <dfn><code>OperationError</code></dfn>
+        </li>
+        <li>
+          <dfn><code>SecurityError</code></dfn>
         </li>
         <li>
           <dfn><code>SyntaxError</code></dfn>
@@ -422,6 +425,8 @@
         and <dfn><a href=
         "http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute"><code>sessionStorage</code></a></dfn>
         are defined in [[WEBSTORAGE]].
+      </p>
+      <p>The terms <dfn><a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">a priori unauthenticated URL</a></dfn> and <dfn><a href="https://w3c.github.io/webappsec-mixed-content/#categorize-settings-object">prohibit mixed security contexts algorithm</dfn> are defined in [[MIXED-CONTENT]].
       </p>
     </section>
     <section>
@@ -862,6 +867,15 @@
             <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
             and abort these steps.
             </li>
+            <li>Using the document's <a>settings object</a>, run
+            the <a>prohibits mixed security contexts algrithm</a>.
+            </li> 
+            <li>
+              If result of the algorithm is <code>"Prohibits Mixed
+              Security Contexts"</code> and
+              <var>presentationUrl<var> is an <a>a priori unauthenticated URL</a>, then
+              return a a <a>Promise</a> rejected with a <a>SecurityError</a>.
+            </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
             call to <code>start</code> for the same <a>controlling browsing
             context</a>, return a <a>Promise</a> rejected with an
@@ -1000,6 +1014,18 @@
           </dl>
           <ol>
             <li>Let <var>P</var> be a new <a>Promise</a>.
+            </li>
+            <li>
+              Using the document's <a>settings
+              object</a>, run the <a>prohibits mixed security contexts algorithm</a>.
+            </li> 
+            <li>
+              If result of the algorithm is <code>"Prohibits Mixed
+              Security Contexts"</code> and the 
+              <a>presentation request URL<a>
+              of <var>presentationRequest</var> is an <a>a priori
+              unauthenticated URL</a>, then reject <var>P</var> with
+              a <a>SecurityError</a>.
             </li>
             <li>Return <var>P</var>, but continue running these steps in
             parallel.
@@ -2284,17 +2310,24 @@
         presentation.
       </p>
       <p>
-        This specification does not prohibit a user agent from publishing
-        information about its <a>set of presentations</a>. The group envisions
-        a user agent on another device (distinct from the controller or
-        presentation) becoming authorized to reconnect to the presentation,
-        either by user action or by discovering the presentation's URL and id.
+        This specification allows a user agent to publish information about
+        its <a>set of presentations</a>, and allows a browsing context on
+        another user agent connect to a running presentation via <code><a for=
+        "PresentationRequest">reconnect</a>()</code>.  To connect, the
+        additional browsing context must discover the presentation URL and
+        presentation ID of the presentation, either provided by the user, or via
+        a shared service.
       </p>
-      <div class="issue">
-        This section should provide informative guidance as to what constitutes
-        a reasonable context for a Web page to become authorized to control a
-        presentation connection.
-      </div>
+      <p>
+        However, the specification makes makes no guarantee as to the identity
+        of the connecting party.  Once connected, the
+        <a>receiving browsing context</a> may wish to further verify its
+        identity through application-specific means.  For example, the
+        connecting <a>controlling browsing context</a> may provide a token
+        via <code><a for= "PresentationConnection">send</a>()</code> that
+        the <a>receiving browsing context</a> can verify corresponds to a
+        authorized entity.
+      </p>
       <h3>
         Device Access
       </h3>
@@ -2313,9 +2346,6 @@
         presentation from another browsing context. They can be intercepted if
         an attacker can inject content into the controlling page.
       </p>
-      <div class="issue">
-        Should we restrict the API to some extent in non secure contexts?
-      </div>
       <h3>
         Incognito mode and clearing of browsing data
       </h3>
