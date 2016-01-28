@@ -335,8 +335,10 @@
         sandboxed auxiliary navigation browsing context flag</a></dfn>,
         <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">
-        sandboxed top-level navigation browsing context flag</a></dfn>, and <dfn><a href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a><dfn> are
-        defined in [[!HTML5]].
+        sandboxed top-level navigation browsing context flag</a></dfn>, and
+        <dfn><a href=
+        "http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
+        object</a></dfn> are defined in [[!HTML5]].
       </p>
       <p>
         The term <dfn><a href=
@@ -426,7 +428,13 @@
         "http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute"><code>sessionStorage</code></a></dfn>
         are defined in [[WEBSTORAGE]].
       </p>
-      <p>The terms <dfn><a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">a priori unauthenticated URL</a></dfn> and <dfn><a href="https://w3c.github.io/webappsec-mixed-content/#categorize-settings-object">prohibit mixed security contexts algorithm</dfn> are defined in [[MIXED-CONTENT]].
+      <p>
+        The terms <dfn><a href=
+        "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">
+        a priori unauthenticated URL</a></dfn> and <dfn><a href=
+        "https://w3c.github.io/webappsec-mixed-content/#categorize-settings-object">
+        prohibits mixed security contexts algorithm</a></dfn> are defined in
+        [[!MIXED-CONTENT]].
       </p>
     </section>
     <section>
@@ -823,8 +831,8 @@
           </dl>
           <ol>
             <li>Resolve <var>url</var> relative to the API base URL specified
-            by the entry settings object, and let <var>presentationUrl</var> be
-            the resulting absolute URL, if any.
+            by the entry <a>settings object</a>, and let
+            <var>presentationUrl</var> be the resulting absolute URL, if any.
             </li>
             <li>If the resolve a URL algorithm failed, then throw a
             <a>SyntaxError</a> exception and abort the remaining steps.
@@ -867,14 +875,13 @@
             <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
             and abort these steps.
             </li>
-            <li>Using the document's <a>settings object</a>, run
-            the <a>prohibits mixed security contexts algrithm</a>.
-            </li> 
-            <li>
-              If result of the algorithm is <code>"Prohibits Mixed
-              Security Contexts"</code> and
-              <var>presentationUrl<var> is an <a>a priori unauthenticated URL</a>, then
-              return a a <a>Promise</a> rejected with a <a>SecurityError</a>.
+            <li>Using the document's <a>settings object</a>, run the
+            <a>prohibits mixed security contexts algorithm</a>.
+            </li>
+            <li>If result of the algorithm is <code>"Prohibits Mixed Security
+            Contexts"</code> and <var>presentationUrl</var> is an <a>a priori
+            unauthenticated URL</a>, then return a a <a>Promise</a> rejected
+            with a <a>SecurityError</a>.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
             call to <code>start</code> for the same <a>controlling browsing
@@ -1015,17 +1022,13 @@
           <ol>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
-            <li>
-              Using the document's <a>settings
-              object</a>, run the <a>prohibits mixed security contexts algorithm</a>.
-            </li> 
-            <li>
-              If result of the algorithm is <code>"Prohibits Mixed
-              Security Contexts"</code> and the 
-              <a>presentation request URL<a>
-              of <var>presentationRequest</var> is an <a>a priori
-              unauthenticated URL</a>, then reject <var>P</var> with
-              a <a>SecurityError</a>.
+            <li>Using the document's <a>settings object</a>, run the
+            <a>prohibits mixed security contexts algorithm</a>.
+            </li>
+            <li>If result of the algorithm is <code>"Prohibits Mixed Security
+            Contexts"</code> and the <a>presentation request URL</a> of
+            <var>presentationRequest</var> is an <a>a priori unauthenticated
+            URL</a>, then reject <var>P</var> with a <a>SecurityError</a>.
             </li>
             <li>Return <var>P</var>, but continue running these steps in
             parallel.
@@ -1247,8 +1250,8 @@
             <li>Return <var>P</var>, but continue running these steps <a>in
             parallel</a>.
             </li>
-            <li>If the user agent is unable to <a>monitor the list of of
-            available presentation displays</a> for the entire duration of the
+            <li>If the user agent is unable to <a>monitor the list of available
+            presentation displays</a> for the entire duration of the
             <a>controlling browsing context</a> (e.g., because the user has
             disabled this feature), then:
               <ol>
@@ -2310,23 +2313,22 @@
         presentation.
       </p>
       <p>
-        This specification allows a user agent to publish information about
-        its <a>set of presentations</a>, and allows a browsing context on
-        another user agent connect to a running presentation via <code><a for=
-        "PresentationRequest">reconnect</a>()</code>.  To connect, the
+        This specification allows a user agent to publish information about its
+        <a>set of presentations</a>, and allows a browsing context on another
+        user agent connect to a running presentation via <code><a for=
+        "PresentationRequest">reconnect</a>()</code>. To connect, the
         additional browsing context must discover the presentation URL and
-        presentation ID of the presentation, either provided by the user, or via
-        a shared service.
+        presentation ID of the presentation, either provided by the user, or
+        via a shared service.
       </p>
       <p>
         However, the specification makes makes no guarantee as to the identity
-        of the connecting party.  Once connected, the
-        <a>receiving browsing context</a> may wish to further verify its
-        identity through application-specific means.  For example, the
-        connecting <a>controlling browsing context</a> may provide a token
-        via <code><a for= "PresentationConnection">send</a>()</code> that
-        the <a>receiving browsing context</a> can verify corresponds to a
-        authorized entity.
+        of the connecting party. Once connected, the <a>receiving browsing
+        context</a> may wish to further verify its identity through
+        application-specific means. For example, the connecting <a>controlling
+        browsing context</a> may provide a token via <code><a for=
+        "PresentationConnection">send</a>()</code> that the <a>receiving
+        browsing context</a> can verify corresponds to a authorized entity.
       </p>
       <h3>
         Device Access
