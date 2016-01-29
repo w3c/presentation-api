@@ -311,6 +311,8 @@
         The terms <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
         context</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#nested-browsing-contexts">nested
+        browsing context</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#event-handlers">event
         handler</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#event-handler-event-type">event
@@ -331,6 +333,10 @@
         browsing context</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#session-history">session
         history</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#sandboxing-flag-set">sandboxing
+        flag set</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#parse-a-sandboxing-directive">
+        parse a sandboxing directive</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">
         sandboxed auxiliary navigation browsing context flag</a></dfn>,
         <dfn><a href=
@@ -2278,6 +2284,47 @@
           </table>
         </section>
       </section>
+      <section>
+        <h3>
+          Sandboxing and the <code>allow-presentation</code> keyword
+        </h3>
+        <p>
+          This specification adds a new token, <code>allow-presentation</code>,
+          to the set of tokens allowed in the <code>sandbox</code> attribute of
+          an <code>iframe</code>. It adds a corresponding new flag to the
+          <a>sandboxing flag set</a>:
+        </p>
+        <dl>
+          <dt>
+            The <dfn id=
+            "sandboxed-presentation-browsing-context-flag">sandboxed
+            presentation browsing context flag</dfn>
+          </dt>
+          <dd>
+            This flag disables the Presentation API.
+          </dd>
+        </dl>
+        <p>
+          It amends the <a>parse a sandboxing directive</a> algorithm by adding
+          an item to step 3:
+        </p>
+        <ul>
+          <li>The <a>sandboxed presentation browsing context flag</a>, unless
+          <var>tokens</var> contains the <dfn id=
+          "attr-iframe-sandbox-allow-presentation"><code>allow-presentation</code></dfn>
+          keyword.
+          </li>
+        </ul>
+        <p>
+          The effect of this change is that a <a>nested browsing context</a>
+          created by an <code>iframe</code> with its <code>sandbox</code>
+          attribute set will have the Presentation API disabled, unless that
+          attribute includes the <code>allow-presentation</code> keyword. This
+          allows pages to embed potentially untrustworthy content and deny it
+          the ability to request presentation from the user or query for screen
+          availability.
+        </p>
+      </section>
     </section>
     <section>
       <h2>
@@ -2331,6 +2378,17 @@
         application could verify corresponds an authorized entity.
       </p>
       <h3>
+        User interface guidelines
+      </h3>
+      <p>
+        When the user is asked permission to use a <a>presentation display</a>
+        during the steps to <a>start a presentation</a>, the <a>controlling
+        user agent</a> should make it clear what origin is requesting
+        presentation. This will help the user understand what content is
+        requesting presentation, especially when the request is initiated from
+        a <a>nested browsing context</a>.
+      </p>
+      <h3>
         Device Access
       </h3>
       <p>
@@ -2354,8 +2412,8 @@
       <p>
         The content displayed on the presentation is different from the
         controller. In particular, if the user is logged in in both contexts,
-        then logs out of the <a>controlling browsing context</a>, she will not
-        be automatically logged out from the <a>receiving browsing context</a>.
+        then logs out of the controlling browsing context, she will not be
+        automatically logged out from the <a>receiving browsing context</a>.
         Applications that use authentication should pay extra care when
         communicating between devices.
       </p>
@@ -2363,7 +2421,6 @@
         The set of presentations known to the user agent should be cleared when
         the user requests to "clear browsing data."
       </p>
-      <div class="issue" data-number="14"></div>
       <div class="issue">
         The spec should clarify what is to happen to the set of known
         presentations in "incognito" (private browsing context) mode.
@@ -2378,7 +2435,6 @@
         confidentiality and authenticity between corresponding <a>presentation
         connections</a>.
       </p>
-      <div class="issue" data-number="80"></div>
     </section>
     <section>
       <h2>
