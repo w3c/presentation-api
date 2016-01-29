@@ -878,10 +878,10 @@
             <li>Using the document's <a>settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
-            <li>If result of the algorithm is <code>"Prohibits Mixed Security
-            Contexts"</code> and <var>presentationUrl</var> is an <a>a priori
-            unauthenticated URL</a>, then return a a <a>Promise</a> rejected
-            with a <a>SecurityError</a>.
+            <li>If the result of the algorithm is <code>"Prohibits Mixed
+            Security Contexts"</code> and <var>presentationUrl</var> is an <a>
+              a priori unauthenticated URL</a>, then return a <a>Promise</a>
+              rejected with a <a>SecurityError</a>.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
             call to <code>start</code> for the same <a>controlling browsing
@@ -1025,9 +1025,9 @@
             <li>Using the document's <a>settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
-            <li>If result of the algorithm is <code>"Prohibits Mixed Security
-            Contexts"</code> and the <a>presentation request URL</a> of
-            <var>presentationRequest</var> is an <a>a priori unauthenticated
+            <li>If the result of the algorithm is <code>"Prohibits Mixed
+            Security Contexts"</code> and the <a>presentation request URL</a>
+            of <var>presentationRequest</var> is an <a>a priori unauthenticated
             URL</a>, then reject <var>P</var> with a <a>SecurityError</a>.
             </li>
             <li>Return <var>P</var>, but continue running these steps in
@@ -2315,20 +2315,20 @@
       <p>
         This specification allows a user agent to publish information about its
         <a>set of presentations</a>, and allows a browsing context on another
-        user agent connect to a running presentation via <code><a for=
+        user agent to connect to a running presentation via <code><a for=
         "PresentationRequest">reconnect</a>()</code>. To connect, the
         additional browsing context must discover the presentation URL and
         presentation ID of the presentation, either provided by the user, or
         via a shared service.
       </p>
       <p>
-        However, the specification makes makes no guarantee as to the identity
-        of the connecting party. Once connected, the <a>receiving browsing
-        context</a> may wish to further verify its identity through
-        application-specific means. For example, the connecting <a>controlling
-        browsing context</a> may provide a token via <code><a for=
-        "PresentationConnection">send</a>()</code> that the <a>receiving
-        browsing context</a> can verify corresponds to a authorized entity.
+        However, this specification makes no guarantee as to the identity of
+        the connecting party. Once connected, the receiving application may
+        wish to further verify the identity of the connecting party through
+        application-specific means. For example, the connecting application
+        could provide a token via <code><a for=
+        "PresentationConnection">send</a>()</code> that the receiving
+        application could verify corresponds an authorized entity.
       </p>
       <h3>
         Device Access
