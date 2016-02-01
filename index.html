@@ -335,6 +335,8 @@
         history</a></dfn>, <dfn><a href=
         "https://www.w3.org/TR/html5/browsers.html#sandboxing-flag-set">sandboxing
         flag set</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#active-sandboxing-flag-set">active
+        sandboxing flag set</a></dfn>, <dfn><a href=
         "https://www.w3.org/TR/html5/browsers.html#parse-a-sandboxing-directive">
         parse a sandboxing directive</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">
@@ -718,7 +720,7 @@
         </h3>
         <pre class="idl">
           partial interface Navigator {
-            [SameObject] readonly attribute Presentation presentation;
+            [SameObject] readonly attribute Presentation? presentation;
           };
 
           interface Presentation {
@@ -729,7 +731,10 @@
 </pre>
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the <a>Presentation</a> interface.
+          used to retrieve an instance of the <a><code>Presentation</code></a>
+          interface. If <a>presentation is disabled</a>, the attribute MUST
+          return null. Otherwise, it MUST return the
+          <a><code>Presentation</code></a> instance.
         </p>
         <section>
           <h4>
@@ -2316,14 +2321,18 @@
           </li>
         </ul>
         <p>
-          The effect of this change is that a <a>nested browsing context</a>
-          created by an <code>iframe</code> with its <code>sandbox</code>
-          attribute set will have the Presentation API disabled, unless that
-          attribute includes the <code>allow-presentation</code> keyword. This
-          allows pages to embed potentially untrustworthy content and deny it
-          the ability to request presentation from the user or query for screen
-          availability.
+          <dfn>Presentation is disabled</dfn> in a browsing context when the
+          document object's <a>active sandboxing flag set</a> does not have the
+          <a>sandboxed presentation browsing context flag</a> set.
         </p>
+        <div class="note">
+          A <a>nested browsing context</a> created by an <code>iframe</code>
+          with its <code>sandbox</code> attribute set will have the
+          Presentation API disabled, unless that attribute includes the
+          <code>allow-presentation</code> keyword. This allows pages to embed
+          potentially untrustworthy content and deny it the ability to request
+          presentation from the user or query for screen availability.
+        </div>
       </section>
     </section>
     <section>
