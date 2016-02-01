@@ -2327,8 +2327,8 @@
         </p>
         <div class="note">
           A <a>nested browsing context</a> created by an <code>iframe</code>
-          with its <code>sandbox</code> attribute set will have the
-          Presentation API disabled, unless that attribute includes the
+          with its <code>sandbox</code> attribute set will act as if 
+          <a>presentation is disabled</a>, unless that attribute includes the
           <code>allow-presentation</code> keyword. This allows pages to embed
           potentially untrustworthy content and deny it the ability to request
           presentation from the user or query for screen availability.
