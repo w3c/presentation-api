@@ -311,6 +311,8 @@
         The terms <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
         context</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#nested-browsing-contexts">nested
+        browsing context</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#event-handlers">event
         handler</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/webappapis.html#event-handler-event-type">event
@@ -331,6 +333,12 @@
         browsing context</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#session-history">session
         history</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#sandboxing-flag-set">sandboxing
+        flag set</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#active-sandboxing-flag-set">active
+        sandboxing flag set</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#parse-a-sandboxing-directive">
+        parse a sandboxing directive</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">
         sandboxed auxiliary navigation browsing context flag</a></dfn>,
         <dfn><a href=
@@ -712,7 +720,7 @@
         </h3>
         <pre class="idl">
           partial interface Navigator {
-            [SameObject] readonly attribute Presentation presentation;
+            [SameObject] readonly attribute Presentation? presentation;
           };
 
           interface Presentation {
@@ -723,7 +731,10 @@
 </pre>
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the <a>Presentation</a> interface.
+          used to retrieve an instance of the <a><code>Presentation</code></a>
+          interface. If <a>presentation is disabled</a>, the attribute MUST
+          return null. Otherwise, it MUST return the
+          <a><code>Presentation</code></a> instance.
         </p>
         <section>
           <h4>
@@ -1506,6 +1517,23 @@
             <var>S</var>.
           </p>
           <p>
+            When a <a>PresentationConnection</a> object is created, its
+            <a>binaryType</a> IDL attribute MUST be set to the string
+            "<a link-for="BinaryType">arraybuffer</a>". On getting, it MUST
+            return the last value it was set to. On setting, the user agent
+            MUST set the IDL attribute to the new value.
+          </p>
+          <div class="note">
+            The <a>binaryType</a> attribute allows authors to control how
+            binary data is exposed to scripts. By setting the attribute to
+            "<dfn dfn-for="BinaryType">blob</dfn>", binary data is returned in
+            <code>Blob</code> form; by setting it to "<dfn dfn-for=
+            "BinaryType">arraybuffer</dfn>", it is returned in
+            <code>ArrayBuffer</code> form. The attribute defaults to
+            "<code>arraybuffer</code>". This attribute has no effect on data
+            sent in a string form.
+          </div>
+          <p>
             When the <code><dfn>send</dfn>()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
             MUST run the algorithm to <a>send a message</a> through
@@ -1725,15 +1753,17 @@
                 <var>messageData</var> with type <code>DOMString</code>.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> is set to <code>blob</code>, then initialize
-                <var>event</var>'s <code>data</code> attribute to a new <code>
-                  Blob</code> object with <var>messageData</var> its raw data.
+                <a>binaryType</a> attribute is set to "<dfn dfn-for=
+                "BinaryType">blob</dfn>", then initialize <var>event</var>'s
+                <code>data</code> attribute to a new <code>Blob</code> object
+                with <var>messageData</var> as its raw data.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> is set to <code>arraybuffer</code>, then
-                initialize <var>event</var>'s <code>data</code> attribute to a
-                new <code>ArrayBuffer</code> object whose contents are
-                <var>messageData</var>.
+                <a>binaryType</a> attribute is set to "<dfn dfn-for=
+                "BinaryType">arraybuffer</dfn>", then initialize
+                <var>event</var>'s <code>data</code> attribute to a new <code>
+                  ArrayBuffer</code> object whose contents are
+                  <var>messageData</var>.
                 </li>
               </ol>
             </li>
@@ -2278,6 +2308,51 @@
           </table>
         </section>
       </section>
+      <section>
+        <h3>
+          Sandboxing and the <code>allow-presentation</code> keyword
+        </h3>
+        <p>
+          This specification adds a new token, <code>allow-presentation</code>,
+          to the set of tokens allowed in the <code>sandbox</code> attribute of
+          an <code>iframe</code>. It adds a corresponding new flag to the
+          <a>sandboxing flag set</a>:
+        </p>
+        <dl>
+          <dt>
+            The <dfn id=
+            "sandboxed-presentation-browsing-context-flag">sandboxed
+            presentation browsing context flag</dfn>
+          </dt>
+          <dd>
+            This flag disables the Presentation API.
+          </dd>
+        </dl>
+        <p>
+          It amends the <a>parse a sandboxing directive</a> algorithm by adding
+          an item to step 3:
+        </p>
+        <ul>
+          <li>The <a>sandboxed presentation browsing context flag</a>, unless
+          <var>tokens</var> contains the <dfn id=
+          "attr-iframe-sandbox-allow-presentation"><code>allow-presentation</code></dfn>
+          keyword.
+          </li>
+        </ul>
+        <p>
+          <dfn>Presentation is disabled</dfn> in a browsing context when the
+          document object's <a>active sandboxing flag set</a> does not have the
+          <a>sandboxed presentation browsing context flag</a> set.
+        </p>
+        <div class="note">
+          A <a>nested browsing context</a> created by an <code>iframe</code>
+          with its <code>sandbox</code> attribute set will have the
+          Presentation API disabled, unless that attribute includes the
+          <code>allow-presentation</code> keyword. This allows pages to embed
+          potentially untrustworthy content and deny it the ability to request
+          presentation from the user or query for screen availability.
+        </div>
+      </section>
     </section>
     <section>
       <h2>
@@ -2331,6 +2406,17 @@
         application could verify corresponds an authorized entity.
       </p>
       <h3>
+        User interface guidelines
+      </h3>
+      <p>
+        When the user is asked permission to use a <a>presentation display</a>
+        during the steps to <a>start a presentation</a>, the <a>controlling
+        user agent</a> should make it clear what origin is requesting
+        presentation. This will help the user understand what content is
+        requesting presentation, especially when the request is initiated from
+        a <a>nested browsing context</a>.
+      </p>
+      <h3>
         Device Access
       </h3>
       <p>
@@ -2363,7 +2449,6 @@
         The set of presentations known to the user agent should be cleared when
         the user requests to "clear browsing data."
       </p>
-      <div class="issue" data-number="14"></div>
       <div class="issue">
         The spec should clarify what is to happen to the set of known
         presentations in "incognito" (private browsing context) mode.
@@ -2378,7 +2463,6 @@
         confidentiality and authenticity between corresponding <a>presentation
         connections</a>.
       </p>
-      <div class="issue" data-number="80"></div>
     </section>
     <section>
       <h2>
