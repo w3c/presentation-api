@@ -1753,14 +1753,14 @@
                 <var>messageData</var> with type <code>DOMString</code>.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> attribute is set to "<dfn dfn-for=
-                "BinaryType">blob</dfn>", then initialize <var>event</var>'s
+                <a>binaryType</a> attribute is set to "<a link-for=
+                "BinaryType">blob</a>", then initialize <var>event</var>'s
                 <code>data</code> attribute to a new <code>Blob</code> object
                 with <var>messageData</var> as its raw data.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> attribute is set to "<dfn dfn-for=
-                "BinaryType">arraybuffer</dfn>", then initialize
+                <a>binaryType</a> attribute is set to "<a link-for=
+                "BinaryType">arraybuffer</a>", then initialize
                 <var>event</var>'s <code>data</code> attribute to a new <code>
                   ArrayBuffer</code> object whose contents are
                   <var>messageData</var>.
@@ -2346,8 +2346,8 @@
         </p>
         <div class="note">
           A <a>nested browsing context</a> created by an <code>iframe</code>
-          with its <code>sandbox</code> attribute set will have the
-          Presentation API disabled, unless that attribute includes the
+          with its <code>sandbox</code> attribute set will act as if
+          <a>presentation is disabled</a>, unless that attribute includes the
           <code>allow-presentation</code> keyword. This allows pages to embed
           potentially untrustworthy content and deny it the ability to request
           presentation from the user or query for screen availability.
