@@ -1517,6 +1517,23 @@
             <var>S</var>.
           </p>
           <p>
+            When a <a>PresentationConnection</a> object is created, its
+            <a>binaryType</a> IDL attribute MUST be set to the string
+            "<a link-for="BinaryType">arraybuffer</a>". On getting, it MUST
+            return the last value it was set to. On setting, the user agent
+            MUST set the IDL attribute to the new value.
+          </p>
+          <div class="note">
+            The <a>binaryType</a> attribute allows authors to control how
+            binary data is exposed to scripts. By setting the attribute to
+            "<dfn dfn-for="BinaryType">blob</dfn>", binary data is returned in
+            <code>Blob</code> form; by setting it to "<dfn dfn-for=
+            "BinaryType">arraybuffer</dfn>", it is returned in
+            <code>ArrayBuffer</code> form. The attribute defaults to
+            "<code>arraybuffer</code>". This attribute has no effect on data
+            sent in a string form.
+          </div>
+          <p>
             When the <code><dfn>send</dfn>()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
             MUST run the algorithm to <a>send a message</a> through
@@ -1736,15 +1753,17 @@
                 <var>messageData</var> with type <code>DOMString</code>.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> is set to <code>blob</code>, then initialize
-                <var>event</var>'s <code>data</code> attribute to a new <code>
-                  Blob</code> object with <var>messageData</var> its raw data.
+                <a>binaryType</a> attribute is set to "<dfn dfn-for=
+                "BinaryType">blob</dfn>", then initialize <var>event</var>'s
+                <code>data</code> attribute to a new <code>Blob</code> object
+                with <var>messageData</var> as its raw data.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> is set to <code>arraybuffer</code>, then
-                initialize <var>event</var>'s <code>data</code> attribute to a
-                new <code>ArrayBuffer</code> object whose contents are
-                <var>messageData</var>.
+                <a>binaryType</a> attribute is set to "<dfn dfn-for=
+                "BinaryType">arraybuffer</dfn>", then initialize
+                <var>event</var>'s <code>data</code> attribute to a new <code>
+                  ArrayBuffer</code> object whose contents are
+                  <var>messageData</var>.
                 </li>
               </ol>
             </li>
