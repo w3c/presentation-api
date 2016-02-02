@@ -702,22 +702,25 @@
           context</a>.
         </p>
         <p>
-          The <dfn>set of controlling presentations</dfn>, initially empty,
+          The <dfn>set of controlled presentations</dfn>, initially empty,
           contains the <a>presentation connections</a> created by the
           <a>controlling browsing contexts</a> for the <a>controlling user
           agent</a> (or a specific user profile within that user agent). The
-          <a>set of controlling presentations</a> is represented by a list of
+          <a>set of controlled presentations</a> is represented by a list of
           <a>PresentationConnection</a> objects that represent the underlying
-          <a>presentation connections</a>. The <a>presentation URL</a> and
-          <a>presentation identifier</a> uniquely identify a <a>presentation
-          connection</a> in this set.
+          <a>presentation connections</a>. Several
+          <a>PresentationConnection</a> objects may share the same
+          <a>presentation URL</a> and <a>presentation identifier</a> in that
+          set, but there can be only one <a>PresentationConnection</a> with a
+          specific <a>presentation URL</a> and <a>presentation identifier</a>
+          for a given <a>controlling browsing context</a>.
         </p>
         <p>
-          The <dfn>set of incoming presentations</dfn>, initially empty,
+          The <dfn>set of presentation controllers</dfn>, initially empty,
           contains the <a>presentation connections</a> created by a
           <a>receiving browsing context</a> for the <a>receiving user
-          agent</a>. The <a>set of incoming presentations</a> is represented by
-          a list of <a>PresentationConnection</a> objects that represent the
+          agent</a>. The <a>set of presentation controllers</a> is represented
+          by a list of <a>PresentationConnection</a> objects that represent the
           underlying <a>presentation connections</a>. All <a>presentation
           connections</a> in this set share the same <a>presentation URL</a>
           and <a>presentation identifier</a>.
@@ -741,9 +744,9 @@
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
           used to retrieve an instance of the <a><code>Presentation</code></a>
-          If <a>presentation is disabled</a>, the attribute MUST return null.
-          Otherwise, it MUST return the <a><code>Presentation</code></a>
-          instance.
+          interface. If <a>presentation is disabled</a>, the attribute MUST
+          return null. Otherwise, it MUST return the
+          <a><code>Presentation</code></a> instance.
         </p>
         <section>
           <h4>
@@ -953,7 +956,7 @@
             </li>
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
-            <a>presentation connections</a> in the <a>set of controlling
+            <a>presentation connections</a> in the <a>set of controlled
             presentations</a>.
             </li>
             <li>Create a new <a>PresentationConnection</a> <var>S</var>.
@@ -967,8 +970,7 @@
             <li>Set the <a>presentation connection state</a> of <var>S</var> to
             <a for="PresentationConnectionState">connecting</a>.
             </li>
-            <li>Add <var>S</var> to the <a>set of controlling
-            presentations</a>.
+            <li>Add <var>S</var> to the <a>set of controlled presentations</a>.
             </li>
             <li>
               <a>Resolve</a> <var>P</var> with <var>S</var>.
@@ -1060,7 +1062,7 @@
             <li>Return <var>P</var>, but continue running these steps in
             parallel.
             </li>
-            <li>Search the <a>set of controlling presentations</a> for a
+            <li>Search the <a>set of controlled presentations</a> for a
             <a>PresentationConnection</a> that meets the following criteria:
             its <a>controlling browsing context</a> is the current <a>browsing
             context</a>, its <a>presentation connection state</a> is not
@@ -1104,9 +1106,9 @@
                 </li>
               </ol>
             </li>
-            <li>Search the <a>set of controlling presentations</a> for the
-            first <a>PresentationConnection</a> that meets the following
-            criteria: its <a>presentation connection state</a> is not <a for=
+            <li>Search the <a>set of controlled presentations</a> for the first
+            <a>PresentationConnection</a> that meets the following criteria:
+            its <a>presentation connection state</a> is not <a for=
             "PresentationConnectionState">terminated</a>, its <a>presentation
             URL</a> is equal to the <a>presentation request URL</a> of
             <var>presentationRequest</var>, and its <a>presentation
@@ -1128,7 +1130,7 @@
                 <var>S</var> to <a for=
                 "PresentationConnectionState">connecting</a>.
                 </li>
-                <li>Add <var>S</var> to the <a>set of controlling
+                <li>Add <var>S</var> to the <a>set of controlled
                 presentations</a>.
                 </li>
                 <li>
@@ -2028,7 +2030,7 @@
               connected</a>, then abort these steps.
             </li>
             <li>Otherwise, for each <var>known connection</var> in the <a>set
-            of controlling presentations</a> in the <a>controlling user
+            of controlled presentations</a> in the <a>controlling user
             agent</a>:
               <ol>
                 <li>If the <a>presentation identifier</a> of <var>known
@@ -2078,7 +2080,7 @@
             SHOULD run the following steps:
           </p>
           <ol>
-            <li>For each <var>connection</var> in the <a>set of controlling
+            <li>For each <var>connection</var> in the <a>set of controlled
             presentations</a> that was connected to the <a>receiving browsing
             context</a>, <a>queue a task</a> to run the following steps:
               <ol>
@@ -2279,7 +2281,7 @@
         <p>
           The <dfn for="PresentationConnectionList">connections</dfn> attribute
           MUST return the non-terminated set of <a>presentation connections</a>
-          in the <a>set of incoming presentations</a>.
+          in the <a>set of presentation controllers</a>.
         </p>
         <section>
           <h4>
@@ -2311,7 +2313,7 @@
             <li>Set the <a>presentation connection state</a> of <var>S</var> to
             <a for="PresentationConnectionState">connected</a>.
             </li>
-            <li>Add <var>S</var> to the <a>set of incoming presentations</a>.
+            <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
             <li>
               <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
@@ -2445,7 +2447,7 @@
       </p>
       <p>
         This specification allows a user agent to publish information about its
-        <a>set of controlling presentations</a>, and allows a browsing context
+        <a>set of controlled presentations</a>, and allows a browsing context
         on another user agent to connect to a running presentation via
         <code><a for="PresentationRequest">reconnect</a>()</code>. To connect,
         the additional browsing context must discover the presentation URL and
