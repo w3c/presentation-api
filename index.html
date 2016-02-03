@@ -438,8 +438,10 @@
       </p>
       <p>
         The terms <dfn><a href=
+        "https://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially
+        secure</a></dfn>, <dfn><a href=
         "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">
-        a priori unauthenticated URL</a></dfn> and <dfn><a href=
+        a priori unauthenticated URL</a></dfn>, and <dfn><a href=
         "https://w3c.github.io/webappsec-mixed-content/#categorize-settings-object">
         prohibits mixed security contexts algorithm</a></dfn> are defined in
         [[!MIXED-CONTENT]].
@@ -2408,14 +2410,60 @@
       <h3>
         User interface guidelines
       </h3>
-      <p>
-        When the user is asked permission to use a <a>presentation display</a>
-        during the steps to <a>start a presentation</a>, the <a>controlling
-        user agent</a> should make it clear what origin is requesting
-        presentation. This will help the user understand what content is
-        requesting presentation, especially when the request is initiated from
-        a <a>nested browsing context</a>.
-      </p>
+      <dl>
+        <dt>
+          Origin display
+        </dt>
+        <dd>
+          <p>
+            When the user is asked permission to use a <a>presentation
+            display</a> during the steps to <a>start a presentation</a>, the
+            <a>controlling user agent</a> should make it clear what origin is
+            requesting presentation <i>and</i> what origin will be presented.
+          </p>
+          <p>
+            Display of the origin requesting presentation will help the user
+            understand what content is making the request, especially when the
+            request is initiated from a <a>nested browsing context</a>. For
+            example, embedded content may try to convince the user to click to
+            trigger a request to start an unwanted presentation.
+          </p>
+          <p>
+            Showing the origin that will be presented will help the user know
+            if that content is from an <a>potentially secure</a> (e.g.,
+            <code>https:</code>) origin, and corresponds to a known or expected
+            site. For example, a malicious site may attempt to convince the
+            user to enter login credentials into a presentation page that
+            imitates a legimitate site. Examination of the requested origin
+            will help the user detect these cases.
+          </p>
+        </dd>
+        <dt>
+          Cross-device access
+        </dt>
+        <dd>
+          <p>
+            When a user <a data-lt="start a presentation">starts a
+            presentation</a>, the user will begin with exclusive control of the
+            presentation. However, the Presentation API allows additional
+            devices (likely belonging to distinct users) to connect and thereby
+            control the presentation as well. When a second device connects to
+            a presentation, it is recommended that all connected <a data-lt=
+            "controlling user agent">controlling user agents</a> notify their
+            users via the browser chrome that the original user has lost
+            exclusive access, and there are now multiple controllers for the
+            presentation.
+          </p>
+          <p>
+            In addition, it may be the case that the <a>receiving user
+            agent</a> is capable of receiving user input, as well as acting as
+            a <a>presentation display</a>. In this case, the <a>receiving user
+            agent</a> should notify its user via browser chrome when a
+            <a>receiving browsing context</a> is under the control of a remote
+            party (i.e., it has one or more connected controllers).
+          </p>
+        </dd>
+      </dl>
       <h3>
         Device Access
       </h3>
