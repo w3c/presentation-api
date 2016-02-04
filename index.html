@@ -74,6 +74,15 @@
             ],
             status: 'finding',
             publisher: 'W3C'
+          },
+          DIAL: {
+            title: 'DIscovery And Launch Protocol Specification',
+            href: 'http://www.dial-multiscreen.org/dial-protocol-specification',
+            authors: [
+              'Netflix',
+              'YouTube'
+            ],
+            publisher: 'Netflix'
           }
         },
         issueBase: "https://www.github.com/w3c/presentation-api/issues/",
@@ -445,6 +454,10 @@
         "https://w3c.github.io/webappsec-mixed-content/#categorize-settings-object">
         prohibits mixed security contexts algorithm</a></dfn> are defined in
         [[!MIXED-CONTENT]].
+      </p>
+      <p>
+        The term <dfn><a href="http://www.dial-multiscreen.org/">DIAL</a></dfn>
+        is defined in [[DIAL]].
       </p>
     </section>
     <section>
@@ -2418,7 +2431,6 @@
       <h2>
         Security and privacy considerations
       </h2>
-      <div class="issue" data-number="45"></div>
       <h3>
         Personally identifiable information
       </h3>
@@ -2430,6 +2442,18 @@
         in conjunction with other information for fingerprinting the user.
         However, this information is also dependent on the user's local network
         context, so the risk is minimized.
+      </p>
+      <p>
+        The API enables <a href=
+        "#monitoring-the-list-of-available-presentation-displays">monitoring
+        the list of available presentation displays</a>. How the user agent
+        determines the compatibility and availability of a <a>presentation
+        display</a> with a given URL is an implementation detail. If a
+        <a>controlling user agent</a> matches a <a>presentation request URL</a>
+        to a <a>DIAL</a> application to determine its availability, this
+        feature can be used to probe information about which <a>DIAL</a>
+        applications the user has installed on the <a>presentation display</a>
+        without user consent.
       </p>
       <h3>
         Cross-origin access
@@ -2555,10 +2579,12 @@
         The set of presentations known to the user agent should be cleared when
         the user requests to "clear browsing data."
       </p>
-      <div class="issue">
-        The spec should clarify what is to happen to the set of known
-        presentations in "incognito" (private browsing context) mode.
-      </div>
+      <p>
+        When in private browsing mode ("incognito"), the initial <a>set of
+        controlled presentations</a> in that browsing session must be empty.
+        Any <a data-lt="presentation connection">presentation connections</a>
+        added to it must be discarded when the session terminates.
+      </p>
       <h3>
         Messaging between presentation connections
       </h3>
