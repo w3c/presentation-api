@@ -2497,10 +2497,12 @@
         The set of presentations known to the user agent should be cleared when
         the user requests to "clear browsing data."
       </p>
-      <div class="issue">
-        The spec should clarify what is to happen to the set of known
-        presentations in "incognito" (private browsing context) mode.
-      </div>
+      <p>
+        When in private browsing mode ("incognito"), the set of presentations
+        known to the user agent must be initially empty, and all state
+        associated with the browsing session must be made unavailable after the
+        session terminates.
+      </p>
       <h3>
         Messaging between presentation connections
       </h3>
