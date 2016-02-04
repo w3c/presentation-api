@@ -685,9 +685,8 @@
           identifier</dfn> to distinguish it from other <a>presentations</a>,
           and a <dfn>presentation URL</dfn> that is a <a>URL</a> used to create
           or resume the <a>presentation</a>. A <dfn>valid presentation
-          identifier</dfn> consists of alphanumeric ASCII characters only, is
-          at least 16 characters long, and is unique within the <a>set of
-          presentations</a>.
+          identifier</dfn> consists of alphanumeric ASCII characters only and
+          is at least 16 characters long.
         </p>
         <p>
           A <dfn lt=
@@ -718,15 +717,28 @@
           context</a>.
         </p>
         <p>
-          The <dfn>set of presentations</dfn>, initially empty, contains the
-          <a>presentations</a> created by the <a>controlling browsing
-          contexts</a> for the controlling user agent (or a specific user
-          profile within that user agent). The <a>set of presentations</a> is
-          represented by a list of tuples, where each tuple consists of a
-          <a>presentation URL</a>, a <a>presentation identifier</a>, and the
-          <a>presentation connection</a> itself. The <a>presentation URL</a>
-          and <a>presentation identifier</a> uniquely identify the
-          <a>presentation</a>.
+          The <dfn>set of controlled presentations</dfn>, initially empty,
+          contains the <a>presentation connections</a> created by the
+          <a>controlling browsing contexts</a> for the <a>controlling user
+          agent</a> (or a specific user profile within that user agent). The
+          <a>set of controlled presentations</a> is represented by a list of
+          <a>PresentationConnection</a> objects that represent the underlying
+          <a>presentation connections</a>. Several
+          <a>PresentationConnection</a> objects may share the same
+          <a>presentation URL</a> and <a>presentation identifier</a> in that
+          set, but there can be only one <a>PresentationConnection</a> with a
+          specific <a>presentation URL</a> and <a>presentation identifier</a>
+          for a given <a>controlling browsing context</a>.
+        </p>
+        <p>
+          The <dfn>set of presentation controllers</dfn>, initially empty,
+          contains the <a>presentation connections</a> created by a
+          <a>receiving browsing context</a> for the <a>receiving user
+          agent</a>. The <a>set of presentation controllers</a> is represented
+          by a list of <a>PresentationConnection</a> objects that represent the
+          underlying <a>presentation connections</a>. All <a>presentation
+          connections</a> in this set share the same <a>presentation URL</a>
+          and <a>presentation identifier</a>.
         </p>
       </section>
       <section>
@@ -798,8 +810,10 @@
             In a <a>receiving user agent</a>, the <dfn for=
             "Presentation"><code>receiver</code></dfn> attribute MUST return
             the <a><code>PresentationReceiver</code></a> instance associated
-            with the <a>receiving browsing context</a>. In any other
-            <a>browsing context</a>, it MUST return <code>null</code>.
+            with the <a>receiving browsing context</a> and created by the
+            <a>receiving user agent</a> when the <a>receiving browsing
+            context</a> is created. In any other <a>browsing context</a>, it
+            MUST return <code>null</code>.
           </p>
         </section>
       </section>
@@ -957,17 +971,21 @@
             </li>
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
-            presentations in the <a>set of presentations</a>.
+            <a>presentation connections</a> in the <a>set of controlled
+            presentations</a>.
             </li>
             <li>Create a new <a>PresentationConnection</a> <var>S</var>.
             </li>
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
-              I</var>, and set the <a>presentation connection state</a> of
-              <var>S</var> to <a for=
-              "PresentationConnectionState">connecting</a>.
+              I</var>.
             </li>
-            <li>Add the tuple {<var>presentationUrl</var>, <var>S.id</var>,
-            <var>S</var>} to the <a>set of presentations</a>.
+            <li>Set the <a>presentation URL</a> of <var>S</var> to
+            <var>presentationUrl</var>.
+            </li>
+            <li>Set the <a>presentation connection state</a> of <var>S</var> to
+            <a for="PresentationConnectionState">connecting</a>.
+            </li>
+            <li>Add <var>S</var> to the <a>set of controlled presentations</a>.
             </li>
             <li>
               <a>Resolve</a> <var>P</var> with <var>S</var>.
@@ -1059,48 +1077,101 @@
             <li>Return <var>P</var>, but continue running these steps in
             parallel.
             </li>
-            <li>For each <var>known connection</var> in the <a>set of
-            presentations</a>,
-              <div style="margin-left: 2em">
-                If <a>presentation connection state</a> of <var>known
-                presentation</var> is not <a for=
-                "PresentationConnectionState">terminated</a>, the
-                <a>presentation URL</a> of <var>known connection</var> is equal
-                to the <a>presentation request URL</a> of
-                <var>presentationRequest</var>, and the <a>presentation
-                identifier</a> of <var>known connection</var> is equal to
-                <var>presentationId</var>, run the following steps:
-                <ol>
-                  <li>Let <var>S</var> be the <a>presentation connection</a> of
-                  <var>known connection</var>.
-                  </li>
-                  <li>
-                    <a>Resolve</a> <var>P</var> with <var>S</var>.
-                  </li>
-                  <li>
-                    <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
-                    with the name <a>connectionavailable</a>, that uses the
-                    <a>PresentationConnectionAvailableEvent</a> interface, with
-                    the <a for=
-                    "PresentationConnectionAvailableEvent">connection</a>
-                    attribute initialized to <var>S</var>, at
-                    <var>presentationRequest</var>. The event must not bubble,
-                    must not be cancelable, and has no default action.
-                  </li>
-                  <li>
-                    <a>Establish a presentation connection</a> with
-                    <var>S</var>.
-                  </li>
-                  <li>Abort all remaining steps.
-                  </li>
-                </ol>
-              </div>
+            <li>Search the <a>set of controlled presentations</a> for a
+            <a>PresentationConnection</a> that meets the following criteria:
+            its <a>controlling browsing context</a> is the current <a>browsing
+            context</a>, its <a>presentation connection state</a> is not
+              <a for="PresentationConnectionState">terminated</a>, its
+              <a>presentation URL</a> is equal to the <a>presentation request
+              URL</a> of <var>presentationRequest</var>, and its
+              <a>presentation identifier</a> is equal to
+              <var>presentationId</var>.
+            </li>
+            <li>If such a <a>PresentationConnection</a> exists, run the
+            following steps:
+              <ol>
+                <li>Let <var>S</var> be that <a>PresentationConnection</a>.
+                </li>
+                <li>
+                  <a>Resolve</a> <var>P</var> with <var>S</var>.
+                </li>
+                <li>
+                  <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
+                  with the name <a>connectionavailable</a>, that uses the
+                  <a>PresentationConnectionAvailableEvent</a> interface, with
+                  the <a for=
+                  "PresentationConnectionAvailableEvent">connection</a>
+                  attribute initialized to <var>S</var>, at
+                  <var>presentationRequest</var>. The event must not bubble,
+                  must not be cancelable, and has no default action.
+                </li>
+                <li>If the <a>presentation connection state</a> of <var>S</var>
+                is <a for="PresentationConnectionState">connecting</a> or
+                <a for="PresentationConnectionState">connected</a>, then abort
+                all remaining steps.
+                </li>
+                <li>Set the <a>presentation connection state</a> of
+                <var>S</var> to <a for=
+                "PresentationConnectionState">connecting</a>.
+                </li>
+                <li>
+                  <a>Establish a presentation connection</a> with <var>S</var>.
+                </li>
+                <li>Abort all remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>Search the <a>set of controlled presentations</a> for the first
+            <a>PresentationConnection</a> that meets the following criteria:
+            its <a>presentation connection state</a> is not <a for=
+            "PresentationConnectionState">terminated</a>, its <a>presentation
+            URL</a> is equal to the <a>presentation request URL</a> of
+            <var>presentationRequest</var>, and its <a>presentation
+            identifier</a> is equal to <var>presentationId</var>.
+            </li>
+            <li>If such a <a>PresentationConnection</a> exists, run the
+            following steps:
+              <ol>
+                <li>Create a new <a>PresentationConnection</a> <var>S</var>.
+                </li>
+                <li>Set the <a>presentation identifier</a> of <var>S</var> to
+                <var>presentationId</var>.
+                </li>
+                <li>Set the <a>presentation URL</a> of <var>S</var> to the <a>
+                  presentation request URL</a> of
+                  <var>presentationRequest</var>.
+                </li>
+                <li>Set the <a>presentation connection state</a> of
+                <var>S</var> to <a for=
+                "PresentationConnectionState">connecting</a>.
+                </li>
+                <li>Add <var>S</var> to the <a>set of controlled
+                presentations</a>.
+                </li>
+                <li>
+                  <a>Resolve</a> <var>P</var> with <var>S</var>.
+                </li>
+                <li>
+                  <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
+                  with the name <a>connectionavailable</a>, that uses the
+                  <a>PresentationConnectionAvailableEvent</a> interface, with
+                  the <a for=
+                  "PresentationConnectionAvailableEvent">connection</a>
+                  attribute initialized to <var>S</var>, at
+                  <var>presentationRequest</var>. The event must not bubble,
+                  must not be cancelable, and has no default action.
+                </li>
+                <li>
+                  <a>Establish a presentation connection</a> with <var>S</var>.
+                </li>
+                <li>Abort all remaining steps.
+                </li>
+              </ol>
             </li>
             <li>
               <a>Reject</a> <var>P</var> with a <a>NotFoundError</a> exception.
             </li>
           </ol>
-          <div class="issue" data-number="229"></div>
           <div class="issue">
             If no matching presentation is found, we could leave the Promise
             pending in case a matching presentation is started in the future.
@@ -1607,15 +1678,9 @@
                 <var>presentationConnection</var> to <a for=
                 "PresentationConnectionState">connected</a>.
                 </li>
-                <li>For each <var>known connection</var> in the <a>set of
-                presentations</a>:
-                  <ol>
-                    <li>If the <a>presentation identifier</a> of <var>known
-                    connection</var> and <var>presentationConnection</var> are
-                    equal, then <a>fire a simple event</a> named
-                    <a>connected</a> at <var>presentationConnection</var>.
-                    </li>
-                  </ol>
+                <li>
+                  <a>Fire a simple event</a> named <a>connected</a> at
+                  <var>presentationConnection</var>.
                 </li>
               </ol>
             </li>
@@ -1980,7 +2045,8 @@
               connected</a>, then abort these steps.
             </li>
             <li>Otherwise, for each <var>known connection</var> in the <a>set
-            of presentations</a> in the <a>controlling user agent</a>:
+            of controlled presentations</a> in the <a>controlling user
+            agent</a>:
               <ol>
                 <li>If the <a>presentation identifier</a> of <var>known
                 connection</var> and <var>connection</var> are equal, and the
@@ -2015,9 +2081,8 @@
             When a <a>receiving user agent</a> is to <dfn data-lt=
             "terminate-algorithm-receiving">terminate a presentation in a
             receiving browsing context</dfn> using <var>connection</var>, it
-            MUST close the <a>receiving browsing context</a> that was created
-            for the presentation associated with <var>connection</var>
-            (equivalent to calling <code>window.close()</code> on it).
+            MUST close that <a>receiving browsing context</a> (equivalent to
+            calling <code>window.close()</code> on it).
           </p>
           <p>
             In addition, the <a>receiving user agent</a> SHOULD signal each
@@ -2030,9 +2095,9 @@
             SHOULD run the following steps:
           </p>
           <ol>
-            <li>For each <var>connection</var> that was connected to the
-            <a>receiving browsing context</a>, <a>queue a task</a> to run the
-            following steps:
+            <li>For each <var>connection</var> in the <a>set of controlled
+            presentations</a> that was connected to the <a>receiving browsing
+            context</a>, <a>queue a task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <var>connection</var> is not <a for=
@@ -2120,14 +2185,13 @@
 
 
 </pre>
-        <div class='issue' data-number='193'></div>
         <p>
-          The <a>PresentationReceiver</a> object is available to a <a>receiving
-          browsing context</a> in order to access the <a data-lt=
-          "controlling browsing context">controlling browsing context</a> and
-          communicate with it. The <a><code>PresentationReceiver</code></a>
-          object MUST be implemented in a <a>receiving browsing context</a>
-          provided by a <a>receiving user agent</a>.
+          The <a>PresentationReceiver</a> interface allows a <a>receiving
+          browsing context</a> to access the <a data-lt=
+          "controlling browsing context">controlling browsing contexts</a> and
+          communicate with them. The <a>PresentationReceiver</a> interface MUST
+          be implemented in a <a>receiving browsing context</a> provided by a
+          <a>receiving user agent</a>.
         </p>
         <p>
           On getting, the <dfn for="PresentationReceiver">connectionList</dfn>
@@ -2146,9 +2210,6 @@
           parallel</a>.
           </li>
           <li>Let <var>list</var> be a new <a>PresentationConnectionList</a>.
-          </li>
-          <li>Initialize <var>list</var> with the <a>set of presentations</a>
-          associated with the <a>receiving browsing context</a>.
           </li>
           <li>Resolve <var>P</var> with <var>list</var>.
           </li>
@@ -2234,8 +2295,8 @@
 </pre>
         <p>
           The <dfn for="PresentationConnectionList">connections</dfn> attribute
-          MUST return a non-terminated <a>set of presentations</a> connections
-          available for the <a>receiving browsing context</a>.
+          MUST return the non-terminated set of <a>presentation connections</a>
+          in the <a>set of presentation controllers</a>.
         </p>
         <section>
           <h4>
@@ -2244,19 +2305,18 @@
           <p>
             When the <a>receiving user agent</a> is to start <dfn>monitoring
             incoming presentation connections</dfn> in a <a>receiving browsing
-            context</a> from <a>controlling browsing contexts</a>, it MUST wait
-            for and accept incoming connection requests from a <a>controlling
-            browsing context</a> using an implementation specific mechanism.
-            When a new connection request is received from a <a>controlling
-            browsing context</a>, the <a>receiving user agent</a> MUST run the
-            following steps:
+            context</a> from <a>controlling browsing contexts</a>, it MUST
+            listen to and accept incoming connection requests from a
+            <a>controlling browsing context</a> using an implementation
+            specific mechanism. When a new connection request is received from
+            a <a>controlling browsing context</a>, the <a>receiving user
+            agent</a> MUST run the following steps:
           </p>
           <ol>
-            <li>Create a new <a>PresentationConnection</a> <var>S</var>.
+            <li>Let <var>I</var> be the <a>presentation identifier</a> sent by
+            the <a>controlling browsing context</a> in the incoming request.
             </li>
-            <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
-            unique among all <a>presentation identifier</a>s for known
-            presentations in the <a>set of presentations</a>.
+            <li>Create a new <a>PresentationConnection</a> <var>S</var>.
             </li>
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
               I</var>.
@@ -2268,9 +2328,7 @@
             <li>Set the <a>presentation connection state</a> of <var>S</var> to
             <a for="PresentationConnectionState">connected</a>.
             </li>
-            <li>Add a tuple (<code>undefined</code>, <a>presentation
-            identifier</a> of <var>S</var>, <var>S</var>) to the <a>set of
-            presentations</a>.
+            <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
             <li>
               <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
@@ -2415,10 +2473,10 @@
       </p>
       <p>
         This specification allows a user agent to publish information about its
-        <a>set of presentations</a>, and allows a browsing context on another
-        user agent to connect to a running presentation via <code><a for=
-        "PresentationRequest">reconnect</a>()</code>. To connect, the
-        additional browsing context must discover the presentation URL and
+        <a>set of controlled presentations</a>, and allows a browsing context
+        on another user agent to connect to a running presentation via
+        <code><a for="PresentationRequest">reconnect</a>()</code>. To connect,
+        the additional browsing context must discover the presentation URL and
         presentation ID of the presentation, either provided by the user, or
         via a shared service.
       </p>
