@@ -61,6 +61,7 @@
             ]
           }
         ],
+        sotdAfterWGinfo: true,
         wg: 'Second Screen Presentation Working Group',
         wgURI: 'http://www.w3.org/2014/secondscreen/',
         wgPublicList: 'public-secondscreen',
@@ -87,20 +88,7 @@
         },
         issueBase: "https://www.github.com/w3c/presentation-api/issues/",
         // TODO: Uncomment when https://github.com/w3c/presentation-api/issues/228 is fixed
-        // githubAPI: "https://api.github.com/repos/w3c/presentation-api",
-
-        // Temp fix for ReSpec issue #483:
-        // https://github.com/w3c/respec/issues/483
-        afterEnd: function () {
-          Array.prototype.forEach.call(
-            document.querySelectorAll("[for],[dfn-for],[link-for]"),
-            function (element) {
-              element.removeAttribute('for');
-              element.removeAttribute('dfn-for');
-              element.removeAttribute('link-for');
-            }
-          );
-        }
+        // githubAPI: "https://api.github.com/repos/w3c/presentation-api"
       };
     </script>
     <style>
@@ -165,16 +153,23 @@
     </section>
     <section id="sotd">
       <p>
-        This document is a <b>work in progress</b> and is subject to change.
-        Some sections are still incomplete or underspecified. <a href=
-        "#security-and-privacy-considerations">Security and privacy
-        considerations</a> need to be adjusted based on feedback and
-        experience. Some open issues are noted inline; please check the group's
-        <a href="https://github.com/w3c/presentation-api/issues">issue
-        tracker</a> on GitHub for all open issues. Feedback from early
-        experimentations is encouraged to allow the Second Screen Presentation
-        Working Group to evolve the specification based on implementation
-        issues.
+        Since publication as Working Draft on <a href=
+        "https://www.w3.org/TR/2015/WD-presentation-api-20151013/">13 October
+        2015</a>, the Working Group has refined the interfaces and
+        significantly improved all procedures. Security and privacy
+        considerations have been completed based on feedback and interactions
+        with other W3C groups. The Working Group intends to publish a Candidate
+        Recommentation soon and seeks wide review of this document. Horizontal
+        reviews and feedback from early experimentations and developers willing
+        to use this specification are encouraged.
+      </p>
+      <p>
+        Some open issues remain, including on ways to pass the language
+        settings from the controller to the presentation and on whether the
+        messaging channel should expose a congestion control mechanism; please
+        check the group's <a href=
+        "https://github.com/w3c/presentation-api/issues">issue tracker</a> on
+        GitHub for a complete list of open issues.
       </p>
     </section>
     <section class="informative">
