@@ -599,7 +599,7 @@
     localStorage["presId"] = connection.id;
 
     // monitor connection's state
-    connection.onconnected = function () {
+    connection.onconnect = function () {
       // Allow the user to disconnect from or terminate the presentation
       disconnectBtn.style.display = "inline";
       stopBtn.style.display = "inline";
@@ -612,8 +612,8 @@
       // send initial message to presentation page
       this.send("say hello");
     };
-    connection.onclosed = reset;
-    connection.onterminated = function () {
+    connection.onclose = reset;
+    connection.onterminate = function () {
       // remove presId from localStorage if exists
       delete localStorage["presId"];
       // Reset the UI
@@ -641,7 +641,7 @@
 &lt;!-- receiver.html --&gt;
 &lt;script&gt;
   var addConnection = function(connection) {
-    connection.onconnected = function () {
+    connection.onconnect = function () {
       this.onmessage = function (message) {
         if (message.data == "say hello")
           this.send("hello");
@@ -695,8 +695,8 @@
           <a>browsing context</a> that has connected to a <a>presentation</a>
           by calling <code><a for="PresentationRequest">start</a>()</code> or
           <code><a for="PresentationRequest">reconnect</a>()</code>, or
-          received a <a>presentation connection</a> via a
-          <a>connectionavailable</a> event.
+          received a <a>presentation connection</a> via a <a for=
+          "PresentationRequest">connectionavailable</a> event.
         </p>
         <p>
           The <dfn data-lt=
@@ -992,12 +992,13 @@
             </li>
             <li>
               <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
-              the name <a>connectionavailable</a>, that uses the
-              <a>PresentationConnectionAvailableEvent</a> interface, with the
-              <a for="PresentationConnectionAvailableEvent">connection</a>
-              attribute initialized to <var>S</var>, at
-              <var>presentationRequest</var>. The event must not bubble, must
-              not be cancelable, and has no default action.
+              the name <a for="PresentationRequest">connectionavailable</a>,
+              that uses the <a>PresentationConnectionAvailableEvent</a>
+              interface, with the <a for=
+              "PresentationConnectionAvailableEvent">connection</a> attribute
+              initialized to <var>S</var>, at <var>presentationRequest</var>.
+              The event must not bubble, must not be cancelable, and has no
+              default action.
             </li>
             <li>If any of the following steps fails, abort all remaining steps
             and <a>close the presentation connection</a> <var>S</var> with
@@ -1097,7 +1098,8 @@
                 </li>
                 <li>
                   <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
-                  with the name <a>connectionavailable</a>, that uses the
+                  with the name <a for=
+                  "PresentationRequest">connectionavailable</a>, that uses the
                   <a>PresentationConnectionAvailableEvent</a> interface, with
                   the <a for=
                   "PresentationConnectionAvailableEvent">connection</a>
@@ -1153,7 +1155,8 @@
                 </li>
                 <li>
                   <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
-                  with the name <a>connectionavailable</a>, that uses the
+                  with the name <a for=
+                  "PresentationRequest">connectionavailable</a>, that uses the
                   <a>PresentationConnectionAvailableEvent</a> interface, with
                   the <a for=
                   "PresentationConnectionAvailableEvent">connection</a>
@@ -1480,31 +1483,32 @@
 </pre>
           <p>
             A <a>controlling user agent</a> <a>fires</a> a <a>trusted event</a>
-            named <a>connectionavailable</a> on a <a>PresentationRequest</a>
-            when a connection associated with the object is created. It is
-            fired at the <a>PresentationRequest</a> instance, using the
-            <a>PresentationConnectionAvailableEvent</a> interface, with the
-            <a for="PresentationConnectionAvailableEvent">connection</a>
-            attribute set to the <a><code>PresentationConnection</code></a>
-            object that was created. The event is fired for each connection
-            that is created for the <a>controller</a>, either by the
-            <a>controller</a> calling <code>start()</code> or
-            <code>reconnect()</code>, or by the <a>controlling user agent</a>
-            creating a connection on the controller's behalf via <a for=
+            named <a for="PresentationRequest">connectionavailable</a> on a
+            <a>PresentationRequest</a> when a connection associated with the
+            object is created. It is fired at the <a>PresentationRequest</a>
+            instance, using the <a>PresentationConnectionAvailableEvent</a>
+            interface, with the <a for=
+            "PresentationConnectionAvailableEvent">connection</a> attribute set
+            to the <a><code>PresentationConnection</code></a> object that was
+            created. The event is fired for each connection that is created for
+            the <a>controller</a>, either by the <a>controller</a> calling
+            <code>start()</code> or <code>reconnect()</code>, or by the
+            <a>controlling user agent</a> creating a connection on the
+            controller's behalf via <a for=
             "Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
             A <a>receiving user agent</a> <a>fires</a> a <a>trusted event</a>
-            named <a>connectionavailable</a> on a <a>PresentationReceiver</a>
-            when an incoming connection is created. It is fired at the
-            <a>PresentationConnectionList</a> instance associated with the
-            <a>PresentationReceiver</a> instance, using the
-            <a>PresentationConnectionAvailableEvent</a> interface, with the
-            <a for="PresentationConnectionAvailableEvent">connection</a>
-            attribute set to the <a><code>PresentationConnection</code></a>
-            object that was created. The event is fired for all connections
-            that are created when <a>monitoring incoming presentation
-            connections</a>.
+            named <a for="PresentationConnectionList">connectionavailable</a>
+            on a <a>PresentationReceiver</a> when an incoming connection is
+            created. It is fired at the <a>PresentationConnectionList</a>
+            instance associated with the <a>PresentationReceiver</a> instance,
+            using the <a>PresentationConnectionAvailableEvent</a> interface,
+            with the <a for=
+            "PresentationConnectionAvailableEvent">connection</a> attribute set
+            to the <a><code>PresentationConnection</code></a> object that was
+            created. The event is fired for all connections that are created
+            when <a>monitoring incoming presentation connections</a>.
           </p>
         </section>
       </section>
@@ -1527,9 +1531,9 @@
             readonly attribute PresentationConnectionState state;
             void close();
             void terminate();
-            attribute EventHandler onconnected;
-            attribute EventHandler onclosed;
-            attribute EventHandler onterminated;
+            attribute EventHandler onconnect;
+            attribute EventHandler onclose;
+            attribute EventHandler onterminate;
 
             // Communication
             attribute BinaryType binaryType;
@@ -1679,7 +1683,8 @@
                 "PresentationConnectionState">connected</a>.
                 </li>
                 <li>
-                  <a>Fire a simple event</a> named <a>connected</a> at
+                  <a>Fire a simple event</a> named <a class=
+                  "PresentationConnectionEvent">connect</a> at
                   <var>presentationConnection</var>.
                 </li>
               </ol>
@@ -2011,8 +2016,8 @@
                 "PresentationConnectionState">closed</a>.
                 </li>
                 <li>
-                  <a>Fire</a> a <a>trusted event</a> with the name
-                  <a>closed</a>, that uses the
+                  <a>Fire</a> a <a>trusted event</a> with the name <a for=
+                  "PresentationConnectionEvent">close</a>, that uses the
                   <a>PresentationConnectionClosedEvent</a> interface, with the
                   <a for="PresentationConnectionClosedEvent">reason</a>
                   attribute initialized to <var>closeReason</var> and the
@@ -2060,8 +2065,9 @@
                     "PresentationConnectionState">terminated</a>.
                     </li>
                     <li>
-                      <a>Fire a simple event</a> named <a>terminated</a> at
-                      <var>known connection</var>.
+                      <a>Fire a simple event</a> named <a for=
+                      "PresentationConnectionEvent">terminate</a> at <var>known
+                      connection</var>.
                     </li>
                   </ol>
                 </li>
@@ -2109,7 +2115,8 @@
                   terminated</a>.
                 </li>
                 <li>
-                  <a>Fire a simple event</a> named <a>terminated</a> at
+                  <a>Fire a simple event</a> named <a for=
+                  "PresentationConnectionEvent">terminate</a> at
                   <var>connection</var>.
                 </li>
               </ol>
@@ -2148,26 +2155,28 @@
               </tr>
               <tr>
                 <td>
-                  <dfn><code>onconnected</code></dfn>
+                  <dfn><code>onconnect</code></dfn>
                 </td>
                 <td>
-                  <dfn><code>connected</code></dfn>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <dfn><code>onclosed</code></dfn>
-                </td>
-                <td>
-                  <dfn><code>closed</code></dfn>
+                  <dfn><code>connect</code></dfn>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <dfn><code>onterminated</code></dfn>
+                  <dfn><code>onclose</code></dfn>
                 </td>
                 <td>
-                  <dfn><code>terminated</code></dfn>
+                  <dfn for=
+                  "PresentationConnectionEvent"><code>close</code></dfn>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>onterminate</code></dfn>
+                </td>
+                <td>
+                  <dfn for=
+                  "PresentationConnectionEvent"><code>terminate</code></dfn>
                 </td>
               </tr>
             </tbody>
@@ -2332,9 +2341,10 @@
             </li>
             <li>
               <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
-              the name <a>connectionavailable</a>, that uses the
-              <a>PresentationConnectionAvailableEvent</a> interface, with the
-              <a for="PresentationConnectionAvailableEvent">connection</a>
+              the name <a for=
+              "PresentationConnectionList">connectionavailable</a>, that uses
+              the <a>PresentationConnectionAvailableEvent</a> interface, with
+              the <a for="PresentationConnectionAvailableEvent">connection</a>
               attribute initialized to <var>S</var>, at the
               <a>PresentationConnectionList</a> instance associated with the
               <a>PresentationReceiver</a> object. The event must not bubble,
