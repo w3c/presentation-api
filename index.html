@@ -785,9 +785,10 @@
             button in the browser.
           </p>
           <div class="note">
-            Not all user agents may support initiation of a presentation
-            connection outside of the content area. In this case setting
-            <code>defaultRequest</code> has no effect.
+            Not all <a data-lt="controlling user agent">controlling user
+            agents</a> may support initiation of a presentation connection via
+            the browser chrome. In this case, setting
+            <code>defaultRequest</code> would have no effect.
           </div>
           <div class="issue">
             It should be clear that user-intiated presentation via the user
@@ -809,6 +810,18 @@
             <a>receiving user agent</a> when the <a>receiving browsing
             context</a> is created. In any other <a>browsing context</a>, it
             MUST return <code>null</code>.
+          </p>
+          <p>
+            A user agent that is a <a>receiving user agent</a> but not a
+            <a>controlling user agent</a> MUST always return <code>null</code>
+            for the <a for="Presentation">defaultRequest</a> attribute. It MUST
+            treat setting the <a for="Presentation">defaultRequest</a>
+            attribute as a no-op.
+          </p>
+          <p>
+            A user agent that is a <a>controlling user agent</a> but not a
+            <a>receiving user agent</a> MUST always return <code>null</code>
+            for the <a for="Presentation">receiver</a> attribute.
           </p>
         </section>
       </section>
