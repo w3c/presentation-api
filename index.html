@@ -2101,18 +2101,20 @@
                 objects after 30 minutes.
               </p>
             </li>
-            <li>The <a>receiving user agent</a> receives a signal from a
-            <a>controlling user agent</a> via the algorithm to <a data-lt=
-            "terminate-algorithm-controlling">terminate a presentation in a
-            controlling browsing context</a> that the presentation should be
-            terminated.
+            <li>
+              The <a>receiving user agent</a> receives a signal from a
+              <a>controlling user agent</a> via the algorithm to <a data-lt=
+                 "terminate-algorithm-controlling">terminate a presentation in a
+                 controlling browsing context</a> that the presentation should be
+                 terminated.
             </li>
-            <li>The receiving user agent is to <a>unload a document</a>
-            corresponding to the <a>receiving browsing context</a> in response
-            to a request to <a>navigate</a> that context. Navigation among
-            fragment identifiers within the same presentation document MUST not
-            <a data-lt="terminate-algorithm-receiving">terminate the
-            presentation</a>.
+            <li>
+              The receiving user agent is to <a>unload a document</a>
+              corresponding to the <a>receiving browsing context</a> in response
+              to a request to <a>navigate</a> that context. Navigation among
+              fragment identifiers within the same presentation document MUST not
+              <a data-lt="terminate-algorithm-receiving">terminate the
+                presentation</a>.
             </li>
           </ol>
           <p>
@@ -2124,9 +2126,9 @@
           </p>
           <p>
             In addition, the <a>receiving user agent</a> SHOULD signal each
-            <a>controlling user agent</a> that was connected to the
-            <a>receiving browsing context</a> that was closed using an
-            implementation specific mechanism.
+            <a>controlling user agent</a> that was connected to the presentation
+            that the presentation is now terminated, using an implementation
+            specific mechanism.
           </p>
           <p>
             When a <a>controlling user agent</a> receives such a signal, it
@@ -2135,7 +2137,8 @@
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
             presentations</a> that was connected to the <a>receiving browsing
-            context</a>, <a>queue a task</a> to run the following steps:
+            context</a> for the presentation, <a>queue a task</a> to run the
+            following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <var>connection</var> is not <a for=
