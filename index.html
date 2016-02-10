@@ -2088,7 +2088,7 @@
             presentation</a>.
           </p>
           <ol>
-            <li>The <a>top level browsing context</a> of the presentation calls
+            <li>The <a>top-level browsing context</a> of the presentation calls
             <code>window.close()</code>.
             </li>
             <li>The <a>receiving user agent</a> closes the presentation at user
@@ -2102,8 +2102,10 @@
               </p>
             </li>
             <li>The <a>receiving user agent</a> receives a signal from a
-            <a>controlling user agent</a> that the presentation should be
-            closed.
+            <a>controlling user agent</a> via the algorithm to <a data-lt=
+            "terminate-algorithm-controlling">terminate a presentation in a
+            controlling browsing context</a> that the presentation should be
+            terminated.
             </li>
             <li>The receiving user agent is to <a>unload a document</a>
             corresponding to the <a>receiving browsing context</a> in response
@@ -2117,8 +2119,8 @@
             In any of these cases, when a <a>receiving user agent</a> is to
             <dfn data-lt="terminate-algorithm-receiving">terminate a
             presentation in a receiving browsing context</dfn> using
-            <var>connection</var>, it MUST <a>close</a> that <a>receiving
-            browsing context</a>.
+            <var>connection</var>, it MUST <a>unload a document</a>
+            corresponding to the <a>receiving browsing context</a>.
           </p>
           <p>
             In addition, the <a>receiving user agent</a> SHOULD signal each
