@@ -2071,8 +2071,9 @@
               </ol>
             </li>
             <li>
-              <dfn>Send a termination signal</dfn> to the <a>receiving user
-              agent</a> using an implementation specific mechanism.
+              <dfn>Send a termination request</dfn> for the presentation to its
+              <a>receiving user agent</a> using an implementation specific
+              mechanism.
             </li>
           </ol>
         </section>
@@ -2086,11 +2087,14 @@
             context</a>:
           </p>
           <ol>
-            <li>The <a>top-level browsing context</a> of the presentation calls
-            <code>window.close()</code>.
+            <li>The <a>receiving user agent</a> is to <a>unload a document</a>
+            corresponding to the <a>receiving browsing context</a>, e.g. in
+            response to a call to <code>window.close()</code> in the
+            <a>top-level browsing context</a> or to a request to
+            <a>navigate</a> that context to a new resource.
             </li>
-            <li>The <a>receiving user agent</a> closes the presentation at user
-            request.
+            <li>The user requests to terminate the presentation via the
+            <a>receiving user agent</a>.
               <p class="note">
                 This could happen by an explicit user action, or as a policy of
                 the user agent. For example, the <a>receiving user agent</a>
@@ -2101,43 +2105,61 @@
                 minutes.
               </p>
             </li>
-            <li>The <a>controlling user agent</a> <a data-lt=
-            "send a termination signal">sends a termination signal</a> to the
-            <a>receiving user agent</a>.
-            </li>
-            <li>The <a>receiving user agent</a> is to <a>unload a document</a>
-            corresponding to the <a>receiving browsing context</a> in response
-            to a request to <a>navigate</a> that context. Navigation among
-            fragment identifiers within the same presentation document MUST not
-            <a data-lt="terminate-algorithm-receiving">terminate the
-            presentation</a>.
+            <li>A <a>controlling user agent</a> <a data-lt=
+            "send a termination request">sends a termination request</a> to the
+            <a>receiving user agent</a> for that presentation.
             </li>
           </ol>
           <p>
             When a <a>receiving user agent</a> is to <dfn data-lt=
             "terminate-algorithm-receiving">terminate a presentation in a
-            receiving browsing context</dfn> given a <var>connection</var>, it
-            MUST <a>unload a document</a> corresponding to the <a>receiving
-            browsing context</a>, and it SHOULD <a>send a termination
-            confirmation signal</a> to each <a>controlling user agent</a> using
-            an implementation specific mechanism.
+            receiving browsing context</dfn>, it MUST run the following steps:
           </p>
+          <ol>
+            <li>Let <var>P</var> be the presentation to be terminated.
+            </li>
+            <li>If there is a <a>receiving browsing context</a> for
+            <var>P</var>, and it has a document for <var>P</var> that is not
+            unloaded, <a>unload a document</a> corresponding to that
+            <a>browsing context</a>.
+            </li>
+            <li>For each <var>connection</var> in the <a>set of presentation
+            controllers</a> that were created for <var>P</var>, <a>queue a
+            task</a> to run the following steps:
+              <ol>
+                <li>If the <a>presentation connection state</a> of
+                <var>connection</var> is not <a for=
+                "PresentationConnectionState">connected</a>, then abort the
+                following steps.
+                </li>
+                <li>
+                  <dfn>Send a termination confirmation</dfn> for <var>P</var>
+                  using an implementation specific mechanism to the
+                  <a>controlling user agent</a> that owns the <a>destination
+                  browsing context</a> for <var>connection</var>.
+                  <p class="note">
+                    Only one termination confirmation needs to be sent per
+                    <a>controlling user agent</a>.
+                  </p>
+                </li>
+              </ol>
+            </li>
+          </ol>
         </section>
         <section>
           <h4>
-            Reacting to a termination confirmation signal in a controlling
-            browsing context
+            Handling a termination confirmation in a controlling user agent
           </h4>
           <p>
-            When a <a>receiving user agent</a> is to <dfn>send a termination
-            confirmation signal</dfn> to a <a>controlling browsing context</a>,
-            the <a>controlling user agent</a> SHOULD run the following steps:
+            When a <a>receiving user agent</a> has <dfn>sent a termination
+            confirmation</dfn> for a presentation <var>P</var>, and that
+            confirmation was received by a <a>controlling user agent</a>, the
+            <a>controlling user agent</a> SHOULD run the following steps:
           </p>
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
-            presentations</a> that was connected to the <a>receiving browsing
-            context</a> for the presentation, <a>queue a task</a> to run the
-            following steps:
+            presentations</a> that was connected to <var>P</var>, <a>queue a
+            task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <var>connection</var> is not <a for=
