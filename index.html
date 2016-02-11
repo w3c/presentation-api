@@ -1593,17 +1593,15 @@
             When the <code><dfn>terminate</dfn>()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>controlling
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
-            to <a data-lt="terminate-algorithm-controlling">terminate the
-            presentation in a controlling browsing context</a> using
-            <var>S</var>.
+            to <a>terminate a presentation in a controlling browsing
+            context</a> using <var>S</var>.
           </p>
           <p>
             When the <code>terminate()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>receiving
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
-            to <a data-lt="terminate-algorithm-receiving">terminate the
-            presentation in a receiving browsing context</a> using
-            <var>S</var>.
+            to <a>terminate a presentation in a controlling browsing
+            context</a> using <var>S</var>.
           </p>
           <p>
             When a <a>PresentationConnection</a> object is created, its
@@ -2072,9 +2070,9 @@
                 </li>
               </ol>
             </li>
-            <li>Signal the <a>receiving user agent</a> to <a data-lt=
-            "terminate-algorithm-receiving">terminate the presentation</a>
-            using an implementation specific mechanism.
+            <li>
+              <dfn>Send a termination signal</dfn> to the <a>receiving user
+              agent</a> using an implementation specific mechanism.
             </li>
           </ol>
         </section>
@@ -2084,8 +2082,8 @@
           </h4>
           <p>
             When any of the following occur, the <a>receiving user agent</a>
-            MUST <a data-lt="terminate-algorithm-receiving">terminate a
-            presentation</a>.
+            MUST <a>terminate a presentation in a receiving browsing
+            context</a>:
           </p>
           <ol>
             <li>The <a>top-level browsing context</a> of the presentation calls
@@ -2097,42 +2095,43 @@
                 This could happen by an explicit user action, or as a policy of
                 the user agent. For example, the <a>receiving user agent</a>
                 could be configured to terminate presentations that have no
-                <code>connected</code> <code>PresentationConnection</code>
-                objects after 30 minutes.
+                <a>PresentationConnection</a> objects whose <a>presentation
+                connection state</a> is in the <a link-for=
+                "PresentationConnectionState">connected</a> state after 30
+                minutes.
               </p>
             </li>
-            <li>
-              The <a>receiving user agent</a> receives a signal from a
-              <a>controlling user agent</a> via the algorithm to <a data-lt=
-                 "terminate-algorithm-controlling">terminate a presentation in a
-                 controlling browsing context</a> that the presentation should be
-                 terminated.
+            <li>The <a>controlling user agent</a> <a data-lt=
+            "send a termination signal">sends a termination signal</a> to the
+            <a>receiving user agent</a>.
             </li>
-            <li>
-              The receiving user agent is to <a>unload a document</a>
-              corresponding to the <a>receiving browsing context</a> in response
-              to a request to <a>navigate</a> that context. Navigation among
-              fragment identifiers within the same presentation document MUST not
-              <a data-lt="terminate-algorithm-receiving">terminate the
-                presentation</a>.
+            <li>The <a>receiving user agent</a> is to <a>unload a document</a>
+            corresponding to the <a>receiving browsing context</a> in response
+            to a request to <a>navigate</a> that context. Navigation among
+            fragment identifiers within the same presentation document MUST not
+            <a data-lt="terminate-algorithm-receiving">terminate the
+            presentation</a>.
             </li>
           </ol>
           <p>
-            In any of these cases, when a <a>receiving user agent</a> is to
-            <dfn data-lt="terminate-algorithm-receiving">terminate a
-            presentation in a receiving browsing context</dfn> using
-            <var>connection</var>, it MUST <a>unload a document</a>
-            corresponding to the <a>receiving browsing context</a>.
+            When a <a>receiving user agent</a> is to <dfn data-lt=
+            "terminate-algorithm-receiving">terminate a presentation in a
+            receiving browsing context</dfn> given a <var>connection</var>, it
+            MUST <a>unload a document</a> corresponding to the <a>receiving
+            browsing context</a>, and it SHOULD <a>send a termination
+            confirmation signal</a> to each <a>controlling user agent</a> using
+            an implementation specific mechanism.
           </p>
+        </section>
+        <section>
+          <h4>
+            Reacting to a termination confirmation signal in a controlling
+            browsing context
+          </h4>
           <p>
-            In addition, the <a>receiving user agent</a> SHOULD signal each
-            <a>controlling user agent</a> that was connected to the presentation
-            that the presentation is now terminated, using an implementation
-            specific mechanism.
-          </p>
-          <p>
-            When a <a>controlling user agent</a> receives such a signal, it
-            SHOULD run the following steps:
+            When a <a>receiving user agent</a> is to <dfn>send a termination
+            confirmation signal</dfn> to a <a>controlling browsing context</a>,
+            the <a>controlling user agent</a> SHOULD run the following steps:
           </p>
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
