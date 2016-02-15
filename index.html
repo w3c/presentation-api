@@ -746,13 +746,10 @@
           partial interface Navigator {
             [SameObject] readonly attribute Presentation? presentation;
           };
-
+          
           interface Presentation {
-            attribute PresentationRequest? defaultRequest;
-            [SameObject] readonly attribute PresentationReceiver? receiver;
           };
-
-</pre>
+        </pre>
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
           used to retrieve an instance of the <a><code>Presentation</code></a>
@@ -764,6 +761,11 @@
           <h4>
             Controlling user agent
           </h4>
+          <pre class="idl idl-controlling-ua">
+            partial interface Presentation {
+              attribute PresentationRequest? defaultRequest;
+            };
+          </pre>
           <p>
             In a <a>controlling user agent</a>, the <dfn for=
             "Presentation"><code>defaultRequest</code></dfn> attribute MUST
@@ -804,6 +806,11 @@
           <h4>
             Receiving user agent
           </h4>
+          <pre class="idl idl-receiving-ua">
+            partial interface Presentation {
+              [SameObject] readonly attribute PresentationReceiver? receiver;
+            };
+          </pre>
           <p>
             In a <a>receiving user agent</a>, the <dfn for=
             "Presentation"><code>receiver</code></dfn> attribute MUST return
