@@ -789,17 +789,18 @@
             <code>defaultRequest</code> will have no effect.
           </div>
           <div class="note">
-            Some <a data-lt="controlling user agent">controlling user
-            agents</a> may allow the user to initiate a default <a>presentation
+            Some <a data-lt="controlling user agent">controlling user agents</a>
+            may allow the user to initiate a default <a>presentation
             connection</a> and select a <a>presentation display</a> with the
-            same user gesture; for example, they could tap a mobile user agent
-            on an <a href="https://nfc-forum.org/">Near Field Communications
-            (NFC)</a> enabled <a>presentation display</a>. In this case, when
-            the <a>controlling user agent</a> asks for permission while
-            <a data-lt="start a presentation">starting a presentation</a> it
-            could offer that display as the default choice, or consider the tap
-            gesture as granting permission and bypass display selection
-            entirely.
+            same user gesture.  For example, the browser chrome could allow the
+            user to pick a display from a menu, or allow the user to tap on
+            an <a href="https://nfc-forum.org/">Near Field Communications
+            (NFC)</a> enabled display. In this case, when the <a>controlling
+            user agent</a> asks for permission while
+            <a data-lt="start a presentation">starting a presentation</a>, the
+            browser could offer that display as the default choice, or consider
+            the gesture as granting permission for the display and bypass
+            display selection entirely.
           </div>
         </section>
         <section>
