@@ -740,7 +740,8 @@
           
           interface Presentation {
           };
-        </pre>
+        
+</pre>
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
           used to retrieve an instance of the <a><code>Presentation</code></a>
@@ -756,7 +757,8 @@
             partial interface Presentation {
               attribute PresentationRequest? defaultRequest;
             };
-          </pre>
+          
+</pre>
           <p>
             In a <a>controlling user agent</a>, the <dfn for=
             "Presentation"><code>defaultRequest</code></dfn> attribute MUST
@@ -768,30 +770,37 @@
             If set by the <a>controller</a>, the value of the <a for=
             "Presentation">defaultRequest</a> attribute SHOULD be used by the
             <a>controlling user agent</a> as the <dfn>default presentation
-            request</dfn> for that controller. When the <a>controlling user
-            agent</a> wishes to initiate a <a>PresentationConnection</a> on the
-            controller's behalf, it MUST <a>start a presentation</a> using the
-            <a>default presentation request</a> for the <a>controller</a> (as
-            if the controller had called <code>defaultRequest.start()</code>).
+            request</dfn> for that <a>controlling browsing context</a>. When
+            the <a>controlling user agent</a> wishes to initiate a
+            <a>PresentationConnection</a> on the behalf of that browsing
+            context, it MUST <a>start a presentation</a> using the <a>default
+            presentation request</a> for the <a>controller</a> (as if the
+            controller had called <code>defaultRequest.start()</code>).
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
             using the <a>default presentation request</a> only when the user
-            has expressed an intention to do so, for example by clicking a
-            button in the browser.
+            has expressed an intention to do so via a user gesture, for example
+            by clicking a button in the browser.
           </p>
           <div class="note">
-            Not all <a data-lt="controlling user agent">controlling user
-            agents</a> may support initiation of a presentation connection via
-            the browser chrome. In this case, setting
-            <code>defaultRequest</code> would have no effect.
+            If a <a>controlling user agent</a> does not support initiation of a
+            <a>presentation connection</a> from the browser chrome, setting
+            <code>defaultRequest</code> will have no effect.
           </div>
-          <div class="issue">
-            It should be clear that user-intiated presentation via the user
-            agent may have pre-selected the presentation display. In this case
-            step 6 of <a>start a presentation</a> is optional. It may be
-            cleaner to define a separate set of steps for initiating a default
-            presentation.
+          <div class="note">
+            Some <a data-lt="controlling user agent">controlling user agents</a>
+            may allow the user to initiate a default <a>presentation
+            connection</a> and select a <a>presentation display</a> with the
+            same user gesture.  For example, the browser chrome could allow the
+            user to pick a display from a menu, or allow the user to tap on
+            an <a href="https://nfc-forum.org/">Near Field Communications
+            (NFC)</a> enabled display. In this case, when the <a>controlling
+            user agent</a> asks for permission while
+            <a data-lt="start a presentation">starting a presentation</a>, the
+            browser could offer that display as the default choice, or consider
+            the gesture as granting permission for the display and bypass
+            display selection entirely.
           </div>
         </section>
         <section>
@@ -802,7 +811,8 @@
             partial interface Presentation {
               [SameObject] readonly attribute PresentationReceiver? receiver;
             };
-          </pre>
+          
+</pre>
           <p>
             In a <a>receiving user agent</a>, the <dfn for=
             "Presentation"><code>receiver</code></dfn> attribute MUST return
@@ -972,8 +982,8 @@
               </ol>
             </li>
             <li>If the user <em>denied permission</em> to use a display, reject
-            <var>P</var> with an <a>NotAllowedError</a> exception, and abort all
-            remaining steps.
+            <var>P</var> with an <a>NotAllowedError</a> exception, and abort
+            all remaining steps.
             </li>
             <li>Otherwise, the user <em>granted permission</em> to use a
             display; let <var>D</var> be that display.
