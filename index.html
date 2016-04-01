@@ -2353,6 +2353,26 @@
             <a>databases</a> MUST be discarded and not used for any other
             <a>receiving browsing context</a>.
           </p>
+          <h4>Non-interactive versus interactive contexts</h4>
+          <p>
+            The <a>presentation display<a> rendering the <a>receiving browsing
+            context</a> may or may not have the ability to receive user input.
+            As such, the <a>receiving browsing context</a> should behave
+            reasonably when it knows that no user input is possible  That
+            implies that the following functions declared on <code>window</code>
+            should behave as no-ops:
+          </p>
+          <ul>
+            <li><code>alert(<var>message</var>)</code></li>
+            <li><code>confirm(<var>message</var>)</code></li>
+            <li><code>prompt(<var>message, default</var>)</code></li>
+            <li><code>print()</code></li>
+          </ul>
+          In addition, <code>PresentationRequest.start()</code>
+
+
+            
+
         </section>
       </section>
       <section>
