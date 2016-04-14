@@ -789,18 +789,18 @@
             <code>defaultRequest</code> will have no effect.
           </div>
           <div class="note">
-            Some <a data-lt="controlling user agent">controlling user agents</a>
-            may allow the user to initiate a default <a>presentation
+            Some <a data-lt="controlling user agent">controlling user
+            agents</a> may allow the user to initiate a default <a>presentation
             connection</a> and select a <a>presentation display</a> with the
-            same user gesture.  For example, the browser chrome could allow the
-            user to pick a display from a menu, or allow the user to tap on
-            an <a href="https://nfc-forum.org/">Near Field Communications
+            same user gesture. For example, the browser chrome could allow the
+            user to pick a display from a menu, or allow the user to tap on an
+            <a href="https://nfc-forum.org/">Near Field Communications
             (NFC)</a> enabled display. In this case, when the <a>controlling
-            user agent</a> asks for permission while
-            <a data-lt="start a presentation">starting a presentation</a>, the
-            browser could offer that display as the default choice, or consider
-            the gesture as granting permission for the display and bypass
-            display selection entirely.
+            user agent</a> asks for permission while <a data-lt=
+            "start a presentation">starting a presentation</a>, the browser
+            could offer that display as the default choice, or consider the
+            gesture as granting permission for the display and bypass display
+            selection entirely.
           </div>
         </section>
         <section>
@@ -1031,6 +1031,9 @@
             </li>
             <li>
               <a>Navigate</a> <var>R</var> to <var>presentationUrl</var>.
+            </li>
+            <li>In <var>R</var>, begin <a>monitoring incoming presentation
+            connections</a>.
             </li>
             <li>
               <a>Establish a presentation connection</a> with <var>S</var>.
@@ -1379,6 +1382,17 @@
                 <li>
                   <a>Reject</a> <var>P</var> with a <a>NotSupportedError</a>
                   exception.
+                </li>
+                <li>Abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>If there exists a tuple <em>(<var>A</var>,
+            <var>presentationUrl</var>)</em> in the <a>set of availability
+            objects</a>, then:
+              <ol>
+                <li>
+                  <a>Resolve</a> <var>P</var> with <var>A</var>.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
@@ -1888,7 +1902,7 @@
 
             dictionary PresentationConnectionClosedEventInit : EventInit {
               required PresentationConnectionClosedReason reason;
-              DOMString message;
+              DOMString message = "";
             };
 
 
