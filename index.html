@@ -2283,6 +2283,10 @@
           <a>receiving user agent</a>.
         </p>
         <p>
+          A <a>PresentationReceiver</a> object is associated with a
+          <a>PresentationConnectionList</a> object when it is created.
+        </p>
+        <p>
           On getting, the <dfn for="PresentationReceiver">connectionList</dfn>
           attribute MUST return the result of running the following steps:
         </p>
@@ -2298,14 +2302,15 @@
           <li>Return <var>P</var>, but continue running these steps <a>in
           parallel</a>.
           </li>
-          <li>Let <var>list</var> be a new <a>PresentationConnectionList</a>.
+          <li>If the <a>set of presentation controllers</a> contains at least
+          one <a>presentation connection</a>, <a>resolve</a> <var>P</var> with
+          the <a>PresentationConnectionList</a> object associated with the <a>
+            PresentationReceiver</a> object.
           </li>
-          <li>Resolve <var>P</var> with <var>list</var>.
-          </li>
-          <li>If the <a>user agent</a> is not <a>monitoring incoming
-          presentation connections</a>, start <a>monitoring incoming
-          presentation connections</a> from <a>controlling browsing
-          contexts</a>.
+          <li>Otherwise, <var>P</var> remains unsettled. It will be resolved
+          when the first <a>presentation connection</a> is added to the <a>set
+          of presentation controllers</a> as part of the <a>monitoring incoming
+          presentation connections</a> algorithm.
           </li>
         </ol>
         <section>
@@ -2419,6 +2424,14 @@
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
+            <li>If there is an unsettled <a>Promise</a> <var>P</var> from a
+            previous call to get the <a for=
+            "PresentationReceiver">connectionList</a> attribute for the same
+            <a>PresentationReceiver</a> object, <a>resolve</a> <var>P</var>
+            with the <a>PresentationConnectionList</a> object associated with
+            the <a>PresentationReceiver</a> object and abort all remaining
+            steps.
+            </li>
             <li>
               <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
               the name <a for=
@@ -2426,7 +2439,7 @@
               the <a>PresentationConnectionAvailableEvent</a> interface, with
               the <a for="PresentationConnectionAvailableEvent">connection</a>
               attribute initialized to <var>S</var>, at the
-              <a>PresentationConnectionList</a> instance associated with the
+              <a>PresentationConnectionList</a> object associated with the
               <a>PresentationReceiver</a> object. The event must not bubble,
               must not be cancelable, and has no default action.
             </li>
