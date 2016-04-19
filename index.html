@@ -2283,8 +2283,9 @@
           <a>receiving user agent</a>.
         </p>
         <p>
-          A <a>PresentationReceiver</a> object is associated with a
-          <a>PresentationConnectionList</a> object when it is created.
+          When the <a>PresentationReceiver</a> object is created, a
+          <a>PresentationConnectionList</a> object is also created and
+          associated with that <a>PresentationReceiver</a> object.
         </p>
         <p>
           On getting, the <dfn for="PresentationReceiver">connectionList</dfn>
@@ -2307,10 +2308,8 @@
           the <a>PresentationConnectionList</a> object associated with the <a>
             PresentationReceiver</a> object.
           </li>
-          <li>Otherwise, <var>P</var> remains unsettled. It will be resolved
-          when the first <a>presentation connection</a> is added to the <a>set
-          of presentation controllers</a> as part of the <a>monitoring incoming
-          presentation connections</a> algorithm.
+          <li>Otherwise, <var>P</var> remains unsettled and associated with the
+          <a>PresentationReceiver</a> object.
           </li>
         </ol>
         <section>
