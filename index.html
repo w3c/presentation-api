@@ -755,6 +755,22 @@
           connections</a> in this set share the same <a>presentation URL</a>
           and <a>presentation identifier</a>.
         </p>
+        <p>
+          In a <a>receiving browsing context</a>, the <dfn>presentation
+          controllers monitor</dfn>, initially set to <code>null</code>,
+          exposes the current <a>set of presentation controllers</a> to the
+          receiving application. The <a>presentation controllers monitor</a> is
+          represented by a <a>PresentationConnectionList</a>.
+        </p>
+        <p>
+          In a <a>receiving browsing context</a>, the <dfn>presentation
+          controllers promise</dfn>, which is initially set to
+          <code>null</code>, exposes the <a>presentation controllers
+          monitor</a> once the initial <a>presentation connection</a> is
+          established. The <a>presentation controllers promise</a> is
+          represented by a <a>Promise</a> that holds the <a>presentation
+          controllers monitor</a>.
+        </p>
       </section>
       <section>
         <h3>
@@ -1551,10 +1567,9 @@
             A <a>receiving user agent</a> <a>fires</a> a <a>trusted event</a>
             named <a for="PresentationConnectionList">connectionavailable</a>
             on a <a>PresentationReceiver</a> when an incoming connection is
-            created. It is fired at the <a>PresentationConnectionList</a>
-            instance associated with the <a>PresentationReceiver</a> instance,
-            using the <a>PresentationConnectionAvailableEvent</a> interface,
-            with the <a for=
+            created. It is fired at the <a>presentation controllers
+            monitor</a>, using the <a>PresentationConnectionAvailableEvent</a>
+            interface, with the <a for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for all connections that are created
@@ -2318,33 +2333,34 @@
           <a>receiving user agent</a>.
         </p>
         <p>
-          When the <a>PresentationReceiver</a> object is created, a
-          <a>PresentationConnectionList</a> object is also created and
-          associated with that <a>PresentationReceiver</a> object.
-        </p>
-        <p>
           On getting, the <dfn for="PresentationReceiver">connectionList</dfn>
           attribute MUST return the result of running the following steps:
         </p>
         <ol>
-          <li>If there is already an unsettled <a>Promise</a> <var>P</var> from
-          a previous call to get the <a for=
-          "PresentationReceiver">connectionList</a> attribute for the same <a>
-            PresentationReceiver</a> object, return <var>P</var> and abort all
-            remaining steps.
+          <li>If the <a>presentation controllers promise</a> is not
+          <code>null</code>, return the <a>presentation controllers promise</a>
+          and abort all remaining steps.
           </li>
-          <li>Let <var>P</var> be a new <a>Promise</a>.
+          <li>Otherwise, let the <a>presentation controllers promise</a> be a
+          new <a>Promise</a>.
           </li>
-          <li>Return <var>P</var>, but continue running these steps <a>in
-          parallel</a>.
+          <li>Return the <a>presentation controllers promise</a>, but continue
+          running these steps <a>in parallel</a>.
           </li>
           <li>If the <a>set of presentation controllers</a> contains at least
-          one <a>presentation connection</a>, <a>resolve</a> <var>P</var> with
-          the <a>PresentationConnectionList</a> object associated with the <a>
-            PresentationReceiver</a> object.
+          one <a>presentation connection</a>, then run the following steps:
+            <ol>
+              <li>Let the <a>presentation controllers monitor</a> be a new <a>
+                PresentationConnectionList</a>.
+              </li>
+              <li>
+                <a>Resolve</a> the <a>presentation controllers promise</a> with
+                the <a>presentation controllers monitor</a>.
+              </li>
+            </ol>
           </li>
-          <li>Otherwise, <var>P</var> remains unsettled and associated with the
-          <a>PresentationReceiver</a> object.
+          <li>Otherwise, the <a>presentation controllers promise</a> remains
+          unsettled.
           </li>
         </ol>
         <section>
@@ -2488,24 +2504,31 @@
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
-            <li>If there is an unsettled <a>Promise</a> <var>P</var> from a
-            previous call to get the <a for=
-            "PresentationReceiver">connectionList</a> attribute for the same
-            <a>PresentationReceiver</a> object, <a>resolve</a> <var>P</var>
-            with the <a>PresentationConnectionList</a> object associated with
-            the <a>PresentationReceiver</a> object and abort all remaining
-            steps.
+            <li>If the <a>presentation controllers promise</a> is
+            <code>null</code>, then abort all remaining steps.
             </li>
-            <li>
-              <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
-              the name <a for=
-              "PresentationConnectionList">connectionavailable</a>, that uses
-              the <a>PresentationConnectionAvailableEvent</a> interface, with
-              the <a for="PresentationConnectionAvailableEvent">connection</a>
-              attribute initialized to <var>S</var>, at the
-              <a>PresentationConnectionList</a> object associated with the
-              <a>PresentationReceiver</a> object. The event must not bubble,
-              must not be cancelable, and has no default action.
+            <li>Otherwise, if the <a>presentation controllers promise</a> is
+            unsettled, then run the following steps:
+              <ol>
+                <li>Let the <a>presentation controllers monitor</a> be a new
+                <a>PresentationConnectionList</a>.
+                </li>
+                <li>
+                  <a>Resolve</a> the <a>presentation controllers promise</a>
+                  with the <a>presentation controllers monitor</a>.
+                </li>
+                <li>Abort all remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>Otherwise, <a>queue a task</a> to <a>fire</a> a <a>trusted
+            event</a> with the name <a for=
+            "PresentationConnectionList">connectionavailable</a>, that uses the
+            <a>PresentationConnectionAvailableEvent</a> interface, with the
+            <a for="PresentationConnectionAvailableEvent">connection</a>
+            attribute initialized to <var>S</var>, at the <a>presentation
+            controllers monitor</a>. The event must not bubble, must not be
+            cancelable, and has no default action.
             </li>
           </ol>
           <p>
