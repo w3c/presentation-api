@@ -391,7 +391,7 @@
       <p>
         The terms <dfn data-lt="resolve"><a href=
         "http://www.w3.org/2001/tag/doc/promises-guide#resolve-promise">resolving
-        a Promise</a></dfn>, and <dfn data-lt="reject"><a href=
+        a Promise</a></dfn> and <dfn data-lt="reject"><a href=
         "http://www.w3.org/2001/tag/doc/promises-guide#reject-promise">rejecting
         a Promise</a></dfn> are used as explained in [[!PROMGUIDE]].
       </p>
@@ -758,6 +758,22 @@
           connections</a> in this set share the same <a>presentation URL</a>
           and <a>presentation identifier</a>.
         </p>
+        <p>
+          In a <a>receiving browsing context</a>, the <dfn>presentation
+          controllers monitor</dfn>, initially set to <code>null</code>,
+          exposes the current <a>set of presentation controllers</a> to the
+          receiving application. The <a>presentation controllers monitor</a> is
+          represented by a <a>PresentationConnectionList</a>.
+        </p>
+        <p>
+          In a <a>receiving browsing context</a>, the <dfn>presentation
+          controllers promise</dfn>, which is initially set to
+          <code>null</code>, provides the <a>presentation controllers
+          monitor</a> once the initial <a>presentation connection</a> is
+          established. The <a>presentation controllers promise</a> is
+          represented by a <a>Promise</a> that resolves with the
+          <a>presentation controllers monitor</a>.
+        </p>
       </section>
       <section>
         <h3>
@@ -1062,6 +1078,9 @@
             <li>
               <a>Navigate</a> <var>R</var> to <var>presentationUrl</var>.
             </li>
+            <li>In <var>R</var>, begin <a>monitoring incoming presentation
+            connections</a>.
+            </li>
             <li>
               <a>Establish a presentation connection</a> with <var>S</var>.
             </li>
@@ -1302,9 +1321,10 @@
               <var>A</var> is a live <a>PresentationAvailability</a> object;
             </li>
             <li>
-              <var>availabilityUrl</var> is the parameter passed to
-              <code><a for="PresentationRequest">getAvailability</a>()</code>
-              to create <var>A</var>.
+              <var>availabilityUrl</var> is the <a>presentation request URL</a>
+              when <code><a for=
+              "PresentationRequest">getAvailability</a>()</code> is called to
+              create <var>A</var>.
             </li>
           </ol>
         </section>
@@ -1409,6 +1429,17 @@
                 <li>
                   <a>Reject</a> <var>P</var> with a <a>NotSupportedError</a>
                   exception.
+                </li>
+                <li>Abort all the remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>If there exists a tuple <em>(<var>A</var>,
+            <var>presentationUrl</var>)</em> in the <a>set of availability
+            objects</a>, then:
+              <ol>
+                <li>
+                  <a>Resolve</a> <var>P</var> with <var>A</var>.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
@@ -1539,10 +1570,9 @@
             A <a>receiving user agent</a> <a>fires</a> a <a>trusted event</a>
             named <a for="PresentationConnectionList">connectionavailable</a>
             on a <a>PresentationReceiver</a> when an incoming connection is
-            created. It is fired at the <a>PresentationConnectionList</a>
-            instance associated with the <a>PresentationReceiver</a> instance,
-            using the <a>PresentationConnectionAvailableEvent</a> interface,
-            with the <a for=
+            created. It is fired at the <a>presentation controllers
+            monitor</a>, using the <a>PresentationConnectionAvailableEvent</a>
+            interface, with the <a for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for all connections that are created
@@ -1926,7 +1956,7 @@
 
             dictionary PresentationConnectionClosedEventInit : EventInit {
               required PresentationConnectionClosedReason reason;
-              DOMString message;
+              DOMString message = "";
             };
 
 
@@ -2310,25 +2340,18 @@
           attribute MUST return the result of running the following steps:
         </p>
         <ol>
-          <li>If there is already an unsettled <a>Promise</a> <var>P</var> from
-          a previous call to get the <a for=
-          "PresentationReceiver">connectionList</a> attribute for the same <a>
-            PresentationReceiver</a> object, return <var>P</var> and abort all
-            remaining steps.
+          <li>If the <a>presentation controllers promise</a> is not
+          <code>null</code>, return the <a>presentation controllers promise</a>
+          and abort all remaining steps.
           </li>
-          <li>Let <var>P</var> be a new <a>Promise</a>.
+          <li>Otherwise, let the <a>presentation controllers promise</a> be a
+          new <a>Promise</a>.
           </li>
-          <li>Return <var>P</var>, but continue running these steps <a>in
-          parallel</a>.
+          <li>Return the <a>presentation controllers promise</a>.
           </li>
-          <li>Let <var>list</var> be a new <a>PresentationConnectionList</a>.
-          </li>
-          <li>Resolve <var>P</var> with <var>list</var>.
-          </li>
-          <li>If the <a>user agent</a> is not <a>monitoring incoming
-          presentation connections</a>, start <a>monitoring incoming
-          presentation connections</a> from <a>controlling browsing
-          contexts</a>.
+          <li>If the <a>presentation controllers monitor</a> is not
+          <code>null</code>, <a>resolve</a> the <a>presentation controllers
+          promise</a> with the <a>presentation controllers monitor</a>.
           </li>
         </ol>
         <section>
@@ -2452,16 +2475,41 @@
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
-            <li>
-              <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
-              the name <a for=
-              "PresentationConnectionList">connectionavailable</a>, that uses
-              the <a>PresentationConnectionAvailableEvent</a> interface, with
-              the <a for="PresentationConnectionAvailableEvent">connection</a>
-              attribute initialized to <var>S</var>, at the
-              <a>PresentationConnectionList</a> instance associated with the
-              <a>PresentationReceiver</a> object. The event must not bubble,
-              must not be cancelable, and has no default action.
+            <li>If the <a>presentation controllers monitor</a> is
+            <code>null</code>, run the following steps <a>in parallel</a>.
+              <ol>
+                <li>Let the <a>presentation controllers monitor</a> be a new
+                <a>PresentationConnectionList</a>.
+                </li>
+                <li>Populate the <a>presentation controllers monitor</a> with
+                the <a>set of presentation controllers</a>.
+                </li>
+                <li>If the <a>presentation controllers promise</a> is not
+                <code>null</code>, <a>resolve</a> the <a>presentation
+                controllers promise</a> with the <a>presentation controllers
+                monitor</a>.
+                </li>
+                <li>Abort all remaining steps.
+                </li>
+              </ol>
+            </li>
+            <li>Otherwise, run the following steps <a>in parallel</a>.
+              <ol>
+                <li>Populate the <a>presentation controllers monitor</a> with
+                the <a>set of presentation controllers</a>.
+                </li>
+                <li>
+                  <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
+                  with the name <a for=
+                  "PresentationConnectionList">connectionavailable</a>, that
+                  uses the <a>PresentationConnectionAvailableEvent</a>
+                  interface, with the <a for=
+                  "PresentationConnectionAvailableEvent">connection</a>
+                  attribute initialized to <var>S</var>, at the <a>presentation
+                  controllers monitor</a>. The event must not bubble, must not
+                  be cancelable, and has no default action.
+                </li>
+              </ol>
             </li>
           </ol>
           <p>
