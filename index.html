@@ -2493,14 +2493,23 @@
                 </li>
               </ol>
             </li>
-            <li>Otherwise, <a>queue a task</a> to <a>fire</a> a <a>trusted
-            event</a> with the name <a for=
-            "PresentationConnectionList">connectionavailable</a>, that uses the
-            <a>PresentationConnectionAvailableEvent</a> interface, with the
-            <a for="PresentationConnectionAvailableEvent">connection</a>
-            attribute initialized to <var>S</var>, at the <a>presentation
-            controllers monitor</a>. The event must not bubble, must not be
-            cancelable, and has no default action.
+            <li>Otherwise, run the following steps <a>in parallel</a>.
+              <ol>
+                <li>Populate the <a>presentation controllers monitor</a> with
+                the <a>set of presentation controllers</a>.
+                </li>
+                <li>
+                  <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
+                  with the name <a for=
+                  "PresentationConnectionList">connectionavailable</a>, that
+                  uses the <a>PresentationConnectionAvailableEvent</a>
+                  interface, with the <a for=
+                  "PresentationConnectionAvailableEvent">connection</a>
+                  attribute initialized to <var>S</var>, at the <a>presentation
+                  controllers monitor</a>. The event must not bubble, must not
+                  be cancelable, and has no default action.
+                </li>
+              </ol>
             </li>
           </ol>
           <p>
