@@ -405,6 +405,11 @@
         in the File API specification [[!FILEAPI]].
       </p>
       <p>
+        The header <dfn><a href=
+        "https://tools.ietf.org/html/rfc7231#section-5.3.5">Accept-Language</a></dfn>
+        is defined in HTTP 1/.1 [[!rfc7231]].
+      </p>
+      <p>
         The term <dfn><a href=
         "http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel">RTCDataChannel</a></dfn>
         is defined in the WebRTC API specification [[WEBRTC]].
@@ -648,6 +653,31 @@
 &lt;/script&gt;
 </pre>
       </section>
+      <section>
+        <h3>
+          Passing locale information with a message
+        </h3>
+        <pre class="example highlight">
+&lt;!-- controller.html --&gt;
+&lt;script&gt;
+  connection.send("{string: '你好，世界!', lang: 'zh-CN'}");
+  connection.send("{string: 'こんにちは、世界!', lang: 'ja'}");
+  connection.send("{string: '안녕하세요, 세계!', lang: 'ko'}");
+  connection.send("{string: 'Hello, world!', lang: 'en-US'}");
+&lt;/script&gt;
+
+&lt;!-- receiver.html --&gt;
+&lt;script&gt;
+  connection.onmessage = function (message) {
+    var messageObj = JSON.parse(message);
+    var spanElt = document.createElement("SPAN");
+    spanElt.lang = messageObj.lang;
+    spanElt.textContent = messageObj.string;
+    document.appendChild(spanElt);
+  };
+&lt;/script&gt;
+</pre>
+      </section>
     </section>
     <section>
       <h2>
@@ -789,18 +819,18 @@
             <code>defaultRequest</code> will have no effect.
           </div>
           <div class="note">
-            Some <a data-lt="controlling user agent">controlling user agents</a>
-            may allow the user to initiate a default <a>presentation
+            Some <a data-lt="controlling user agent">controlling user
+            agents</a> may allow the user to initiate a default <a>presentation
             connection</a> and select a <a>presentation display</a> with the
-            same user gesture.  For example, the browser chrome could allow the
-            user to pick a display from a menu, or allow the user to tap on
-            an <a href="https://nfc-forum.org/">Near Field Communications
+            same user gesture. For example, the browser chrome could allow the
+            user to pick a display from a menu, or allow the user to tap on an
+            <a href="https://nfc-forum.org/">Near Field Communications
             (NFC)</a> enabled display. In this case, when the <a>controlling
-            user agent</a> asks for permission while
-            <a data-lt="start a presentation">starting a presentation</a>, the
-            browser could offer that display as the default choice, or consider
-            the gesture as granting permission for the display and bypass
-            display selection entirely.
+            user agent</a> asks for permission while <a data-lt=
+            "start a presentation">starting a presentation</a>, the browser
+            could offer that display as the default choice, or consider the
+            gesture as granting permission for the display and bypass display
+            selection entirely.
           </div>
         </section>
         <section>
@@ -1798,6 +1828,14 @@
               </li>
             </ul>
           </div>
+          <div class="note">
+            When sending a user-visible string via a <a>presentation
+            connection</a>, the page author should take care to ensure that
+            locale information is also propagated so that the destination user
+            agent can know how to best render the string. See <a href=
+            "#passing-locale-information-with-a-message">the examples</a> for
+            one solution.
+          </div>
         </section>
         <section>
           <h4>
@@ -2345,6 +2383,16 @@
             <li>Return <var>C</var>.
             </li>
           </ol>
+          <p>
+            The <a>receiving user agent</a> SHOULD fetch resources in a
+            <a>receiving browsing context</a> with an HTTP
+            <a>Accept-Language</a> header that reflects the language
+            preferences of the <a>controlling user agent</a> (i.e., with the
+            same <a>Accept-Language</a> that the controlling user agent would
+            have sent). This will help the <a>receiving user agent</a> render
+            the presentation with fonts and locale-specific attributes that
+            reflect the user's preferences.
+          </p>
           <p>
             When the <a>receiving browsing context</a> is closed, any
             associated browsing state, including <a>session history</a>,
