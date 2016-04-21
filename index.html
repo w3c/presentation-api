@@ -771,8 +771,8 @@
           <code>null</code>, provides the <a>presentation controllers
           monitor</a> once the initial <a>presentation connection</a> is
           established. The <a>presentation controllers promise</a> is
-          represented by a <a>Promise</a> that resolves with the <a>presentation
-          controllers monitor</a>.
+          represented by a <a>Promise</a> that resolves with the
+          <a>presentation controllers monitor</a>.
         </p>
       </section>
       <section>
@@ -2347,10 +2347,11 @@
           <li>Otherwise, let the <a>presentation controllers promise</a> be a
           new <a>Promise</a>.
           </li>
-          <li>Return the <a>presentation controllers promise</a>.</li>
-          <li>If the <a>presentation controllers monitor</a> is not <code>null</code>,
-            <a>resolve</a> the <a>presentation controllers promise</a> with the
-            <a>presentation controllers monitor</a>.
+          <li>Return the <a>presentation controllers promise</a>.
+          </li>
+          <li>If the <a>presentation controllers monitor</a> is not
+          <code>null</code>, <a>resolve</a> the <a>presentation controllers
+          promise</a> with the <a>presentation controllers monitor</a>.
           </li>
         </ol>
         <section>
@@ -2474,34 +2475,32 @@
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
-            <li>If the <a>presentation controllers monitor</a> is <code>null</code>,
-              run the following steps <a>in parallel</a>.
+            <li>If the <a>presentation controllers monitor</a> is
+            <code>null</code>, run the following steps <a>in parallel</a>.
               <ol>
                 <li>Let the <a>presentation controllers monitor</a> be a new
-                  <a>PresentationConnectionList</a>.
+                <a>PresentationConnectionList</a>.
                 </li>
-                <li>
-                  Populate the <a>presentation controllers monitor</a> with the
-                  <a>set of presentation controllers</a>.
+                <li>Populate the <a>presentation controllers monitor</a> with
+                the <a>set of presentation controllers</a>.
                 </li>
-                <li>
-                  If the <a>presentation controllers promise</a> is not <code>null</code>,
-                  <a>resolve</a> the <a>presentation controllers promise</a>
-                  with the <a>presentation controllers monitor</a>.
+                <li>If the <a>presentation controllers promise</a> is not
+                <code>null</code>, <a>resolve</a> the <a>presentation
+                controllers promise</a> with the <a>presentation controllers
+                monitor</a>.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
               </ol>
             </li>
-            <li>
-              Otherwise, <a>queue a task</a> to <a>fire</a> a <a>trusted
-                event</a> with the name <a for=
-                                           "PresentationConnectionList">connectionavailable</a>, that uses the
-              <a>PresentationConnectionAvailableEvent</a> interface, with the
-              <a for="PresentationConnectionAvailableEvent">connection</a>
-              attribute initialized to <var>S</var>, at the <a>presentation
-                controllers monitor</a>. The event must not bubble, must not be
-              cancelable, and has no default action.
+            <li>Otherwise, <a>queue a task</a> to <a>fire</a> a <a>trusted
+            event</a> with the name <a for=
+            "PresentationConnectionList">connectionavailable</a>, that uses the
+            <a>PresentationConnectionAvailableEvent</a> interface, with the
+            <a for="PresentationConnectionAvailableEvent">connection</a>
+            attribute initialized to <var>S</var>, at the <a>presentation
+            controllers monitor</a>. The event must not bubble, must not be
+            cancelable, and has no default action.
             </li>
           </ol>
           <p>
