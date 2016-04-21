@@ -738,10 +738,10 @@
         <p>
           In a <a>receiving browsing context</a>, the <dfn>presentation
           controllers promise</dfn>, which is initially set to
-          <code>null</code>, exposes the <a>presentation controllers
+          <code>null</code>, provides the <a>presentation controllers
           monitor</a> once the initial <a>presentation connection</a> is
           established. The <a>presentation controllers promise</a> is
-          represented by a <a>Promise</a> that holds the <a>presentation
+          represented by a <a>Promise</a> that resolves with the <a>presentation
           controllers monitor</a>.
         </p>
       </section>
@@ -2319,6 +2319,10 @@
                 PresentationConnectionList</a>.
               </li>
               <li>
+                Populate the <a>presentation controllers monitor</a> with the
+                current <a>set of presentation controllers<a>.
+              </li>
+              <li>
                 <a>Resolve</a> the <a>presentation controllers promise</a> with
                 the <a>presentation controllers monitor</a>.
               </li>
@@ -2442,11 +2446,17 @@
             <li>If the <a>presentation controllers promise</a> is
             <code>null</code>, then abort all remaining steps.
             </li>
-            <li>Otherwise, if the <a>presentation controllers promise</a> is
-            unsettled, then run the following steps:
+            <li>If the <a>presentation controllers promise</a> is <a>settled</a>,
+              then run the following steps:</li>
+            
+            <li>Otherwise, run the following steps:
               <ol>
                 <li>Let the <a>presentation controllers monitor</a> be a new
                 <a>PresentationConnectionList</a>.
+                </li>
+                <li>
+                  Populate the <a>presentation controllers monitor</a> with the
+                  current <a>set of presentation controllers<a>.
                 </li>
                 <li>
                   <a>Resolve</a> the <a>presentation controllers promise</a>
