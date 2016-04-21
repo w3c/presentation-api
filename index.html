@@ -391,7 +391,7 @@
       <p>
         The terms <dfn data-lt="resolve"><a href=
         "http://www.w3.org/2001/tag/doc/promises-guide#resolve-promise">resolving
-        a Promise</a></dfn>, and <dfn data-lt="reject"><a href=
+        a Promise</a></dfn> and <dfn data-lt="reject"><a href=
         "http://www.w3.org/2001/tag/doc/promises-guide#reject-promise">rejecting
         a Promise</a></dfn> are used as explained in [[!PROMGUIDE]].
       </p>
@@ -2347,27 +2347,10 @@
           <li>Otherwise, let the <a>presentation controllers promise</a> be a
           new <a>Promise</a>.
           </li>
-          <li>Return the <a>presentation controllers promise</a>, but continue
-          running these steps <a>in parallel</a>.
-          </li>
-          <li>If the <a>set of presentation controllers</a> contains at least
-          one <a>presentation connection</a>, then run the following steps:
-            <ol>
-              <li>Let the <a>presentation controllers monitor</a> be a new <a>
-                PresentationConnectionList</a>.
-              </li>
-              <li>
-                Populate the <a>presentation controllers monitor</a> with the
-                current <a>set of presentation controllers<a>.
-              </li>
-              <li>
-                <a>Resolve</a> the <a>presentation controllers promise</a> with
-                the <a>presentation controllers monitor</a>.
-              </li>
-            </ol>
-          </li>
-          <li>Otherwise, the <a>presentation controllers promise</a> remains
-          unsettled.
+          <li>Return the <a>presentation controllers promise</a>.</li>
+          <li>If the <a>presentation controllers monitor</a> is not <code>null</code>,
+            <a>resolve</a> the <a>presentation controllers promise</a> with the
+            <a>presentation controllers monitor</a>.
           </li>
         </ol>
         <section>
@@ -2511,37 +2494,34 @@
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
-            <li>If the <a>presentation controllers promise</a> is
-            <code>null</code>, then abort all remaining steps.
-            </li>
-            <li>If the <a>presentation controllers promise</a> is <a>settled</a>,
-              then run the following steps:</li>
-            
-            <li>Otherwise, run the following steps:
+            <li>If the <a>presentation controllers monitor</a> is <code>null</code>,
+              run the following steps <a>in parallel</a>.
               <ol>
                 <li>Let the <a>presentation controllers monitor</a> be a new
-                <a>PresentationConnectionList</a>.
+                  <a>PresentationConnectionList</a>.
                 </li>
                 <li>
                   Populate the <a>presentation controllers monitor</a> with the
-                  current <a>set of presentation controllers<a>.
+                  <a>set of presentation controllers</a>.
                 </li>
                 <li>
-                  <a>Resolve</a> the <a>presentation controllers promise</a>
+                  If the <a>presentation controllers promise</a> is not <code>null</code>,
+                  <a>resolve</a> the <a>presentation controllers promise</a>
                   with the <a>presentation controllers monitor</a>.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
               </ol>
             </li>
-            <li>Otherwise, <a>queue a task</a> to <a>fire</a> a <a>trusted
-            event</a> with the name <a for=
-            "PresentationConnectionList">connectionavailable</a>, that uses the
-            <a>PresentationConnectionAvailableEvent</a> interface, with the
-            <a for="PresentationConnectionAvailableEvent">connection</a>
-            attribute initialized to <var>S</var>, at the <a>presentation
-            controllers monitor</a>. The event must not bubble, must not be
-            cancelable, and has no default action.
+            <li>
+              Otherwise, <a>queue a task</a> to <a>fire</a> a <a>trusted
+                event</a> with the name <a for=
+                                           "PresentationConnectionList">connectionavailable</a>, that uses the
+              <a>PresentationConnectionAvailableEvent</a> interface, with the
+              <a for="PresentationConnectionAvailableEvent">connection</a>
+              attribute initialized to <var>S</var>, at the <a>presentation
+                controllers monitor</a>. The event must not bubble, must not be
+              cancelable, and has no default action.
             </li>
           </ol>
           <p>
