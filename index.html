@@ -660,6 +660,9 @@
         <pre class="example highlight">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
+  connection.send("{string: '你好，世界!', lang: 'zh-CN'}");
+  connection.send("{string: 'こんにちは、世界!', lang: 'ja'}");
+  connection.send("{string: '안녕하세요, 세계!', lang: 'ko'}");
   connection.send("{string: 'Hello, world!', lang: 'en-US'}");
 &lt;/script&gt;
 
