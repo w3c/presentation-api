@@ -1043,8 +1043,8 @@
             unique among all <a>presentation identifiers</a> for known
             <a>presentation connections</a> in the <a>set of controlled
             presentations</a>. To avoid fingerprinting, it is recommended that
-            the <a>presentation identifier</a> be generated as a <a>UUID</a>
-            following forms 4.4 or 4.5 of [[rfc4122]].
+            the <a>presentation identifier</a> be set to a <a>UUID</a>
+            generated following forms 4.4 or 4.5 of [[rfc4122]].
             </li>
             <li>Create a new <a>PresentationConnection</a> <var>S</var>.
             </li>
@@ -1745,9 +1745,10 @@
             </dd>
           </dl>
           <ol>
-            <li>Connect <var>presentationConnection</var> to the <a>receiving
-            browsing context</a>. The <a>presentation identifier</a> of
-            <var>presentationConnection</var> must be sent with this request.
+            <li>Request connection of <var>presentationConnection</var> to the
+            <a>receiving browsing context</a>. The <a>presentation
+            identifier</a> of <var>presentationConnection</var> must be sent
+            with this request.
             </li>
             <li>If connection completes successfully, <a>queue a task</a> to
             run the following steps:
