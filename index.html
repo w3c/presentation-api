@@ -420,6 +420,11 @@
         is defined in RFC 6265 [[COOKIES]].
       </p>
       <p>
+        The term <dfn><a href=
+        "https://tools.ietf.org/html/rfc4122">UUID</a></dfn> is defined in RFC
+        4122 [[rfc4122]].
+      </p>
+      <p>
         The terms <dfn data-lt="permission|permissions"><a href=
         "https://w3c.github.io/permissions/#idl-def-Permission">permission</a></dfn>
         and <dfn><a href=
@@ -698,11 +703,11 @@
           connection</dfn> is an object relating a <a>controlling browsing
           context</a> to its <a>receiving browsing context</a> and enables
           two-way-messaging between them. Each <a>presentation connection</a>
-          has a <dfn>presentation connection state</dfn>, a <dfn lt=
+          has a <dfn>presentation connection state</dfn>, a unique <dfn lt=
           "presentation identifier|presentation identifiers">presentation
           identifier</dfn> to distinguish it from other <a>presentations</a>,
           and a <dfn>presentation URL</dfn> that is a <a>URL</a> used to create
-          or resume the <a>presentation</a>. A <dfn>valid presentation
+          or reconnect to the <a>presentation</a>. A <dfn>valid presentation
           identifier</dfn> consists of alphanumeric ASCII characters only and
           is at least 16 characters long.
         </p>
@@ -1037,7 +1042,9 @@
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
             <a>presentation connections</a> in the <a>set of controlled
-            presentations</a>.
+            presentations</a>. To avoid fingerprinting, it is recommended that
+            the <a>presentation identifier</a> be set to a <a>UUID</a>
+            generated following forms 4.4 or 4.5 of [[rfc4122]].
             </li>
             <li>Create a new <a>PresentationConnection</a> <var>S</var>.
             </li>
@@ -1123,7 +1130,7 @@
               "PresentationRequest">reconnect</a>()</code> was called on.
             </dd>
             <dd>
-              <var>presentationId</var>, a <a>presentation identifier</a>
+              <var>presentationId</var>, a valid <a>presentation identifier</a>
             </dd>
             <dt>
               Output
@@ -1738,8 +1745,10 @@
             </dd>
           </dl>
           <ol>
-            <li>Connect <var>presentationConnection</var> to the <a>receiving
-            browsing context</a>.
+            <li>Request connection of <var>presentationConnection</var> to the
+            <a>receiving browsing context</a>. The <a>presentation
+            identifier</a> of <var>presentationConnection</var> MUST be sent
+            with this request.
             </li>
             <li>If connection completes successfully, <a>queue a task</a> to
             run the following steps:
