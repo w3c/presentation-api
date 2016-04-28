@@ -1037,7 +1037,8 @@
             all remaining steps.
             </li>
             <li>Otherwise, the user <em>granted permission</em> to use a
-            display; let <var>D</var> be that display.
+            display; let <var>D</var> be that display and <var>U</var> the user
+            agent connected to <var>D</var>.
             </li>
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
@@ -1078,15 +1079,9 @@
             <var>closeReason</var>, and a human readable message describing the
             failure as <var>closeMessage</var>.
             </li>
-            <li>
-              <a>Create a receiving browsing context</a> on <var>D</var> and
-              let <var>R</var> be the result.
-            </li>
-            <li>
-              <a>Navigate</a> <var>R</var> to <var>presentationUrl</var>.
-            </li>
-            <li>In <var>R</var>, begin <a>monitoring incoming presentation
-            connections</a>.
+            <li>Using an implementation specific mechanism, tell <var>U</var>
+            to <a>create a receiving browsing context</a> with <var>D</var> and
+            <var>presentationUrl</var> as parameters.
             </li>
             <li>
               <a>Establish a presentation connection</a> with <var>S</var>.
@@ -2367,6 +2362,10 @@
           <h4>
             Creating a receiving browsing context
           </h4>
+          <p>
+            When the <a>user agent</a> is to <dfn>create a receiving browsing
+            context</dfn>, it MUST run the following steps:
+          </p>
           <dl>
             <dt>
               Input
@@ -2374,20 +2373,13 @@
             <dd>
               <var>D</var>, a <a>presentation display</a> chosen by the user
             </dd>
-            <dt>
-              Output
-            </dt>
             <dd>
-              <var>R</var>, a <a>receiving browsing context</a>
+              <var>presentationUrl</var>, the <a>presentation request URL</a>
             </dd>
           </dl>
-          <p>
-            When the <a>user agent</a> is to <dfn>create a receiving browsing
-            context</dfn>, it MUST run the following steps:
-          </p>
           <ol>
-            <li>Create a new <a>top-level browsing context</a> <var>C</var> on
-            the user agent connected to <var>D</var>.
+            <li>Create a new <a>top-level browsing context</a> <var>C</var>,
+            set to display content on <var>D</var>.
             </li>
             <li>Set the <a>session history</a> of <var>C</var> to be the empty
             list.
@@ -2412,7 +2404,11 @@
             <li>Set the IndexedDB <a>databases</a> for <var>C</var> to an empty
             set of <a>databases</a>.
             </li>
-            <li>Return <var>C</var>.
+            <li>
+              <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
+            </li>
+            <li>Start <a>monitoring incoming presentation connections</a> for
+            <var>C</var>.
             </li>
           </ol>
           <p>
