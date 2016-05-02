@@ -1080,8 +1080,8 @@
             failure as <var>closeMessage</var>.
             </li>
             <li>Using an implementation specific mechanism, tell <var>U</var>
-            to <a>create a receiving browsing context</a> with <var>D</var> and
-            <var>presentationUrl</var> as parameters.
+            to <a>create a receiving browsing context</a> with <var>D</var>,
+            <var>presentationUrl</var>, and <var>I</var> as parameters.
             </li>
             <li>
               <a>Establish a presentation connection</a> with <var>S</var>.
@@ -2376,6 +2376,9 @@
             <dd>
               <var>presentationUrl</var>, the <a>presentation request URL</a>
             </dd>
+            <dd>
+              <var>presentationId</var>, the <a>presentation identifier</a>
+            </dd>
           </dl>
           <ol>
             <li>Create a new <a>top-level browsing context</a> <var>C</var>,
@@ -2408,7 +2411,7 @@
               <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
             </li>
             <li>Start <a>monitoring incoming presentation connections</a> for
-            <var>C</var>.
+            <var>C</var> with <var>presentationId</var>.
             </li>
           </ol>
           <p>
@@ -2462,9 +2465,24 @@
             a <a>controlling browsing context</a>, the <a>receiving user
             agent</a> MUST run the following steps:
           </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <var>I</var>, the <a>presentation identifier</a> passed by the
+              <a>controlling browsing context</a> with the incoming connection
+              request.
+            </dd>
+            <dd>
+              <var>presentationId</var>, the <a>presentation identifier</a>
+              used to <a data-lt="create a receiving browsing context">create
+              the receiving browsing context</a>.
+            </dd>
+          </dl>
           <ol>
-            <li>Let <var>I</var> be the <a>presentation identifier</a> sent by
-            the <a>controlling browsing context</a> in the incoming request.
+            <li>If <var>presentationId</var> and <var>I</var> are not equal,
+            refuse the connection and abort all remaining steps.
             </li>
             <li>Create a new <a>PresentationConnection</a> <var>S</var>.
             </li>
