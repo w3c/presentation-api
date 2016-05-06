@@ -797,9 +797,8 @@
         <p>
           The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
           used to retrieve an instance of the <a><code>Presentation</code></a>
-          interface. If <a>presentation is disabled</a>, the attribute MUST
-          return null. Otherwise, it MUST return the
-          <a><code>Presentation</code></a> instance.
+          interface. It MUST return the <a><code>Presentation</code></a>
+          instance.
         </p>
         <section>
           <h4>
@@ -991,8 +990,13 @@
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
             Security Contexts"</code> and <var>presentationUrl</var> is an <a>
-              a priori unauthenticated URL</a>, then return a <a>Promise</a>
-              rejected with a <a>SecurityError</a>.
+            a priori unauthenticated URL</a>, then return a <a>Promise</a>
+            rejected with a <a>SecurityError</a> and abort these steps.
+            </li>
+            <li>If the document object's <a>active sandboxing flag set</a> has
+            the <a>sandboxed presentation browsing context flag</a> set, then
+            return a <a>Promise</a> rejected with a <a>SecurityError</a> and
+            abort these steps.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
             call to <code>start</code> for the same <a>controlling browsing
@@ -1136,15 +1140,21 @@
             </dd>
           </dl>
           <ol>
-            <li>Let <var>P</var> be a new <a>Promise</a>.
-            </li>
             <li>Using the document's <a>settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
             Security Contexts"</code> and the <a>presentation request URL</a>
             of <var>presentationRequest</var> is an <a>a priori unauthenticated
-            URL</a>, then reject <var>P</var> with a <a>SecurityError</a>.
+            URL</a>, then return a <a>Promise</a> rejected with a
+            <a>SecurityError</a> and abort these steps.
+            </li>
+            <li>If the document object's <a>active sandboxing flag set</a> has
+            the <a>sandboxed presentation browsing context flag</a> set, then
+            return a <a>Promise</a> rejected with a <a>SecurityError</a> and
+            abort these steps.
+            </li>
+            <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
             <li>Return <var>P</var>, but continue running these steps in
             parallel.
@@ -1406,6 +1416,25 @@
             </dd>
           </dl>
           <ol>
+            <li>If one of the following conditions is true:
+              <ul>
+               <li>The result of running the <a>prohibits mixed security
+                contexts algorithm</a> on the document's <a>settings object</a>
+                is <code>"Prohibits Mixed Security Contexts"</code> and <var>
+                presentationUrl</var> is an <a>a priori unauthenticated URL</a>.
+                </li>
+                <li>The document object's <a>active sandboxing flag set</a> has
+                the <a>sandboxed presentation browsing context flag</a> set.
+                </li>
+              </ul>
+              Run the following substeps:
+              <ol>
+                <li>Return a <a>Promise</a> rejected with a <a>SecurityError</a>.
+                </li>
+                <li>Abort these steps.
+                </li>
+              </ol>
+            </li>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
             <li>Return <var>P</var>, but continue running these steps <a>in
@@ -2602,19 +2631,6 @@
           keyword.
           </li>
         </ul>
-        <p>
-          <dfn>Presentation is disabled</dfn> in a browsing context when the
-          document object's <a>active sandboxing flag set</a> does not have the
-          <a>sandboxed presentation browsing context flag</a> set.
-        </p>
-        <div class="note">
-          A <a>nested browsing context</a> created by an <code>iframe</code>
-          with its <code>sandbox</code> attribute set will act as if
-          <a>presentation is disabled</a>, unless that attribute includes the
-          <code>allow-presentation</code> keyword. This allows pages to embed
-          potentially untrustworthy content and deny it the ability to request
-          presentation from the user or query for screen availability.
-        </div>
       </section>
     </section>
     <section>
