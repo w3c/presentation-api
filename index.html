@@ -97,6 +97,15 @@
               'YouTube'
             ],
             publisher: 'Netflix'
+          },
+          WEBIDL: {
+            title: 'Web IDL (Second Edition)',
+            href: 'https://heycam.github.io/webidl/',
+            status: 'ED',
+            authors: [
+              'Cameron McCormack',
+              'Boris Zbarsky'
+            ]
           }
         },
         issueBase: "https://www.github.com/w3c/presentation-api/issues/"
@@ -143,7 +152,7 @@
       </p>
     </section>
     <section id="sotd">
-       <p>
+      <p>
         Since publication as Working Draft on <a href=
         "https://www.w3.org/TR/2016/WD-presentation-api-20160211/">11 February
         2016</a>, the Working Group has further refined some of the procedures,
@@ -356,37 +365,45 @@
         ([[!WEBIDL]]). The terms <dfn><a href=
         "https://heycam.github.io/webidl/#idl-promise">Promise</a></dfn>,
         <dfn><a href=
-        "http://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></dfn>,
+        "https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></dfn>,
         <dfn><a href=
-        "http://heycam.github.io/webidl/#idl-ArrayBufferView">ArrayBufferView</a></dfn>
+        "https://heycam.github.io/webidl/#idl-ArrayBufferView">ArrayBufferView</a></dfn>
         are defined in [[!WEBIDL]].
       </p>
       <p>
-        The <dfn>term</dfn> throw in this specification is used as defined in
-        [[!WEBIDL]]. The following exception names are defined by WebIDL and
-        used by this specification:
+        The term <dfn><a href=
+        "https://heycam.github.io/webidl/#dfn-throw">throw</a></dfn> in this
+        specification is used as defined in [[!WEBIDL]]. The following
+        exception names are defined by WebIDL and used by this specification:
       </p>
       <ul>
         <li>
-          <dfn><code>NotAllowedError</code></dfn>
+          <dfn><code><a href=
+          "https://heycam.github.io/webidl/#notallowederror">NotAllowedError</a></code></dfn>
         </li>
         <li>
-          <dfn><code>InvalidAccessError</code></dfn>
+          <dfn><code><a href=
+          "https://heycam.github.io/webidl/#invalidaccesserror">InvalidAccessError</a></code></dfn>
         </li>
         <li>
-          <dfn><code>NotFoundError</code></dfn>
+          <dfn><code><a href=
+          "https://heycam.github.io/webidl/#notfounderror">NotFoundError</a></code></dfn>
         </li>
         <li>
-          <dfn><code>NotSupportedError</code></dfn>
+          <dfn><code><a href=
+          "https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a></code></dfn>
         </li>
         <li>
-          <dfn><code>OperationError</code></dfn>
+          <dfn><code><a href=
+          "https://heycam.github.io/webidl/#operationerror">OperationError</a></code></dfn>
         </li>
         <li>
-          <dfn><code>SecurityError</code></dfn>
+          <dfn><code><a href=
+          "https://heycam.github.io/webidl/#securityerror">SecurityError</a></code></dfn>
         </li>
         <li>
-          <dfn><code>SyntaxError</code></dfn>
+          <dfn><code><a href=
+          "https://heycam.github.io/webidl/#syntaxerror">SyntaxError</a></code></dfn>
         </li>
       </ul>
       <p>
@@ -944,8 +961,8 @@
             by the entry <a>settings object</a>, and let
             <var>presentationUrl</var> be the resulting absolute URL, if any.
             </li>
-            <li>If the resolve a URL algorithm failed, then throw a
-            <a>SyntaxError</a> exception and abort the remaining steps.
+            <li>If the resolve a URL algorithm failed, then <a>throw</a> a <a>
+              SyntaxError</a> exception and abort the remaining steps.
             </li>
             <li>Construct a new <code>PresentationRequest</code> object with
             <var>presentationUrl</var> as the constructor argument and return
@@ -990,8 +1007,8 @@
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
             Security Contexts"</code> and <var>presentationUrl</var> is an <a>
-            a priori unauthenticated URL</a>, then return a <a>Promise</a>
-            rejected with a <a>SecurityError</a> and abort these steps.
+              a priori unauthenticated URL</a>, then return a <a>Promise</a>
+              rejected with a <a>SecurityError</a> and abort these steps.
             </li>
             <li>If the document object's <a>active sandboxing flag set</a> has
             the <a>sandboxed presentation browsing context flag</a> set, then
@@ -1418,18 +1435,19 @@
           <ol>
             <li>If one of the following conditions is true:
               <ul>
-               <li>The result of running the <a>prohibits mixed security
+                <li>The result of running the <a>prohibits mixed security
                 contexts algorithm</a> on the document's <a>settings object</a>
-                is <code>"Prohibits Mixed Security Contexts"</code> and <var>
-                presentationUrl</var> is an <a>a priori unauthenticated URL</a>.
+                is <code>"Prohibits Mixed Security Contexts"</code> and
+                <var>presentationUrl</var> is an <a>a priori unauthenticated
+                URL</a>.
                 </li>
                 <li>The document object's <a>active sandboxing flag set</a> has
                 the <a>sandboxed presentation browsing context flag</a> set.
                 </li>
-              </ul>
-              Run the following substeps:
+              </ul>Run the following substeps:
               <ol>
-                <li>Return a <a>Promise</a> rejected with a <a>SecurityError</a>.
+                <li>Return a <a>Promise</a> rejected with a
+                <a>SecurityError</a>.
                 </li>
                 <li>Abort these steps.
                 </li>
@@ -1845,8 +1863,8 @@
           <ol link-for="PresentationConnection">
             <li>If the <a>state</a> property of
             <var>presentationConnection</var> is not <a for=
-            "PresentationConnectionState">connected</a>, throw an
-            <code>InvalidStateError</code> exception.
+            "PresentationConnectionState">connected</a>, <a>throw</a> an <code>
+              InvalidStateError</code> exception.
             </li>
             <li>If the <a>closing procedure</a> of
             <var>presentationConnection</var> has started, then abort these
