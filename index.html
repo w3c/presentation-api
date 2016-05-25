@@ -2541,8 +2541,12 @@
             <a>receiving browsing contexts</a> using an implementation specific
             mechanism.
             </li>
-            <li>Set the <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">connected</a>.
+            <li>If connection establishment completes successfully, set the
+            <a>presentation connection state</a> of <var>S</var> to
+            <a for="PresentationConnectionState">connected</a>. Otherwise, set
+            the <a>presentation connection state</a> of <var>S</var> to
+            <a for="PresentationConnectionState">closed</a> and abort all
+            remaining steps.
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
