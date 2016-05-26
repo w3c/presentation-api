@@ -2472,26 +2472,16 @@
             <a>databases</a> MUST be discarded and not used for any other
             <a>receiving browsing context</a>.
           </p>
-          <h4>Non-interactive versus interactive contexts</h4>
-          <p>
-            The <a>presentation display<a> rendering the <a>receiving browsing
-            context</a> may or may not have the ability to receive user input.
-            As such, the <a>receiving browsing context</a> should behave
-            reasonably when it knows that no user input is possible  That
-            implies that the following functions declared on <code>window</code>
-            should behave as no-ops:
+          <p class="note">
+            The <a>receiving user agent</a> may be a display-only device lacking
+            the ability to accept user input.  When this is the case, it should
+            handle functions that require user input carefully, especially when
+            the interaction is modal.  For example, functions such as
+            <code>window.alert</code>,
+            <code>window.confirm</code>,
+            <code>window.prompt</code>, and
+            <code>window.print</code> could be treated as no-ops.
           </p>
-          <ul>
-            <li><code>alert(<var>message</var>)</code></li>
-            <li><code>confirm(<var>message</var>)</code></li>
-            <li><code>prompt(<var>message, default</var>)</code></li>
-            <li><code>print()</code></li>
-          </ul>
-          In addition, <code>PresentationRequest.start()</code>
-
-
-            
-
         </section>
       </section>
       <section>
