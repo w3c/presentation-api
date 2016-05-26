@@ -2472,6 +2472,16 @@
             <a>databases</a> MUST be discarded and not used for any other
             <a>receiving browsing context</a>.
           </p>
+          <p class="note">
+            The <a>receiving user agent</a> may be a display-only device lacking
+            the ability to accept user input.  When this is the case, it should
+            handle functions that require user input carefully, especially when
+            the interaction is modal.  For example, functions such as
+            <code>window.alert</code>,
+            <code>window.confirm</code>,
+            <code>window.prompt</code>, and
+            <code>window.print</code> could be treated as no-ops.
+          </p>
         </section>
       </section>
       <section>
