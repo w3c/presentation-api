@@ -313,7 +313,9 @@
         Terminology
       </h2>
       <p>
-        The terms <dfn><a href="https://www.w3.org/TR/html5/browsers.html#application-cache">application cache</a></dfn>, <dfn><a href=
+        The terms <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#application-cache">application
+        cache</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
         context</a></dfn>, <dfn><a href=
         "https://www.w3.org/TR/html5/browsers.html#nested-browsing-contexts">nested
@@ -428,9 +430,9 @@
         and is defined in HTTP/1.1 [[!rfc7231]].
       </p>
       <p>
-        <dfn><a href=
-        "https://tools.ietf.org/html/rfc7235#section-2">HTTP authentication</a></dfn>
-        is defined in HTTP/1.1: Authentication [[!rfc7235]].
+        <dfn><a href="https://tools.ietf.org/html/rfc7235#section-2">HTTP
+        authentication</a></dfn> is defined in HTTP/1.1: Authentication
+        [[!rfc7235]].
       </p>
       <p>
         The term <dfn><a href=
@@ -2439,25 +2441,29 @@
             <a>cookie store</a>.
             </li>
             <li>Set any state associated with <a>HTTP authentication</a> to the
-            empty state.</li>
-            <li>Set the <a>application cache</a> to an empty <a>application cache</a>.</li>
-            <li>If the <a>receiving user agent</a> implements [[PERMISSIONS]],
-            set the <a>permission state</a> of all <a>Permissions</a> for
-            <var>C</var> to <code>"denied"</code>.
+            empty state.
             </li>
-            <li>If the <a>receiving user agent</a> implements [[INDEXEDDB]], set
-            the IndexedDB <a>databases</a> for <var>C</var> to an empty set
+            <li>Set the <a>application cache</a> to an empty <a>application
+            cache</a>.
+            </li>
+            <li>If the <a>receiving user agent</a> implements [[PERMISSIONS]],
+            set the <a>permission state</a> of all <a>Permissions</a> for <var>
+              C</var> to <code>"denied"</code>.
+            </li>
+            <li>If the <a>receiving user agent</a> implements [[INDEXEDDB]],
+            set the IndexedDB <a>databases</a> for <var>C</var> to an empty set
             of <a>databases</a>.
             </li>
-            <li>If the <a>receiving user agent</a> implements [[WEBSTORAGE]], then run the following steps.
+            <li>If the <a>receiving user agent</a> implements [[WEBSTORAGE]],
+            then run the following steps.
               <ul>
-                <li>Set the <a><code>sessionStorage</code></a> attribute for the
-                  <code>Window</code> object associated with <var>C</var> to a new,
-                  empty storage area.
+                <li>Set the <a><code>sessionStorage</code></a> attribute for
+                the <code>Window</code> object associated with <var>C</var> to
+                a new, empty storage area.
                 </li>
                 <li>Set the <a><code>localStorage</code></a> attribute for the
-                  <code>Window</code> object associated with <var>C</var> to a new,
-                  empty storage area.
+                <code>Window</code> object associated with <var>C</var> to a
+                new, empty storage area.
                 </li>
               </ul>
             </li>
@@ -2470,18 +2476,17 @@
           </ol>
           <p>
             When the <a>receiving browsing context</a> is closed, any
-            associated browsing state, including <a>session history</a>, the <a>cookie
-            store</a>, any <a>HTTP authentication</a>
-            state, the <a>application cache</a>, any <a>databases</a>, 
+            associated browsing state, including <a>session history</a>, the
+            <a>cookie store</a>, any <a>HTTP authentication</a> state, the
+            <a>application cache</a>, any <a>databases</a>,
             <a><code>sessionStorage</code></a>, and
             <a><code>localStorage</code></a> MUST be discarded and not used for
-            any other
-            <a>receiving browsing context</a>.
+            any other <a>receiving browsing context</a>.
           </p>
           <p class="note">
             The <a>receiving browsing context</a> is not intended to define a
             private browsing session, but a well defined environment to allow
-            interoperable behavior for 1-UA and 2-UA presentations.  For
+            interoperable behavior for 1-UA and 2-UA presentations. For
             example, navigation is not allowed in a <a>receiving browsing
             context</a>.
           </p>
@@ -2556,12 +2561,12 @@
             <a>receiving browsing contexts</a> using an implementation specific
             mechanism.
             </li>
-            <li>If connection establishment completes successfully, set the
-            <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">connected</a>. Otherwise, set
-            the <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">closed</a> and abort all
-            remaining steps.
+            <li>If connection establishment completes successfully, set the <a>
+              presentation connection state</a> of <var>S</var> to <a for=
+              "PresentationConnectionState">connected</a>. Otherwise, set the
+              <a>presentation connection state</a> of <var>S</var> to <a for=
+              "PresentationConnectionState">closed</a> and abort all remaining
+              steps.
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
@@ -2858,16 +2863,15 @@
         Acknowledgments
       </h2>
       <p>
-        Thanks to Addison Phillips, Anne Van Kesteren, Anssi Kostiainen,
-        Anton Vayvod, Chris Needham, Christine Runnegar, Daniel Davis,
-        Domenic Denicola, Erik Wilde, François Daoust, 闵洪波 (Hongbo Min),
-        Hongki CHA, Hubert Sablonnière, Hyojin Song, Hyun June Kim,
-        Jean-Claude Dufourd, Joanmarie Diggs, Jonas Sicking, Louay Bassbouss,
-        Mark Watson, Martin Dürst, Matt Hammond, Mike West, Mounir Lamouri,
-        Nick Doty, Oleg Beletski, Philip Jägenstedt, Richard Ishida,
-        Shih-Chiang Chien, Takeshi Kanai, Tobie Langel, Tomoyuki Shimizu,
-        Travis Leithead, and Wayne Carr for help with editing, reviews and
-        feedback to this draft.
+        Thanks to Addison Phillips, Anne Van Kesteren, Anssi Kostiainen, Anton
+        Vayvod, Chris Needham, Christine Runnegar, Daniel Davis, Domenic
+        Denicola, Erik Wilde, François Daoust, 闵洪波 (Hongbo Min), Hongki CHA,
+        Hubert Sablonnière, Hyojin Song, Hyun June Kim, Jean-Claude Dufourd,
+        Joanmarie Diggs, Jonas Sicking, Louay Bassbouss, Mark Watson, Martin
+        Dürst, Matt Hammond, Mike West, Mounir Lamouri, Nick Doty, Oleg
+        Beletski, Philip Jägenstedt, Richard Ishida, Shih-Chiang Chien, Takeshi
+        Kanai, Tobie Langel, Tomoyuki Shimizu, Travis Leithead, and Wayne Carr
+        for help with editing, reviews and feedback to this draft.
       </p>
     </section>
   </body>
