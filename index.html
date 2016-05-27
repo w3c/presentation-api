@@ -313,7 +313,7 @@
         Terminology
       </h2>
       <p>
-        The terms <dfn><a href=
+        The terms <dfn><a href="https://www.w3.org/TR/html5/browsers.html#application-cache">application cache</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
         context</a></dfn>, <dfn><a href=
         "https://www.w3.org/TR/html5/browsers.html#nested-browsing-contexts">nested
@@ -425,7 +425,12 @@
       <p>
         The header <dfn><a href=
         "https://tools.ietf.org/html/rfc7231#section-5.3.5">Accept-Language</a></dfn>
-        is defined in HTTP 1/.1 [[!rfc7231]].
+        and is defined in HTTP/1.1 [[!rfc7231]].
+      </p>
+      <p>
+        <dfn><a href=
+        "https://tools.ietf.org/html/rfc7235#section-2">HTTP authentication</a></dfn>
+        is defined in HTTP/1.1: Authentication [[!rfc7235]].
       </p>
       <p>
         The term <dfn><a href=
@@ -2430,22 +2435,31 @@
             <li>Set the <a>sandboxed auxiliary navigation browsing context
             flag</a> on <var>C</var>.
             </li>
-            <li>Set the <a><code>sessionStorage</code></a> attribute for the
-            <code>Window</code> object associated with <var>C</var> to a new,
-            empty storage area.
-            </li>
-            <li>Set the <a><code>localStorage</code></a> attribute for the
-            <code>Window</code> object associated with <var>C</var> to a new,
-            empty storage area.
-            </li>
             <li>Set the <a>cookie store</a> for <var>C</var> to an empty
             <a>cookie store</a>.
             </li>
-            <li>Set the <a>permission state</a> of all <a>Permissions</a> for
+            <li>Set any state associated with <a>HTTP authentication</a> to the
+            empty state.</li>
+            <li>Set the <a>application cache</a> to an empty <a>application cache</a>.</li>
+            <li>If the <a>receiving user agent</a> implements [[PERMISSIONS]],
+            set the <a>permission state</a> of all <a>Permissions</a> for
             <var>C</var> to <code>"denied"</code>.
             </li>
-            <li>Set the IndexedDB <a>databases</a> for <var>C</var> to an empty
-            set of <a>databases</a>.
+            <li>If the <a>receiving user agent</a> implements [[INDEXEDDB]], set
+            the IndexedDB <a>databases</a> for <var>C</var> to an empty set
+            of <a>databases</a>.
+            </li>
+            <li>If the <a>receiving user agent</a> implements [[WEBSTORAGE]], then run the following steps.
+              <ul>
+                <li>Set the <a><code>sessionStorage</code></a> attribute for the
+                  <code>Window</code> object associated with <var>C</var> to a new,
+                  empty storage area.
+                </li>
+                <li>Set the <a><code>localStorage</code></a> attribute for the
+                  <code>Window</code> object associated with <var>C</var> to a new,
+                  empty storage area.
+                </li>
+              </ul>
             </li>
             <li>
               <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
@@ -2455,6 +2469,23 @@
             </li>
           </ol>
           <p>
+            When the <a>receiving browsing context</a> is closed, any
+            associated browsing state, including <a>session history</a>, the <a>cookie
+            store</a>, any <a>HTTP authentication</a>
+            state, the <a>application cache</a>, any <a>databases</a>, 
+            <a><code>sessionStorage</code></a>, and
+            <a><code>localStorage</code></a> MUST be discarded and not used for
+            any other
+            <a>receiving browsing context</a>.
+          </p>
+          <p class="note">
+            The <a>receiving browsing context</a> is not intended to define a
+            private browsing session, but a well defined environment to allow
+            interoperable behavior for 1-UA and 2-UA presentations.  For
+            example, navigation is not allowed in a <a>receiving browsing
+            context</a>.
+          </p>
+          <p>
             The <a>receiving user agent</a> SHOULD fetch resources in a
             <a>receiving browsing context</a> with an HTTP
             <a>Accept-Language</a> header that reflects the language
@@ -2463,14 +2494,6 @@
             have sent). This will help the <a>receiving user agent</a> render
             the presentation with fonts and locale-specific attributes that
             reflect the user's preferences.
-          </p>
-          <p>
-            When the <a>receiving browsing context</a> is closed, any
-            associated browsing state, including <a>session history</a>,
-            <a><code>sessionStorage</code></a>,
-            <a><code>localStorage</code></a>, the <a>cookie store</a>, and
-            <a>databases</a> MUST be discarded and not used for any other
-            <a>receiving browsing context</a>.
           </p>
         </section>
       </section>
