@@ -21,9 +21,11 @@ her mobile phone allows her to access them from an online service while on the
 go.  At the conference, using wireless display technology, she presents her
 slides on the stage screen from her mobile phone.  The phone's touch screen
 helps her to navigate slides and presents a slide preview while the stage screen
-shows her slides to the audience.
+shows her slides to the audience.  At the end of the presentaton, she clicks a
+button to stop presentation, which stops showing slides on the stage screen and
+reverts to a local view of the presentation on her mobile phone.
 
-**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ05](#req05), [REQ06](#req06)
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ05](#req05), [REQ06](#req06), [REQ09](#req09)
 
 ### <a name="uc02"></a>UC02: Video and image sharing
 
@@ -128,9 +130,10 @@ players on the TV screen. Bob and Ann play one more round of the game with Ann
 drawing and Bob guessing the correct word. After that round is over, they decide
 to stop playing and both press the "exit game" button on their smartphones.  The
 site on the TV is notified that all the players have left the game, and it
-presents a list of the top players.
+presents a list of the top players. No one decides to start a new game, and
+after a period of time the the game on the TV exits itself.
 
-**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07)
+**Requirements**: [REQ01](#req01), [REQ02](#req02), [REQ04](#req04), [REQ05](#req05), [REQ06](#req06), [REQ07](#req07), [REQ09](#req09)
 
 ### <a name="uc06"></a>UC06: Presenting to local and remote screens
 
@@ -221,6 +224,12 @@ data with them. Each connection between a controller and a presentation is
 handled independently by the UA; controlling the same content on multiple
 presentations simultaneously in a synchronized fashion is out of scope for this
 specification.
+
+### <a name="req09"></a>REQ09: Terminating presentation
+
+A connected controller should be able to request termination of a presentation,
+which closes the browsing context and disconnects all connected controllers.  In
+addition, a presentation should be able to terminate itself.
 
 ## Non-functional Requirements
 
