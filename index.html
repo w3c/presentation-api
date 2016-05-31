@@ -2473,14 +2473,12 @@
             <a>receiving browsing context</a>.
           </p>
           <p class="note">
-            The <a>receiving user agent</a> may be a display-only device lacking
-            the ability to accept user input.  When this is the case, it should
-            handle functions that require user input carefully, especially when
-            the interaction is modal.  For example, functions such as
-            <code>window.alert</code>,
-            <code>window.confirm</code>,
-            <code>window.prompt</code>, and
-            <code>window.print</code> could be treated as no-ops.
+            Given the operating context of the <a>presentation display</a>, some
+            APIs will not work by design (for example, by requiring user input)
+            or will be obsolete (for example, by attempting window management);
+            the <a>receiving user agent</a> should be aware of this.
+            Furthermore, any modal user interface will need to be handled
+            carefully.
           </p>
         </section>
       </section>
