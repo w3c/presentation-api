@@ -666,7 +666,7 @@
     list.connections.map(function (connection) {
       addConnection(connection);
     });
-    list.connections.onconnectionavailable = function (connections) {
+    list.onconnectionavailable = function (connections) {
       addConnection(connections[connections.length - 1]);
     };
   });
