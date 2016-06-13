@@ -108,9 +108,6 @@
             ]
           }
         },
-        issueBase: "https://www.github.com/w3c/presentation-api/issues/"
-        // TODO: Uncomment when https://github.com/w3c/presentation-api/issues/228 is fixed
-        // githubAPI: "https://api.github.com/repos/w3c/presentation-api"
       };
     </script>
     <style>
@@ -171,6 +168,17 @@
         "https://github.com/w3c/presentation-api/issues">remaining issues</a>
         and made initial progress on the test suite. Wide reviews of this
         document are encouraged.
+      </p>
+      <p>
+        The Second Screen Presentation Working Group will complete the <a href=
+        "http://w3c-test.org/presentation-api/">test suite</a> for the
+        Presentation API during the Candidate Recommendation period and prepare
+        an <a href=
+        "https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests">implementation
+        report</a>. For this specification to advance to Proposed
+        Recommendation, two independent, interoperable implementations of each
+        feature must be demonstrated, as detailed in the <a href=
+        "#h-cr-exit-criteria">CR exit criteria</a> section.
       </p>
     </section>
     <section class="informative">
@@ -676,7 +684,7 @@
     list.connections.map(function (connection) {
       addConnection(connection);
     });
-    list.connections.onconnectionavailable = function (connections) {
+    list.onconnectionavailable = function (connections) {
       addConnection(connections[connections.length - 1]);
     };
   });
@@ -2487,6 +2495,14 @@
             the presentation with fonts and locale-specific attributes that
             reflect the user's preferences.
           </p>
+          <p class="note">
+            Given the operating context of the <a>presentation display</a>, some
+            APIs will not work by design (for example, by requiring user input)
+            or will be obsolete (for example, by attempting window management);
+            the <a>receiving user agent</a> should be aware of this.
+            Furthermore, any modal user interface will need to be handled
+            carefully.
+          </p>
         </section>
       </section>
       <section>
@@ -2860,6 +2876,64 @@
         Kanai, Tobie Langel, Tomoyuki Shimizu, Travis Leithead, and Wayne Carr
         for help with editing, reviews and feedback to this draft.
       </p>
+    </section>
+    <section class="appendix">
+      <h2>
+        CR exit criteria
+      </h2>
+      <p>
+        For this specification to be advanced to Proposed Recommendation, there
+        must be, for each of the conformance classes it defines (<a>controlling
+        user agent</a> and <a>receiving user agent</a>), at least two
+        independent, interoperable implementations of each feature. Each
+        feature may be implemented by a different set of products, there is no
+        requirement that all features be implemented by a single product.
+        Additionally, implementations of the receiving user agent conformance
+        class must include at least one implementation of the <a href=
+        "#1-ua">1-UA</a> mode and one implementation of the <a href=
+        "#2-ua">2-UA</a> mode.
+      </p>
+      <p>
+        For the purposes of these criteria, we define the following terms:
+      </p>
+      <dl>
+        <dt>
+          Independent
+        </dt>
+        <dd>
+          Each implementation must be developed by a different party, and
+          cannot share, reuse, or derive from code used by another qualifying
+          implementation. Sections of code that have no bearing on the
+          implementation of this specification are exempt from this
+          requirement.
+        </dd>
+        <dt>
+          Interoperable
+        </dt>
+        <dd>
+          Passing the respective test case(s) in the official test suite.
+        </dd>
+        <dt>
+          Implementation
+        </dt>
+        <dd>
+          A user agent which:
+          <ol>
+            <li>implements one of the conformance classes of the specification.
+            </li>
+            <li>is available to the general public. The implementation may be a
+            shipping product or other publicly available version (i.e., beta
+            version, preview release, or "nightly build"). Non-shipping product
+            releases must have implemented the feature(s) for a period of at
+            least one month in order to demonstrate stability.
+            </li>
+            <li>is not experimental (i.e. a version specifically designed to
+            pass the test suite and not intended for normal usage going
+            forward).
+            </li>
+          </ol>
+        </dd>
+      </dl>
     </section>
   </body>
 </html>
