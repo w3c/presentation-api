@@ -1373,7 +1373,7 @@
               <var>availabilityUrl[]</var> is the list of <a>presentation
               request URLs</a> when <code><a for=
               "PresentationRequest">getAvailability</a>()</code> is called to
-              create <var>A</var>;
+              create <var>A</var>.
             </li>
           </ol>
         </section>
@@ -1388,7 +1388,7 @@
             <var>(availabilityUrl, display)</var>. An entry in this list means
             that <var>display</var> is curently available to start a
             presentation and is a <a>compatible presentation display</a> for
-            <var>availabilityUrl.</var> This list of <a>presentation
+            <var>availabilityUrl</var>. This list of <a>presentation
             displays</a> may be used for starting new presentations, and is
             populated based on an implementation specific discovery mechanism.
             It is set to the most recent result of the algorithm to <a>monitor
@@ -1531,10 +1531,9 @@
                   <code>true</code> if there is at least one <a>compatible
                   presentation display</a> for some member of of
                   <var>presentationUrls</var>. That is, there is an entry
-                  <var>(availabilityUrl, display)</var> in the <a>list of
-                  available presentation displays</a> where
-                  <var>availabiltyUrl</var> is a member of
-                  <var>presentationUrls</var>.
+                  <var>(presentationUrl, display)</var> in the <a>list of
+                  available presentation displays</a> for some
+                  <var>presentationUrl</var> in <var>presentationUrls</var>.
                 </li>
                 <li>
                   <code>false</code> otherwise.
@@ -1582,7 +1581,7 @@
                 <li>Let <var>newAvailability</var> be <code>false</code>.
                 </li>
                 <li>For each <var>availabilityUrl</var> in
-                <var>availabilityUrls</var>, run the following steps:
+                <var>availabilityUrls</var>, run the following step:
                   <ol>
                     <li>For each <var>display</var> in <var>newDisplays</var>,
                     if <var>display</var> is a <a>compatible presentation
@@ -1591,8 +1590,8 @@
                       <ol>
                         <li>Insert a tuple <var>(availabilityUrl,
                         display)</var> into the <a>list of available
-                        presentation displays</a> (if no identical tuple
-                        already exists).
+                        presentation displays</a>, if no identical tuple
+                        already exists.
                         </li>
                         <li>Set <var>newAvailability</var> to
                         <code>true</code>.
