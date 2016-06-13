@@ -2429,26 +2429,40 @@
           </dl>
           <ol>
             <li>Create a new <a>top-level browsing context</a> <var>C</var>,
-              set to display content on <var>D</var>.</li>
+            set to display content on <var>D</var>.
+            </li>
             <li>Set the <a>session history</a> of <var>C</var> to be the empty
-              list.</li>
+            list.
+            </li>
             <li>Set the <a>sandboxed auxiliary navigation browsing context
-                flag</a> on <var>C</var>.</li>
-            <li>Create a new empty <a>cookie store</a> for <var>C</var>.</li>
-            <li>Create a new empty store for <var>C</var> to hold
-              <a>HTTP authentication</a> states.</li>
-            <li>Create a new empty <a>application cache</a> storage for <var>C</var>.</li>
+            flag</a> on <var>C</var>.
+            </li>
+            <li>Create a new empty <a>cookie store</a> for <var>C</var>.
+            </li>
+            <li>Create a new empty store for <var>C</var> to hold <a>HTTP
+            authentication</a> states.
+            </li>
+            <li>Create a new empty <a>application cache</a> storage for
+            <var>C</var>.
+            </li>
             <li>If the <a>receiving user agent</a> implements [[!PERMISSIONS]],
-              set the <a>permission state</a> of all <a>Permissions</a> for <var>
-                C</var> to <code>"denied"</code>.</li>
+            set the <a>permission state</a> of all <a>Permissions</a> for <var>
+              C</var> to <code>"denied"</code>.
+            </li>
             <li>If the <a>receiving user agent</a> implements [[!INDEXEDDB]],
-              create a new empty storage for IndexedDB <a>databases</a> for <var>C</var>.</li>
+            create a new empty storage for IndexedDB <a>databases</a> for <var>
+              C</var>.
+            </li>
             <li>If the <a>receiving user agent</a> implements [[!WEBSTORAGE]],
-              create a new empty storage for session storage areas and local storage
-              areas for <var>C</var>.</li>
-            <li><a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.</li>
+            create a new empty storage for session storage areas and local
+            storage areas for <var>C</var>.
+            </li>
+            <li>
+              <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
+            </li>
             <li>Start <a>monitoring incoming presentation connections</a> for
-              <var>C</var> with <var>presentationId</var>.</li>
+            <var>C</var> with <var>presentationId</var>.
+            </li>
           </ol>
           <p>
             When the <a>receiving browsing context</a> is closed, any
@@ -2460,9 +2474,8 @@
             any other <a>receiving browsing context</a>.
           </p>
           <p class="note">
-            This algorithm is intended to create a well defined
-            environment to allow interoperable behavior for 1-UA and 2-UA
-            presentations.
+            This algorithm is intended to create a well defined environment to
+            allow interoperable behavior for 1-UA and 2-UA presentations.
           </p>
           <p>
             The <a>receiving user agent</a> SHOULD fetch resources in a
