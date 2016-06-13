@@ -322,6 +322,8 @@
       </h2>
       <p>
         The terms <dfn><a href=
+        "https://www.w3.org/TR/html5/browsers.html#application-cache">application
+        cache</a></dfn>, <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
         context</a></dfn>, <dfn><a href=
         "https://www.w3.org/TR/html5/browsers.html#nested-browsing-contexts">nested
@@ -433,7 +435,12 @@
       <p>
         The header <dfn><a href=
         "https://tools.ietf.org/html/rfc7231#section-5.3.5">Accept-Language</a></dfn>
-        is defined in HTTP 1/.1 [[!rfc7231]].
+        is defined in HTTP/1.1 [[rfc7231]].
+      </p>
+      <p>
+        <dfn><a href="https://tools.ietf.org/html/rfc7235#section-2">HTTP
+        authentication</a></dfn> is defined in HTTP/1.1: Authentication
+        [[!rfc7235]].
       </p>
       <p>
         The term <dfn><a href=
@@ -455,19 +462,19 @@
         "https://w3c.github.io/permissions/#idl-def-Permission">permission</a></dfn>
         and <dfn><a href=
         "https://w3c.github.io/permissions/#idl-def-PermissionState">permission
-        state</a></dfn> are defined in [[PERMISSIONS]].
+        state</a></dfn> are defined in [[!PERMISSIONS]].
       </p>
       <p>
         The term <dfn data-lt="database|databases"><a href=
         "http://www.w3.org/TR/IndexedDB/#database-concept">database</a></dfn>
-        is defined in [[INDEXEDDB]].
+        is defined in [[!INDEXEDDB]].
       </p>
       <p>
         The terms <dfn><a href=
-        "http://www.w3.org/TR/webstorage/#the-localstorage-attribute"><code>localStorage</code></a></dfn>
-        and <dfn><a href=
-        "http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute"><code>sessionStorage</code></a></dfn>
-        are defined in [[WEBSTORAGE]].
+        "http://www.w3.org/TR/webstorage/#the-localstorage-attribute">local
+        storage areas</a></dfn> and <dfn><a href=
+        "http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute">session
+        storage areas</a></dfn> are defined in [[!WEBSTORAGE]].
       </p>
       <p>
         The terms <dfn><a href=
@@ -2438,22 +2445,25 @@
             <li>Set the <a>sandboxed auxiliary navigation browsing context
             flag</a> on <var>C</var>.
             </li>
-            <li>Set the <a><code>sessionStorage</code></a> attribute for the
-            <code>Window</code> object associated with <var>C</var> to a new,
-            empty storage area.
+            <li>Create a new empty <a>cookie store</a> for <var>C</var>.
             </li>
-            <li>Set the <a><code>localStorage</code></a> attribute for the
-            <code>Window</code> object associated with <var>C</var> to a new,
-            empty storage area.
+            <li>Create a new empty store for <var>C</var> to hold <a>HTTP
+            authentication</a> states.
             </li>
-            <li>Set the <a>cookie store</a> for <var>C</var> to an empty
-            <a>cookie store</a>.
+            <li>Create a new empty <a>application cache</a> storage for
+            <var>C</var>.
             </li>
-            <li>Set the <a>permission state</a> of all <a>Permissions</a> for
-            <var>C</var> to <code>"denied"</code>.
+            <li>If the <a>receiving user agent</a> implements [[!PERMISSIONS]],
+            set the <a>permission state</a> of all <a>Permissions</a> for <var>
+              C</var> to <code>"denied"</code>.
             </li>
-            <li>Set the IndexedDB <a>databases</a> for <var>C</var> to an empty
-            set of <a>databases</a>.
+            <li>If the <a>receiving user agent</a> implements [[!INDEXEDDB]],
+            create a new empty storage for IndexedDB <a>databases</a> for <var>
+              C</var>.
+            </li>
+            <li>If the <a>receiving user agent</a> implements [[!WEBSTORAGE]],
+            create a new empty storage for <a>session storage areas</a> and <a>
+              local storage areas</a> for <var>C</var>.
             </li>
             <li>
               <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
@@ -2463,6 +2473,19 @@
             </li>
           </ol>
           <p>
+            When the <a>receiving browsing context</a> is closed, any
+            associated browsing state, including <a>session history</a>, the
+            <a>cookie store</a>, any <a>HTTP authentication</a> state, the
+            <a>application cache</a>, any <a>databases</a>, the <a>session
+            storage areas</a>, and the <a>local storage areas</a> MUST be
+            discarded and not used for any other <a>receiving browsing
+            context</a>.
+          </p>
+          <p class="note">
+            This algorithm is intended to create a well defined environment to
+            allow interoperable behavior for 1-UA and 2-UA presentations.
+          </p>
+          <p>
             The <a>receiving user agent</a> SHOULD fetch resources in a
             <a>receiving browsing context</a> with an HTTP
             <a>Accept-Language</a> header that reflects the language
@@ -2471,14 +2494,6 @@
             have sent). This will help the <a>receiving user agent</a> render
             the presentation with fonts and locale-specific attributes that
             reflect the user's preferences.
-          </p>
-          <p>
-            When the <a>receiving browsing context</a> is closed, any
-            associated browsing state, including <a>session history</a>,
-            <a><code>sessionStorage</code></a>,
-            <a><code>localStorage</code></a>, the <a>cookie store</a>, and
-            <a>databases</a> MUST be discarded and not used for any other
-            <a>receiving browsing context</a>.
           </p>
           <p class="note">
             Given the operating context of the <a>presentation display</a>, some
@@ -2549,12 +2564,12 @@
             <a>receiving browsing contexts</a> using an implementation specific
             mechanism.
             </li>
-            <li>If connection establishment completes successfully, set the
-            <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">connected</a>. Otherwise, set
-            the <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">closed</a> and abort all
-            remaining steps.
+            <li>If connection establishment completes successfully, set the <a>
+              presentation connection state</a> of <var>S</var> to <a for=
+              "PresentationConnectionState">connected</a>. Otherwise, set the
+              <a>presentation connection state</a> of <var>S</var> to <a for=
+              "PresentationConnectionState">closed</a> and abort all remaining
+              steps.
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
@@ -2851,16 +2866,15 @@
         Acknowledgments
       </h2>
       <p>
-        Thanks to Addison Phillips, Anne Van Kesteren, Anssi Kostiainen,
-        Anton Vayvod, Chris Needham, Christine Runnegar, Daniel Davis,
-        Domenic Denicola, Erik Wilde, François Daoust, 闵洪波 (Hongbo Min),
-        Hongki CHA, Hubert Sablonnière, Hyojin Song, Hyun June Kim,
-        Jean-Claude Dufourd, Joanmarie Diggs, Jonas Sicking, Louay Bassbouss,
-        Mark Watson, Martin Dürst, Matt Hammond, Mike West, Mounir Lamouri,
-        Nick Doty, Oleg Beletski, Philip Jägenstedt, Richard Ishida,
-        Shih-Chiang Chien, Takeshi Kanai, Tobie Langel, Tomoyuki Shimizu,
-        Travis Leithead, and Wayne Carr for help with editing, reviews and
-        feedback to this draft.
+        Thanks to Addison Phillips, Anne Van Kesteren, Anssi Kostiainen, Anton
+        Vayvod, Chris Needham, Christine Runnegar, Daniel Davis, Domenic
+        Denicola, Erik Wilde, François Daoust, 闵洪波 (Hongbo Min), Hongki CHA,
+        Hubert Sablonnière, Hyojin Song, Hyun June Kim, Jean-Claude Dufourd,
+        Joanmarie Diggs, Jonas Sicking, Louay Bassbouss, Mark Watson, Martin
+        Dürst, Matt Hammond, Mike West, Mounir Lamouri, Nick Doty, Oleg
+        Beletski, Philip Jägenstedt, Richard Ishida, Shih-Chiang Chien, Takeshi
+        Kanai, Tobie Langel, Tomoyuki Shimizu, Travis Leithead, and Wayne Carr
+        for help with editing, reviews and feedback to this draft.
       </p>
     </section>
     <section class="appendix">
