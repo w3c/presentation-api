@@ -463,10 +463,10 @@
       </p>
       <p>
         The terms <dfn><a href=
-        "http://www.w3.org/TR/webstorage/#the-localstorage-attribute"><code>localStorage</code></a></dfn>
-        and <dfn><a href=
-        "http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute"><code>sessionStorage</code></a></dfn>
-        are defined in [[!WEBSTORAGE]].
+        "http://www.w3.org/TR/webstorage/#the-localstorage-attribute">local
+        storage areas</a></dfn> and <dfn><a href=
+        "http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute">session
+        storage areas</a></dfn> are defined in [[!WEBSTORAGE]].
       </p>
       <p>
         The terms <dfn><a href=
@@ -2454,8 +2454,8 @@
               C</var>.
             </li>
             <li>If the <a>receiving user agent</a> implements [[!WEBSTORAGE]],
-            create a new empty storage for session storage areas and local
-            storage areas for <var>C</var>.
+            create a new empty storage for <a>session storage areas</a> and <a>
+              local storage areas</a> for <var>C</var>.
             </li>
             <li>
               <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
@@ -2468,10 +2468,10 @@
             When the <a>receiving browsing context</a> is closed, any
             associated browsing state, including <a>session history</a>, the
             <a>cookie store</a>, any <a>HTTP authentication</a> state, the
-            <a>application cache</a>, any <a>databases</a>,
-            <a><code>sessionStorage</code></a>, and
-            <a><code>localStorage</code></a> MUST be discarded and not used for
-            any other <a>receiving browsing context</a>.
+            <a>application cache</a>, any <a>databases</a>, the <a>session
+            storage areas</a>, and the <a>local storage areas</a> MUST be
+            discarded and not used for any other <a>receiving browsing
+            context</a>.
           </p>
           <p class="note">
             This algorithm is intended to create a well defined environment to
