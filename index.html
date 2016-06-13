@@ -846,8 +846,10 @@
             If set by the <a>controller</a>, the value of the <a for=
             "Presentation">defaultRequest</a> attribute SHOULD be used by the
             <a>controlling user agent</a> as the <dfn>default presentation
-            request</dfn> for that <a>controlling browsing context</a>. When
-            the <a>controlling user agent</a> wishes to initiate a
+            request</dfn> for that <a>controlling browsing context</a> unless
+            the document object's <a>active sandboxing flag set</a> has
+            the <a>sandboxed presentation browsing context flag</a> set.
+            When the <a>controlling user agent</a> wishes to initiate a
             <a>PresentationConnection</a> on the behalf of that browsing
             context, it MUST <a>start a presentation</a> using the <a>default
             presentation request</a> for the <a>controller</a> (as if the
