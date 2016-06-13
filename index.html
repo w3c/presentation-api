@@ -939,11 +939,10 @@
         </p>
         <p>
           When a <a><code>PresentationRequest</code></a> is constructed, the
-          given <code>urls</code> MUST be used as the list
-          of <dfn data-lt="presentation request URL|presentation request
-          URLs">presentation request URLs</dfn> which are each a
-          possible <a>presentation URL</a> for the
-          <a><code>PresentationRequest</code></a> instance.
+          given <code>urls</code> MUST be used as the list of <dfn data-lt=
+          "presentation request URL|presentation request URLs">presentation
+          request URLs</dfn> which are each a possible <a>presentation URL</a>
+          for the <a><code>PresentationRequest</code></a> instance.
         </p>
         <section>
           <h4>
@@ -968,17 +967,16 @@
             </dd>
           </dl>
           <ol>
-            <li>Let <var>presentationUrls</var> be an empty list of URLs.</li>
+            <li>Let <var>presentationUrls</var> be an empty list of URLs.
+            </li>
             <li>For each URL <var>url</var> in <var>urls</var>:
               <ol>
                 <li>Resolve <var>url</var> relative to the API base URL
-                  specified by the entry <a>settings object</a>, and add the
-                  resulting absolute URL (if any) to
-                  <var>presentationUrls</var>.
+                specified by the entry <a>settings object</a>, and add the
+                resulting absolute URL (if any) to <var>presentationUrls</var>.
                 </li>
-                <li>
-                  If the resolve a URL algorithm failed, then <a>throw</a> a <a>
-                  SyntaxError</a> exception and abort all remaining steps.
+                <li>If the resolve a URL algorithm failed, then <a>throw</a> a
+                <a>SyntaxError</a> exception and abort all remaining steps.
                 </li>
               </ol>
             </li>
@@ -1059,8 +1057,8 @@
                 completed.
                 </li>
                 <li>No member in the <a>list of available presentation
-                    displays</a> is a <a>compatible presentation display</a> for any
-                  member of <var>presentationUrls</var>.
+                displays</a> is a <a>compatible presentation display</a> for
+                any member of <var>presentationUrls</var>.
                 </li>
               </ol>Then run the following steps:
               <ol>
@@ -1093,8 +1091,8 @@
               I</var>.
             </li>
             <li>Set the <a>presentation URL</a> of <var>S</var> to the
-              <var>presentationUrl</var> for <var>D</var> in the <a>list of
-                available presentation displays</a>.
+            <var>presentationUrl</var> for <var>D</var> in the <a>list of
+            available presentation displays</a>.
             </li>
             <li>Set the <a>presentation connection state</a> of <var>S</var> to
             <a for="PresentationConnectionState">connecting</a>.
@@ -1200,8 +1198,8 @@
             its <a>controlling browsing context</a> is the current <a>browsing
             context</a>, its <a>presentation connection state</a> is not
               <a for="PresentationConnectionState">terminated</a>, its
-              <a>presentation URL</a> is equal to one of the <a>presentation request
-              URLs</a> of <var>presentationRequest</var>, and its
+              <a>presentation URL</a> is equal to one of the <a>presentation
+              request URLs</a> of <var>presentationRequest</var>, and its
               <a>presentation identifier</a> is equal to
               <var>presentationId</var>.
             </li>
@@ -1237,8 +1235,9 @@
             <var>presentationRequest</var>, and its <a>presentation
             identifier</a> is equal to <var>presentationId</var>.
             </li>
-            <li>If such a <a>PresentationConnection</a> exists, let <var>E</var>
-            be that <a>PresentationConnection</a>, and run the following steps:
+            <li>If such a <a>PresentationConnection</a> exists, let
+            <var>E</var> be that <a>PresentationConnection</a>, and run the
+            following steps:
               <ol>
                 <li>Create a new <a>PresentationConnection</a> <var>S</var>.
                 </li>
@@ -1365,8 +1364,8 @@
               <var>A</var> is a live <a>PresentationAvailability</a> object;
             </li>
             <li>
-              <var>availabilityUrl[]</var> is the list of <a>presentation request URLs</a>
-              when <code><a for=
+              <var>availabilityUrl[]</var> is the list of <a>presentation
+              request URLs</a> when <code><a for=
               "PresentationRequest">getAvailability</a>()</code> is called to
               create <var>A</var>;
             </li>
@@ -1437,7 +1436,8 @@
               Input
             </dt>
             <dd>
-              <var>presentationUrls</var>, a list of <a>presentation request URLs</a>
+              <var>presentationUrls</var>, a list of <a>presentation request
+              URLs</a>
             </dd>
             <dt>
               Output
@@ -1553,8 +1553,8 @@
                 <li>Let <var>newAvailability</var> be <code>true</code> if
                 <var>newDisplays</var> is not empty and at least one display in
                 <var>newDisplays</var> is a <a>compatible presentation
-                display</a> for at least one member
-                of <var>availabilityUrls</var>. Otherwise, set
+                display</a> for at least one member of
+                <var>availabilityUrls</var>. Otherwise, set
                 <var>newAvailability</var> to <code>false</code>.
                 </li>
                 <li>If <var>previousAvailability</var> is not equal to
@@ -2492,11 +2492,11 @@
             <a>receiving browsing context</a>.
           </p>
           <p class="note">
-            Given the operating context of the <a>presentation display</a>, some
-            APIs will not work by design (for example, by requiring user input)
-            or will be obsolete (for example, by attempting window management);
-            the <a>receiving user agent</a> should be aware of this.
-            Furthermore, any modal user interface will need to be handled
+            Given the operating context of the <a>presentation display</a>,
+            some APIs will not work by design (for example, by requiring user
+            input) or will be obsolete (for example, by attempting window
+            management); the <a>receiving user agent</a> should be aware of
+            this. Furthermore, any modal user interface will need to be handled
             carefully.
           </p>
         </section>
@@ -2560,12 +2560,12 @@
             <a>receiving browsing contexts</a> using an implementation specific
             mechanism.
             </li>
-            <li>If connection establishment completes successfully, set the
-            <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">connected</a>. Otherwise, set
-            the <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">closed</a> and abort all
-            remaining steps.
+            <li>If connection establishment completes successfully, set the <a>
+              presentation connection state</a> of <var>S</var> to <a for=
+              "PresentationConnectionState">connected</a>. Otherwise, set the
+              <a>presentation connection state</a> of <var>S</var> to <a for=
+              "PresentationConnectionState">closed</a> and abort all remaining
+              steps.
             </li>
             <li>Add <var>S</var> to the <a>set of presentation controllers</a>.
             </li>
@@ -2862,16 +2862,15 @@
         Acknowledgments
       </h2>
       <p>
-        Thanks to Addison Phillips, Anne Van Kesteren, Anssi Kostiainen,
-        Anton Vayvod, Chris Needham, Christine Runnegar, Daniel Davis,
-        Domenic Denicola, Erik Wilde, François Daoust, 闵洪波 (Hongbo Min),
-        Hongki CHA, Hubert Sablonnière, Hyojin Song, Hyun June Kim,
-        Jean-Claude Dufourd, Joanmarie Diggs, Jonas Sicking, Louay Bassbouss,
-        Mark Watson, Martin Dürst, Matt Hammond, Mike West, Mounir Lamouri,
-        Nick Doty, Oleg Beletski, Philip Jägenstedt, Richard Ishida,
-        Shih-Chiang Chien, Takeshi Kanai, Tobie Langel, Tomoyuki Shimizu,
-        Travis Leithead, and Wayne Carr for help with editing, reviews and
-        feedback to this draft.
+        Thanks to Addison Phillips, Anne Van Kesteren, Anssi Kostiainen, Anton
+        Vayvod, Chris Needham, Christine Runnegar, Daniel Davis, Domenic
+        Denicola, Erik Wilde, François Daoust, 闵洪波 (Hongbo Min), Hongki CHA,
+        Hubert Sablonnière, Hyojin Song, Hyun June Kim, Jean-Claude Dufourd,
+        Joanmarie Diggs, Jonas Sicking, Louay Bassbouss, Mark Watson, Martin
+        Dürst, Matt Hammond, Mike West, Mounir Lamouri, Nick Doty, Oleg
+        Beletski, Philip Jägenstedt, Richard Ishida, Shih-Chiang Chien, Takeshi
+        Kanai, Tobie Langel, Tomoyuki Shimizu, Travis Leithead, and Wayne Carr
+        for help with editing, reviews and feedback to this draft.
       </p>
     </section>
     <section class="appendix">
