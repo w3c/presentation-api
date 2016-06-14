@@ -684,8 +684,8 @@
     list.connections.map(function (connection) {
       addConnection(connection);
     });
-    list.onconnectionavailable = function (connections) {
-      addConnection(connections[connections.length - 1]);
+    list.onconnectionavailable = function (evt) {
+      addConnection(evt.connection);
     };
   });
 &lt;/script&gt;
