@@ -929,8 +929,8 @@
           Interface <a><code>PresentationRequest</code></a>
         </h3>
         <pre class="idl">
-          [Constructor(DOMString url)]
-          [Constructor(DOMString[] urls)]
+          [Constructor(DOMString url),
+           Constructor(DOMString[] urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
             Promise&lt;PresentationConnection&gt; reconnect(DOMString presentationId);
@@ -980,9 +980,8 @@
             </dd>
           </dl>
           <ol>
-            <li>If the constructor that take a single <var>url</var> was
-            invoked, let <var>urls</var> be a one item list with <var>url</var>
-            as its only member.
+            <li>If a single <var>url</var> was provided, let <var>urls</var> be
+            a one item array containing <var>url</var>.
             </li>
             <li>Let <var>presentationUrls</var> be an empty list of URLs.
             </li>
@@ -998,8 +997,8 @@
               </ol>
             </li>
             <li>Construct a new <code>PresentationRequest</code> object with
-            <var>presentationUrls</var> as the constructor argument and return
-            it.
+            <var>presentationUrls</var> as its <a>presentation request URLs</a>
+            and return it.
             </li>
           </ol>
         </section>
