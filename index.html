@@ -519,7 +519,7 @@
   var presentBtn = document.getElementById("presentBtn");
   // It is also possible to use relative presentation URL e.g. "presentation.html"
   var presUrls = ["http://example.com/presentation.html",
-                  "http://another.com/alternate.html"];
+                  "http://example.net/alternate.html"];
   // show or hide present button depending on display availability
   var handleAvailabilityChange = function(available) {
     presentBtn.style.display = available ? "inline" : "none";
@@ -854,16 +854,16 @@
             If set by the <a>controller</a>, the value of the <a for=
             "Presentation">defaultRequest</a> attribute SHOULD be used by the
             <a>controlling user agent</a> as the <dfn>default presentation
-            request</dfn> for that <a>controlling browsing context</a>.  If the
-            the document object's <a>active sandboxing flag set</a> has
-            the <a>sandboxed presentation browsing context flag</a> set,
-            the <a>controlling user agent</a> SHOULD act as if the default
-            request is not set for that browsing context.  When
-            the <a>controlling user agent</a> wishes to initiate a
-            <a>PresentationConnection</a> on the behalf of that browsing
-            context, it MUST <a>start a presentation</a> using the <a>default
-            presentation request</a> for the <a>controller</a> (as if the
-            controller had called <code>defaultRequest.start()</code>).
+            request</dfn> for that <a>controlling browsing context</a>. If the
+            the document object's <a>active sandboxing flag set</a> has the
+            <a>sandboxed presentation browsing context flag</a> set, the
+            <a>controlling user agent</a> SHOULD act as if the default request
+            is not set for that browsing context. When the <a>controlling user
+            agent</a> wishes to initiate a <a>PresentationConnection</a> on the
+            behalf of that browsing context, it MUST <a>start a
+            presentation</a> using the <a>default presentation request</a> for
+            the <a>controller</a> (as if the controller had called
+            <code>defaultRequest.start()</code>).
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
@@ -929,6 +929,7 @@
           Interface <a><code>PresentationRequest</code></a>
         </h3>
         <pre class="idl">
+          [Constructor(DOMString url)]
           [Constructor(DOMString[] urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
@@ -968,7 +969,8 @@
               Input
             </dt>
             <dd>
-              <var>urls</var>, the list of <a>presentation request URLs</a>
+              <var>url</var> or <var>urls</var>, the <a>presentation request
+              URLs</a>
             </dd>
             <dt>
               Output
@@ -978,13 +980,17 @@
             </dd>
           </dl>
           <ol>
+            <li>If the constructor that take a single <var>url</var> was
+            invoked, let <var>urls</var> be a one item list with <var>url</var>
+            as its only member.
+            </li>
             <li>Let <var>presentationUrls</var> be an empty list of URLs.
             </li>
-            <li>For each URL <var>url</var> in <var>urls</var>:
+            <li>For each URL <var>U</var> in <var>urls</var>:
               <ol>
-                <li>Resolve <var>url</var> relative to the API base URL
-                specified by the entry <a>settings object</a>, and add the
-                resulting absolute URL (if any) to <var>presentationUrls</var>.
+                <li>Resolve <var>U</var> relative to the API base URL specified
+                by the entry <a>settings object</a>, and add the resulting
+                absolute URL (if any) to <var>presentationUrls</var>.
                 </li>
                 <li>If the resolve a URL algorithm failed, then <a>throw</a> a
                 <a>SyntaxError</a> exception and abort all remaining steps.
@@ -1101,15 +1107,10 @@
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
               I</var>.
             </li>
-            <li>For each <var>presentationUrl</var> in
-            <var>presentationUrls</var> in order, run the following step:
-              <ol>
-                <li>If there is an entry <var>(presentationUrl, D)</var> in the
-                <a>list of available presentation displays</a>, then set the
-                <a>presentation URL</a> for <var>S</var> to
-                <var>presentationUrl</var> and stop iterating.
-                </li>
-              </ol>
+            <li>Set the <a>presentation URL</a> for <var>S</var> to the first
+            <var>presentationUrl</var> in <var>presentationUrls</var> for which
+            there exists an entry <var>(presentationUrl, D)</var> in the
+            <a>list of available presentation displays</a>.
             </li>
             <li>Set the <a>presentation connection state</a> of <var>S</var> to
             <a for="PresentationConnectionState">connecting</a>.
@@ -1540,7 +1541,7 @@
                 </li>
                 <li>
                   <code>true</code> if there is at least one <a>compatible
-                  presentation display</a> for some member of of
+                  presentation display</a> for some member of
                   <var>presentationUrls</var>. That is, there is an entry
                   <var>(presentationUrl, display)</var> in the <a>list of
                   available presentation displays</a> for some
@@ -1791,8 +1792,8 @@
             When the <code>terminate()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>receiving
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
-            to <a>terminate a presentation in a receiving browsing
-            context</a> using <var>S</var>.
+            to <a>terminate a presentation in a receiving browsing context</a>
+            using <var>S</var>.
           </p>
           <p>
             When a <a>PresentationConnection</a> object is created, its
