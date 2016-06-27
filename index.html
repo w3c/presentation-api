@@ -518,14 +518,15 @@
   // The Present button is visible if at least one presentation display is available
   var presentBtn = document.getElementById("presentBtn");
   // It is also possible to use relative presentation URL e.g. "presentation.html"
-  var presUrl = "http://example.com/presentation.html";
+  var presUrls = ["http://example.com/presentation.html",
+                  "http://example.net/alternate.html"];
   // show or hide present button depending on display availability
   var handleAvailabilityChange = function(available) {
     presentBtn.style.display = available ? "inline" : "none";
   };
   // Promise is resolved as soon as the presentation display availability is
   // known.
-  var request = new PresentationRequest(presUrl);
+  var request = new PresentationRequest(presUrls);
   request.getAvailability().then(function(availability) {
     // availability.value may be kept up-to-date by the controlling UA as long
     // as the availability object is alive. It is advised for the web developers
@@ -598,7 +599,7 @@
      PresentationRequest to use when the controlling UA initiates a
      presentation. --&gt;
 &lt;script&gt;
-  navigator.presentation.defaultRequest = new PresentationRequest(defaultUrl);
+  navigator.presentation.defaultRequest = new PresentationRequest(presUrls);
   navigator.presentation.defaultRequest.onconnectionavailable = function(evt) {
     setConnection(evt.connection);
   };
@@ -669,7 +670,7 @@
           Monitor available connection(s) and say hello
         </h3>
         <pre class="example highlight">
-&lt;!-- receiver.html --&gt;
+&lt;!-- presentation.html --&gt;
 &lt;script&gt;
   var addConnection = function(connection) {
     connection.onconnect = function () {
@@ -704,7 +705,7 @@
   connection.send("{string: 'Hello, world!', lang: 'en-US'}");
 &lt;/script&gt;
 
-&lt;!-- receiver.html --&gt;
+&lt;!-- presentation.html --&gt;
 &lt;script&gt;
   connection.onmessage = function (message) {
     var messageObj = JSON.parse(message);
@@ -853,16 +854,16 @@
             If set by the <a>controller</a>, the value of the <a for=
             "Presentation">defaultRequest</a> attribute SHOULD be used by the
             <a>controlling user agent</a> as the <dfn>default presentation
-            request</dfn> for that <a>controlling browsing context</a>.  If the
-            the document object's <a>active sandboxing flag set</a> has
-            the <a>sandboxed presentation browsing context flag</a> set,
-            the <a>controlling user agent</a> SHOULD act as if the default
-            request is not set for that browsing context.  When
-            the <a>controlling user agent</a> wishes to initiate a
-            <a>PresentationConnection</a> on the behalf of that browsing
-            context, it MUST <a>start a presentation</a> using the <a>default
-            presentation request</a> for the <a>controller</a> (as if the
-            controller had called <code>defaultRequest.start()</code>).
+            request</dfn> for that <a>controlling browsing context</a>. If the
+            the document object's <a>active sandboxing flag set</a> has the
+            <a>sandboxed presentation browsing context flag</a> set, the
+            <a>controlling user agent</a> SHOULD act as if the default request
+            is not set for that browsing context. When the <a>controlling user
+            agent</a> wishes to initiate a <a>PresentationConnection</a> on the
+            behalf of that browsing context, it MUST <a>start a
+            presentation</a> using the <a>default presentation request</a> for
+            the <a>controller</a> (as if the controller had called
+            <code>defaultRequest.start()</code>).
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
@@ -928,7 +929,8 @@
           Interface <a><code>PresentationRequest</code></a>
         </h3>
         <pre class="idl">
-          [Constructor(DOMString url)]
+          [Constructor(DOMString url),
+           Constructor(DOMString[] urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
             Promise&lt;PresentationConnection&gt; reconnect(DOMString presentationId);
@@ -949,8 +951,9 @@
         </p>
         <p>
           When a <a><code>PresentationRequest</code></a> is constructed, the
-          given <code>url</code> MUST be used as the <dfn>presentation request
-          URL</dfn> which is the <a>presentation URL</a> for the
+          given <code>urls</code> MUST be used as the list of <dfn data-lt=
+          "presentation request URL">presentation request URLs</dfn> which are
+          each a possible <a>presentation URL</a> for the
           <a><code>PresentationRequest</code></a> instance.
         </p>
         <section>
@@ -966,7 +969,8 @@
               Input
             </dt>
             <dd>
-              <var>url</var>, the <a>presentation request URL</a>
+              <var>url</var> or <var>urls</var>, the <a>presentation request
+              URLs</a>
             </dd>
             <dt>
               Output
@@ -976,16 +980,25 @@
             </dd>
           </dl>
           <ol>
-            <li>Resolve <var>url</var> relative to the API base URL specified
-            by the entry <a>settings object</a>, and let
-            <var>presentationUrl</var> be the resulting absolute URL, if any.
+            <li>If a single <var>url</var> was provided, let <var>urls</var> be
+            a one item array containing <var>url</var>.
             </li>
-            <li>If the resolve a URL algorithm failed, then <a>throw</a> a <a>
-              SyntaxError</a> exception and abort the remaining steps.
+            <li>Let <var>presentationUrls</var> be an empty list of URLs.
+            </li>
+            <li>For each URL <var>U</var> in <var>urls</var>:
+              <ol>
+                <li>Resolve <var>U</var> relative to the API base URL specified
+                by the entry <a>settings object</a>, and add the resulting
+                absolute URL (if any) to <var>presentationUrls</var>.
+                </li>
+                <li>If the resolve a URL algorithm failed, then <a>throw</a> a
+                <a>SyntaxError</a> exception and abort all remaining steps.
+                </li>
+              </ol>
             </li>
             <li>Construct a new <code>PresentationRequest</code> object with
-            <var>presentationUrl</var> as the constructor argument and return
-            it.
+            <var>presentationUrls</var> as its <a>presentation request URLs</a>
+            and return it.
             </li>
           </ol>
         </section>
@@ -1007,7 +1020,7 @@
               <code>PresentationRequest</code> object
             </dd>
             <dd>
-              <var>presentationUrl</var>, the <a>presentation request URL</a>
+              <var>presentationUrls</var>, the <a>presentation request URLs</a>
             </dd>
             <dt>
               Output
@@ -1061,7 +1074,7 @@
                 </li>
                 <li>No member in the <a>list of available presentation
                 displays</a> is a <a>compatible presentation display</a> for
-                <var>presentationUrl</var>.
+                any member of <var>presentationUrls</var>.
                 </li>
               </ol>Then run the following steps:
               <ol>
@@ -1093,8 +1106,10 @@
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
               I</var>.
             </li>
-            <li>Set the <a>presentation URL</a> of <var>S</var> to
-            <var>presentationUrl</var>.
+            <li>Set the <a>presentation URL</a> for <var>S</var> to the first
+            <var>presentationUrl</var> in <var>presentationUrls</var> for which
+            there exists an entry <var>(presentationUrl, D)</var> in the
+            <a>list of available presentation displays</a>.
             </li>
             <li>Set the <a>presentation connection state</a> of <var>S</var> to
             <a for="PresentationConnectionState">connecting</a>.
@@ -1200,8 +1215,8 @@
             its <a>controlling browsing context</a> is the current <a>browsing
             context</a>, its <a>presentation connection state</a> is not
               <a for="PresentationConnectionState">terminated</a>, its
-              <a>presentation URL</a> is equal to the <a>presentation request
-              URL</a> of <var>presentationRequest</var>, and its
+              <a>presentation URL</a> is equal to one of the <a>presentation
+              request URLs</a> of <var>presentationRequest</var>, and its
               <a>presentation identifier</a> is equal to
               <var>presentationId</var>.
             </li>
@@ -1233,11 +1248,12 @@
             <a>PresentationConnection</a> that meets the following criteria:
             its <a>presentation connection state</a> is not <a for=
             "PresentationConnectionState">terminated</a>, its <a>presentation
-            URL</a> is equal to the <a>presentation request URL</a> of
+            URL</a> is equal to one of the <a>presentation request URLs</a> of
             <var>presentationRequest</var>, and its <a>presentation
             identifier</a> is equal to <var>presentationId</var>.
             </li>
-            <li>If such a <a>PresentationConnection</a> exists, run the
+            <li>If such a <a>PresentationConnection</a> exists, let
+            <var>E</var> be that <a>PresentationConnection</a>, and run the
             following steps:
               <ol>
                 <li>Create a new <a>PresentationConnection</a> <var>S</var>.
@@ -1246,8 +1262,7 @@
                 <var>presentationId</var>.
                 </li>
                 <li>Set the <a>presentation URL</a> of <var>S</var> to the <a>
-                  presentation request URL</a> of
-                  <var>presentationRequest</var>.
+                  presentation URL</a> of <var>E</var>.
                 </li>
                 <li>Set the <a>presentation connection state</a> of
                 <var>S</var> to <a for=
@@ -1358,7 +1373,7 @@
             availability objects</dfn> requested through the <code><a for=
             "PresentationRequest">getAvailability</a>()</code> method. The
             <a>set of availability objects</a> is represented as a set of
-            tuples <em>(<var>A</var>, <var>availabilityUrl</var>)</em>,
+            tuples <em>(<var>A</var>, <var>availabilityUrl[]</var>)</em>,
             initially empty, where:
           </p>
           <ol>
@@ -1366,8 +1381,8 @@
               <var>A</var> is a live <a>PresentationAvailability</a> object;
             </li>
             <li>
-              <var>availabilityUrl</var> is the <a>presentation request URL</a>
-              when <code><a for=
+              <var>availabilityUrl[]</var> is the list of <a>presentation
+              request URLs</a> when <code><a for=
               "PresentationRequest">getAvailability</a>()</code> is called to
               create <var>A</var>.
             </li>
@@ -1379,7 +1394,12 @@
           </h4>
           <p>
             The <a>user agent</a> MUST keep a <dfn>list of available
-            presentation displays</dfn>. This current list of <a>presentation
+            presentation displays</dfn>. The <a>list of available presentation
+            displays</a> is represented by a list of tuples
+            <var>(availabilityUrl, display)</var>. An entry in this list means
+            that <var>display</var> is curently available to start a
+            presentation and is a <a>compatible presentation display</a> for
+            <var>availabilityUrl</var>. This list of <a>presentation
             displays</a> may be used for starting new presentations, and is
             populated based on an implementation specific discovery mechanism.
             It is set to the most recent result of the algorithm to <a>monitor
@@ -1438,7 +1458,8 @@
               Input
             </dt>
             <dd>
-              <var>presentationUrl</var>, the <a>presentation request URL</a>
+              <var>presentationUrls</var>, a list of <a>presentation request
+              URLs</a>
             </dd>
             <dt>
               Output
@@ -1500,7 +1521,7 @@
               </ol>
             </li>
             <li>If there exists a tuple <em>(<var>A</var>,
-            <var>presentationUrl</var>)</em> in the <a>set of availability
+            <var>presentationUrls</var>)</em> in the <a>set of availability
             objects</a>, then:
               <ol>
                 <li>
@@ -1511,13 +1532,27 @@
               </ol>
             </li>
             <li>Let <var>A</var> be a new <code>PresentationAvailability</code>
-            object with its <code>value</code> property set to
-            <code>false</code> if the <a>list of available presentation
-            displays</a> is empty or none of them is a <a>compatible
-            presentation display</a>, <code>true</code> otherwise.
+            object with its <code>value</code> property set as follows:
+              <ol>
+                <li>
+                  <code>false</code> if the <a>list of available presentation
+                  displays</a> is empty.
+                </li>
+                <li>
+                  <code>true</code> if there is at least one <a>compatible
+                  presentation display</a> for some member of
+                  <var>presentationUrls</var>. That is, there is an entry
+                  <var>(presentationUrl, display)</var> in the <a>list of
+                  available presentation displays</a> for some
+                  <var>presentationUrl</var> in <var>presentationUrls</var>.
+                </li>
+                <li>
+                  <code>false</code> otherwise.
+                </li>
+              </ol>
             </li>
             <li>Create a tuple <em>(<var>A</var>,
-            <var>presentationUrl</var>)</em> and add it to the <a>set of
+            <var>presentationUrls</var>)</em> and add it to the <a>set of
             availability objects</a>.
             </li>
             <li>Run the algorithm to <a>monitor the list of available
@@ -1540,22 +1575,41 @@
             running the following steps.
           </p>
           <ol link-for="PresentationAvailability">
+            <li>Set the <a>list of available presentation displays</a> to the
+            empty list.
+            </li>
             <li>Retrieve available presentation displays (using an
             implementation specific mechanism) and let <var>newDisplays</var>
             be this list.
             </li>
             <li>For each member <em>(<var>A</var>,
-            <var>availabilityUrl</var>)</em> of the <a>set of availability
-            objects</a>:
+            <var>availabilityUrls</var>)</em> of the <a>set of availability
+            objects</a>, run the following steps:
               <ol>
                 <li>Set <var>previousAvailability</var> to the value of
                 <var>A</var>'s <a>value</a> property.
                 </li>
-                <li>Let <var>newAvailability</var> be <code>true</code> if
-                <var>newDisplays</var> is not empty and at least one display in
-                <var>newDisplays</var> is a <a>compatible presentation
-                display</a> for <var>availabilityUrl</var>. Otherwise, set
-                <var>newAvailability</var> to <code>false</code>.
+                <li>Let <var>newAvailability</var> be <code>false</code>.
+                </li>
+                <li>For each <var>availabilityUrl</var> in
+                <var>availabilityUrls</var>, run the following step:
+                  <ol>
+                    <li>For each <var>display</var> in <var>newDisplays</var>,
+                    if <var>display</var> is a <a>compatible presentation
+                    display</a> for <var>availabilityUrl</var>, then run the
+                    following steps:
+                      <ol>
+                        <li>Insert a tuple <var>(availabilityUrl,
+                        display)</var> into the <a>list of available
+                        presentation displays</a>, if no identical tuple
+                        already exists.
+                        </li>
+                        <li>Set <var>newAvailability</var> to
+                        <code>true</code>.
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
                 </li>
                 <li>If <var>previousAvailability</var> is not equal to
                 <var>newAvailability</var>, then <a>queue a task</a> to run the
@@ -1572,9 +1626,6 @@
                 </li>
               </ol>
             </li>
-            <li>Set the <a>list of available presentation displays</a> to the
-            value of <var>newDisplays</var>.
-            </li>
           </ol>
           <p>
             When a <a>PresentationAvailability</a> object is no longer alive
@@ -1590,7 +1641,8 @@
             there is no pending request to <a for="PresentationRequest"
               data-lt="start">start a presentation</a>, cancel any pending task
               to <a>monitor the list of available presentation displays</a> for
-              power saving purposes.
+              power saving purposes, and set the <a>list of available
+              presentation displays</a> to the empty list.
             </li>
           </ol>
           <div class="note">
@@ -1661,6 +1713,7 @@
 
           interface PresentationConnection : EventTarget {
             readonly attribute DOMString? id;
+            readonly attribute DOMString url;
             readonly attribute PresentationConnectionState state;
             void close();
             void terminate();
@@ -1683,6 +1736,10 @@
           <p>
             The <dfn><code>id</code></dfn> attribute specifies the
             <a>presentation connection</a>'s <a>presentation identifier</a>.
+          </p>
+          <p>
+            The <dfn><code>url</code></dfn> attribute specifies the
+            <a>presentation connection</a>'s <a>presentation URL</a>.
           </p>
           <p>
             The <dfn><code>state</code></dfn> attribute represents the
@@ -1734,8 +1791,8 @@
             When the <code>terminate()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>receiving
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
-            to <a>terminate a presentation in a receiving browsing
-            context</a> using <var>S</var>.
+            to <a>terminate a presentation in a receiving browsing context</a>
+            using <var>S</var>.
           </p>
           <p>
             When a <a>PresentationConnection</a> object is created, its
@@ -2473,7 +2530,8 @@
               <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
             </li>
             <li>Start <a>monitoring incoming presentation connections</a> for
-            <var>C</var> with <var>presentationId</var>.
+            <var>C</var> with <var>presentationId</var> and
+            <var>presentationUrl</var>.
             </li>
           </ol>
           <p>
@@ -2500,11 +2558,11 @@
             reflect the user's preferences.
           </p>
           <p class="note">
-            Given the operating context of the <a>presentation display</a>, some
-            APIs will not work by design (for example, by requiring user input)
-            or will be obsolete (for example, by attempting window management);
-            the <a>receiving user agent</a> should be aware of this.
-            Furthermore, any modal user interface will need to be handled
+            Given the operating context of the <a>presentation display</a>,
+            some APIs will not work by design (for example, by requiring user
+            input) or will be obsolete (for example, by attempting window
+            management); the <a>receiving user agent</a> should be aware of
+            this. Furthermore, any modal user interface will need to be handled
             carefully.
           </p>
         </section>
@@ -2554,6 +2612,11 @@
               used to <a data-lt="create a receiving browsing context">create
               the receiving browsing context</a>.
             </dd>
+            <dd>
+              <var>presentationUrl</var>, the <a>presentation request URL</a>
+              used to <a data-lt="create a receiving browsing context">create
+              the receiving browsing context</a>.
+            </dd>
           </dl>
           <ol>
             <li>If <var>presentationId</var> and <var>I</var> are not equal,
@@ -2563,6 +2626,9 @@
             </li>
             <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
               I</var>.
+            </li>
+            <li>Set the <a>presentation URL</a> of <var>S</var> to
+            <var>presentationUrl</var>.
             </li>
             <li>Establish the connection between the controlling and
             <a>receiving browsing contexts</a> using an implementation specific
