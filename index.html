@@ -2557,9 +2557,10 @@
             </li>
           </ol>
           <p>
-            The <a>receiving browsing context</a> and the other <a>browsing
-            context</a> must not expose any associated <a>window clients</a>
-            and <a>worker clients</a> to each other's <a>service workers</a>.
+            <a>Window clients</a> and <a>worker clients</a> associated with the
+            <a>receiving browsing context</a> and the other <a>browsing
+            context</a> must not be exposed to <a>service workers</a>
+            associated with each other.
           </p>
           <p>
             When the <a>receiving browsing context</a> is closed, any
