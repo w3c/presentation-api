@@ -487,6 +487,23 @@
         [[!MIXED-CONTENT]].
       </p>
       <p>
+        The terms <dfn data-lt="service worker|service workers"><a href=
+        "https://slightlyoff.github.io/ServiceWorker/spec/service_worker/#dfn-service-worker">
+        service worker</a></dfn>, <dfn data-lt=
+        "a list of registered service worker registrations|list of registered service worker registrations">
+        <a href=
+        "https://slightlyoff.github.io/ServiceWorker/spec/service_worker/#service-worker-registration-lifetime">
+        a list of registered service worker registrations</a></dfn>,
+        <dfn><a href=
+        "https://slightlyoff.github.io/ServiceWorker/spec/service_worker/#cache-objects">
+        caches</a></dfn>, <dfn data-lt="window client|window clients"><a href=
+        "https://slightlyoff.github.io/ServiceWorker/spec/service_worker/#dfn-window-client">
+        window client</a></dfn> and <dfn data-lt=
+        "worker client|worker clients"><a href=
+        "https://slightlyoff.github.io/ServiceWorker/spec/service_worker/#dfn-worker-client">
+        worker client</a></dfn> are defined in [[!SERVICE-WORKERS]].
+      </p>
+      <p>
         The term <dfn><a href="http://www.dial-multiscreen.org/">DIAL</a></dfn>
         is defined in [[DIAL]].
       </p>
@@ -2526,6 +2543,11 @@
             create a new empty storage for <a>session storage areas</a> and <a>
               local storage areas</a> for <var>C</var>.
             </li>
+            <li>If the <a>receiving user agent</a> implements
+            [[!SERVICE-WORKERS]], create a new empty <a>list of registered
+            service worker registrations</a> and a new empty <a>caches</a> for
+            <var>C</var>.
+            </li>
             <li>
               <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
             </li>
@@ -2535,13 +2557,21 @@
             </li>
           </ol>
           <p>
+            <a>Window clients</a> and <a>worker clients</a> associated with the
+            <a>receiving browsing context</a> and the other <a>browsing
+            context</a> must not be exposed to <a>service workers</a>
+            associated with each other.
+          </p>
+          <p>
             When the <a>receiving browsing context</a> is closed, any
-            associated browsing state, including <a>session history</a>, the
-            <a>cookie store</a>, any <a>HTTP authentication</a> state, the
-            <a>application cache</a>, any <a>databases</a>, the <a>session
-            storage areas</a>, and the <a>local storage areas</a> MUST be
-            discarded and not used for any other <a>receiving browsing
-            context</a>.
+            associated <a>service workers</a> MUST be unregistered and
+            terminated, and any associated browsing state, including <a>session
+            history</a>, the <a>cookie store</a>, any <a>HTTP
+            authentication</a> state, the <a>application cache</a>, any
+            <a>databases</a>, the <a>session storage areas</a>, the <a>local
+            storage areas</a>, the <a>list of registered service worker
+            registrations</a> and the <a>caches</a> MUST be discarded and not
+            used for any other <a>receiving browsing context</a>.
           </p>
           <p class="note">
             This algorithm is intended to create a well defined environment to
