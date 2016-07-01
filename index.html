@@ -28,7 +28,7 @@
           }
         ],
         previousMaturity: 'WD',
-        previousPublishDate: '2015-07-01',
+        previousPublishDate: '2016-05-10',
         otherLinks: [
           {
             key: 'Version history',
@@ -108,6 +108,8 @@
             ]
           }
         },
+        crEnd: '2016-09-12',
+        implementationReportURI: 'https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests'
       };
     </script>
     <style>
@@ -151,33 +153,34 @@
     <section id="sotd">
       <p>
         Since publication as Working Draft on <a href=
-        "https://www.w3.org/TR/2016/WD-presentation-api-20160211/">11 February
-        2016</a>, the Working Group has further refined some of the procedures,
-        notably those linked to the receiving user agent, specified the
-        algorithm for generating a presentation identifier, clarified the
-        expected behavior when a presentation is started using the default
-        presentation request, added recommendations for reusing the locale
-        settings of the controller in presentations, and further refined text
-        to ease testing. The Working Group also conducted horizontal reviews on
-        accessibility, internationalization, privacy, security and technical
-        architecture principles with the help of relevant groups at W3C.
+        "http://www.w3.org/TR/2016/WD-presentation-api-20160510/">10 May
+        2016</a>, the Working Group has added a new URL fallback mechanism for
+        requests to initiate or reconnect to a presentation, re-written the
+        algorithm to create a receiving browsing context, clarified
+        interactions between iframes and the sandboxing flag, and resolved to
+        postpone new features currently mentioned in the <a href=
+        "https://github.com/w3c/presentation-api/issues">group's issue
+        tracker</a> to a possible future version. The Working Group also made
+        further progress on the test suite.
       </p>
       <p>
-        The Working Group intends to publish a Candidate Recommendation once it
-        has fixed <a href=
-        "https://github.com/w3c/presentation-api/issues">remaining issues</a>
-        and made initial progress on the test suite. Wide reviews of this
-        document are encouraged.
+        No feature has been identified as being <strong>at risk</strong>.
+        However, the working group notes that it expects the definitions in the
+        <a href="#sandboxing-and-the-allow-presentation-keyword"></a> section
+        to be integrated in HTML (see <a href=
+        "https://github.com/w3c/html/issues/437">issue #437</a> in the Web
+        Platform Working Group issue tracker) and dropped from this
+        specification.
       </p>
       <p>
         The Second Screen Presentation Working Group will complete the <a href=
         "http://w3c-test.org/presentation-api/">test suite</a> for the
-        Presentation API during the Candidate Recommendation period and prepare
-        an <a href=
-        "https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests">implementation
-        report</a>. For this specification to advance to Proposed
-        Recommendation, two independent, interoperable implementations of each
-        feature must be demonstrated, as detailed in the <a href=
+        Presentation API during the Candidate Recommendation period and update
+        the <a href=
+        "https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests">preliminary
+        implementation report</a>. For this specification to advance to
+        Proposed Recommendation, two independent, interoperable implementations
+        of each feature must be demonstrated, as detailed in the <a href=
         "#h-cr-exit-criteria">CR exit criteria</a> section.
       </p>
     </section>
