@@ -891,13 +891,12 @@
             the document object's <a>active sandboxing flag set</a> has the
             <a>sandboxed presentation browsing context flag</a> set, the
             <a>controlling user agent</a> SHOULD consider the <a>default
-            presentation request</a> for that browsing context to
-            be <code>null</code>.  When the <a>controlling user agent</a> wishes
-            to initiate a <a>PresentationConnection</a> on the behalf of that
-            browsing context, it MUST <a>start a presentation</a> using
-            the <a>default presentation request</a> for the <a>controller</a>
-            (as if the controller had called
-            <code>defaultRequest.start()</code>).
+            presentation request</a> for that browsing context to be
+            <code>null</code>. When the <a>controlling user agent</a> wishes to
+            initiate a <a>PresentationConnection</a> on the behalf of that
+            browsing context, it MUST <a>start a presentation</a> using the
+            <a>default presentation request</a> for the <a>controller</a> (as
+            if the controller had called <code>defaultRequest.start()</code>).
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
@@ -964,7 +963,7 @@
         </h3>
         <pre class="idl">
           [Constructor(DOMString url),
-           Constructor(sequence<DOMString> urls)]
+           Constructor(sequence&lt;DOMString&gt; urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
             Promise&lt;PresentationConnection&gt; reconnect(DOMString presentationId);
@@ -1014,9 +1013,8 @@
             </dd>
           </dl>
           <ol>
-            <li>
-              If <var>urls</var> is an empty sequence, then <a>throw</a> a <a>NotSupportedError</a>
-              and abort all remaining steps.
+            <li>If <var>urls</var> is an empty sequence, then <a>throw</a> a
+            <a>NotSupportedError</a> and abort all remaining steps.
             </li>
             <li>If a single <var>url</var> was provided, let <var>urls</var> be
             a one item array containing <var>url</var>.
