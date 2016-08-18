@@ -890,13 +890,13 @@
             request</dfn> for that <a>controlling browsing context</a>. If the
             the document object's <a>active sandboxing flag set</a> has the
             <a>sandboxed presentation browsing context flag</a> set, the
-            <a>controlling user agent</a> SHOULD act as if the default request
-            is not set for that browsing context. When the <a>controlling user
-            agent</a> wishes to initiate a <a>PresentationConnection</a> on the
-            behalf of that browsing context, it MUST <a>start a
-            presentation</a> using the <a>default presentation request</a> for
-            the <a>controller</a> (as if the controller had called
-            <code>defaultRequest.start()</code>).
+            <a>controlling user agent</a> SHOULD consider the <a>default
+            presentation request</a> for that browsing context to be
+            <code>null</code>. When the <a>controlling user agent</a> wishes to
+            initiate a <a>PresentationConnection</a> on the behalf of that
+            browsing context, it MUST <a>start a presentation</a> using the
+            <a>default presentation request</a> for the <a>controller</a> (as
+            if the controller had called <code>defaultRequest.start()</code>).
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
@@ -963,7 +963,7 @@
         </h3>
         <pre class="idl">
           [Constructor(DOMString url),
-           Constructor(DOMString[] urls)]
+           Constructor(sequence&lt;DOMString&gt; urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
             Promise&lt;PresentationConnection&gt; reconnect(DOMString presentationId);
@@ -1013,6 +1013,9 @@
             </dd>
           </dl>
           <ol>
+            <li>If <var>urls</var> is an empty sequence, then <a>throw</a> a
+            <a>NotSupportedError</a> and abort all remaining steps.
+            </li>
             <li>If a single <var>url</var> was provided, let <var>urls</var> be
             a one item array containing <var>url</var>.
             </li>
@@ -2100,18 +2103,18 @@
         </section>
         <section>
           <h4>
-            Interface <code>PresentationConnectionClosedEvent</code>
+            Interface <code>PresentationConnectionCloseEvent</code>
           </h4>
           <pre class="idl">
             enum PresentationConnectionClosedReason { "error", "closed", "wentaway" };
 
-            [Constructor(DOMString type, PresentationConnectionClosedEventInit eventInitDict)]
-            interface PresentationConnectionClosedEvent : Event {
+            [Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict)]
+            interface PresentationConnectionCloseEvent : Event {
               readonly attribute PresentationConnectionClosedReason reason;
               readonly attribute DOMString message;
             };
 
-            dictionary PresentationConnectionClosedEventInit : EventInit {
+            dictionary PresentationConnectionCloseEventInit : EventInit {
               required PresentationConnectionClosedReason reason;
               DOMString message = "";
             };
@@ -2119,7 +2122,7 @@
 
 </pre>
           <p>
-            A <code>PresentationConnectionClosedEvent</code> is fired when a
+            A <code>PresentationConnectionCloseEvent</code> is fired when a
             <a>presentation connection</a> enters a <a for=
             "PresentationConnectionState">closed</a> state. The
             <code>reason</code> attribute provides the reason why the
@@ -2249,10 +2252,10 @@
                 <li>
                   <a>Fire</a> a <a>trusted event</a> with the name <a for=
                   "PresentationConnectionEvent">close</a>, that uses the
-                  <a>PresentationConnectionClosedEvent</a> interface, with the
-                  <a for="PresentationConnectionClosedEvent">reason</a>
+                  <a>PresentationConnectionCloseEvent</a> interface, with the
+                  <a for="PresentationConnectionCloseEvent">reason</a>
                   attribute initialized to <var>closeReason</var> and the
-                  <a for="PresentationConnectionClosedEvent">message</a>
+                  <a for="PresentationConnectionCloseEvent">message</a>
                   attribute initialized to <var>closeMessage</var>, at
                   <var>presentationConnection</var>. The event must not bubble,
                   must not be cancelable, and has no default action.
