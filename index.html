@@ -1074,9 +1074,10 @@
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
-            Security Contexts"</code> and <var>presentationUrl</var> is an <a>
-              a priori unauthenticated URL</a>, then return a <a>Promise</a>
-              rejected with a <a>SecurityError</a> and abort these steps.
+            Security Contexts"</code> and any member of
+            <var>presentationUrls</var> is an <a>a priori unauthenticated
+            URL</a>, then return a <a>Promise</a> rejected with a
+            <a>SecurityError</a> and abort these steps.
             </li>
             <li>If the document object's <a>active sandboxing flag set</a> has
             the <a>sandboxed presentation browsing context flag</a> set, then
@@ -1509,9 +1510,9 @@
               <ul>
                 <li>The result of running the <a>prohibits mixed security
                 contexts algorithm</a> on the document's <a>settings object</a>
-                is <code>"Prohibits Mixed Security Contexts"</code> and
-                <var>presentationUrl</var> is an <a>a priori unauthenticated
-                URL</a>.
+                is <code>"Prohibits Mixed Security Contexts"</code> and any
+                member of <var>presentationUrls</var> is an <a>a priori
+                unauthenticated URL</a>.
                 </li>
                 <li>The document object's <a>active sandboxing flag set</a> has
                 the <a>sandboxed presentation browsing context flag</a> set.
