@@ -741,7 +741,7 @@
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
   connection.onmessage = function (message) {
-    var messageObj = JSON.parse(message);
+    var messageObj = JSON.parse(message.data);
     var spanElt = document.createElement("SPAN");
     spanElt.lang = messageObj.lang;
     spanElt.textContent = messageObj.string;
