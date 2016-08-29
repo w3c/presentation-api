@@ -850,7 +850,7 @@
           In a <a>controlling browsing context</a>, the <dfn>default
           presentation request</dfn>, which is initially set to
           <code>null</code>, represents the request to use when the user wishes
-          to initiate a <a>presentation connection</a> from the browser chrome.
+          to initiate a <a>presentation connection</a> from the browser.
         </p>
       </section>
       <section>
@@ -876,6 +876,10 @@
           <h4>
             Controlling user agent
           </h4>
+          <p>
+            <a data-lt="controlling user agent">Controlling user agents</a>
+            MUST implement the following partial interface:
+          </p>
           <pre class="idl idl-controlling-ua">
             partial interface Presentation {
               attribute PresentationRequest? defaultRequest;
@@ -883,19 +887,10 @@
           
 </pre>
           <p>
-            In a <a>controlling user agent</a>, the <dfn for=
-            "Presentation"><code>defaultRequest</code></dfn> attribute MUST
-            return the <a>default presentation request</a> if any,
-            <code>null</code> otherwise. On setting, the <a>default
+            The <dfn for="Presentation"><code>defaultRequest</code></dfn>
+            attribute MUST return the <a>default presentation request</a> if
+            any, <code>null</code> otherwise. On setting, the <a>default
             presentation request</a> MUST be set to the new value.
-          </p>
-          <p>
-            In a user agent that is a <a>receiving user agent</a> but not a
-            <a>controlling user agent</a>, the <a for=
-            "Presentation">defaultRequest</a> attribute MUST always return
-            <code>null</code>, and setting the <a for=
-            "Presentation">defaultRequest</a> attribute MUST be treated as a
-            no-op.
           </p>
           <p>
             The <a>controlling user agent</a> SHOULD initiate presentation
@@ -918,11 +913,11 @@
           </div>
           <p>
             Support for the initiation of a <a>presentation connection</a> from
-            the browser chrome is OPTIONAL.
+            the browser is OPTIONAL.
           </p>
           <div class="note">
             If a <a>controlling user agent</a> does not support initiation of a
-            <a>presentation connection</a> from the browser chrome, setting
+            <a>presentation connection</a> from the browser, setting
             <code>defaultRequest</code> will have no effect.
           </div>
           <div class="note">
@@ -944,6 +939,10 @@
           <h4>
             Receiving user agent
           </h4>
+          <p>
+            <a data-lt="Receiving user agent">Receiving user agents</a> MUST
+            implement the following partial interface:
+          </p>
           <pre class="idl idl-receiving-ua">
             partial interface Presentation {
               [SameObject] readonly attribute PresentationReceiver? receiver;
@@ -951,18 +950,12 @@
           
 </pre>
           <p>
-            In a <a>receiving user agent</a>, the <dfn for=
-            "Presentation"><code>receiver</code></dfn> attribute MUST return
-            the <a><code>PresentationReceiver</code></a> instance associated
-            with the <a>receiving browsing context</a> and created by the
-            <a>receiving user agent</a> when the <a>receiving browsing
+            The <dfn for="Presentation"><code>receiver</code></dfn> attribute
+            MUST return the <a><code>PresentationReceiver</code></a> instance
+            associated with the <a>receiving browsing context</a> and created
+            by the <a>receiving user agent</a> when the <a>receiving browsing
             context</a> is created. In any other <a>browsing context</a>, it
             MUST return <code>null</code>.
-          </p>
-          <p>
-            A user agent that is a <a>controlling user agent</a> but not a
-            <a>receiving user agent</a> MUST always return <code>null</code>
-            for the <a for="Presentation">receiver</a> attribute.
           </p>
         </section>
       </section>
