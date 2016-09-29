@@ -443,9 +443,11 @@
         WHATWG URL standard [[!URL]].
       </p>
       <p>
-        The term  <dfn><a href=
+        The terms <dfn><a href=
         "https://html.spec.whatwg.org/multipage/webappapis.html#concept-current-everything">
-         current settings object</a></dfn> is defined in [[HTML]].
+        current settings object</a></dfn> and <dfn><a href=
+        "https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-everything">relevant
+        settings object</a></dfn> are defined in [[HTML]].
       </p>
       <p>
         The term <dfn><a href=
@@ -1076,7 +1078,7 @@
             <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
             and abort these steps.
             </li>
-            <li>Using the document's <a>current settings object</a>, run the
+            <li>Using the document's <a>relevant settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
@@ -1244,7 +1246,7 @@
             </dd>
           </dl>
           <ol>
-            <li>Using the document's <a>current settings object</a>, run the
+            <li>Using the document's <a>relevant settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
@@ -1525,7 +1527,7 @@
             <li>If one of the following conditions is true:
               <ul>
                 <li>The result of running the <a>prohibits mixed security
-                contexts algorithm</a> on the document's <a>current settings
+                contexts algorithm</a> on the document's <a>relevant settings
                 object</a> is <code>"Prohibits Mixed Security Contexts"</code>
                 and any member of <var>presentationUrls</var> is an <a>a priori
                 unauthenticated URL</a>.
