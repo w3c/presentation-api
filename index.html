@@ -283,8 +283,10 @@
               presentations by providing a <a>controlling browsing context</a>
               as described in this specification. This context implements the
               <a><code>Presentation</code></a>,
+              <a><code>PresentationAvailability</code></a>,
               <a><code>PresentationConnection</code></a>,
-              <a><code>PresentationConnectionAvailableEvent</code></a>, and
+              <a><code>PresentationConnectionAvailableEvent</code></a>,
+              <a><code>PresentationConnectionCloseEvent</code></a>, and
               <a><code>PresentationRequest</code></a> interfaces.
             </p>
           </dd>
@@ -300,6 +302,7 @@
               <a><code>Presentation</code></a>,
               <a><code>PresentationConnection</code></a>,
               <a><code>PresentationConnectionAvailableEvent</code></a>,
+              <a><code>PresentationConnectionCloseEvent</code></a>,
               <a><code>PresentationConnectionList</code></a>, and
               <a><code>PresentationReceiver</code></a> interfaces.
             </p>
@@ -1188,19 +1191,19 @@
             selection are left to the user agent; for example it may show the
             user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
-            permission). Implementers are encouraged to show the user whether an
-            available display is currently in use, to facilitate presentations
-            that can make use of multiple displays.
+            permission). Implementers are encouraged to show the user whether
+            an available display is currently in use, to facilitate
+            presentations that can make use of multiple displays.
           </div>
           <div class="note">
             Receiving user agents are encouraged to advertise a user friendly
             name for the presentation display, e.g. &quot;Living Room TV&quot;,
-            to assist the user in selecting the intended display.  Implementers
-            of receiving user agents are also encouraged to advertise the locale
-            and intended text direction of the user friendly name.
+            to assist the user in selecting the intended display. Implementers
+            of receiving user agents are also encouraged to advertise the
+            locale and intended text direction of the user friendly name.
             Implementers of controlling user agents are encouraged to render a
-            user friendly name using its locale and text direction when they are
-            known.
+            user friendly name using its locale and text direction when they
+            are known.
           </div>
           <div class="note">
             The <var>presentationUrl</var> should name a resource accessible to
