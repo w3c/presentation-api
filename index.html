@@ -364,9 +364,7 @@
         <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">
         sandboxed top-level navigation browsing context flag</a></dfn>,
-        <dfn><a href=
-        "http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
-        object</a></dfn>, <dfn><code><a href=
+        <dfn><code><a href=
         "http://www.w3.org/TR/html5/webappapis.html#eventhandler">EventHandler</a></code></dfn>
         and <dfn><code><a href=
         "http://www.w3.org/TR/html5/webappapis.html#navigator">Navigator</a></code></dfn>
@@ -440,8 +438,14 @@
         a Promise</a></dfn> are used as explained in [[!PROMGUIDE]].
       </p>
       <p>
-        The term <dfn><a href="https://url.spec.whatwg.org/#url">URL</a></dfn>
-        is defined in the WHATWG URL standard [[!URL]].
+        The term <dfn><a href=
+        "https://url.spec.whatwg.org/#url">URL</a></dfn> is defined in the
+        WHATWG URL standard [[!URL]].
+      </p>
+      <p>
+        The term  <dfn><a href=
+        "https://html.spec.whatwg.org/multipage/webappapis.html#concept-current-everything">
+         current settings object</a></dfn> is defined in [[HTML]].
       </p>
       <p>
         The term <dfn><a href=
@@ -1026,7 +1030,7 @@
             <li>For each URL <var>U</var> in <var>urls</var>:
               <ol>
                 <li>Resolve <var>U</var> relative to the API base URL specified
-                by the entry <a>settings object</a>, and add the resulting
+                by the <a>current settings object</a>, and add the resulting
                 absolute URL (if any) to <var>presentationUrls</var>.
                 </li>
                 <li>If the resolve a URL algorithm failed, then <a>throw</a> a
@@ -1072,7 +1076,7 @@
             <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
             and abort these steps.
             </li>
-            <li>Using the document's <a>settings object</a>, run the
+            <li>Using the document's <a>current settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
@@ -1187,19 +1191,19 @@
             selection are left to the user agent; for example it may show the
             user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
-            permission). Implementers are encouraged to show the user whether an
-            available display is currently in use, to facilitate presentations
-            that can make use of multiple displays.
+            permission). Implementers are encouraged to show the user whether
+            an available display is currently in use, to facilitate
+            presentations that can make use of multiple displays.
           </div>
           <div class="note">
             Receiving user agents are encouraged to advertise a user friendly
             name for the presentation display, e.g. &quot;Living Room TV&quot;,
-            to assist the user in selecting the intended display.  Implementers
-            of receiving user agents are also encouraged to advertise the locale
-            and intended text direction of the user friendly name.
+            to assist the user in selecting the intended display. Implementers
+            of receiving user agents are also encouraged to advertise the
+            locale and intended text direction of the user friendly name.
             Implementers of controlling user agents are encouraged to render a
-            user friendly name using its locale and text direction when they are
-            known.
+            user friendly name using its locale and text direction when they
+            are known.
           </div>
           <div class="note">
             The <var>presentationUrl</var> should name a resource accessible to
@@ -1240,7 +1244,7 @@
             </dd>
           </dl>
           <ol>
-            <li>Using the document's <a>settings object</a>, run the
+            <li>Using the document's <a>current settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
@@ -1521,9 +1525,9 @@
             <li>If one of the following conditions is true:
               <ul>
                 <li>The result of running the <a>prohibits mixed security
-                contexts algorithm</a> on the document's <a>settings object</a>
-                is <code>"Prohibits Mixed Security Contexts"</code> and any
-                member of <var>presentationUrls</var> is an <a>a priori
+                contexts algorithm</a> on the document's <a>current settings
+                object</a> is <code>"Prohibits Mixed Security Contexts"</code>
+                and any member of <var>presentationUrls</var> is an <a>a priori
                 unauthenticated URL</a>.
                 </li>
                 <li>The document object's <a>active sandboxing flag set</a> has
