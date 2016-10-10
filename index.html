@@ -710,11 +710,9 @@
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
   var addConnection = function(connection) {
-    connection.onconnect = function () {
-      this.onmessage = function (message) {
-        if (message.data == "say hello")
-          this.send("hello");
-      };
+    this.onmessage = function (message) {
+      if (message.data == "say hello")
+        this.send("hello");
     };
   };
 
