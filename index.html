@@ -283,8 +283,10 @@
               presentations by providing a <a>controlling browsing context</a>
               as described in this specification. This context implements the
               <a><code>Presentation</code></a>,
+              <a><code>PresentationAvailability</code></a>,
               <a><code>PresentationConnection</code></a>,
-              <a><code>PresentationConnectionAvailableEvent</code></a>, and
+              <a><code>PresentationConnectionAvailableEvent</code></a>,
+              <a><code>PresentationConnectionCloseEvent</code></a>, and
               <a><code>PresentationRequest</code></a> interfaces.
             </p>
           </dd>
@@ -299,7 +301,9 @@
               specification. This context implements the
               <a><code>Presentation</code></a>,
               <a><code>PresentationConnection</code></a>,
-              <a><code>PresentationConnectionAvailableEvent</code></a>, and
+              <a><code>PresentationConnectionAvailableEvent</code></a>,
+              <a><code>PresentationConnectionCloseEvent</code></a>,
+              <a><code>PresentationConnectionList</code></a>, and
               <a><code>PresentationReceiver</code></a> interfaces.
             </p>
           </dd>
@@ -364,9 +368,7 @@
         <dfn><a href=
         "http://www.w3.org/TR/html5/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">
         sandboxed top-level navigation browsing context flag</a></dfn>,
-        <dfn><a href=
-        "http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
-        object</a></dfn>, <dfn><code><a href=
+        <dfn><code><a href=
         "http://www.w3.org/TR/html5/webappapis.html#eventhandler">EventHandler</a></code></dfn>
         and <dfn><code><a href=
         "http://www.w3.org/TR/html5/webappapis.html#navigator">Navigator</a></code></dfn>
@@ -440,8 +442,16 @@
         a Promise</a></dfn> are used as explained in [[!PROMGUIDE]].
       </p>
       <p>
-        The term <dfn><a href="https://url.spec.whatwg.org/#url">URL</a></dfn>
-        is defined in the WHATWG URL standard [[!URL]].
+        The term <dfn><a href=
+        "https://url.spec.whatwg.org/#url">URL</a></dfn> is defined in the
+        WHATWG URL standard [[!URL]].
+      </p>
+      <p>
+        The terms <dfn><a href=
+        "https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object">
+        current settings object</a></dfn> and <dfn><a href=
+        "https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">relevant
+        settings object</a></dfn> are defined in [[HTML]].
       </p>
       <p>
         The term <dfn><a href=
@@ -706,11 +716,9 @@
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
   var addConnection = function(connection) {
-    connection.onconnect = function () {
-      this.onmessage = function (message) {
-        if (message.data == "say hello")
-          this.send("hello");
-      };
+    this.onmessage = function (message) {
+      if (message.data == "say hello")
+        this.send("hello");
     };
   };
 
@@ -870,7 +878,7 @@
         </h3>
         <pre class="idl">
           partial interface Navigator {
-            [SameObject] readonly attribute Presentation? presentation;
+            [SameObject] readonly attribute Presentation presentation;
           };
           
           interface Presentation {
@@ -968,6 +976,10 @@
             context</a> is created. In any other <a>browsing context</a>, it
             MUST return <code>null</code>.
           </p>
+          <p class="note">
+            Web developers can use <code>Navigator.presentation.receiver</code>
+            to detect when a document is loaded as a presentation.
+          </p>
         </section>
       </section>
       <section>
@@ -1037,7 +1049,7 @@
             <li>For each URL <var>U</var> in <var>urls</var>:
               <ol>
                 <li>Resolve <var>U</var> relative to the API base URL specified
-                by the entry <a>settings object</a>, and add the resulting
+                by the <a>current settings object</a>, and add the resulting
                 absolute URL (if any) to <var>presentationUrls</var>.
                 </li>
                 <li>If the resolve a URL algorithm failed, then <a>throw</a> a
@@ -1083,7 +1095,7 @@
             <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
             and abort these steps.
             </li>
-            <li>Using the document's <a>settings object</a>, run the
+            <li>Using the document's <a>relevant settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
@@ -1147,9 +1159,9 @@
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
             <a>presentation connections</a> in the <a>set of controlled
-            presentations</a>. To avoid fingerprinting, it is recommended that
-            the <a>presentation identifier</a> be set to a <a>UUID</a>
-            generated following forms 4.4 or 4.5 of [[rfc4122]].
+            presentations</a>. To avoid fingerprinting, implementations SHOULD
+            set the <a>presentation identifier</a> to a <a>UUID</a> generated
+            by following forms 4.4 or 4.5 of [[rfc4122]].
             </li>
             <li>Create a new <a>PresentationConnection</a> <var>S</var>.
             </li>
@@ -1179,9 +1191,9 @@
               The event must not bubble, must not be cancelable, and has no
               default action.
             </li>
-            <li>If any of the following steps fails, abort all remaining steps
-            and <a>close the presentation connection</a> <var>S</var> with
-            <a for="PresentationConnectionClosedReason">error</a> as
+            <li>If the next step fails, abort all remaining steps and <a>close
+            the presentation connection</a> <var>S</var> with <a for=
+            "PresentationConnectionClosedReason">error</a> as
             <var>closeReason</var>, and a human readable message describing the
             failure as <var>closeMessage</var>.
             </li>
@@ -1198,19 +1210,19 @@
             selection are left to the user agent; for example it may show the
             user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
-            permission). Implementers are encouraged to show the user whether an
-            available display is currently in use, to facilitate presentations
-            that can make use of multiple displays.
+            permission). Implementers are encouraged to show the user whether
+            an available display is currently in use, to facilitate
+            presentations that can make use of multiple displays.
           </div>
           <div class="note">
             Receiving user agents are encouraged to advertise a user friendly
             name for the presentation display, e.g. &quot;Living Room TV&quot;,
-            to assist the user in selecting the intended display.  Implementers
-            of receiving user agents are also encouraged to advertise the locale
-            and intended text direction of the user friendly name.
+            to assist the user in selecting the intended display. Implementers
+            of receiving user agents are also encouraged to advertise the
+            locale and intended text direction of the user friendly name.
             Implementers of controlling user agents are encouraged to render a
-            user friendly name using its locale and text direction when they are
-            known.
+            user friendly name using its locale and text direction when they
+            are known.
           </div>
           <div class="note">
             The <var>presentationUrl</var> should name a resource accessible to
@@ -1251,7 +1263,7 @@
             </dd>
           </dl>
           <ol>
-            <li>Using the document's <a>settings object</a>, run the
+            <li>Using the document's <a>relevant settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
             <li>If the result of the algorithm is <code>"Prohibits Mixed
@@ -1522,9 +1534,9 @@
             <li>If one of the following conditions is true:
               <ul>
                 <li>The result of running the <a>prohibits mixed security
-                contexts algorithm</a> on the document's <a>settings object</a>
-                is <code>"Prohibits Mixed Security Contexts"</code> and any
-                member of <var>presentationUrls</var> is an <a>a priori
+                contexts algorithm</a> on the document's <a>relevant settings
+                object</a> is <code>"Prohibits Mixed Security Contexts"</code>
+                and any member of <var>presentationUrls</var> is an <a>a priori
                 unauthenticated URL</a>.
                 </li>
                 <li>The document object's <a>active sandboxing flag set</a> has
@@ -1929,6 +1941,12 @@
                 </li>
               </ol>
             </li>
+            <li>If the connection cannot be completed, <a>close the
+            presentation connection</a> <var>S</var> with <a for=
+            "PresentationConnectionClosedReason">error</a> as
+            <var>closeReason</var>, and a human readable message describing the
+            failure as <var>closeMessage</var>.
+            </li>
           </ol>
           <div class="note">
             The mechanism that is used to present on the remote display and
@@ -1938,11 +1956,6 @@
             carrying <code>DOMString</code> payloads in a reliable and in-order
             fashion as described in the <a>Send a Message</a> and <a>Receive a
             Message</a> steps below.
-          </div>
-          <div class="note">
-            If the connection step does not complete successfully, the user
-            agent may choose to re-execute the Presentation Connection
-            algorithm at a later time.
           </div>
         </section>
         <section>
@@ -2016,18 +2029,20 @@
               To assist applications in recovery from an error sending a
               message through a <a>presentation connection</a>, the user agent
               should include details of which attempt failed in
-              <var>closeMessage</var>. Example renditions of
+              <var>closeMessage</var>, along with a human readable string
+              explaining the failure reason. Example renditions of
               <var>closeMessage</var>:
             </p>
             <ul>
               <li>
-                <code>Unable to send message: "hello"</code> for
-                <code>DOMString</code> messages, where <code>"hello"</code> is
-                the first 256 characters of the failed message.
+                <code>Unable to send text message (network_error):
+                "hello"</code> for <code>DOMString</code> messages, where
+                <code>"hello"</code> is the first 256 characters of the failed
+                message.
               </li>
               <li>
-                <code>Unable to send binary message</code> for
-                <code>ArrayBuffer</code>, <code>ArrayBufferView</code> and
+                <code>Unable to send binary message (invalid_message)</code>
+                for <code>ArrayBuffer</code>, <code>ArrayBufferView</code> and
                 <code>Blob</code> messages.
               </li>
             </ul>
