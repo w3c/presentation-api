@@ -1187,19 +1187,19 @@
             selection are left to the user agent; for example it may show the
             user a dialog and allow the user to select an available display
             (granting permission), or cancel the selection (denying
-            permission). Implementers are encouraged to show the user whether an
-            available display is currently in use, to facilitate presentations
-            that can make use of multiple displays.
+            permission). Implementers are encouraged to show the user whether
+            an available display is currently in use, to facilitate
+            presentations that can make use of multiple displays.
           </div>
           <div class="note">
             Receiving user agents are encouraged to advertise a user friendly
             name for the presentation display, e.g. &quot;Living Room TV&quot;,
-            to assist the user in selecting the intended display.  Implementers
-            of receiving user agents are also encouraged to advertise the locale
-            and intended text direction of the user friendly name.
+            to assist the user in selecting the intended display. Implementers
+            of receiving user agents are also encouraged to advertise the
+            locale and intended text direction of the user friendly name.
             Implementers of controlling user agents are encouraged to render a
-            user friendly name using its locale and text direction when they are
-            known.
+            user friendly name using its locale and text direction when they
+            are known.
           </div>
           <div class="note">
             The <var>presentationUrl</var> should name a resource accessible to
@@ -2015,18 +2015,20 @@
               To assist applications in recovery from an error sending a
               message through a <a>presentation connection</a>, the user agent
               should include details of which attempt failed in
-              <var>closeMessage</var>. Example renditions of
+              <var>closeMessage</var>, along with a human readable string
+              explaining the failure reason. Example renditions of
               <var>closeMessage</var>:
             </p>
             <ul>
               <li>
-                <code>Unable to send message: "hello"</code> for
-                <code>DOMString</code> messages, where <code>"hello"</code> is
-                the first 256 characters of the failed message.
+                <code>Unable to send text message (network_error):
+                "hello"</code> for <code>DOMString</code> messages, where
+                <code>"hello"</code> is the first 256 characters of the failed
+                message.
               </li>
               <li>
-                <code>Unable to send binary message</code> for
-                <code>ArrayBuffer</code>, <code>ArrayBufferView</code> and
+                <code>Unable to send binary message (invalid_message)</code>
+                for <code>ArrayBuffer</code>, <code>ArrayBufferView</code> and
                 <code>Blob</code> messages.
               </li>
             </ul>
