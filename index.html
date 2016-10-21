@@ -658,53 +658,72 @@
 &lt;!-- controller.html --&gt;
 &lt;button id="disconnectBtn" style="display: none;"&gt;Disconnect&lt;/button&gt;
 &lt;button id="stopBtn" style="display: none;"&gt;Stop&lt;/button&gt;
+&lt;button id="reconnectBtn" style="display: none;"&gt;Reconnect&lt;/button&gt;
 &lt;script&gt;
-  var connection;
+  let connection;
 
   // The Disconnect and Stop buttons are visible if there is a connected presentation
-  var disconnectBtn = document.getElementById("disconnectBtn");
-  var stopBtn = document.getElementById("stopBtn");
-  stopBtn.onclick = function () { connection &amp;&amp; connection.terminate(); };
+  const stopBtn = document.querySelector("#stopBtn");
+  const reconnectBtn = document.querySelector("#reconnectBtn");
+  const disconnectBtn = document.querySelector("#disconnectBtn");
 
-  var setConnection = function (theConnection) {
-    // Disconnect from existing presentation, if any
-    close();
+  stopBtn.onclick = _ => {
+    connection &amp;&amp; connection.terminate();
+  };
+
+  disconnectBtn.onclick = _ => {
+    connection &amp;&amp; connection.close();
+  };
+
+  function setConnection(newConnection) {
+    // Disconnect from existing presentation, if not attempting to reconnect
+    if (connection &amp;&amp; connection != newConnection && connection.state != 'closed') {
+      connection.onclosed = undefined;
+      connection.close();
+    }
+
     // Set the new connection and save the presentation ID
-    connection = theConnection;
+    connection = newConnection;
     localStorage["presId"] = connection.id;
 
-    // monitor connection's state
-    connection.onconnect = function () {
+    function showConnectedUI() {
       // Allow the user to disconnect from or terminate the presentation
-      disconnectBtn.style.display = "inline";
       stopBtn.style.display = "inline";
+      disconnectBtn.style.display = "inline";
       reconnectBtn.style.display = "none";
+    }
 
-      // register message handler
-      this.onmessage = function (message) {
-        console.log("receive message", message.data);
+    function showDisconnectedUI() {
+      disconnectBtn.style.display = "none";
+      stopBtn.style.display = "none";
+      reconnectBtn.style.display = localStorage["presId"] ? "inline" : "none";
+    }
+
+    // Monitor the connection state
+    connection.onconnect = _ => {
+      showConnectedUI();
+
+      // Register message handler
+      connection.onmessage = message => {
+        console.log(`Received message: ${message.data}`);
       };
-      // send initial message to presentation page
-      this.send("say hello");
+
+      // Send initial message to presentation page
+      connection.send("Say hello");
     };
-    connection.onclose = reset;
-    connection.onterminate = function () {
-      // remove presId from localStorage if exists
+
+    connection.onclose = _ => {
+      connection = null;
+      showDisconnectedUI();
+    };
+
+    connection.onterminate = _ => {
+      // Remove presId from localStorage if exists
       delete localStorage["presId"];
-      // Reset the UI
-      reset();
+      connection = null;
+      showDisconnectedUI();
     };
   };
-
-  var reset = function () {
-    connection = null;
-    disconnectBtn.style.display = "none";
-    stopBtn.style.display = "none";
-    reconnectBtn.style.display = localStorage["presId"] ? "inline" : "none";
-  };
-
-  var close = function () { connection &amp;&amp; connection.close(); };
-  disconnectBtn.onclick = close;
 &lt;/script&gt;
 </pre>
       </section>
