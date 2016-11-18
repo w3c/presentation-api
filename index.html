@@ -375,9 +375,12 @@
         are defined in [[!HTML5]].
       </p>
       <p>
-        The term <dfn><a href=
+        The terms <dfn><a href=
         "http://www.w3.org/TR/html51/infrastructure.html#in-parallel">in
-        parallel</a></dfn> is defined in [[!HTML51]].
+        parallel</a></dfn>, <dfn><a href="https://www.w3.org/TR/html51/webappapis.html#task-source">task
+        source</a></dfn>,
+        and <dfn><a href="https://www.w3.org/TR/html51/webappapis.html#networking-task-source">networking
+        task source</a></dfn> are defined in [[!HTML51]].
       </p>
       <p>
         The terms <dfn><code><a href=
@@ -888,6 +891,9 @@
           <code>null</code>, represents the request to use when the user wishes
           to initiate a <a>presentation connection</a> from the browser.
         </p>
+        <p>
+          The <a>task source</a> for the tasks mentioned in this specification is the <a>networking task source</a>.
+        </p>
       </section>
       <section>
         <h3>
@@ -1133,8 +1139,8 @@
             </li>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
-            <li>Return <var>P</var>, but continue running these steps in
-            parallel.
+            <li>Return <var>P</var>, but continue running these steps <a>in
+            parallel</a>.
             </li>
             <li>If the <a>user agent</a> is not <a data-lt=
             "monitor the list of available presentation displays">monitoring
