@@ -953,8 +953,9 @@
           </p>
           <div class="note">
             If a <a>controlling user agent</a> does not support initiation of a
-            <a>presentation connection</a> from the browser, setting
-            <code>defaultRequest</code> will have no effect.
+            <a>presentation connection</a> from the browser, the controlling
+            user agent should ignore the value of
+            <code>defaultRequest</code>.
           </div>
           <div class="note">
             Some <a data-lt="controlling user agent">controlling user
@@ -1082,12 +1083,13 @@
         </section>
         <section>
           <h4>
-            Starting a presentation
+            Selecting a presentation display
           </h4>
           <p>
             When the <code><dfn for="PresentationRequest">start</dfn></code>
-            method is called, the <a>user agent</a> MUST run the following
-            steps to <dfn>start a presentation</dfn>:
+            method is called, the <a>user agent</a> MUST run the following steps
+            to <dfn>select a presentation display</dfn>, and then <a>start a
+            presentation</a> with the selected display.
           </p>
           <dl>
             <dt>
@@ -1096,9 +1098,6 @@
             <dd>
               <var>presentationRequest</var>, the
               <code>PresentationRequest</code> object
-            </dd>
-            <dd>
-              <var>presentationUrls</var>, the <a>presentation request URLs</a>
             </dd>
             <dt>
               Output
@@ -1112,6 +1111,7 @@
             <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
             and abort these steps.
             </li>
+            <li>Let <var>presentationUrls</var> be the <a>presentation request URLs</a> of <var>presentationRequest</var>.
             <li>Using the document's <a>relevant settings object</a>, run the
             <a>prohibits mixed security contexts algorithm</a>.
             </li>
@@ -1170,56 +1170,11 @@
             all remaining steps.
             </li>
             <li>Otherwise, the user <em>granted permission</em> to use a
-            display; let <var>D</var> be that display and <var>U</var> the user
-            agent connected to <var>D</var>.
-            </li>
-            <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
-            unique among all <a>presentation identifiers</a> for known
-            <a>presentation connections</a> in the <a>set of controlled
-            presentations</a>. To avoid fingerprinting, implementations SHOULD
-            set the <a>presentation identifier</a> to a <a>UUID</a> generated
-            by following forms 4.4 or 4.5 of [[rfc4122]].
-            </li>
-            <li>Create a new <a>PresentationConnection</a> <var>S</var>.
-            </li>
-            <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
-              I</var>.
-            </li>
-            <li>Set the <a>presentation URL</a> for <var>S</var> to the first
-            <var>presentationUrl</var> in <var>presentationUrls</var> for which
-            there exists an entry <var>(presentationUrl, D)</var> in the
-            <a>list of available presentation displays</a>.
-            </li>
-            <li>Set the <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">connecting</a>.
-            </li>
-            <li>Add <var>S</var> to the <a>set of controlled presentations</a>.
+            display; let <var>D</var> be that display.
             </li>
             <li>
-              <a>Resolve</a> <var>P</var> with <var>S</var>.
-            </li>
-            <li>
-              <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
-              the name <a for="PresentationRequest">connectionavailable</a>,
-              that uses the <a>PresentationConnectionAvailableEvent</a>
-              interface, with the <a for=
-              "PresentationConnectionAvailableEvent">connection</a> attribute
-              initialized to <var>S</var>, at <var>presentationRequest</var>.
-              The event must not bubble, must not be cancelable, and has no
-              default action.
-            </li>
-            <li>If the next step fails, abort all remaining steps and <a>close
-            the presentation connection</a> <var>S</var> with <a for=
-            "PresentationConnectionClosedReason">error</a> as
-            <var>closeReason</var>, and a human readable message describing the
-            failure as <var>closeMessage</var>.
-            </li>
-            <li>Using an implementation specific mechanism, tell <var>U</var>
-            to <a>create a receiving browsing context</a> with <var>D</var>,
-            <var>presentationUrl</var>, and <var>I</var> as parameters.
-            </li>
-            <li>
-              <a>Establish a presentation connection</a> with <var>S</var>.
+              Run the steps to <a>start a presentation connection</a>
+              with <var>presentationRequest</var>, <var>D</var>, and <var>P</var>.
             </li>
           </ol>
           <div class="note">
@@ -1241,6 +1196,133 @@
             user friendly name using its locale and text direction when they
             are known.
           </div>
+        </section>
+        <section>
+          <h4>
+            Starting a presentation from a default request
+          </h4>
+          <p>
+            When the user expresses an intent to start presentation from the
+            browser chrome (using a dedicated button, user gesture, or other
+            signal) on a presentation display, the <a>user agent</a> MUST run
+            the following steps to <dfn>start a presentation from a default
+            request</dfn>.
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <var>W</var>, the document that set the default presentation request.
+            </dd>
+            <dd>
+              <var>presentationRequest</var>, the
+              default <code>PresentationRequest</code> object set on <var>W</var>
+            </dd>
+            <dd>
+              <var>D</var>, the selected presentation display.
+            </dd>
+          </dl>
+          <ol>
+            <li>Let <var>presentationUrls</var> be the <a>presentation request URLs</a> of <var>presentationRequest</var>.
+            </li>
+            <li>Using the <a>relevant settings object</a> for <var>W</var>, run the
+            <a>prohibits mixed security contexts algorithm</a>.
+            </li>
+            <li>
+              If the result of the algorithm is <code>"Prohibits Mixed
+                Security Contexts"</code> and any member of
+              <var>presentationUrls</var> is an <a>a priori unauthenticated
+                URL</a>, then abort these steps.
+            </li>
+            <li>
+              If the <a>active sandboxing flag set</a> for <var>W</var> has
+              the <a>sandboxed presentation browsing context flag</a> set, then
+              abort these steps.
+            </li>
+            <li>
+              If there is no <a>presentation request URL</a>
+              for <var>presentationRequest</var> for which <var>D</var> is
+              an <a>available presentation display</a>, then abort these steps.
+            </li>
+            <li>Run the steps to <a>start a presentation connection</a>
+              with <var>presentationRequest</var> and <var>D</var>.
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h4>
+            Starting a presentation connection
+          </h4>
+          <p>
+            When the <a>user agent</a> is to <dfn>start a presentation connection</dfn>, it MUST run the following steps:
+          </p>
+          <dl>
+            <dt>
+              Input
+            </dt>
+            <dd>
+              <var>presentationRequest</var>, the <a>presentation request</a> that is used to start the presentation connection.
+            </dd>
+            <dd>
+              <var>D</var>, the selected <a>presentation display</a>.
+            </dd>
+            <dd>
+              <var>P</var>, an optional <a>Promise</a> that will be resolved with a new <a>presentation connection</a>.
+            </dd>
+          </dl>
+          <ol>
+            <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
+            unique among all <a>presentation identifiers</a> for known
+            <a>presentation connections</a> in the <a>set of controlled
+            presentations</a>. To avoid fingerprinting, implementations SHOULD
+            set the <a>presentation identifier</a> to a <a>UUID</a> generated
+            by following forms 4.4 or 4.5 of [[rfc4122]].
+            </li>
+            <li>Create a new <a>PresentationConnection</a> <var>S</var>.
+            </li>
+            <li>Set the <a>presentation identifier</a> of <var>S</var> to <var>
+              I</var>.
+            </li>
+            <li>Let <var>presentationUrls</var> be the <a>presentation request URLs</a> of <var>presentationRequest</var>.
+            <li>Set the <a>presentation URL</a> for <var>S</var> to the first
+            <var>presentationUrl</var> in <var>presentationUrls</var> for which
+            there exists an entry <var>(presentationUrl, D)</var> in the
+            <a>list of available presentation displays</a>.
+            </li>
+            <li>Set the <a>presentation connection state</a> of <var>S</var> to
+            <a for="PresentationConnectionState">connecting</a>.
+            </li>
+            <li>Add <var>S</var> to the <a>set of controlled presentations</a>.
+            </li>
+            <li>
+              If <var>P</var> was provided, <a>resolve</a> <var>P</var> with <var>S</var>.
+            </li>
+            <li>
+              <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
+              the name <a for="PresentationRequest">connectionavailable</a>,
+              that uses the <a>PresentationConnectionAvailableEvent</a>
+              interface, with the <a for=
+              "PresentationConnectionAvailableEvent">connection</a> attribute
+              initialized to <var>S</var>, at <var>presentationRequest</var>.
+              The event must not bubble, must not be cancelable, and has no
+              default action.
+            </li>
+            <li>If the next step fails, abort all remaining steps and <a>close
+            the presentation connection</a> <var>S</var> with <a for=
+            "PresentationConnectionClosedReason">error</a> as
+            <var>closeReason</var>, and a human readable message describing the
+            failure as <var>closeMessage</var>.
+            </li>
+            <li>Let <var>U</var> be the the user agent connected to </var>D</var>.</li>
+            <li>Using an implementation specific mechanism, tell <var>U</var>
+            to <a>create a receiving browsing context</a> with <var>D</var>,
+            <var>presentationUrl</var>, and <var>I</var> as parameters.
+            </li>
+            <li>
+              <a>Establish a presentation connection</a> with <var>S</var>.
+            </li>
+          </ol>
           <div class="note">
             The <var>presentationUrl</var> should name a resource accessible to
             the local or a remote user agent. This specification defines
