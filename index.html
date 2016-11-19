@@ -1004,11 +1004,11 @@
           Interface <a><code>PresentationRequest</code></a>
         </h3>
         <pre class="idl">
-          [Constructor(DOMString url),
-           Constructor(sequence&lt;DOMString&gt; urls)]
+          [Constructor(USVString url),
+           Constructor(sequence&lt;USVString&gt; urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
-            Promise&lt;PresentationConnection&gt; reconnect(DOMString presentationId);
+            Promise&lt;PresentationConnection&gt; reconnect(USVString presentationId);
             Promise&lt;PresentationAvailability&gt; getAvailability();
 
             attribute EventHandler onconnectionavailable;
@@ -1791,8 +1791,8 @@
           enum BinaryType { "blob", "arraybuffer" };
 
           interface PresentationConnection : EventTarget {
-            readonly attribute DOMString id;
-            readonly attribute DOMString url;
+            readonly attribute USVString id;
+            readonly attribute USVString url;
             readonly attribute PresentationConnectionState state;
             void close();
             void terminate();
