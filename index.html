@@ -941,8 +941,8 @@
             request</a>.
           </p>
           <p>
-            Support initating presentation using the <a>default presentation
-            request</a> is OPTIONAL.
+            Support for initiating a presentation using the <a>default
+            presentation request</a> is OPTIONAL.
           </p>
           <div class="note">
             If a <a>controlling user agent</a> does not support <a>starting a
@@ -1066,8 +1066,7 @@
           <p>
             When the <code><dfn for="PresentationRequest">start</dfn></code>
             method is called, the <a>user agent</a> MUST run the following
-            steps to <dfn>select a presentation display</dfn>, and then
-            <a>start a presentation connection</a> with the selected display.
+            steps to <dfn>select a presentation display</dfn>.
           </p>
           <dl>
             <dt>
@@ -1196,7 +1195,8 @@
               Input
             </dt>
             <dd>
-              <var>W</var>, the document that the user intends to present
+              <var>W</var>, the document on which the user has expressed an
+              intent to start presentation
             </dd>
             <dd>
               <var>presentationRequest</var>, the non-<code>null</code> value
@@ -1306,7 +1306,7 @@
               The event must not bubble, must not be cancelable, and has no
               default action.
             </li>
-            <li>Let <var>U</var> be the the user agent connected to D.
+            <li>Let <var>U</var> be the user agent connected to D.
             </li>
             <li>If the next step fails, abort all remaining steps and <a>close
             the presentation connection</a> <var>S</var> with <a for=
