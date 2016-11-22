@@ -1300,61 +1300,84 @@
             parallel.
             </li>
             <li>Search the <a>set of controlled presentations</a> for a
-              <a>PresentationConnection</a> that meets the following criteria:
+            <a>PresentationConnection</a> that meets the following criteria:
               <ul>
-                <li>Its <a>controlling browsing context</a> is the current <a>browsing
-                    context</a> </li>
-                <li>Its <a>presentation connection state</a> is not <a for="PresentationConnectionState">terminated</a> </li>
-                <li>Its <a>presentation URL</a> is equal to one of the <a>presentation
-                    request URLs</a> of <var>presentationRequest</var></li>
-                <li>Its <a>presentation identifier</a> is equal to <var>presentationId</var></li>
+                <li>Its <a>controlling browsing context</a> is the current <a>
+                  browsing context</a>
+                </li>
+                <li>Its <a>presentation connection state</a> is not <a for=
+                "PresentationConnectionState">terminated</a>
+                </li>
+                <li>Its <a>presentation URL</a> is equal to one of the
+                <a>presentation request URLs</a> of
+                <var>presentationRequest</var>
+                </li>
+                <li>Its <a>presentation identifier</a> is equal to
+                <var>presentationId</var>
+                </li>
               </ul>
             </li>
             <li>If such a <a>PresentationConnection</a> exists, run the
             following steps:
               <ol>
-                <li>Let <var>existingConnection</var> be that <a>PresentationConnection</a>.
+                <li>Let <var>existingConnection</var> be that
+                <a>PresentationConnection</a>.
                 </li>
                 <li>
-                   <a>Resolve</a> <var>P</var> with <var>existingConnection</var>.
+                  <a>Resolve</a> <var>P</var> with
+                  <var>existingConnection</var>.
                 </li>
-                <li>If the <a>presentation connection state</a> of <var>existingConnection</var>
-                is <a for="PresentationConnectionState">connecting</a> or
-                <a for="PresentationConnectionState">connected</a>, then abort
-                all remaining steps.
+                <li>If the <a>presentation connection state</a> of
+                <var>existingConnection</var> is <a for=
+                "PresentationConnectionState">connecting</a> or <a for=
+                "PresentationConnectionState">connected</a>, then abort all
+                remaining steps.
                 </li>
                 <li>Set the <a>presentation connection state</a> of
                 <var>existingConnection</var> to <a for=
                 "PresentationConnectionState">connecting</a>.
                 </li>
                 <li>
-                  <a>Establish a presentation connection</a> with <var>existingConnection</var>.
+                  <a>Establish a presentation connection</a> with
+                  <var>existingConnection</var>.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
               </ol>
             </li>
             <li>Search the <a>set of controlled presentations</a> for the first
-              <a>PresentationConnection</a> that meets the following criteria:
+            <a>PresentationConnection</a> that meets the following criteria:
               <ul>
-                <li>Its <a>controlling browsing context</a> is not the current <a>browsing context</a></li>
-                <li>Its <a>presentation connection state</a> is not <a for="PresentationConnectionState">terminated</a></li>
-                <li>Its <a>presentation URL</a> is equal to one of the <a>presentation request URLs</a> of
-                  <var>presentationRequest</var></li>
-                <li>Its <a>presentation identifier</a> is equal to <var>presentationId</var></li>
+                <li>Its <a>controlling browsing context</a> is not the current
+                <a>browsing context</a>
+                </li>
+                <li>Its <a>presentation connection state</a> is not <a for=
+                "PresentationConnectionState">terminated</a>
+                </li>
+                <li>Its <a>presentation URL</a> is equal to one of the
+                <a>presentation request URLs</a> of
+                <var>presentationRequest</var>
+                </li>
+                <li>Its <a>presentation identifier</a> is equal to
+                <var>presentationId</var>
+                </li>
               </ul>
             </li>
-            <li>If such a <a>PresentationConnection</a> exists, run the following steps:
+            <li>If such a <a>PresentationConnection</a> exists, run the
+            following steps:
               <ol>
-                <li>Let <var>existingConnection</var> be that <a>PresentationConnection</a>.
+                <li>Let <var>existingConnection</var> be that
+                <a>PresentationConnection</a>.
                 </li>
-                <li>Create a new <a>PresentationConnection</a> <var>newConnection</var>.
+                <li>Create a new <a>PresentationConnection</a>
+                <var>newConnection</var>.
                 </li>
-                <li>Set the <a>presentation identifier</a> of <var>newConnection</var> to
-                <var>presentationId</var>.
+                <li>Set the <a>presentation identifier</a> of
+                <var>newConnection</var> to <var>presentationId</var>.
                 </li>
-                <li>Set the <a>presentation URL</a> of <var>newConnection</var> to the <a>
-                  presentation URL</a> of <var>existingConnection</var>.
+                <li>Set the <a>presentation URL</a> of <var>newConnection</var>
+                to the <a>presentation URL</a> of
+                <var>existingConnection</var>.
                 </li>
                 <li>Set the <a>presentation connection state</a> of
                 <var>newConnection</var> to <a for=
@@ -1378,7 +1401,8 @@
                   must not be cancelable, and has no default action.
                 </li>
                 <li>
-                  <a>Establish a presentation connection</a> with <var>newConnection</var>.
+                  <a>Establish a presentation connection</a> with
+                  <var>newConnection</var>.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
