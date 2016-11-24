@@ -1624,10 +1624,10 @@
             <a for="PresentationAvailability">value</a> property of a
             <code>PresentationAvailability</code> object to offer presentation
             only when there are available displays. However, the <a>user
-            agent</a> may not support continuous availability monitoring; for
-            example, because of platform or power consumption restrictions. In
-            this case the <a>Promise</a> returned by <code><a for=
-            "PresentationRequest">getAvailability</a>()</code> is
+            agent</a> may not support continuous availability monitoring in the
+            background; for example, because of platform or power consumption
+            restrictions. In this case the <a>Promise</a> returned by
+            <code><a for="PresentationRequest">getAvailability</a>()</code> is
             <a data-lt="reject">rejected</a>, and the algorithm to <a>monitor
             the list of available presentation displays</a> will only run as
             part of the <a>select a presentation display</a> algorithm.
@@ -1785,11 +1785,12 @@
             Monitoring the list of available presentation displays
           </h4>
           <p>
-            If the <a>set of presentation availability objects</a> is non-empty,
-            or there is a pending request to <a for="PresentationRequest"
-            data-lt= "start">select a presentation display</a>, the <a>user
-            agent</a> MUST <dfn>monitor the list of available presentation
-            displays</dfn> by running the following steps.
+            If the <a>set of presentation availability objects</a> is
+            non-empty, or there is a pending request to <a for=
+            "PresentationRequest" data-lt="start">select a presentation
+            display</a>, the <a>user agent</a> MUST <dfn>monitor the list of
+            available presentation displays</dfn> by running the following
+            steps.
           </p>
           <ol link-for="PresentationAvailability">
             <li>Set the <a>list of available presentation displays</a> to the
@@ -1856,10 +1857,11 @@
             </li>
             <li>If the <a>set of presentation availability objects</a> is now
             empty and there is no pending request to <a for=
-            "PresentationRequest" data-lt="start">select a presentation display</a>,
-            cancel any pending task to <a>monitor the list of available
-            presentation displays</a> for power saving purposes, and set the
-            <a>list of available presentation displays</a> to the empty list.
+            "PresentationRequest" data-lt="start">select a presentation
+            display</a>, cancel any pending task to <a>monitor the list of
+            available presentation displays</a> for power saving purposes, and
+            set the <a>list of available presentation displays</a> to the empty
+            list.
             </li>
           </ol>
           <div class="note">
