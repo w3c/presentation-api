@@ -1115,9 +1115,10 @@
             abort these steps.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
-            call to <code>start</code> for the same <a>controlling browsing
-            context</a>, return a <a>Promise</a> rejected with an
-            <a>OperationError</a> exception and abort all remaining steps.
+            call to <code>start</code> on any <code>PresentationRequest</code>
+            in the same <a>controlling browsing context</a>, return a
+            new <a>Promise</a> rejected with an <a>OperationError</a> exception
+            and abort all remaining steps.
             </li>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
