@@ -1116,9 +1116,9 @@
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
             call to <code>start</code> on any <code>PresentationRequest</code>
-            in the same <a>controlling browsing context</a>, return a
-            new <a>Promise</a> rejected with an <a>OperationError</a> exception
-            and abort all remaining steps.
+            in the same <a>controlling browsing context</a>, return a new
+            <a>Promise</a> rejected with an <a>OperationError</a> exception and
+            abort all remaining steps.
             </li>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
@@ -1258,14 +1258,14 @@
             <dd>
               <var>presentationRequest</var>, the
               <code>PresentationRequest</code> that is used to start the
-              presentation connection.
+              presentation connection
             </dd>
             <dd>
-              <var>D</var>, the selected <a>presentation display</a>.
+              <var>D</var>, the selected <a>presentation display</a>
             </dd>
             <dd>
               <var>P</var>, an optional <a>Promise</a> that will be resolved
-              with a new <a>presentation connection</a>.
+              with a new <a>presentation connection</a>
             </dd>
           </dl>
           <ol>
@@ -1349,7 +1349,7 @@
             <dd>
               <var>presentationRequest</var>, the <a>PresentationRequest</a>
               object that <code><a for=
-              "PresentationRequest">reconnect</a>()</code> was called on.
+              "PresentationRequest">reconnect</a>()</code> was called on
             </dd>
             <dd>
               <var>presentationId</var>, a valid <a>presentation identifier</a>
@@ -1653,8 +1653,8 @@
             </dt>
             <dd>
               <var>presentationRequest</var>, the
-              <code>PresentationRequest</code> that
-              <code>getAvailability()</code> was called on
+              <code>PresentationRequest</code> object that received the call to
+              <code>getAvailability</code>
             </dd>
             <dt>
               Output
@@ -2056,12 +2056,15 @@
             <dd>
               <var>presentationConnection</var>, the
               <code>PresentationConnection</code> object that is to be
-              connected. The <a>presentation connection state</a> of
-              <var>presentationConnection</var> must be <a for=
-              "PresentationConnectionState">connecting</a>.
+              connected
             </dd>
           </dl>
           <ol>
+            <li>If the <a>presentation connection state</a> of
+            <var>presentationConnection</var> is not <a for=
+            "PresentationConnectionState">connecting</a>, then abort all
+            remaining steps.
+            </li>
             <li>Request connection of <var>presentationConnection</var> to the
             <a>receiving browsing context</a>. The <a>presentation
             identifier</a> of <var>presentationConnection</var> MUST be sent
@@ -2345,7 +2348,7 @@
             </dd>
             <dd>
               <var>closeMessage</var>, a human-readable message with details of
-              why the connection was closed.
+              why the connection was closed
             </dd>
           </dl>
           <ol>
@@ -2823,17 +2826,17 @@
             <dd>
               <var>I</var>, the <a>presentation identifier</a> passed by the
               <a>controlling browsing context</a> with the incoming connection
-              request.
+              request
             </dd>
             <dd>
               <var>presentationId</var>, the <a>presentation identifier</a>
               used to <a data-lt="create a receiving browsing context">create
-              the receiving browsing context</a>.
+              the receiving browsing context</a>
             </dd>
             <dd>
               <var>presentationUrl</var>, the <a>presentation request URL</a>
               used to <a data-lt="create a receiving browsing context">create
-              the receiving browsing context</a>.
+              the receiving browsing context</a>
             </dd>
           </dl>
           <ol>
