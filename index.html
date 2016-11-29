@@ -138,6 +138,7 @@
     table thead, table tbody { border-bottom: solid; }
     table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
     dfn { font-weight: bolder; font-style: normal; }
+    var { hyphens: none; }
     .copyright { font-size: small; }
     .issue[id^='issue-'] > *:not([role='heading']) { display: none; }
     </style>
@@ -1061,6 +1062,14 @@
                 </li>
               </ol>
             </li>
+            <li>Using the document's <a>relevant settings object</a>, run the
+            <a>prohibits mixed security contexts algorithm</a>.
+            </li>
+            <li>If the result of the algorithm is <code>"Prohibits Mixed
+            Security Contexts"</code> and any member of
+            <var>presentationUrls</var> is an <a>a priori unauthenticated
+            URL</a>, then throw a <a>SecurityError</a> and abort these steps.
+            </li>
             <li>Construct a new <code>PresentationRequest</code> object with
             <var>presentationUrls</var> as its <a>presentation request URLs</a>
             and return it.
@@ -1099,15 +1108,6 @@
             </li>
             <li>Let <var>presentationUrls</var> be the <a>presentation request
             URLs</a> of <var>presentationRequest</var>.
-            </li>
-            <li>Using the document's <a>relevant settings object</a>, run the
-            <a>prohibits mixed security contexts algorithm</a>.
-            </li>
-            <li>If the result of the algorithm is <code>"Prohibits Mixed
-            Security Contexts"</code> and any member of
-            <var>presentationUrls</var> is an <a>a priori unauthenticated
-            URL</a>, then return a <a>Promise</a> rejected with a
-            <a>SecurityError</a> and abort these steps.
             </li>
             <li>If the document object's <a>active sandboxing flag set</a> has
             the <a>sandboxed presentation browsing context flag</a> set, then
@@ -1220,14 +1220,6 @@
           <ol>
             <li>Let <var>presentationUrls</var> be the <a>presentation request
             URLs</a> of <var>presentationRequest</var>.
-            </li>
-            <li>Using the <a>relevant settings object</a> for <var>W</var>, run
-            the <a>prohibits mixed security contexts algorithm</a>.
-            </li>
-            <li>If the result of the algorithm is <code>"Prohibits Mixed
-            Security Contexts"</code> and any member of
-            <var>presentationUrls</var> is an <a>a priori unauthenticated
-            URL</a>, then abort these steps.
             </li>
             <li>If the <a>active sandboxing flag set</a> for <var>W</var> has
             the <a>sandboxed presentation browsing context flag</a> set, then
@@ -1370,15 +1362,6 @@
             </dd>
           </dl>
           <ol>
-            <li>Using the document's <a>relevant settings object</a>, run the
-            <a>prohibits mixed security contexts algorithm</a>.
-            </li>
-            <li>If the result of the algorithm is <code>"Prohibits Mixed
-            Security Contexts"</code> and the <a>presentation request URL</a>
-            of <var>presentationRequest</var> is an <a>a priori unauthenticated
-            URL</a>, then return a <a>Promise</a> rejected with a
-            <a>SecurityError</a> and abort these steps.
-            </li>
             <li>If the document object's <a>active sandboxing flag set</a> has
             the <a>sandboxed presentation browsing context flag</a> set, then
             return a <a>Promise</a> rejected with a <a>SecurityError</a> and
@@ -1681,18 +1664,9 @@
             </dd>
           </dl>
           <ol>
-            <li>If one of the following conditions is true:
-              <ul>
-                <li>The result of running the <a>prohibits mixed security
-                contexts algorithm</a> on the document's <a>relevant settings
-                object</a> is <code>"Prohibits Mixed Security Contexts"</code>
-                and any member of <var>presentationUrls</var> is an <a>a priori
-                unauthenticated URL</a>.
-                </li>
-                <li>The document object's <a>active sandboxing flag set</a> has
-                the <a>sandboxed presentation browsing context flag</a> set.
-                </li>
-              </ul>Run the following substeps:
+            <li>If the document object's <a>active sandboxing flag set</a> has
+            the <a>sandboxed presentation browsing context flag</a> set, then
+            run the following substeps:
               <ol>
                 <li>Return a new <a>Promise</a> object <a data-lt=
                 "reject">rejected</a> with a <a>SecurityError</a>.
