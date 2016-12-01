@@ -2521,37 +2521,39 @@
             receiving browsing context</dfn>, it MUST run the following steps:
           </p>
           <ol>
-            <li>Let <var>P</var> be the presentation to be terminated.
+            <li>Let <var>P</var> be the presentation to be terminated,
+            let <var>allControllers</var> be the <a>set of presentation
+            controllers</a> that were created for <var>P</var>,
+            and <var>connectedControllers</var> an empty list.
             </li>
-            <li>If there is a <a>receiving browsing context</a> for
-            <var>P</var>, and it has a document for <var>P</var> that is not
-            unloaded, <a>unload a document</a> corresponding to that
-            <a>browsing context</a>.
-            </li>
-            <li>For each <var>connection</var> in the <a>set of presentation
-            controllers</a> that were created for <var>P</var>, <a>queue a
-            task</a> to run the following steps:
+            <li>
+              For each <var>connection</var> in <var>allControllers</var>, run the following steps:
               <ol>
-                <li>If the <a>presentation connection state</a> of
-                <var>connection</var> is not <a for=
-                "PresentationConnectionState">connected</a>, then abort the
-                following steps.
+                <li>
+                  If the <a>presentation connection state</a> of
+                  <var>connection</var> is <a for="PresentationConnectionState">connected</a>, then
+                  add <var>connection</var> to <var>connectedControllers</var>.
                 </li>
                 <li>
                   Set the <a>presentation connection state</a> of <var>connection</var> to
                   <a for="PresentationConnectionState">terminated</a>.
                 </li>
-                <li>
-                  <a>Send a termination confirmation</a> for <var>P</var> using
-                  an implementation specific mechanism to the <a>controlling
-                  user agent</a> that owns the <a>destination browsing
+              </ol>
+            <li>If there is a <a>receiving browsing context</a> for
+            <var>P</var>, and it has a document for <var>P</var> that is not
+            unloaded, <a>unload a document</a> corresponding to that
+            <a>browsing context</a>.
+            </li>
+            <li>
+              For each <var>connection</var> in <var>connectedControllers</var>, <a>queue
+              a task</a> to send a termination confirmation</a> for <var>P</var> using
+an implementation specific mechanism to the <a>controlling
+  user agent</a> that owns the <a>destination browsing
                   context</a> for <var>connection</var>.
                   <p class="note">
                     Only one termination confirmation needs to be sent per
                     <a>controlling user agent</a>.
                   </p>
-                </li>
-              </ol>
             </li>
           </ol>
         </section>
