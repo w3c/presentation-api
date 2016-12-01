@@ -1043,6 +1043,10 @@
             </dd>
           </dl>
           <ol>
+            <li>If the document object's <a>active sandboxing flag set</a> has
+            the <a>sandboxed presentation browsing context flag</a> set, then
+            throw a <a>SecurityError</a> and abort these steps.
+            </li>
             <li>If <var>urls</var> is an empty sequence, then <a>throw</a> a
             <a>NotSupportedError</a> and abort all remaining steps.
             </li>
