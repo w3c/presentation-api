@@ -1702,20 +1702,6 @@
                 </li>
               </ol>
             </li>
-            <li>If the user agent is unable to <a>monitor the list of available
-            presentation displays</a> for the entire duration of the
-            <a>controlling browsing context</a> (e.g., because the user has
-            disabled this feature), then:
-              <ol>
-                <li>
-                  <a>Resolve</a> <var>P</var> with a newly created
-                  <code>PresentationAvailability</code> object with its
-                  <code>value</code> property set to <code>false</code>.
-                </li>
-                <li>Abort all the remaining steps.
-                </li>
-              </ol>
-            </li>
             <li>If the <a>presentation display availability</a> for
             <var>presentationRequest</var> is not <code>null</code>, then:
               <ol>
@@ -1779,9 +1765,14 @@
             <li>Set the <a>list of available presentation displays</a> to the
             empty list.
             </li>
-            <li>Retrieve <a>available presentation displays</a> (using an
-            implementation specific mechanism) and let <var>newDisplays</var>
-            be this list.
+            <li>Let <var>newDisplays</var> be an empty list.
+            </li>
+            <li>If the <a>user agent</a> is unable to retrieve <a>presentation
+            displays</a> (e.g., because the user has disabled this capability),
+            then skip the following step.
+            </li>
+            <li>Retrieve <a>presentation displays</a> (using an implementation
+            specific mechanism) and set <var>newDisplays</var> to this list.
             </li>
             <li>For each member <em>(<var>A</var>,
             <var>availabilityUrls</var>)</em> of the <a>set of presentation
