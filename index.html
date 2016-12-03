@@ -1129,19 +1129,24 @@
             <li>Return <var>P</var>, but continue running these steps <a>in
             parallel</a>.
             </li>
-            <li>Let <var>availabilityObj</var> be <code>null</code>.</li>
-            <li>If the <a>presentation display availability</a>
-                for <var>presentationRequest</var> is <code>null</code>, run the
-                following substeps <a>in parallel</a>.
+            <li>Let <var>availabilityObj</var> be <code>null</code>.
+            </li>
+            <li>If the <a>presentation display availability</a> for
+            <var>presentationRequest</var> is <code>null</code>, run the
+            following substeps <a>in parallel</a>.
               <ol>
-                <li>Set the <a>presentation display availability</a>
-                  for <var>presentationRequest</var> to a newly
-                  created <code>PresentationAvailability</code> object, and
-                  let <var>availabilityObj</var> be that object.</li>
-                <li>Create a tuple (<var>availabilityObj</var>, <var>presentationUrls</var>) and
-                  add it to the <a>set of presentation availability objects</a>.
+                <li>Set the <a>presentation display availability</a> for <var>
+                  presentationRequest</var> to a newly created
+                  <code>PresentationAvailability</code> object, and let
+                  <var>availabilityObj</var> be that object.
                 </li>
-                <li>Run the steps to continuously <a>monitor the list of available presentation displays</a>.</li>
+                <li>Create a tuple (<var>availabilityObj</var>,
+                <var>presentationUrls</var>) and add it to the <a>set of
+                presentation availability objects</a>.
+                </li>
+                <li>Run the steps to continuously <a>monitor the list of
+                available presentation displays</a>.
+                </li>
               </ol>
             </li>
             <li>Request user permission for the use of a <a>presentation
@@ -1168,7 +1173,8 @@
               </ol>
             </li>
             <li>If the user <em>denies permission</em> to use a display, reject
-            <var>P</var> with an <a>NotAllowedError</a> exception, and go to the step named <var>Cleanup</var>.
+            <var>P</var> with an <a>NotAllowedError</a> exception, and go to
+            the step named <var>Cleanup</var>.
             </li>
             <li>Otherwise, the user <em>grants permission</em> to use a
             display; let <var>D</var> be that display.
@@ -1176,11 +1182,17 @@
             <li>Run the steps to <a>start a presentation connection</a> with
             <var>presentationRequest</var>, <var>D</var>, and <var>P</var>.
             </li>
-            <li><var>Cleanup</var>: If <var>availabilityObj</var> is not <code>null</code>, run the following substeps:
+            <li>
+              <var>Cleanup</var>: If <var>availabilityObj</var> is not
+              <code>null</code>, run the following substeps:
               <ol>
-                <li>Remove the tuple (<var>availabilityObj</var>, <var>presentationUrls</var>) from the <a>set of presentation availability objects</a>.</li>
-                <li>Set the <a>presentation display availability</a>
-                  for <var>presentationRequest</var> to <code>null</code>.</li>
+                <li>Remove the tuple (<var>availabilityObj</var>,
+                <var>presentationUrls</var>) from the <a>set of presentation
+                availability objects</a>.
+                </li>
+                <li>Set the <a>presentation display availability</a> for <var>
+                  presentationRequest</var> to <code>null</code>.
+                </li>
               </ol>
             </li>
           </ol>
