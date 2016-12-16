@@ -1313,7 +1313,7 @@
             </li>
             <li>If the next step fails, abort all remaining steps and <a>close
             the presentation connection</a> <var>S</var> with <a for=
-            "PresentationConnectionClosedReason">error</a> as
+            "PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>, and a human readable message describing the
             failure as <var>closeMessage</var>.
             </li>
@@ -1971,7 +1971,7 @@
             When the <code><dfn>close</dfn>()</code> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
             MUST <a>start closing the presentation connection</a> <var>S</var>
-            with <a for="PresentationConnectionClosedReason">closed</a> as
+            with <a for="PresentationConnectionCloseReason">closed</a> as
             <var>closeReason</var> and an empty message as
             <var>closeMessage</var>.
           </p>
@@ -2020,7 +2020,7 @@
             or <a for="PresentationConnectionState">connected</a>, the <a>user
             agent</a> SHOULD <a>start closing the presentation connection</a>
             <var>S</var> with <a for=
-            "PresentationConnectionClosedReason">wentaway</a> as
+            "PresentationConnectionCloseReason">wentaway</a> as
             <var>closeReason</var> and an empty <var>closeMessage</var>.
           </p>
           <p>
@@ -2028,8 +2028,8 @@
             browsing context</a> that a <a>PresentationConnection</a>
             <var>S</var> is to be closed, it SHOULD <a>close the presentation
             connection</a> <var>S</var> with <a for=
-            "PresentationConnectionClosedReason">closed</a> or <a for=
-            "PresentationConnectionClosedReason">wentaway</a> as
+            "PresentationConnectionCloseReason">closed</a> or <a for=
+            "PresentationConnectionCloseReason">wentaway</a> as
             <var>closeReason</var> and an empty <var>closeMessage</var>.
           </p>
         </div>
@@ -2079,7 +2079,7 @@
             </li>
             <li>If the connection cannot be completed, <a>close the
             presentation connection</a> <var>S</var> with <a for=
-            "PresentationConnectionClosedReason">error</a> as
+            "PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>, and a human readable message describing the
             failure as <var>closeMessage</var>.
             </li>
@@ -2155,7 +2155,7 @@
             <li>If the previous step encounters an unrecoverable error, then
             abruptly <a>close the presentation connection</a>
             <var>presentationConnection</var> with <a for=
-            "PresentationConnectionClosedReason">error</a> as
+            "PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>, and a <var>closeMessage</var> describing
             the error encountered.
             </li>
@@ -2261,7 +2261,7 @@
             <a data-lt="receive-algorithm">receiving a message</a> through
             <var>presentationConnection</var>, it SHOULD abruptly <a>close the
             presentation connection</a> <var>presentationConnection</var> with
-            <a for="PresentationConnectionClosedReason">error</a> as
+            <a for="PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>, and a human readable description of the
             error encountered as <var>closeMessage</var>.
           </p>
@@ -2271,16 +2271,16 @@
             Interface <code>PresentationConnectionCloseEvent</code>
           </h4>
           <pre class="idl">
-            enum PresentationConnectionClosedReason { "error", "closed", "wentaway" };
+            enum PresentationConnectionCloseReason { "error", "closed", "wentaway" };
 
             [Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict)]
             interface PresentationConnectionCloseEvent : Event {
-              readonly attribute PresentationConnectionClosedReason reason;
+              readonly attribute PresentationConnectionCloseReason reason;
               readonly attribute DOMString message;
             };
 
             dictionary PresentationConnectionCloseEventInit : EventInit {
-              required PresentationConnectionClosedReason reason;
+              required PresentationConnectionCloseReason reason;
               DOMString message = "";
             };
 
@@ -2293,7 +2293,7 @@
             <code>reason</code> attribute provides the reason why the
             connection was closed:
           </p>
-          <ul dfn-for="PresentationConnectionClosedReason">
+          <ul dfn-for="PresentationConnectionCloseReason">
             <li>
               <dfn>error</dfn> means that the mechanism for connecting or
               communicating with a presentation entered an unrecoverable error.
@@ -2312,7 +2312,7 @@
           </ul>
           <p>
             When the <code>reason</code> attribute is <a for=
-            "PresentationConnectionClosedReason">error</a>, the user agent
+            "PresentationConnectionCloseReason">error</a>, the user agent
             SHOULD set the error message to a human readable description of how
             the communication channel encountered an error.
           </p>
@@ -2336,7 +2336,7 @@
             </dd>
             <dd>
               <var>closeReason</var>, the
-              <a>PresentationConnectionClosedReason</a> describing why the
+              <a>PresentationConnectionCloseReason</a> describing why the
               connection is to be closed
             </dd>
             <dd>
@@ -2364,7 +2364,7 @@
             proceeding to the next step.
             </li>
             <li>If <var>closeReason</var> is not <a for=
-            "PresentationConnectionClosedReason">wentaway</a>, then locally run
+            "PresentationConnectionCloseReason">wentaway</a>, then locally run
             the steps to <a>close the presentation connection</a> with
             <var>presentationConnection</var>, <var>closeReason</var>, and
             <var>closeMessage</var>.
@@ -2385,7 +2385,7 @@
             </dd>
             <dd>
               <var>closeReason</var>, the
-              <a>PresentationConnectionClosedReason</a> describing why the
+              <a>PresentationConnectionCloseReason</a> describing why the
               connection is to be closed
             </dd>
             <dd>
