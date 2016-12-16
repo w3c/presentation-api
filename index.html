@@ -1762,8 +1762,8 @@
                 <li>Create a tuple <em>(<var>A</var>,
                 <var>presentationUrls</var>)</em> where
                 <var>presentationUrls</var> is the <a>PresentationRequest</a>'s
-                <a>presentation request URLs</a> and add it to the <a>set of
-                presentation availability objects</a>.
+                <a>presentation request URLs</a> and add it to
+                <var>availabilitySet</var>.
                 </li>
               </ol>
             </li>
@@ -1780,8 +1780,8 @@
             empty list.
             </li>
             <li>For each member <em>(<var>A</var>,
-            <var>availabilityUrls</var>)</em> of the <a>set of presentation
-            availability objects</a>, run the following steps:
+            <var>availabilityUrls</var>)</em> of <var>availabilitySet</var>,
+            run the following steps:
               <ol>
                 <li>Set <var>previousAvailability</var> to the value of
                 <var>A</var>'s <a>value</a> property.
