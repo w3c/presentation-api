@@ -380,12 +380,10 @@
         parallel</a></dfn> and <dfn><a href=
         "https://www.w3.org/TR/html51/webappapis.html#task-source">task
         source</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#ancestor-browsing-context">ancestor
-        browsing context</a></dfn>, <dfn><a href=
         "https://www.w3.org/TR/html5/browsers.html#nested-browsing-contexts">nested
         browsing context</a></dfn>, and <dfn><a href=
         "https://www.w3.org/TR/html51/browsers.html#list-of-the-descendant-browsing-contexts">
-        list of descendent browsing contexts</a></dfn>, and <dfn><a href=
+        list of descendant browsing contexts</a></dfn>, and <dfn><a href=
         "https://www.w3.org/TR/html51/browsers.html#creating-a-new-browsing-context">
         creating a new browsing context</a></dfn> are defined in [[!HTML51]].
       </p>
@@ -2764,24 +2762,24 @@
             contexts</a> <a data-lt=
             "creating a new browsing context">created</a> by the presented
             document, i.e. that have the <a>receiving browsing context</a> as
-            their <a data-lt="ancestor browsing context">top-level
-            ancestor</a>, MUST also have restrictions 2-4 above. All of these
+            their <a data-lt="top-level browsing context">top-level browsing
+            context</a>, MUST also have restrictions 2-4 above. All of these
             <a>browsing contexts</a> MUST also share the same browsing state
             (storage) for features 5-10 listed above.
           </p>
           <p>
             <a>Window clients</a> and <a>worker clients</a> associated with the
-            <a>receiving browsing context</a> and its <a>list of descendent
+            <a>receiving browsing context</a> and its <a>list of descendant
             browsing contexts</a> must not be exposed to <a>service workers</a>
             associated with each other.
           </p>
           <p>
             When the <a>receiving browsing context</a> is closed, any
             <a>service workers</a> associated with it and the <a>browsing
-            contexts</a> in its <a>list of descendent browsing contexts</a>
+            contexts</a> in its <a>list of descendant browsing contexts</a>
             MUST be unregistered and terminated. Any browsing state associated
             with the <a>receiving browsing context</a> and the <a>browsing
-            contexts</a> in its <a>list of descendent browsing contexts</a>,
+            contexts</a> in its <a>list of descendant browsing contexts</a>,
             including <a>session history</a>, the <a>cookie store</a>, any
             <a>HTTP authentication</a> state, the <a>application cache</a>, any
             <a>databases</a>, the <a>session storage areas</a>, the <a>local
