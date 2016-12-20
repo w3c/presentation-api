@@ -1557,8 +1557,9 @@
         </p>
         <p>
           The <dfn for="PresentationAvailability">value</dfn> attribute MUST
-          return the last value it was set to. The value is updated by the
-          <a>monitor the list of available presentation displays</a> algorithm.
+          return the last value it was set to. The value is initialized and
+          updated by the <a>monitor the list of available presentation
+          displays</a> algorithm.
         </p>
         <p>
           The <dfn for="PresentationAvailability">onchange</dfn> attribute is
@@ -1712,9 +1713,6 @@
             <a>PresentationAvailability</a> object, and let <var>A</var> be
             that object.
             </li>
-            <li>Set the <code>value</code> property of <var>A</var> to
-            <code>false</code>.
-            </li>
             <li>Create a tuple <em>(<var>A</var>,
             <var>presentationUrls</var>)</em> and add it to the <a>set of
             presentation availability objects</a>.
@@ -1755,9 +1753,6 @@
               <ol>
                 <li>Let <var>A</var> be a newly created
                 <a>PresentationAvailability</a> object.
-                </li>
-                <li>Set the <var>value</var> property of <var>A</var> to <code>
-                  false</code>.
                 </li>
                 <li>Create a tuple <em>(<var>A</var>,
                 <var>presentationUrls</var>)</em> where
@@ -1808,23 +1803,26 @@
                     </li>
                   </ol>
                 </li>
+                <li>If <var>A</var>'s <a>value</a> property has not yet been
+                initialized, then set <var>A</var>'s <a>value</a> property to
+                <var>newAvailability</var> and skip the following step.
+                  <div class="note">
+                    The <a>value</a> property of a
+                    <a>PresentationAvailability</a> object becomes
+                    <em>initialized</em> when the above step sets it for the
+                    first time.
+                  </div>
+                </li>
                 <li>If <var>previousAvailability</var> is not equal to
-                <var>newAvailability</var>, then run the following steps:
+                <var>newAvailability</var>, then <a>queue a task</a> to run the
+                following steps:
                   <ol>
-                    <li>If <var>A</var> has already been exposed to ECMAScript
-                    code, then <a>queue a task</a> to run the following steps:
-                      <ol>
-                        <li>Set <var>A</var>'s <a>value</a> property to
-                        <var>newAvailability</var>.
-                        </li>
-                        <li>
-                          <a>Fire a simple event</a> named <a>change</a> at
-                          <var>A</var>.
-                        </li>
-                      </ol>
-                    </li>
-                    <li>Otherwise, set <var>A</var>'s <a>value</a> property to
+                    <li>Set <var>A</var>'s <a>value</a> property to
                     <var>newAvailability</var>.
+                    </li>
+                    <li>
+                      <a>Fire a simple event</a> named <a>change</a> at
+                      <var>A</var>.
                     </li>
                   </ol>
                 </li>
@@ -1837,8 +1835,10 @@
             calls to <a for="PresentationRequest">getAvailability</a> and
             <a for="PresentationRequest">start</a>. The <a>user agent</a> may
             run such requests in parallel, serialize them, or interrupt the
-            algorithm if it is before or at step 5 and run it again to group
-            requests.
+            algorithm if it is before or at step 5 and run it again to
+            aggregate requests. The <a>user agent</a> may also aggregate
+            monitoring activities across <a data-lt="browsing context">browsing
+            contexts</a>.
           </div>
           <p>
             When a <a>presentation display availability</a> object is no longer
