@@ -1126,10 +1126,10 @@
             abort these steps.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
-            call to <code>start</code> on any <code>PresentationRequest</code>
-            in the same <a>controlling browsing context</a>, return a new
-            <a>Promise</a> rejected with an <a>OperationError</a> exception and
-            abort all remaining steps.
+            call to <a for="PresentationRequest">start</a> on any
+            <a>PresentationRequest</a> in the same <a>controlling browsing
+            context</a>, return a new <a>Promise</a> rejected with an
+            <a>OperationError</a> exception and abort all remaining steps.
             </li>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
@@ -1552,6 +1552,11 @@
           <a>presentation request URLs</a> of the request.
         </p>
         <p>
+          The <a>presentation display availability</a> for a presentation
+          request is eligible for garbage collection when no ECMASCript code
+          can observe the <code>PresentationAvailability</code> object.
+        </p>
+        <p>
           If the <a>controlling user agent</a> can <a>monitor the list of
           available presentation displays</a> in the background (without a
           pending request to <code><a for=
@@ -1561,8 +1566,9 @@
         </p>
         <p>
           The <dfn for="PresentationAvailability">value</dfn> attribute MUST
-          return the last value it was set to. The value is updated by the
-          <a>monitor the list of available presentation displays</a> algorithm.
+          return the last value it was set to. The value is initialized and
+          updated by the <a>monitor the list of available presentation
+          displays</a> algorithm.
         </p>
         <p>
           The <dfn for="PresentationAvailability">onchange</dfn> attribute is
@@ -1573,15 +1579,6 @@
           <h4>
             The set of presentation availability objects
           </h4>
-          <p>
-            Each <code>PresentationRequest</code> has a <a>presentation
-            availability promise</a> and a <a>presentation display
-            availability</a>, which are initially set to <code>null</code>. The
-            <dfn>presentation availability promise</dfn> for a
-            <code>PresentationRequest</code> is a <code>Promise</code> object
-            that <a data-lt="resolve">resolves</a> to the <a>presentation
-            display availability</a> for the request.
-          </p>
           <p>
             The <a>user agent</a> MUST keep track of the <dfn>set of
             presentation availability objects</dfn> created by the
@@ -1686,19 +1683,15 @@
                 </li>
               </ol>
             </li>
-            <li>If the <a>presentation availability promise</a> for
-            <code>presentationRequest</code> is not <code>null</code>, return
-            the <code>presentationRequest</code> object's <a>presentation
-            availability promise</a> and abort these steps.
+            <li>If there is an unsettled <a>Promise</a> from a previous call to
+            <a for="PresentationRequest">getAvailability</a> on
+            <code>presentationRequest</code>, return that <a>Promise</a> and
+            abort these steps.
             </li>
-            <li>Otherwise, set the <code>presentationRequest</code> object's
-            <a>presentation availability promise</a> to a newly created <code>
-              Promise</code> object and set <var>P</var> to this
-              <code>Promise</code>.
+            <li>Otherwise, let <var>P</var> be a new <a>Promise</a>.
             </li>
-            <li>Return the <code>presentationRequest</code> object's
-            <a>presentation availability promise</a>, but continue running
-            these steps <a>in parallel</a>.
+            <li>Return <var>P</var>, but continue running these steps <a>in
+            parallel</a>.
             </li>
             <li>If the user agent is unable to continuously <a>monitor the list
             of available presentation displays</a> in the background, but can
@@ -1726,34 +1719,20 @@
             </li>
             <li>Set the <a>presentation display availability</a> for
             <var>presentationRequest</var> to a newly created
-            <code>PresentationAvailability</code> object, and let <var>A</var>
-            be that object.
-            </li>
-            <li>Set the <code>value</code> property of <var>A</var> as follows:
-              <ol>
-                <li>
-                  <code>false</code> if the <a>list of available presentation
-                  displays</a> is empty.
-                </li>
-                <li>
-                  <code>true</code> if there is at least one <a>available
-                  presentation display</a> for some member of
-                  <var>presentationUrls</var>. That is, there is an entry
-                  <var>(presentationUrl, display)</var> in the <a>list of
-                  available presentation displays</a> for some
-                  <var>presentationUrl</var> in <var>presentationUrls</var>.
-                </li>
-                <li>
-                  <code>false</code> otherwise.
-                </li>
-              </ol>
+            <a>PresentationAvailability</a> object, and let <var>A</var> be
+            that object.
             </li>
             <li>Create a tuple <em>(<var>A</var>,
             <var>presentationUrls</var>)</em> and add it to the <a>set of
             presentation availability objects</a>.
             </li>
             <li>Run the algorithm to <a>monitor the list of available
-            presentation displays</a> <a>in parallel</a>.
+            presentation displays</a>.
+              <div class="note">
+                The monitoring algorithm must be run at least one more time
+                after the previous step to pick up the tuple that was added to
+                the <a>set of presentation availability objects</a>.
+              </div>
             </li>
             <li>
               <a>Resolve</a> <var>P</var> with <var>A</var>.
@@ -1770,11 +1749,28 @@
             "PresentationRequest" data-lt="start">select a presentation
             display</a>, the <a>user agent</a> MUST <dfn>monitor the list of
             available presentation displays</dfn> by running the following
-            steps.
+            steps:
           </p>
           <ol link-for="PresentationAvailability">
-            <li>Set the <a>list of available presentation displays</a> to the
-            empty list.
+            <li>Let <var>availabilitySet</var> be a shallow copy of the <a>set
+            of presentation availability objects</a>.
+            </li>
+            <li>If there is a pending request to <a for="PresentationRequest"
+            data-lt="start">select a presentation display</a> for a
+            <a>PresentationRequest</a> and if the <a>PresentationRequest</a>'s
+            <a>presentation display availability</a> is <code>null</code>, then
+            run the following substeps:
+              <ol>
+                <li>Let <var>A</var> be a newly created
+                <a>PresentationAvailability</a> object.
+                </li>
+                <li>Create a tuple <em>(<var>A</var>,
+                <var>presentationUrls</var>)</em> where
+                <var>presentationUrls</var> is the <a>PresentationRequest</a>'s
+                <a>presentation request URLs</a> and add it to
+                <var>availabilitySet</var>.
+                </li>
+              </ol>
             </li>
             <li>Let <var>newDisplays</var> be an empty list.
             </li>
@@ -1785,9 +1781,12 @@
             <li>Retrieve <a>presentation displays</a> (using an implementation
             specific mechanism) and set <var>newDisplays</var> to this list.
             </li>
+            <li>Set the <a>list of available presentation displays</a> to the
+            empty list.
+            </li>
             <li>For each member <em>(<var>A</var>,
-            <var>availabilityUrls</var>)</em> of the <a>set of presentation
-            availability objects</a>, run the following steps:
+            <var>availabilityUrls</var>)</em> of <var>availabilitySet</var>,
+            run the following steps:
               <ol>
                 <li>Set <var>previousAvailability</var> to the value of
                 <var>A</var>'s <a>value</a> property.
@@ -1814,6 +1813,10 @@
                     </li>
                   </ol>
                 </li>
+                <li>If <var>A</var>'s <a>value</a> property has not yet been
+                initialized, then set <var>A</var>'s <a>value</a> property to
+                <var>newAvailability</var> and skip the following step.
+                </li>
                 <li>If <var>previousAvailability</var> is not equal to
                 <var>newAvailability</var>, then <a>queue a task</a> to run the
                 following steps:
@@ -1830,15 +1833,26 @@
               </ol>
             </li>
           </ol>
+          <div class="note">
+            The <a>controlling user agent</a> may choose how often to
+            <a>monitor the list of available presentation displays</a>,
+            including grouping requests from <a for=
+            "PresentationRequest">start</a> and <a for=
+            "PresentationRequest">getAvailability</a>, and aggregating them
+            across <a data-lt="browsing context">browsing contexts</a>.
+          </div>
           <p>
-            When a <a>PresentationAvailability</a> object is no longer alive
-            (i.e., is eligible for garbage collection), the <a>user agent</a>
-            SHOULD run the following steps:
+            When a <a>presentation display availability</a> object is eligible
+            for garbage collection, the <a>user agent</a> SHOULD run the
+            following steps:
           </p>
           <ol>
+            <li>Let <var>A</var> be the newly deceased
+            <a>PresentationAvailability</a> object
+            </li>
             <li>Find and remove any entry <em>(<var>A</var>,
             <var>availabilityUrl</var>)</em> in the <a>set of presentation
-            availability objects</a> for the newly deceased <var>A</var>.
+            availability objects</a>.
             </li>
             <li>If the <a>set of presentation availability objects</a> is now
             empty and there is no pending request to <a for=
