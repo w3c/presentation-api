@@ -1720,8 +1720,9 @@
             <li>Run the algorithm to <a>monitor the list of available
             presentation displays</a>.
               <div class="note">
-                This algorithm needs to run even if it is already running to
-                pick up the tuple created in the previous step.
+                The monitoring algorithm must be run at least one more time
+                after the previous step to pick up the tuple that was added to
+                the <a>set of presentation availability objects</a>.
               </div>
             </li>
             <li>
@@ -1806,12 +1807,6 @@
                 <li>If <var>A</var>'s <a>value</a> property has not yet been
                 initialized, then set <var>A</var>'s <a>value</a> property to
                 <var>newAvailability</var> and skip the following step.
-                  <div class="note">
-                    The <a>value</a> property of a
-                    <a>PresentationAvailability</a> object becomes
-                    <em>initialized</em> when the above step sets it for the
-                    first time.
-                  </div>
                 </li>
                 <li>If <var>previousAvailability</var> is not equal to
                 <var>newAvailability</var>, then <a>queue a task</a> to run the
@@ -1830,20 +1825,17 @@
             </li>
           </ol>
           <div class="note">
-            Multiple requests to run the algorithm to <a>monitor the list of
-            available presentation displays</a> may occur at once, e.g., due to
-            calls to <a for="PresentationRequest">getAvailability</a> and
-            <a for="PresentationRequest">start</a>. The <a>user agent</a> may
-            run such requests in parallel, serialize them, or interrupt the
-            algorithm if it is before or at step 5 and run it again to
-            aggregate requests. The <a>user agent</a> may also aggregate
-            monitoring activities across <a data-lt="browsing context">browsing
-            contexts</a>.
+            The <a>controlling user agent</a> may choose how often to
+            <a>monitor the list of available presentation displays</a>,
+            including grouping requests from <a for=
+            "PresentationRequest">start</a> and <a for=
+            "PresentationRequest">getAvailability</a>, and aggregating them
+            across <a data-lt="browsing context">browsing contexts</a>.
           </div>
           <p>
-            When a <a>presentation display availability</a> object is no longer
-            alive (i.e., is eligible for garbage collection), the <a>user
-            agent</a> SHOULD run the following steps:
+            When a <a>presentation display availability</a> object is eligible
+            for garbage collection, the <a>user agent</a> SHOULD run the
+            following steps:
           </p>
           <ol>
             <li>Let <var>A</var> be the newly deceased
