@@ -1120,11 +1120,6 @@
             <li>Let <var>presentationUrls</var> be the <a>presentation request
             URLs</a> of <var>presentationRequest</var>.
             </li>
-            <li>If the document object's <a>active sandboxing flag set</a> has
-            the <a>sandboxed presentation browsing context flag</a> set, then
-            return a <a>Promise</a> rejected with a <a>SecurityError</a> and
-            abort these steps.
-            </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
             call to <a for="PresentationRequest">start</a> on any
             <a>PresentationRequest</a> in the same <a>controlling browsing
@@ -1231,10 +1226,6 @@
           <ol>
             <li>Let <var>presentationUrls</var> be the <a>presentation request
             URLs</a> of <var>presentationRequest</var>.
-            </li>
-            <li>If the <a>active sandboxing flag set</a> for <var>W</var> has
-            the <a>sandboxed presentation browsing context flag</a> set, then
-            abort these steps.
             </li>
             <li>If there is no <a>presentation request URL</a> for
             <var>presentationRequest</var> for which <var>D</var> is an
@@ -1373,11 +1364,6 @@
             </dd>
           </dl>
           <ol>
-            <li>If the document object's <a>active sandboxing flag set</a> has
-            the <a>sandboxed presentation browsing context flag</a> set, then
-            return a <a>Promise</a> rejected with a <a>SecurityError</a> and
-            abort these steps.
-            </li>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
             <li>Return <var>P</var>, but continue running these steps in
@@ -1672,17 +1658,6 @@
             </dd>
           </dl>
           <ol>
-            <li>If the document object's <a>active sandboxing flag set</a> has
-            the <a>sandboxed presentation browsing context flag</a> set, then
-            run the following substeps:
-              <ol>
-                <li>Return a new <a>Promise</a> object <a data-lt=
-                "reject">rejected</a> with a <a>SecurityError</a>.
-                </li>
-                <li>Abort these steps.
-                </li>
-              </ol>
-            </li>
             <li>If there is an unsettled <a>Promise</a> from a previous call to
             <a for="PresentationRequest">getAvailability</a> on
             <code>presentationRequest</code>, return that <a>Promise</a> and
