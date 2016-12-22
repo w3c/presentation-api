@@ -385,7 +385,14 @@
         "https://www.w3.org/TR/html51/browsers.html#list-of-the-descendant-browsing-contexts">
         list of descendant browsing contexts</a></dfn>, and <dfn><a href=
         "https://www.w3.org/TR/html51/browsers.html#creating-a-new-browsing-context">
-        creating a new browsing context</a></dfn> are defined in [[!HTML51]].
+        creating a new browsing context</a></dfn>, and <dfn><a href=
+        "https://www.w3.org/TR/html51/webappapis.html#current">current
+        realm</a></dfn> are defined by [[!HTML51]].
+      </p>
+      <p>
+        The term <dfn><a href=
+        "https://tc39.github.io/ecma262/#sec-code-realms">JavaScript
+        realm</a></dfn> is defined in [[!ECMASCRIPT]].
       </p>
       <p>
         The terms <dfn><code><a href=
@@ -899,6 +906,10 @@
         <p>
           The <a>task source</a> for the tasks mentioned in this specification
           is the <dfn>presentation task source</dfn>.
+        </p>
+        <p>
+          Unless otherwise specified, the <a>JavaScript realm</a> for script
+          objects constructed by algorithm steps is the <a>current realm</a>.
         </p>
       </section>
       <section>
@@ -1663,7 +1674,8 @@
             <code>presentationRequest</code>, return that <a>Promise</a> and
             abort these steps.
             </li>
-            <li>Otherwise, let <var>P</var> be a new <a>Promise</a>.
+            <li>Otherwise, let <var>P</var> be a new <a>Promise</a> constructed
+            in the <a>JavaScript realm</a> of <var>presentationRequest</var>.
             </li>
             <li>Return <var>P</var>, but continue running these steps <a>in
             parallel</a>.
@@ -1694,8 +1706,9 @@
             </li>
             <li>Set the <a>presentation display availability</a> for
             <var>presentationRequest</var> to a newly created
-            <a>PresentationAvailability</a> object, and let <var>A</var> be
-            that object.
+            <a>PresentationAvailability</a> object constructed in the
+            <a>JavaScript realm</a> of <var>presentationRequest</var>, and let
+            <var>A</var> be that object.
             </li>
             <li>Create a tuple <em>(<var>A</var>,
             <var>presentationUrls</var>)</em> and add it to the <a>set of
@@ -2670,7 +2683,8 @@
           and abort all remaining steps.
           </li>
           <li>Otherwise, let the <a>presentation controllers promise</a> be a
-          new <a>Promise</a>.
+          new <a>Promise</a> constructed in the <a>JavaScript realm</a> of this
+          <a>PresentationReceiver</a> object.
           </li>
           <li>Return the <a>presentation controllers promise</a>.
           </li>
@@ -2880,7 +2894,9 @@
             <code>null</code>, run the following steps <a>in parallel</a>.
               <ol>
                 <li>Let the <a>presentation controllers monitor</a> be a new
-                <a>PresentationConnectionList</a>.
+                <a>PresentationConnectionList</a> constructed in the
+                <a>JavaScript realm</a> of the <a>PresentationReceiver</a>
+                object of the <a>receiving browsing context</a>.
                 </li>
                 <li>Populate the <a>presentation controllers monitor</a> with
                 the <a>set of presentation controllers</a>.
