@@ -387,7 +387,9 @@
         "https://www.w3.org/TR/html51/browsers.html#creating-a-new-browsing-context">
         creating a new browsing context</a></dfn>, and <dfn><a href=
         "https://www.w3.org/TR/html51/webappapis.html#current">current
-        realm</a></dfn> are defined by [[!HTML51]].
+        realm</a></dfn>, <dfn><a href=
+        "https://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">
+        responsible browsing context</a></dfn> are defined by [[!HTML51]].
       </p>
       <p>
         The term <dfn><a href=
@@ -837,7 +839,11 @@
           by calling <code><a for="PresentationRequest">start</a>()</code> or
           <code><a for="PresentationRequest">reconnect</a>()</code>, or
           received a <a>presentation connection</a> via a <a for=
-          "PresentationRequest">connectionavailable</a> event.
+          "PresentationRequest">connectionavailable</a> event. In algorithms
+          for <a><code>PresentationRequest</code></a>, the <a>controlling
+          browsing context</a> is the <a>responsible browsing context</a> whose
+          <a>JavaScript realm</a> was used to construct the
+          <a><code>PresentationRequest</code></a>.
         </p>
         <p>
           The <dfn data-lt=
@@ -1128,14 +1134,15 @@
             <a>Promise</a> rejected with an <a>InvalidAccessError</a> exception
             and abort these steps.
             </li>
-            <li>Let <var>presentationUrls</var> be the <a>presentation request
-            URLs</a> of <var>presentationRequest</var>.
+            <li>Let <var>topContext</var> be the <a>top-level browsing
+            context</a> of the <a>controlling browsing context</a>.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
-            call to <a for="PresentationRequest">start</a> on any
-            <a>PresentationRequest</a> in the same <a>controlling browsing
-            context</a>, return a new <a>Promise</a> rejected with an
-            <a>OperationError</a> exception and abort all remaining steps.
+            call to <a for="PresentationRequest">start</a> in
+            <var>topContext</var> or any <a>browsing context</a> in the <a>list
+            of descendant browsing contexts</a> of <var>topContext</var>,
+            return a new <a>Promise</a> rejected with an <a>OperationError</a>
+            exception and abort all remaining steps.
             </li>
             <li>Let <var>P</var> be a new <a>Promise</a>.
             </li>
@@ -1147,6 +1154,9 @@
             the list of available presentation displays</a>, run the steps to
             <a>monitor the list of available presentation displays</a> <a>in
             parallel</a>.
+            </li>
+            <li>Let <var>presentationUrls</var> be the <a>presentation request
+            URLs</a> of <var>presentationRequest</var>.
             </li>
             <li>Request user permission for the use of a <a>presentation
             display</a> and selection of one presentation display.
