@@ -520,13 +520,17 @@
       </p>
       <p>
         The terms <dfn><a href=
-        "https://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially
-        secure</a></dfn>, <dfn><a href=
         "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">
         a priori unauthenticated URL</a></dfn>, and <dfn><a href=
         "https://w3c.github.io/webappsec-mixed-content/#categorize-settings-object">
         prohibits mixed security contexts algorithm</a></dfn> are defined in
         [[!MIXED-CONTENT]].
+      </p>
+      <p>
+        The term <dfn><a href=
+        "https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-origin">
+        potentially trustworthy origin</a></dfn> is defined in
+        [[!SECURE-CONTEXTS]].
       </p>
       <p>
         The terms <dfn data-lt="service worker|service workers"><a href=
@@ -3098,12 +3102,15 @@
             </p>
             <p>
               Showing the origin that will be presented will help the user know
-              if that content is from an <a>potentially secure</a> (e.g.,
-              <code>https:</code>) origin, and corresponds to a known or
-              expected site. For example, a malicious site may attempt to
-              convince the user to enter login credentials into a presentation
-              page that imitates a legitimate site. Examination of the
-              requested origin will help the user detect these cases.
+              if that content is from an <a>potentially trustworthy origin</a>
+              (e.g., <code>https:</code>), and corresponds to a known or
+              expected site. The user agent should specifically indicate when
+              the origin requesting presentation is not <a data-lt=
+              "potentially trustworthy origin">potentially trustworthy</a>. For
+              example, a malicious site may attempt to convince the user to
+              enter login credentials into a presentation page that imitates a
+              legitimate site. Examination of the requested origin will help
+              the user detect these cases.
             </p>
           </dd>
           <dt>
