@@ -206,20 +206,21 @@
       <p>
         At its core, this specification enables an exchange of messages between
         a page that acts as the <a>controller</a> and another page that
-        represents the <a data-lt="receiving browsing context">presentation</a>
-        shown in the <a>presentation display</a>. How the messages are
-        transmitted is left to the UA in order to allow the use of
-        <a>presentation display</a> devices that can be attached in a wide
-        variety of ways. For example, when a <a>presentation display</a> device
-        is attached using HDMI or Miracast, the same UA that acts as the
-        <a>controller</a> renders the <a data-lt=
-        "receiving browsing context">presentation</a>. Instead of displaying
-        the <a data-lt="receiving browsing context">presentation</a> in another
-        window on the same device, however, it can use whatever means the
-        operating system provides for using the external <a>presentation
-        displays</a>. In such a case, both the <a>controller</a> and
-        <a data-lt="receiving browsing context">presentation</a> run on the
-        same UA and the operating system is used to route the <a>presentation
+        represents the <a href=
+        "#dfn-receiving-browsing-context">presentation</a> shown in the
+        <a>presentation display</a>. How the messages are transmitted is left
+        to the UA in order to allow the use of <a>presentation display</a>
+        devices that can be attached in a wide variety of ways. For example,
+        when a <a>presentation display</a> device is attached using HDMI or
+        Miracast, the same UA that acts as the <a>controller</a> renders the
+        <a href="#dfn-receiving-browsing-context">presentation</a>. Instead of
+        displaying the <a href=
+        "#dfn-receiving-browsing-context">presentation</a> in another window on
+        the same device, however, it can use whatever means the operating
+        system provides for using the external <a>presentation displays</a>. In
+        such a case, both the <a>controller</a> and <a href=
+        "#dfn-receiving-browsing-context">presentation</a> run on the same UA
+        and the operating system is used to route the <a>presentation
         display</a> output to the <a>presentation display</a>. This is commonly
         referred to as the <dfn><b id="1-ua">1-UA</b></dfn> case. This
         specification imposes no requirements on the <a>presentation
@@ -228,14 +229,15 @@
       <p>
         If the <a>presentation display</a> is able to render HTML documents and
         communicate with the <a>controller</a>, the <a>controller</a> does not
-        need to render the <a data-lt=
-        "receiving browsing context">presentation</a>. In this case, the UA
-        acts as a proxy that requests the <a>presentation display</a> to show
-        and render the <a data-lt="receiving browsing context">presentation</a>
-        itself. This is commonly referred to as the <b id="2-ua">2-UA</b> case.
-        This way of attaching to displays could be enhanced in the future by
-        defining a standard protocol for delivering these types of messages
-        that display devices could choose to implement.
+        need to render the <a href=
+        "#dfn-receiving-browsing-context">presentation</a>. In this case, the
+        UA acts as a proxy that requests the <a>presentation display</a> to
+        show and render the <a href=
+        "#dfn-receiving-browsing-context">presentation</a> itself. This is
+        commonly referred to as the <b id="2-ua">2-UA</b> case. This way of
+        attaching to displays could be enhanced in the future by defining a
+        standard protocol for delivering these types of messages that display
+        devices could choose to implement.
       </p>
       <p>
         The API defined here is intended to be used with UAs that attach to
@@ -404,6 +406,11 @@
         <dfn><code><a href=
         "https://dom.spec.whatwg.org/#dictdef-eventinit">EventInit</a></code></dfn>
         are defined in [[!DOM]].
+      </p>
+      <p>
+        The term <dfn><code><a href=
+        "http://www.w3.org/TR/webmessaging/#messageevent">MessageEvent</a></code></dfn>
+        is defined in [[!WEBMESSAGING]].
       </p>
       <p>
         This document provides interface definitions using the Web IDL standard
@@ -820,9 +827,10 @@
           "presentation identifier|presentation identifiers">presentation
           identifier</dfn> to distinguish it from other <a>presentations</a>,
           and a <dfn>presentation URL</dfn> that is a <a>URL</a> used to create
-          or reconnect to the <a>presentation</a>. A <dfn>valid presentation
-          identifier</dfn> consists of alphanumeric ASCII characters only and
-          is at least 16 characters long.
+          or reconnect to the <a href=
+          "#dfn-receiving-browsing-context">presentation</a>. A <dfn>valid
+          presentation identifier</dfn> consists of alphanumeric ASCII
+          characters only and is at least 16 characters long.
         </p>
         <p>
           Some <a>presentation displays</a> may only be able to display a
@@ -837,12 +845,13 @@
         </p>
         <p>
           A <dfn lt=
-          "controlling browsing context|controlling browsing contexts">controlling
-          browsing context</dfn> (or <dfn>controller</dfn> for short) is a
-          <a>browsing context</a> that has connected to a <a>presentation</a>
-          by calling <code><a for="PresentationRequest">start</a>()</code> or
-          <code><a for="PresentationRequest">reconnect</a>()</code>, or
-          received a <a>presentation connection</a> via a <a for=
+          "controlling browsing context|controlling browsing contexts|controller">
+          controlling browsing context</dfn> (or <strong>controller</strong>
+          for short) is a <a>browsing context</a> that has connected to a
+          <a href="#dfn-receiving-browsing-context">presentation</a> by calling
+          <a for="PresentationRequest">start()</a> or <a for=
+          "PresentationRequest">reconnect()</a>, or received a <a>presentation
+          connection</a> via a <a for=
           "PresentationRequest">connectionavailable</a> event. In algorithms
           for <a><code>PresentationRequest</code></a>, the <a>controlling
           browsing context</a> is the <a>responsible browsing context</a> whose
@@ -851,14 +860,14 @@
         </p>
         <p>
           The <dfn data-lt=
-          "receiving browsing context|receiving browsing contexts">receiving
-          browsing context</dfn> (or <dfn for="idiom" data-lt=
-          "presentations">presentation</dfn> for short) is the browsing context
-          responsible for rendering to a <a>presentation display</a>. A
-          <a>receiving browsing context</a> can reside in the same user agent
-          as the <a>controlling browsing context</a> or a different one. A
-          <a>receiving browsing context</a> is created by following the steps
-          to <a>create a receiving browsing context</a>.
+          "receiving browsing context|receiving browsing contexts|presentations">
+          receiving browsing context</dfn> (or <strong>presentation</strong>
+          for short) is the browsing context responsible for rendering to a
+          <a>presentation display</a>. A <a>receiving browsing context</a> can
+          reside in the same user agent as the <a>controlling browsing
+          context</a> or a different one. A <a>receiving browsing context</a>
+          is created by following the steps to <a>create a receiving browsing
+          context</a>.
         </p>
         <p>
           In a procedure, the <dfn>destination browsing context</dfn> is the
@@ -924,7 +933,7 @@
       </section>
       <section>
         <h3>
-          Interface <code>Presentation</code>
+          Interface <dfn>Presentation</dfn>
         </h3>
         <pre class="idl">
           partial interface Navigator {
@@ -980,7 +989,8 @@
           <div class="note">
             If a <a>controlling user agent</a> does not support <a>starting a
             presentation from a default presentation request</a>, that user
-            agent should ignore any value set for <code>defaultRequest</code>.
+            agent should ignore any value set for <a for=
+            "Presentation">defaultRequest</a>.
           </div>
         </section>
         <section>
@@ -1010,14 +1020,15 @@
             <code>null</code>.
           </p>
           <p class="note">
-            Web developers can use <code>Navigator.presentation.receiver</code>
-            to detect when a document is loaded as a presentation.
+            Web developers can use <a data-lt=
+            "Presentation.receiver">navigator.presentation.receiver</a> to
+            detect when a document is loaded as a presentation.
           </p>
         </section>
       </section>
       <section>
         <h3>
-          Interface <a><code>PresentationRequest</code></a>
+          Interface <dfn>PresentationRequest</dfn>
         </h3>
         <pre class="idl">
           [Constructor(USVString url),
@@ -1049,11 +1060,11 @@
         </p>
         <section>
           <h4>
-            Constructing a <code>PresentationRequest</code>
+            Constructing a <a>PresentationRequest</a>
           </h4>
           <p>
-            When the <code>PresentationRequest</code> constructor is called,
-            the <a>controlling user agent</a> MUST run these steps:
+            When the <a>PresentationRequest</a> constructor is called, the
+            <a>controlling user agent</a> MUST run these steps:
           </p>
           <dl>
             <dt>
@@ -1067,7 +1078,7 @@
               Output
             </dt>
             <dd>
-              A <code>PresentationRequest</code> object
+              A <a>PresentationRequest</a> object
             </dd>
           </dl>
           <ol>
@@ -1102,7 +1113,7 @@
             <var>presentationUrls</var> is an <a>a priori unauthenticated
             URL</a>, then throw a <a>SecurityError</a> and abort these steps.
             </li>
-            <li>Construct a new <code>PresentationRequest</code> object with
+            <li>Construct a new <a>PresentationRequest</a> object with
             <var>presentationUrls</var> as its <a>presentation request URLs</a>
             and return it.
             </li>
@@ -1113,18 +1124,19 @@
             Selecting a presentation display
           </h4>
           <p>
-            When the <code><dfn for="PresentationRequest">start</dfn></code>
-            method is called, the <a>user agent</a> MUST run the following
-            steps to <dfn>select a presentation display</dfn>.
+            When the <code><dfn for="PresentationRequest" data-lt=
+            "start()">start</dfn></code> method is called, the <a>user
+            agent</a> MUST run the following steps to <dfn>select a
+            presentation display</dfn>.
           </p>
           <dl>
             <dt>
               Input
             </dt>
             <dd>
-              <var>presentationRequest</var>, the
-              <code>PresentationRequest</code> object that received the call to
-              <code>start</code>
+              <var>presentationRequest</var>, the <a>PresentationRequest</a>
+              object that received the call to <a for=
+              "PresentationRequest">start</a>
             </dd>
             <dt>
               Output
@@ -1142,7 +1154,7 @@
             context</a> of the <a>controlling browsing context</a>.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
-            call to <a for="PresentationRequest">start</a> in
+            call to <a for="PresentationRequest">start()</a> in
             <var>topContext</var> or any <a>browsing context</a> in the <a>list
             of descendant browsing contexts</a> of <var>topContext</var>,
             return a new <a>Promise</a> rejected with an <a>OperationError</a>
@@ -1240,8 +1252,9 @@
             </dd>
             <dd>
               <var>presentationRequest</var>, the non-<code>null</code> value
-              of <code>navigator.presentation.defaultRequest</code> set on
-              <var>W</var>
+              of <a data-lt=
+              "Presentation.defaultRequest">navigator.presentation.defaultRequest</a>
+              set on <var>W</var>
             </dd>
             <dd>
               <var>D</var>, the <a>presentation display</a> that is the target
@@ -1283,9 +1296,8 @@
               Input
             </dt>
             <dd>
-              <var>presentationRequest</var>, the
-              <code>PresentationRequest</code> that is used to start the
-              presentation connection
+              <var>presentationRequest</var>, the <a>PresentationRequest</a>
+              that is used to start the presentation connection
             </dd>
             <dd>
               <var>D</var>, the selected <a>presentation display</a>
@@ -1363,11 +1375,10 @@
             Reconnecting to a presentation
           </h4>
           <p>
-            When the <code><dfn for=
-            "PresentationRequest">reconnect</dfn>(presentationId)</code> method
-            is called on a <code>PresentationRequest</code>
-            <var>presentationRequest</var>, the <a>user agent</a> MUST run the
-            following steps to <dfn>reconnect to a presentation</dfn>:
+            When the <code><dfn for="PresentationRequest" data-lt=
+            "reconnect()">reconnect</dfn>()</code> method is called, the
+            <a>user agent</a> MUST run the following steps to <dfn>reconnect to
+            a presentation</dfn>:
           </p>
           <dl>
             <dt>
@@ -1375,8 +1386,8 @@
             </dt>
             <dd>
               <var>presentationRequest</var>, the <a>PresentationRequest</a>
-              object that <code><a for=
-              "PresentationRequest">reconnect</a>()</code> was called on
+              object that <a for="PresentationRequest">reconnect()</a> was
+              called on
             </dd>
             <dd>
               <var>presentationId</var>, a valid <a>presentation identifier</a>
@@ -1544,7 +1555,7 @@
       </section>
       <section>
         <h3>
-          Interface <code>PresentationAvailability</code>
+          Interface <dfn>PresentationAvailability</dfn>
         </h3>
         <pre class="idl">
           interface PresentationAvailability : EventTarget {
@@ -1558,20 +1569,19 @@
           A <a><code>PresentationAvailability</code></a> object exposes the
           <a>presentation display availability</a> for a presentation request.
           The <dfn>presentation display availability</dfn> for a
-          <code>PresentationRequest</code> stores whether there is currently
-          any <a>available presentation display</a> for at least one of the
+          <a>PresentationRequest</a> stores whether there is currently any
+          <a>available presentation display</a> for at least one of the
           <a>presentation request URLs</a> of the request.
         </p>
         <p>
           The <a>presentation display availability</a> for a presentation
           request is eligible for garbage collection when no ECMASCript code
-          can observe the <code>PresentationAvailability</code> object.
+          can observe the <a>PresentationAvailability</a> object.
         </p>
         <p>
           If the <a>controlling user agent</a> can <a>monitor the list of
           available presentation displays</a> in the background (without a
-          pending request to <code><a for=
-          "PresentationRequest">start</a>()</code>), the
+          pending request to <a for="PresentationRequest">start()</a>), the
           <a><code>PresentationAvailability</code></a> object MUST be
           implemented in a <a>controlling browsing context</a>.
         </p>
@@ -1592,22 +1602,21 @@
           </h4>
           <p>
             The <a>user agent</a> MUST keep track of the <dfn>set of
-            presentation availability objects</dfn> created by the
-            <code><a for="PresentationRequest">getAvailability</a>()</code>
-            method. The <a>set of presentation availability objects</a> is
-            represented as a set of tuples <em>(<var>A</var>,
-            <var>availabilityUrls</var>)</em>, initially empty, where:
+            presentation availability objects</dfn> created by the <a for=
+            "PresentationRequest">getAvailability()</a> method. The <a>set of
+            presentation availability objects</a> is represented as a set of
+            tuples <em>(<var>A</var>, <var>availabilityUrls</var>)</em>,
+            initially empty, where:
           </p>
           <ol>
             <li>
-              <var>A</var> is a live <code>PresentationAvailability</code>
-              object.
+              <var>A</var> is a live <a>PresentationAvailability</a> object.
             </li>
             <li>
               <var>availabilityUrls</var> is the list of <a>presentation
-              request URLs</a> for the <code>PresentationRequest</code> when
-              <code><a for="PresentationRequest">getAvailability</a>()</code>
-              was called on it to create <var>A</var>.
+              request URLs</a> for the <a>PresentationRequest</a> when <a for=
+              "PresentationRequest">getAvailability()</a> was called on it to
+              create <var>A</var>.
             </li>
           </ol>
         </section>
@@ -1633,15 +1642,15 @@
             empty, the <a>user agent</a> MAY <a>monitor the list of available
             presentation displays</a> continuously, so that pages can use the
             <a for="PresentationAvailability">value</a> property of a
-            <code>PresentationAvailability</code> object to offer presentation
-            only when there are available displays. However, the <a>user
-            agent</a> may not support continuous availability monitoring in the
+            <a>PresentationAvailability</a> object to offer presentation only
+            when there are available displays. However, the <a>user agent</a>
+            may not support continuous availability monitoring in the
             background; for example, because of platform or power consumption
-            restrictions. In this case the <a>Promise</a> returned by
-            <code><a for="PresentationRequest">getAvailability</a>()</code> is
-            <a data-lt="reject">rejected</a>, and the algorithm to <a>monitor
-            the list of available presentation displays</a> will only run as
-            part of the <a>select a presentation display</a> algorithm.
+            restrictions. In this case the <a>Promise</a> returned by <a for=
+            "PresentationRequest">getAvailability()</a> is <a data-lt=
+            "reject">rejected</a>, and the algorithm to <a>monitor the list of
+            available presentation displays</a> will only run as part of the
+            <a>select a presentation display</a> algorithm.
           </p>
           <p>
             When the <a>set of presentation availability objects</a> is empty
@@ -1651,10 +1660,9 @@
             "https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#nf-req01-power-saving-friendly">
             power saving non-functional requirement</a>. To further save power,
             the <a>user agent</a> MAY also keep track of whether a page holding
-            a <code>PresentationAvailability</code> object is in the
-            foreground. Using this information, implementation specific
-            discovery of <a>presentation displays</a> can be resumed or
-            suspended.
+            a <a>PresentationAvailability</a> object is in the foreground.
+            Using this information, implementation specific discovery of
+            <a>presentation displays</a> can be resumed or suspended.
           </p>
         </section>
         <section>
@@ -1662,8 +1670,8 @@
             Getting the <a>presentation displays</a> availability information
           </h4>
           <p>
-            When the <code><dfn for=
-            "PresentationRequest">getAvailability</dfn>()</code> method is
+            When the <code><dfn for="PresentationRequest" data-lt=
+            "getAvailability()">getAvailability</dfn>()</code> method is
             called, the user agent MUST run the following steps:
           </p>
           <dl>
@@ -1671,9 +1679,9 @@
               Input
             </dt>
             <dd>
-              <var>presentationRequest</var>, the
-              <code>PresentationRequest</code> object that received the call to
-              <code>getAvailability</code>
+              <var>presentationRequest</var>, the <a>PresentationRequest</a>
+              object that received the call to <a for=
+              "PresentationRequest">getAvailability</a>
             </dd>
             <dt>
               Output
@@ -1684,8 +1692,8 @@
           </dl>
           <ol>
             <li>If there is an unsettled <a>Promise</a> from a previous call to
-            <a for="PresentationRequest">getAvailability</a> on
-            <code>presentationRequest</code>, return that <a>Promise</a> and
+            <a for="PresentationRequest">getAvailability()</a> on
+            <var>presentationRequest</var>, return that <a>Promise</a> and
             abort these steps.
             </li>
             <li>Otherwise, let <var>P</var> be a new <a>Promise</a> constructed
@@ -1839,8 +1847,8 @@
             The <a>controlling user agent</a> may choose how often to
             <a>monitor the list of available presentation displays</a>,
             including grouping requests from <a for=
-            "PresentationRequest">start</a> and <a for=
-            "PresentationRequest">getAvailability</a>, and aggregating them
+            "PresentationRequest">start()</a> and <a for=
+            "PresentationRequest">getAvailability()</a>, and aggregating them
             across <a data-lt="browsing context">browsing contexts</a>.
           </div>
           <p>
@@ -1873,7 +1881,7 @@
         </section>
         <section>
           <h4>
-            Interface <code>PresentationConnectionAvailableEvent</code>
+            Interface <dfn>PresentationConnectionAvailableEvent</dfn>
           </h4>
           <pre class="idl">
             [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
@@ -1898,10 +1906,10 @@
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for each connection that is created for
             the <a>controller</a>, either by the <a>controller</a> calling
-            <code>start()</code> or <code>reconnect()</code>, or by the
-            <a>controlling user agent</a> creating a connection on the
-            controller's behalf via <a for=
-            "Presentation"><code>defaultRequest</code></a>.
+            <a for="PresentationRequest">start()</a> or <a for=
+            "PresentationRequest">reconnect()</a>, or by the <a>controlling
+            user agent</a> creating a connection on the controller's behalf via
+            <a for="Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
             A <a>receiving user agent</a> <a>fires</a> a <a>trusted event</a>
@@ -1915,11 +1923,27 @@
             created. The event is fired for all connections that are created
             when <a>monitoring incoming presentation connections</a>.
           </p>
+          <p>
+            The <dfn for=
+            "PresentationConnectionAvailableEvent">connection</dfn> attribute
+            MUST return the value it was set to when the
+            <a>PresentationConnection</a> object was created.
+          </p>
+          <p>
+            When the <a>PresentationConnectionAvailableEvent</a> constructor is
+            called, the <a>user agent</a> MUST construct a new
+            <a>PresentationConnectionAvailableEvent</a> object with its <a for=
+            "PresentationConnectionAvailableEvent">connection</a> attribute set
+            to the <dfn for=
+            "PresentationConnectionAvailableEventInit">connection</dfn> member
+            of the <dfn>PresentationConnectionAvailableEventInit</dfn> object
+            passed to the constructor.
+          </p>
         </section>
       </section>
       <section>
         <h3>
-          Interface <code>PresentationConnection</code>
+          Interface <dfn>PresentationConnection</dfn>
         </h3>
         <p>
           Each <a>presentation connection</a> is represented by a
@@ -1964,8 +1988,8 @@
           <p>
             The <dfn><code>state</code></dfn> attribute represents the
             <a>presentation connection</a>'s current state. It can take one of
-            the values of <a>PresentationConnectionState</a> depending on the
-            connection state:
+            the values of <dfn>PresentationConnectionState</dfn> depending on
+            the connection state:
           </p>
           <ul dfn-for="PresentationConnectionState">
             <li>
@@ -1981,61 +2005,64 @@
             <li>
               <dfn>closed</dfn> means that the <a>presentation connection</a>
               has been closed, or could not be opened. It may be re-opened
-              through a call to <code><a for=
-              "PresentationRequest">reconnect</a>()</code>. No communication is
-              possible.
+              through a call to <a for="PresentationRequest">reconnect()</a>.
+              No communication is possible.
             </li>
             <li>
               <dfn>terminated</dfn> means that the <a>receiving browsing
               context</a> has been terminated. Any <a>presentation
-              connection</a> to that <a>presentation</a> is also terminated and
-              cannot be re-opened. No communication is possible.
+              connection</a> to that <a href=
+              "#dfn-receiving-browsing-context">presentation</a> is also
+              terminated and cannot be re-opened. No communication is possible.
             </li>
           </ul>
           <p>
-            When the <code><dfn>close</dfn>()</code> method is called on a
-            <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
-            MUST <a>start closing the presentation connection</a> <var>S</var>
-            with <a for="PresentationConnectionCloseReason">closed</a> as
+            When the <code><dfn data-lt="close()">close</dfn>()</code> method
+            is called on a <a>PresentationConnection</a> <var>S</var>, the
+            <a>user agent</a> MUST <a>start closing the presentation
+            connection</a> <var>S</var> with <a for=
+            "PresentationConnectionCloseReason">closed</a> as
             <var>closeReason</var> and an empty message as
             <var>closeMessage</var>.
           </p>
           <p>
-            When the <code><dfn>terminate</dfn>()</code> method is called on a
-            <a>PresentationConnection</a> <var>S</var> in a <a>controlling
-            browsing context</a>, the <a>user agent</a> MUST run the algorithm
-            to <a>terminate a presentation in a controlling browsing
-            context</a> using <var>S</var>.
+            When the <code><dfn data-lt="terminate()">terminate</dfn>()</code>
+            method is called on a <a>PresentationConnection</a> <var>S</var> in
+            a <a>controlling browsing context</a>, the <a>user agent</a> MUST
+            run the algorithm to <a>terminate a presentation in a controlling
+            browsing context</a> using <var>S</var>.
           </p>
           <p>
-            When the <code>terminate()</code> method is called on a
+            When the <a>terminate()</a> method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>receiving
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
             to <a>terminate a presentation in a receiving browsing context</a>
             using <var>S</var>.
           </p>
           <p>
-            When a <a>PresentationConnection</a> object is created, its
-            <a>binaryType</a> IDL attribute MUST be set to the string
-            "<a link-for="BinaryType">arraybuffer</a>". On getting, it MUST
-            return the last value it was set to. On setting, the user agent
-            MUST set the IDL attribute to the new value.
+            The <dfn>binaryType</dfn> attribute can take one of the values of
+            <dfn for="">BinaryType</dfn>. When a <a>PresentationConnection</a>
+            object is created, its <a>binaryType</a> attribute MUST be set to
+            the string "<a link-for="BinaryType">arraybuffer</a>". On getting,
+            it MUST return the last value it was set to. On setting, the user
+            agent MUST set the attribute to the new value.
           </p>
           <div class="note">
             The <a>binaryType</a> attribute allows authors to control how
             binary data is exposed to scripts. By setting the attribute to
             "<dfn dfn-for="BinaryType">blob</dfn>", binary data is returned in
-            <code>Blob</code> form; by setting it to "<dfn dfn-for=
+            <a>Blob</a> form; by setting it to "<dfn dfn-for=
             "BinaryType">arraybuffer</dfn>", it is returned in
-            <code>ArrayBuffer</code> form. The attribute defaults to
+            <a>ArrayBuffer</a> form. The attribute defaults to
             "<code>arraybuffer</code>". This attribute has no effect on data
             sent in a string form.
           </div>
           <p>
-            When the <code><dfn>send</dfn>()</code> method is called on a
-            <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
-            MUST run the algorithm to <a>send a message</a> through
-            <var>S</var>.
+            When the <code><dfn data-lt=
+            "send!overload-1|send!overload-2|send!overload-3|send()">send</dfn>()</code>
+            method is called on a <a>PresentationConnection</a> <var>S</var>,
+            the <a>user agent</a> MUST run the algorithm to <a>send a
+            message</a> through <var>S</var>.
           </p>
           <p>
             When a <a>PresentationConnection</a> object <var>S</var> is
@@ -2073,8 +2100,7 @@
             </dt>
             <dd>
               <var>presentationConnection</var>, the
-              <code>PresentationConnection</code> object that is to be
-              connected
+              <a>PresentationConnection</a> object that is to be connected
             </dd>
           </dl>
           <ol>
@@ -2121,15 +2147,15 @@
         </section>
         <section>
           <h4>
-            Sending a message through <code>PresentationConnection</code>
+            Sending a message through <a>PresentationConnection</a>
           </h4>
           <div class="note">
             No specific transport for the connection between the <a>controlling
             browsing context</a> and the <a>receiving browsing context</a> is
-            mandated, except that for multiple calls to <code><a for=
-            "PresentationConnection">send</a>()</code> it has to be ensured
-            that messages are delivered to the other end reliably and in
-            sequence. The transport should function equivalently to an
+            mandated, except that for multiple calls to <a for=
+            "PresentationConnection">send()</a> it has to be ensured that
+            messages are delivered to the other end reliably and in sequence.
+            The transport should function equivalently to an
             <a><code>RTCDataChannel</code></a> in reliable mode.
           </div>
           <p>
@@ -2168,9 +2194,9 @@
             </li>
             <li>Let <a>presentation message type</a> <var>messageType</var> be
             <code>binary</code> if <var>messageOrData</var> is of type
-            <code>ArrayBuffer</code>, <code>ArrayBufferView</code>, or
-            <code>Blob</code>. Let <var>messageType</var> be <code>text</code>
-            if <var>messageOrData</var> is of type <code>DOMString</code>.
+            <a>ArrayBuffer</a>, <a>ArrayBufferView</a>, or <a>Blob</a>. Let
+            <var>messageType</var> be <code>text</code> if
+            <var>messageOrData</var> is of type <code>DOMString</code>.
             </li>
             <li>Using an implementation specific mechanism, transmit the
             contents of <var>messageOrData</var> as the <a>presentation message
@@ -2203,8 +2229,8 @@
               </li>
               <li>
                 <code>Unable to send binary message (invalid_message)</code>
-                for <code>ArrayBuffer</code>, <code>ArrayBufferView</code> and
-                <code>Blob</code> messages.
+                for <a>ArrayBuffer</a>, <a>ArrayBufferView</a> and <a>Blob</a>
+                messages.
               </li>
             </ul>
           </div>
@@ -2219,14 +2245,14 @@
         </section>
         <section>
           <h4>
-            Receiving a message through <code>PresentationConnection</code>
+            Receiving a message through <a>PresentationConnection</a>
           </h4>
           <p>
             When the <a>user agent</a> has received a transmission from the
             remote side consisting of <a>presentation message data</a> and
             <a>presentation message type</a>, it MUST run the following steps
             to <dfn data-lt="receive-algorithm">receive a message</dfn> through
-            a <code>PresentationConnection</code>:
+            a <a>PresentationConnection</a>:
           </p>
           <dl>
             <dt>
@@ -2251,9 +2277,9 @@
             "PresentationConnectionState">connected</a>, abort these steps.
             </li>
             <li>Let <var>event</var> be a newly created <a>trusted event</a>
-            that uses the <code>MessageEvent</code> interface, with the event
-            type <a>message</a>, which does not bubble, is not cancelable, and
-            has no default action.
+            that uses the <a>MessageEvent</a> interface, with the event type
+            <a>message</a>, which does not bubble, is not cancelable, and has
+            no default action.
             </li>
             <li>Initialize the <var>event</var>'s data attribute as follows:
               <ol>
@@ -2264,15 +2290,15 @@
                 <li>If <var>messageType</var> is <code>binary</code>, and
                 <a>binaryType</a> attribute is set to "<a link-for=
                 "BinaryType">blob</a>", then initialize <var>event</var>'s
-                <code>data</code> attribute to a new <code>Blob</code> object
-                with <var>messageData</var> as its raw data.
+                <code>data</code> attribute to a new <a>Blob</a> object with
+                <var>messageData</var> as its raw data.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
                 <a>binaryType</a> attribute is set to "<a link-for=
                 "BinaryType">arraybuffer</a>", then initialize
-                <var>event</var>'s <code>data</code> attribute to a new <code>
-                  ArrayBuffer</code> object whose contents are
-                  <var>messageData</var>.
+                <var>event</var>'s <code>data</code> attribute to a new
+                <a>ArrayBuffer</a> object whose contents are
+                <var>messageData</var>.
                 </li>
               </ol>
             </li>
@@ -2293,7 +2319,7 @@
         </section>
         <section>
           <h4>
-            Interface <code>PresentationConnectionCloseEvent</code>
+            Interface <dfn>PresentationConnectionCloseEvent</dfn>
           </h4>
           <pre class="idl">
             enum PresentationConnectionCloseReason { "error", "closed", "wentaway" };
@@ -2312,11 +2338,12 @@
 
 </pre>
           <p>
-            A <code>PresentationConnectionCloseEvent</code> is fired when a
+            A <a>PresentationConnectionCloseEvent</a> is fired when a
             <a>presentation connection</a> enters a <a for=
-            "PresentationConnectionState">closed</a> state. The
-            <code>reason</code> attribute provides the reason why the
-            connection was closed:
+            "PresentationConnectionState">closed</a> state. The <dfn for=
+            "PresentationConnectionCloseEvent">reason</dfn> attribute provides
+            the reason why the connection was closed. It can take one of the
+            values of <dfn>PresentationConnectionCloseReason</dfn>:
           </p>
           <ul dfn-for="PresentationConnectionCloseReason">
             <li>
@@ -2326,8 +2353,8 @@
             <li>
               <dfn>closed</dfn> means that either the <a>controlling browsing
               context</a> or the <a>receiving browsing context</a> that were
-              connected by the <code>PresentationConnection</code> called
-              <code>close()</code>.
+              connected by the <a>PresentationConnection</a> called <a for=
+              "PresentationConnection">close()</a>.
             </li>
             <li>
               <dfn>wentaway</dfn> means that the browser closed the connection,
@@ -2336,15 +2363,30 @@
             </li>
           </ul>
           <p>
-            When the <code>reason</code> attribute is <a for=
-            "PresentationConnectionCloseReason">error</a>, the user agent
-            SHOULD set the error message to a human readable description of how
-            the communication channel encountered an error.
+            When the <a for="PresentationConnectionCloseEvent">reason</a>
+            attribute is <a for="PresentationConnectionCloseReason">error</a>,
+            the user agent SHOULD set the <dfn for=
+            "PresentationConnectionCloseEvent">message</dfn> attribute to a
+            human readable description of how the communication channel
+            encountered an error.
+          </p>
+          <p>
+            When the <a>PresentationConnectionCloseEvent</a> constructor is
+            called, the <a>user agent</a> MUST construct a new
+            <a>PresentationConnectionCloseEvent</a> object, with its <a for=
+            "PresentationConnectionCloseEvent">reason</a> attribute set to the
+            <dfn for="PresentationConnectionCloseEventInit">reason</dfn> member
+            of the <dfn>PresentationConnectionCloseEventInit</dfn> object
+            passed to the constructor, and its <a for=
+            "PresentationConnectionCloseEvent">message</a> attribute set to the
+            <dfn for="PresentationConnectionCloseEventInit">message</dfn>
+            member of this <a>PresentationConnectionCloseEventInit</a> object
+            if set, to an empty string otherwise.
           </p>
         </section>
         <section>
           <h4>
-            Closing a <code>PresentationConnection</code>
+            Closing a <a>PresentationConnection</a>
           </h4>
           <p>
             When the <a>user agent</a> is to <dfn data-lt=
@@ -2381,12 +2423,11 @@
             "PresentationConnectionState">closed</a>.
             </li>
             <li>Start to signal to the <a>destination browsing context</a> the
-            intention to close the corresponding
-            <code>PresentationConnection</code>, passing the
-            <var>closeReason</var> to that context. The user agent does not
-            need to wait for acknowledgement that the corresponding
-            <code>PresentationConnection</code> was actually closed before
-            proceeding to the next step.
+            intention to close the corresponding <a>PresentationConnection</a>,
+            passing the <var>closeReason</var> to that context. The user agent
+            does not need to wait for acknowledgement that the corresponding
+            <a>PresentationConnection</a> was actually closed before proceeding
+            to the next step.
             </li>
             <li>If <var>closeReason</var> is not <a for=
             "PresentationConnectionCloseReason">wentaway</a>, then locally run
@@ -2670,7 +2711,7 @@
       </section>
       <section>
         <h3>
-          Interface <a><code>PresentationReceiver</code></a>
+          Interface <dfn>PresentationReceiver</dfn>
         </h3>
         <pre class="idl">
           interface PresentationReceiver {
@@ -2830,7 +2871,7 @@
       </section>
       <section>
         <h3>
-          Interface <a><code>PresentationConnectionList</code></a>
+          Interface <dfn>PresentationConnectionList</dfn>
         </h3>
         <pre class="idl">
           interface PresentationConnectionList : EventTarget {
@@ -3020,13 +3061,13 @@
           Personally identifiable information
         </h3>
         <p>
-          The <code>change</code> event fired on the
-          <a>PresentationAvailability</a> object reveals one bit of information
-          about the presence (or non-presence) of a <a>presentation display</a>
-          typically discovered through the local area network. This could be
-          used in conjunction with other information for fingerprinting the
-          user. However, this information is also dependent on the user's local
-          network context, so the risk is minimized.
+          The <a>change</a> event fired on the <a>PresentationAvailability</a>
+          object reveals one bit of information about the presence (or
+          non-presence) of a <a>presentation display</a> typically discovered
+          through the local area network. This could be used in conjunction
+          with other information for fingerprinting the user. However, this
+          information is also dependent on the user's local network context, so
+          the risk is minimized.
         </p>
         <p>
           The API enables <a href=
@@ -3046,11 +3087,12 @@
           Cross-origin access
         </h3>
         <p>
-          A <a>presentation</a> is allowed to be accessed across origins; the
-          presentation URL and presentation ID used to create the presentation
-          are the only information needed to reconnect to a connection from any
-          origin in that user agent. In other words, a presentation is not tied
-          to a particular opening origin.
+          A <a href="#dfn-receiving-browsing-context">presentation</a> is
+          allowed to be accessed across origins; the presentation URL and
+          presentation ID used to create the presentation are the only
+          information needed to reconnect to a connection from any origin in
+          that user agent. In other words, a presentation is not tied to a
+          particular opening origin.
         </p>
         <p>
           This design allows controlling contexts from different domains to
@@ -3062,19 +3104,19 @@
           This specification allows a user agent to publish information about
           its <a>set of controlled presentations</a>, and allows a browsing
           context on another user agent to connect to a running presentation
-          via <code><a for="PresentationRequest">reconnect</a>()</code>. To
-          connect, the additional browsing context must discover the
-          presentation URL and presentation ID of the presentation, either
-          provided by the user, or via a shared service.
+          via <a for="PresentationRequest">reconnect()</a>. To connect, the
+          additional browsing context must discover the presentation URL and
+          presentation ID of the presentation, either provided by the user, or
+          via a shared service.
         </p>
         <p>
           However, this specification makes no guarantee as to the identity of
           the connecting party. Once connected, the receiving application may
           wish to further verify the identity of the connecting party through
           application-specific means. For example, the connecting application
-          could provide a token via <code><a for=
-          "PresentationConnection">send</a>()</code> that the receiving
-          application could verify corresponds an authorized entity.
+          could provide a token via <a for="PresentationConnection">send()</a>
+          that the receiving application could verify corresponds an authorized
+          entity.
         </p>
       </section>
       <section>
