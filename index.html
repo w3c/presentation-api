@@ -322,69 +322,154 @@
         Terminology
       </h2>
       <p>
-        The terms <dfn><a href=
-        "https://www.w3.org/TR/html51/obsolete.html#application-cache-manifest">
-        application cache</a></dfn>, <dfn data-lt=
-        "browsing context|browsing contexts"><a href=
-        "https://www.w3.org/TR/html51/browsers.html#browsing-context">browsing
-        context</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/webappapis.html#event-handler">event
-        handler</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/webappapis.html#event-handler-event-type">
-        event handler event type</a></dfn>, <dfn data-lt="fire|fires"><a href=
-        "https://www.w3.org/TR/html51/infrastructure.html#fire">firing an
-        event</a></dfn>, <dfn data-lt="fire a simple event"><a href=
-        "https://www.w3.org/TR/html51/webappapis.html#firing-a-simple-event-named-e">
-        firing a simple event</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#navigated">navigate</a></dfn>,
-        <dfn><a href=
-        "https://www.w3.org/TR/html51/webappapis.html#queuing">queue a
-        task</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/infrastructure.html#trusted">trusted
-        event</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#allowed-to-show-a-popup">allowed
-        to show a popup</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">
-        top-level browsing context</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#unloaded">unload a
-        document</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#session-history">session
-        history</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#sandboxing-flag-set">sandboxing
-        flag set</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#active-sandboxing-flag-set">
-        active sandboxing flag set</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#parse-the-sandboxing-directive">
-        parse a sandboxing directive</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">
-        sandboxed auxiliary navigation browsing context flag</a></dfn>,
-        <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">
-        sandboxed top-level navigation browsing context flag</a></dfn>,
-        <dfn><a href=
-        "https://www.w3.org/TR/html51/infrastructure.html#in-parallel">in
-        parallel</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/webappapis.html#task-source">task
-        source</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#nested-browsing-contexts">nested
-        browsing context</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#list-of-the-descendant-browsing-contexts">
-        list of descendant browsing contexts</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/browsers.html#creating-a-new-browsing-context">
-        creating a new browsing context</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/webappapis.html#current">current
-        realm</a></dfn>, <dfn><a href=
-        "https://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">
-        responsible browsing context</a></dfn>, <dfn><a href=
-        "http://www.w3.org/TR/html51/webappapis.html#current-settings-object">current
-        settings object</a></dfn>, <dfn><a href=
-        "http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant
-        settings object</a></dfn>, <a href=
-        "https://www.w3.org/TR/html51/webappapis.html#events-event-handlers"><dfn>
-        <code>EventHandler</code></dfn></a> and <a href=
-        "https://www.w3.org/TR/html51/webappapis.html#navigator-navigator"><dfn>
-        <code>Navigator</code></dfn></a> are defined in [[!HTML51]].
+        The following terms are defined in [[!HTML51]]:
       </p>
+      <ul>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#active-sandboxing-flag-set">
+          active sandboxing flag set</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#allowed-to-show-a-popup">allowed
+          to show a popup</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/obsolete.html#application-cache-manifest">
+          application cache</a></dfn>
+        </li>
+        <li>
+          <dfn data-lt="browsing context|browsing contexts"><a href=
+          "https://www.w3.org/TR/html51/browsers.html#browsing-context">browsing
+          context</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#creating-a-new-browsing-context">
+          creating a new browsing context</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/webappapis.html#current">current
+          realm</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "http://www.w3.org/TR/html51/webappapis.html#current-settings-object">
+          current settings object</a></dfn>
+        </li>
+        <li>
+          <a href=
+          "https://www.w3.org/TR/html51/webappapis.html#events-event-handlers"><dfn>
+          <code>EventHandler</code></dfn></a>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/webappapis.html#event-handler">event
+          handler</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/webappapis.html#event-handler-event-type">
+          event handler event type</a></dfn>
+        </li>
+        <li>
+          <dfn data-lt="fire|fires"><a href=
+          "https://www.w3.org/TR/html51/infrastructure.html#fire">firing an
+          event</a></dfn>
+        </li>
+        <li>
+          <dfn data-lt="fire a simple event"><a href=
+          "https://www.w3.org/TR/html51/webappapis.html#firing-a-simple-event-named-e">
+          firing a simple event</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/infrastructure.html#in-parallel">in
+          parallel</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#list-of-the-descendant-browsing-contexts">
+          list of descendant browsing contexts</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#navigated">navigate</a></dfn>
+        </li>
+        <li>
+          <a href=
+          "https://www.w3.org/TR/html51/webappapis.html#navigator-navigator"><dfn>
+          <code>Navigator</code></dfn></a>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#nested-browsing-contexts">
+          nested browsing context</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#parse-the-sandboxing-directive">
+          parse a sandboxing directive</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/webappapis.html#queuing">queue a
+          task</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">
+          relevant settings object</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">
+          responsible browsing context</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#sandboxed-auxiliary-navigation-browsing-context-flag">
+          sandboxed auxiliary navigation browsing context flag</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#sandboxed-top-level-navigation-browsing-context-flag">
+          sandboxed top-level navigation browsing context flag</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#sandboxing-flag-set">sandboxing
+          flag set</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#session-history">session
+          history</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/webappapis.html#task-source">task
+          source</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">
+          top-level browsing context</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/infrastructure.html#trusted">trusted
+          event</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#unloaded">unload a
+          document</a></dfn>
+        </li>
+      </ul>
       <p>
         The term <dfn><a href=
         "https://tc39.github.io/ecma262/#sec-code-realms">JavaScript
@@ -837,8 +922,8 @@
           controlling browsing context</dfn> (or <strong>controller</strong>
           for short) is a <a>browsing context</a> that has connected to a
           <a href="#dfn-receiving-browsing-context">presentation</a> by calling
-          <a for="PresentationRequest">start()</a> or <a for=
-          "PresentationRequest">reconnect()</a>, or received a <a>presentation
+          <a for="PresentationRequest">start</a> or <a for=
+          "PresentationRequest">reconnect</a>, or received a <a>presentation
           connection</a> via a <a for=
           "PresentationRequest">connectionavailable</a> event. In algorithms
           for <a><code>PresentationRequest</code></a>, the <a>controlling
@@ -1141,7 +1226,7 @@
             context</a> of the <a>controlling browsing context</a>.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
-            call to <a for="PresentationRequest">start()</a> in
+            call to <a for="PresentationRequest">start</a> in
             <var>topContext</var> or any <a>browsing context</a> in the <a>list
             of descendant browsing contexts</a> of <var>topContext</var>,
             return a new <a>Promise</a> rejected with an <a>OperationError</a>
@@ -1362,9 +1447,8 @@
             Reconnecting to a presentation
           </h4>
           <p>
-            When the <code><dfn for=
-            "PresentationRequest">reconnect</dfn>()</code> method is called,
-            the <a>user agent</a> MUST run the following steps to
+            When the <dfn for="PresentationRequest">reconnect</dfn> method is
+            called, the <a>user agent</a> MUST run the following steps to
             <dfn>reconnect to a presentation</dfn>:
           </p>
           <dl>
@@ -1373,8 +1457,8 @@
             </dt>
             <dd>
               <var>presentationRequest</var>, the <a>PresentationRequest</a>
-              object that <a for="PresentationRequest">reconnect()</a> was
-              called on
+              object that <a for="PresentationRequest">reconnect</a> was called
+              on
             </dd>
             <dd>
               <var>presentationId</var>, a valid <a>presentation identifier</a>
@@ -1568,7 +1652,7 @@
         <p>
           If the <a>controlling user agent</a> can <a>monitor the list of
           available presentation displays</a> in the background (without a
-          pending request to <a for="PresentationRequest">start()</a>), the
+          pending request to <a for="PresentationRequest">start</a>), the
           <a><code>PresentationAvailability</code></a> object MUST be
           implemented in a <a>controlling browsing context</a>.
         </p>
@@ -1590,7 +1674,7 @@
           <p>
             The <a>user agent</a> MUST keep track of the <dfn>set of
             presentation availability objects</dfn> created by the <a for=
-            "PresentationRequest">getAvailability()</a> method. The <a>set of
+            "PresentationRequest">getAvailability</a> method. The <a>set of
             presentation availability objects</a> is represented as a set of
             tuples <em>(<var>A</var>, <var>availabilityUrls</var>)</em>,
             initially empty, where:
@@ -1602,7 +1686,7 @@
             <li>
               <var>availabilityUrls</var> is the list of <a>presentation
               request URLs</a> for the <a>PresentationRequest</a> when <a for=
-              "PresentationRequest">getAvailability()</a> was called on it to
+              "PresentationRequest">getAvailability</a> was called on it to
               create <var>A</var>.
             </li>
           </ol>
@@ -1634,7 +1718,7 @@
             may not support continuous availability monitoring in the
             background; for example, because of platform or power consumption
             restrictions. In this case the <a>Promise</a> returned by <a for=
-            "PresentationRequest">getAvailability()</a> is <a data-lt=
+            "PresentationRequest">getAvailability</a> is <a data-lt=
             "reject">rejected</a>, and the algorithm to <a>monitor the list of
             available presentation displays</a> will only run as part of the
             <a>select a presentation display</a> algorithm.
@@ -1657,9 +1741,8 @@
             Getting the <a>presentation displays</a> availability information
           </h4>
           <p>
-            When the <code><dfn for="PresentationRequest" data-lt=
-            "getAvailability()">getAvailability</dfn>()</code> method is
-            called, the user agent MUST run the following steps:
+            When the <dfn for="PresentationRequest">getAvailability</dfn>
+            method is called, the user agent MUST run the following steps:
           </p>
           <dl>
             <dt>
@@ -1679,7 +1762,7 @@
           </dl>
           <ol>
             <li>If there is an unsettled <a>Promise</a> from a previous call to
-            <a for="PresentationRequest">getAvailability()</a> on
+            <a for="PresentationRequest">getAvailability</a> on
             <var>presentationRequest</var>, return that <a>Promise</a> and
             abort these steps.
             </li>
@@ -1834,8 +1917,8 @@
             The <a>controlling user agent</a> may choose how often to
             <a>monitor the list of available presentation displays</a>,
             including grouping requests from <a for=
-            "PresentationRequest">start()</a> and <a for=
-            "PresentationRequest">getAvailability()</a>, and aggregating them
+            "PresentationRequest">start</a> and <a for=
+            "PresentationRequest">getAvailability</a>, and aggregating them
             across <a data-lt="browsing context">browsing contexts</a>.
           </div>
           <p>
@@ -1893,9 +1976,9 @@
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for each connection that is created for
             the <a>controller</a>, either by the <a>controller</a> calling
-            <a for="PresentationRequest">start()</a> or <a for=
-            "PresentationRequest">reconnect()</a>, or by the <a>controlling
-            user agent</a> creating a connection on the controller's behalf via
+            <a for="PresentationRequest">start</a> or <a for=
+            "PresentationRequest">reconnect</a>, or by the <a>controlling user
+            agent</a> creating a connection on the controller's behalf via
             <a for="Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
@@ -1992,8 +2075,8 @@
             <li>
               <dfn>closed</dfn> means that the <a>presentation connection</a>
               has been closed, or could not be opened. It may be re-opened
-              through a call to <a for="PresentationRequest">reconnect()</a>.
-              No communication is possible.
+              through a call to <a for="PresentationRequest">reconnect</a>. No
+              communication is possible.
             </li>
             <li>
               <dfn>terminated</dfn> means that the <a>receiving browsing
@@ -2004,7 +2087,7 @@
             </li>
           </ul>
           <p>
-            When the <code><dfn>close</dfn>()</code> method is called on a
+            When the <dfn>close</dfn> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
             MUST <a>start closing the presentation connection</a> <var>S</var>
             with <a for="PresentationConnectionCloseReason">closed</a> as
@@ -2012,14 +2095,14 @@
             <var>closeMessage</var>.
           </p>
           <p>
-            When the <code><dfn>terminate</dfn>()</code> method is called on a
+            When the <dfn>terminate</dfn> method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>controlling
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
             to <a>terminate a presentation in a controlling browsing
             context</a> using <var>S</var>.
           </p>
           <p>
-            When the <a>terminate()</a> method is called on a
+            When the <a>terminate</a> method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>receiving
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
             to <a>terminate a presentation in a receiving browsing context</a>
@@ -2044,11 +2127,11 @@
             sent in a string form.
           </div>
           <p>
-            When the <code><dfn data-lt=
-            "send!overload-1|send!overload-2|send!overload-3">send</dfn>()</code>
-            method is called on a <a>PresentationConnection</a> <var>S</var>,
-            the <a>user agent</a> MUST run the algorithm to <a>send a
-            message</a> through <var>S</var>.
+            When the <dfn data-lt=
+            "send!overload-1|send!overload-2|send!overload-3">send</dfn> method
+            is called on a <a>PresentationConnection</a> <var>S</var>, the
+            <a>user agent</a> MUST run the algorithm to <a>send a message</a>
+            through <var>S</var>.
           </p>
           <p>
             When a <a>PresentationConnection</a> object <var>S</var> is
@@ -2139,7 +2222,7 @@
             No specific transport for the connection between the <a>controlling
             browsing context</a> and the <a>receiving browsing context</a> is
             mandated, except that for multiple calls to <a for=
-            "PresentationConnection">send()</a> it has to be ensured that
+            "PresentationConnection">send</a> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
             <a><code>RTCDataChannel</code></a> in reliable mode.
@@ -2340,7 +2423,7 @@
               <dfn>closed</dfn> means that either the <a>controlling browsing
               context</a> or the <a>receiving browsing context</a> that were
               connected by the <a>PresentationConnection</a> called <a for=
-              "PresentationConnection">close()</a>.
+              "PresentationConnection">close</a>.
             </li>
             <li>
               <dfn>wentaway</dfn> means that the browser closed the connection,
@@ -3090,7 +3173,7 @@
           This specification allows a user agent to publish information about
           its <a>set of controlled presentations</a>, and allows a browsing
           context on another user agent to connect to a running presentation
-          via <a for="PresentationRequest">reconnect()</a>. To connect, the
+          via <a for="PresentationRequest">reconnect</a>. To connect, the
           additional browsing context must discover the presentation URL and
           presentation ID of the presentation, either provided by the user, or
           via a shared service.
@@ -3100,7 +3183,7 @@
           the connecting party. Once connected, the receiving application may
           wish to further verify the identity of the connecting party through
           application-specific means. For example, the connecting application
-          could provide a token via <a for="PresentationConnection">send()</a>
+          could provide a token via <a for="PresentationConnection">send</a>
           that the receiving application could verify corresponds an authorized
           entity.
         </p>
