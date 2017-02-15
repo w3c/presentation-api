@@ -490,7 +490,7 @@
       </p>
       <p>
         This document provides interface definitions using the Web IDL standard
-        [[!WEBIDL-1]].
+        [[!WEBIDL-2]].
       </p>
       <p>
         The terms <dfn><a href=
@@ -500,8 +500,8 @@
         <dfn><a href=
         "https://heycam.github.io/webidl/#idl-ArrayBuffer">ArrayBuffer</a></dfn>,
         <dfn><a href=
-        "https://heycam.github.io/webidl/#idl-ArrayBufferView">ArrayBufferView</a></dfn>,
-        and the following exception names are defined in [[!WEBIDL-1]]:
+        "https://heycam.github.io/webidl/#ArrayBufferView">ArrayBufferView</a></dfn>,
+        and the following exception names are defined in [[!WEBIDL-2]]:
       </p>
       <ul>
         <li>
@@ -530,8 +530,7 @@
         </li>
         <li>
           <a href=
-          "https://heycam.github.io/webidl/#notallowederror"><dfn><code>NotAllowedError</code></dfn></a>,
-          defined in [[!WEBIDL-2]]
+          "https://heycam.github.io/webidl/#notallowederror"><dfn><code>NotAllowedError</code></dfn></a>
         </li>
       </ul>
       <p>
@@ -650,7 +649,7 @@
         <h3>
           Monitor availability of presentation displays example
         </h3>
-        <pre class="example highlight">
+        <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;button id="presentBtn" style="display: none;"&gt;Present&lt;/button&gt;
 &lt;script&gt;
@@ -686,7 +685,7 @@
         <h3>
           Starting a new presentation example
         </h3>
-        <pre class="example highlight">
+        <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
   presentBtn.onclick = function () {
@@ -705,7 +704,7 @@
         <h3>
           Reconnect to a presentation example
         </h3>
-        <pre class="example highlight">
+        <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;button id="reconnectBtn" style="display: none;"&gt;Reconnect&lt;/button&gt;
 &lt;script&gt;
@@ -733,7 +732,7 @@
         <h3>
           Presentation initiation by the controlling UA example
         </h3>
-        <pre class="example highlight">
+        <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;!-- Setting presentation.defaultRequest allows the page to specify the
      PresentationRequest to use when the controlling UA initiates a
@@ -751,7 +750,7 @@
         <h3>
           Monitor connection's state and exchange data example
         </h3>
-        <pre class="example highlight">
+        <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;button id="disconnectBtn" style="display: none;"&gt;Disconnect&lt;/button&gt;
 &lt;button id="stopBtn" style="display: none;"&gt;Stop&lt;/button&gt;
@@ -826,7 +825,7 @@
         <h3>
           Monitor available connection(s) and say hello
         </h3>
-        <pre class="example highlight">
+        <pre class="example">
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
   var addConnection = function(connection) {
@@ -851,7 +850,7 @@
         <h3>
           Passing locale information with a message
         </h3>
-        <pre class="example highlight">
+        <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
   connection.send("{string: '你好，世界!', lang: 'zh-CN'}");
