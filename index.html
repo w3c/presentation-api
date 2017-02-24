@@ -596,7 +596,7 @@
       <p>
         The term <dfn><a href=
         "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">
-        a priori unauthenticated URL</a></dfn> is defined in
+        a priori authenticated URL</a></dfn> is defined in
         [[!MIXED-CONTENT]].
       </p>
       <p>
@@ -630,9 +630,9 @@
         features of the Presentation API. In these examples,
         <code>controller.html</code> implements the controller and
         <code>presentation.html</code> implements the presentation. Both pages
-        are served from the domain <code>http://example.org</code>
-        (<code>http://example.org/controller.html</code> and
-        <code>http://example.org/presentation.html</code>). These examples
+        are served from the domain <code>https://example.org</code>
+        (<code>https://example.org/controller.html</code> and
+        <code>https://example.org/presentation.html</code>). These examples
         assume that the controlling page is managing one presentation at a
         time. Please refer to the comments in the code examples for further
         details.
@@ -648,8 +648,8 @@
   // The Present button is visible if at least one presentation display is available
   var presentBtn = document.getElementById("presentBtn");
   // It is also possible to use relative presentation URL e.g. "presentation.html"
-  var presUrls = ["http://example.com/presentation.html",
-                  "http://example.net/alternate.html"];
+  var presUrls = ["https://example.com/presentation.html",
+                  "https://example.net/alternate.html"];
   // show or hide present button depending on display availability
   var handleAvailabilityChange = function(available) {
     presentBtn.style.display = available ? "inline" : "none";
@@ -997,7 +997,7 @@
         </h3>
         <pre class="idl">
           partial interface Navigator {
-            [SecureContext] [SameObject] readonly attribute Presentation presentation;
+            [SecureContext, SameObject] readonly attribute Presentation presentation;
           };
 
           [SecureContext]           
@@ -1092,8 +1092,8 @@
           Interface <dfn>PresentationRequest</dfn>
         </h3>
         <pre class="idl">
-          [SecureContext]
-          [Constructor(USVString url),
+          [SecureContext,
+           Constructor(USVString url),
            Constructor(sequence&lt;USVString&gt; urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
@@ -1167,12 +1167,9 @@
                 </li>
               </ol>
             </li>
-            <li>Using the document's <a>relevant settings object</a>, run the
-            <a>prohibits mixed security contexts algorithm</a>.
-            </li>
-            <li>If any member of
-            <var>presentationUrls</var> is an <a>a priori unauthenticated
-            URL</a>, then throw a <a>SecurityError</a> and abort these steps.
+            <li>If any member of <var>presentationUrls</var> is an not an <a>a priori
+            authenticated URL</a>, then throw a <a>SecurityError</a> and
+            abort these steps.
             </li>
             <li>Construct a new <a>PresentationRequest</a> object with
             <var>presentationUrls</var> as its <a>presentation request URLs</a>
@@ -1943,8 +1940,8 @@
             Interface <dfn>PresentationConnectionAvailableEvent</dfn>
           </h4>
           <pre class="idl">
-            [SecureContext]
-            [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
+            [SecureContext,
+             Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
             interface PresentationConnectionAvailableEvent : Event {
               [SameObject] readonly attribute PresentationConnection connection;
             };
@@ -2384,8 +2381,8 @@
           <pre class="idl">
             enum PresentationConnectionCloseReason { "error", "closed", "wentaway" };
 
-            [SecureContext]
-            [Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict)]
+            [SecureContext,
+             Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict)]
             interface PresentationConnectionCloseEvent : Event {
               readonly attribute PresentationConnectionCloseReason reason;
               readonly attribute DOMString message;
