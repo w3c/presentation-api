@@ -594,18 +594,9 @@
         storage areas</a></dfn> are defined in [[!WEBSTORAGE]].
       </p>
       <p>
-        The terms <dfn><a href=
-        "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">
-        a priori unauthenticated URL</a></dfn>, and <dfn><a href=
-        "https://w3c.github.io/webappsec-mixed-content/#categorize-settings-object">
-        prohibits mixed security contexts algorithm</a></dfn> are defined in
-        [[!MIXED-CONTENT]].
-      </p>
-      <p>
         The term <dfn><a href=
-        "https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-origin">
-        potentially trustworthy origin</a></dfn> is defined in
-        [[!SECURE-CONTEXTS]].
+        "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">
+        a priori authenticated URL</a></dfn> is defined in [[!MIXED-CONTENT]].
       </p>
       <p>
         The terms <dfn data-lt="service worker|service workers"><a href=
@@ -638,9 +629,9 @@
         features of the Presentation API. In these examples,
         <code>controller.html</code> implements the controller and
         <code>presentation.html</code> implements the presentation. Both pages
-        are served from the domain <code>http://example.org</code>
-        (<code>http://example.org/controller.html</code> and
-        <code>http://example.org/presentation.html</code>). These examples
+        are served from the domain <code>https://example.org</code>
+        (<code>https://example.org/controller.html</code> and
+        <code>https://example.org/presentation.html</code>). These examples
         assume that the controlling page is managing one presentation at a
         time. Please refer to the comments in the code examples for further
         details.
@@ -656,8 +647,8 @@
   // The Present button is visible if at least one presentation display is available
   var presentBtn = document.getElementById("presentBtn");
   // It is also possible to use relative presentation URL e.g. "presentation.html"
-  var presUrls = ["http://example.com/presentation.html",
-                  "http://example.net/alternate.html"];
+  var presUrls = ["https://example.com/presentation.html",
+                  "https://example.net/alternate.html"];
   // show or hide present button depending on display availability
   var handleAvailabilityChange = function(available) {
     presentBtn.style.display = available ? "inline" : "none";
@@ -1005,9 +996,10 @@
         </h3>
         <pre class="idl">
           partial interface Navigator {
-            [SameObject] readonly attribute Presentation presentation;
+            [SecureContext, SameObject] readonly attribute Presentation presentation;
           };
-          
+
+          [SecureContext]           
           interface Presentation {
           };
         
@@ -1099,7 +1091,8 @@
           Interface <dfn>PresentationRequest</dfn>
         </h3>
         <pre class="idl">
-          [Constructor(USVString url),
+          [SecureContext,
+           Constructor(USVString url),
            Constructor(sequence&lt;USVString&gt; urls)]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
@@ -1173,13 +1166,9 @@
                 </li>
               </ol>
             </li>
-            <li>Using the document's <a>relevant settings object</a>, run the
-            <a>prohibits mixed security contexts algorithm</a>.
-            </li>
-            <li>If the result of the algorithm is <code>"Prohibits Mixed
-            Security Contexts"</code> and any member of
-            <var>presentationUrls</var> is an <a>a priori unauthenticated
-            URL</a>, then throw a <a>SecurityError</a> and abort these steps.
+            <li>If any member of <var>presentationUrls</var> is not an <a>a
+            priori authenticated URL</a>, then throw a <a>SecurityError</a> and
+            abort these steps.
             </li>
             <li>Construct a new <a>PresentationRequest</a> object with
             <var>presentationUrls</var> as its <a>presentation request URLs</a>
@@ -1624,6 +1613,7 @@
           Interface <dfn>PresentationAvailability</dfn>
         </h3>
         <pre class="idl">
+          [SecureContext] 
           interface PresentationAvailability : EventTarget {
             readonly attribute boolean value;
 
@@ -1949,7 +1939,8 @@
             Interface <dfn>PresentationConnectionAvailableEvent</dfn>
           </h4>
           <pre class="idl">
-            [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
+            [SecureContext,
+             Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
             interface PresentationConnectionAvailableEvent : Event {
               [SameObject] readonly attribute PresentationConnection connection;
             };
@@ -2020,6 +2011,7 @@
           enum PresentationConnectionState { "connecting", "connected", "closed", "terminated" };
           enum BinaryType { "blob", "arraybuffer" };
 
+          [SecureContext]
           interface PresentationConnection : EventTarget {
             readonly attribute USVString id;
             readonly attribute USVString url;
@@ -2388,7 +2380,8 @@
           <pre class="idl">
             enum PresentationConnectionCloseReason { "error", "closed", "wentaway" };
 
-            [Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict)]
+            [SecureContext,
+             Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict)]
             interface PresentationConnectionCloseEvent : Event {
               readonly attribute PresentationConnectionCloseReason reason;
               readonly attribute DOMString message;
@@ -2778,6 +2771,7 @@
           Interface <dfn>PresentationReceiver</dfn>
         </h3>
         <pre class="idl">
+          [SecureContext]
           interface PresentationReceiver {
             readonly attribute Promise&lt;PresentationConnectionList&gt; connectionList;
           };
@@ -2938,6 +2932,7 @@
           Interface <dfn>PresentationConnectionList</dfn>
         </h3>
         <pre class="idl">
+          [SecureContext]
           interface PresentationConnectionList : EventTarget {
             readonly attribute FrozenArray&lt;PresentationConnection&gt; connections;
             attribute EventHandler onconnectionavailable;
@@ -3205,18 +3200,6 @@
               the request is initiated from a <a>nested browsing context</a>.
               For example, embedded content may try to convince the user to
               click to trigger a request to start an unwanted presentation.
-            </p>
-            <p>
-              Showing the origin that will be presented will help the user know
-              if that content is from an <a>potentially trustworthy origin</a>
-              (e.g., <code>https:</code>), and corresponds to a known or
-              expected site. The user agent should specifically indicate when
-              the origin requesting presentation is not <a data-lt=
-              "potentially trustworthy origin">potentially trustworthy</a>. For
-              example, a malicious site may attempt to convince the user to
-              enter login credentials into a presentation page that imitates a
-              legitimate site. Examination of the requested origin will help
-              the user detect these cases.
             </p>
           </dd>
           <dt>
