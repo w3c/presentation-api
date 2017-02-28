@@ -440,6 +440,11 @@
         </li>
         <li>
           <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#sandboxed-modals-flag">
+          sandboxed modals flag</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
           "https://www.w3.org/TR/html51/browsers.html#sandboxing-flag-set">sandboxing
           flag set</a></dfn>
         </li>
@@ -2610,9 +2615,7 @@
           <ol>
             <li>The <a>receiving user agent</a> is to <a>unload a document</a>
             corresponding to the <a>receiving browsing context</a>, e.g. in
-            response to a call to <code>window.close()</code> in the
-            <a>top-level browsing context</a> or to a request to
-            <a>navigate</a> that context to a new resource.
+            response a request to <a>navigate</a> that context to a new resource.
             </li>
             <li>The user requests to terminate the presentation via the
             <a>receiving user agent</a>.
@@ -2837,8 +2840,9 @@
             <li>Set the <a>session history</a> of <var>C</var> to be the empty
             list.
             </li>
-            <li>Set the <a>sandboxed auxiliary navigation browsing context
-            flag</a> on <var>C</var>.
+            <li>Set the <a>sandboxed top-level navigation browsing context
+            flag</a>, the <a>sandboxed modals flag</a>, and the <a>sandboxed
+            auxiliary navigation browsing context flag</a> on <var>C</var>.
             </li>
             <li>If the <a>receiving user agent</a> implements [[!PERMISSIONS]],
             set the <a>permission state</a> of all <a>Permissions</a> for <var>
@@ -2890,7 +2894,7 @@
             associated with each other.
           </p>
           <p>
-            When the <a>receiving browsing context</a> is closed, any
+            When the <a>receiving browsing context</a> is terminated, any
             <a>service workers</a> associated with it and the <a>browsing
             contexts</a> in its <a>list of descendant browsing contexts</a>
             MUST be unregistered and terminated. Any browsing state associated
