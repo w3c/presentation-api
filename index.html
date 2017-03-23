@@ -151,7 +151,8 @@
         Interfaces defined in this document did not change, except
         <code>PresentationConnectionClosedReason</code> and
         <code>PresentationConnectionClosedEvent</code>, which were renamed to
-        improve consistency with the rest of the Web platform. See the <a href=
+        improve consistency with the rest of the Web platform. The API was also
+        restricted to secure contexts. See the <a href=
         "#changes-since-14-july-2016">list of changes</a> for details.
       </p>
       <p>
@@ -3380,6 +3381,12 @@
           Changes since 14 July 2016
         </h3>
         <ul>
+          <li>The sandboxed top-level navigation browsing context flag and the
+          sandboxed modals flag are now set on the receiving browsing context
+          to prevent top-level navigation and the ability to spawn new browsing
+          contexts (<a href=
+          "https://github.com/w3c/presentation-api/issues/414">#414</a>)
+          </li>
           <li>Moved sandboxing flag checks to PresentationRequest constructor
           (<a href=
           "https://github.com/w3c/presentation-api/issues/379">#379</a>,
@@ -3418,8 +3425,8 @@
           <li>Assigned correct JavaScript realm to re-used objects (<a href=
           "https://github.com/w3c/presentation-api/issues/391">#391</a>)
           </li>
-          <li>Clarified display of insecure contexts in UX guidelines
-            (<a href="https://github.com/w3c/presentation-api/issues/380">#380</a>)
+          <li>API now restricted to secure contexts (<a href=
+          "https://github.com/w3c/presentation-api/issues/380">#380</a>)
           </li>
           <li>Set the state of receiving presentation connections to terminated
           before unload (<a href=
@@ -3429,8 +3436,11 @@
           context (<a href=
           "https://github.com/w3c/presentation-api/issues/367">#367</a>)
           </li>
-          <li>Removed [SameObject] for receiver (<a href=
-          "https://github.com/w3c/presentation-api/issues/365">#365</a>)
+          <li>Removed [SameObject] from Presentation.receiver and
+          PresentationReceiver.connectionList (<a href=
+          "https://github.com/w3c/presentation-api/issues/365">#365</a>,
+          <a href=
+          "https://github.com/w3c/presentation-api/issues/407">#407</a>)
           </li>
           <li>Replaced DOMString with USVString for PresentationRequest URLs
           (<a href=
