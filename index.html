@@ -2929,7 +2929,9 @@
             input) or will be obsolete (for example, by attempting window
             management); the <a>receiving user agent</a> should be aware of
             this. Furthermore, any modal user interface will need to be handled
-            carefully.
+            carefully. The <a>sandboxed modals flag</a> is set on the
+            <a>receiving browsing context</a> to prevent most of these
+            operations.
           </p>
         </section>
       </section>
@@ -3206,6 +3208,12 @@
               the request is initiated from a <a>nested browsing context</a>.
               For example, embedded content may try to convince the user to
               click to trigger a request to start an unwanted presentation.
+            </p>
+            <p>
+              The <a>sandboxed top-level navigation browsing context flag</a>
+              is set on the <a>receiving browsing context</a> to enforce that
+              the top-level origin of the presentation remains the same during
+              the lifetime of the presentation.
             </p>
           </dd>
           <dt>
