@@ -157,12 +157,6 @@
       </p>
       <p>
         No feature has been identified as being <strong>at risk</strong>.
-        However, the working group notes that it expects the definitions in the
-        <a href="#sandboxing-and-the-allow-presentation-keyword"></a> section
-        to be integrated in HTML (see <a href=
-        "https://github.com/w3c/html/issues/437">issue #437</a> in the Web
-        Platform Working Group issue tracker) and dropped from this
-        specification.
       </p>
       <p>
         The Second Screen Presentation Working Group will complete the <a href=
@@ -357,7 +351,7 @@
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html51/webappapis.html#current-settings-object">
+          "https://www.w3.org/TR/html51/webappapis.html#current-settings-object">
           current settings object</a></dfn>
         </li>
         <li>
@@ -421,7 +415,7 @@
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">
+          "https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">
           relevant settings object</a></dfn>
         </li>
         <li>
@@ -443,6 +437,11 @@
           <dfn><a href=
           "https://www.w3.org/TR/html51/browsers.html#sandboxed-modals-flag">sandboxed
           modals flag</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html52/browsers.html#sandboxed-presentation-browsing-context-flag">sandboxed
+          presentation browsing context flag</a></dfn> (defined in [[!HTML52]])
         </li>
         <li>
           <dfn><a href=
@@ -3086,38 +3085,6 @@
           </table>
         </section>
       </section>
-      <section>
-        <h3>
-          Sandboxing and the <code>allow-presentation</code> keyword
-        </h3>
-        <p>
-          This specification adds a new token, <code>allow-presentation</code>,
-          to the set of tokens allowed in the <code>sandbox</code> attribute of
-          an <code>iframe</code>. It adds a corresponding new flag to the
-          <a>sandboxing flag set</a>:
-        </p>
-        <dl>
-          <dt>
-            The <dfn id=
-            "sandboxed-presentation-browsing-context-flag">sandboxed
-            presentation browsing context flag</dfn>
-          </dt>
-          <dd>
-            This flag disables the Presentation API.
-          </dd>
-        </dl>
-        <p>
-          It amends the <a>parse a sandboxing directive</a> algorithm by adding
-          an item to step 3:
-        </p>
-        <ul>
-          <li>The <a>sandboxed presentation browsing context flag</a>, unless
-          <var>tokens</var> contains the <dfn id=
-          "attr-iframe-sandbox-allow-presentation"><code>allow-presentation</code></dfn>
-          keyword.
-          </li>
-        </ul>
-      </section>
     </section>
     <section class="informative">
       <h2>
@@ -3400,6 +3367,10 @@
           Changes since 14 July 2016
         </h3>
         <ul>
+          <li>Dropped sandboxing section, now integrated in HTML (<a href=
+          "https://github.com/w3c/html/issues/437">#437</a> in the Web
+          Platform Working Group issue tracker)
+          </li>
           <li>Relaxed exit criteria to match known implementations plans
           (<a href=
           "https://github.com/w3c/presentation-api/issues/406">#406</a>)
