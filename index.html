@@ -355,6 +355,11 @@
           current settings object</a></dfn>
         </li>
         <li>
+          <dfn data-lt="discard"><a href=
+          "https://www.w3.org/TR/html51/browsers.html#a-browsing-context-is-discarded">
+          discard a browsing context</a></dfn>
+        </li>
+        <li>
           <a href=
           "https://www.w3.org/TR/html51/webappapis.html#events-event-handlers"><dfn>
           <code>EventHandler</code></dfn></a>
@@ -440,8 +445,9 @@
         </li>
         <li>
           <dfn><a href=
-          "https://www.w3.org/TR/html52/browsers.html#sandboxed-presentation-browsing-context-flag">sandboxed
-          presentation browsing context flag</a></dfn> (defined in [[!HTML52]])
+          "https://www.w3.org/TR/html52/browsers.html#sandboxed-presentation-browsing-context-flag">
+          sandboxed presentation browsing context flag</a></dfn> (defined in
+          [[!HTML52]])
         </li>
         <li>
           <dfn><a href=
@@ -2663,7 +2669,8 @@
             <li>If there is a <a>receiving browsing context</a> for
             <var>P</var>, and it has a document for <var>P</var> that is not
             unloaded, <a>unload a document</a> corresponding to that
-            <a>browsing context</a>.
+            <a>browsing context</a>, remove that <a>browsing context</a> from
+            the user interface and <a>discard</a> it.
             </li>
             <li>For each <var>connection</var> in
             <var>connectedControllers</var>, <a>queue a task</a> to send a
@@ -3368,8 +3375,8 @@
         </h3>
         <ul>
           <li>Dropped sandboxing section, now integrated in HTML (<a href=
-          "https://github.com/w3c/html/issues/437">#437</a> in the Web
-          Platform Working Group issue tracker)
+          "https://github.com/w3c/html/issues/437">#437</a> in the Web Platform
+          Working Group issue tracker)
           </li>
           <li>Relaxed exit criteria to match known implementations plans
           (<a href=
