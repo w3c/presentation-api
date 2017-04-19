@@ -2548,6 +2548,19 @@
                 "PresentationConnectionState">closed</a>, set it to <a for=
                 "PresentationConnectionState">closed</a>.
                 </li>
+                <li>If the <var>presentationConnection</var> was created as a
+                result of <a>monitoring incoming presentation connections</a>
+                in a <a>receiving browsing context</a>, run the following
+                sub-steps.
+                  <ol>
+                    <li>Remove <var>presentationConnection</var> from the
+                    <a>set of presentation controllers</a>.
+                    </li>
+                    <li>Populate the <a>presentation controllers monitor</a>
+                    with the <a>set of presentation controllers</a>.
+                    </li>
+                  </ol>
+                </li>
                 <li>
                   <a>Fire</a> a <a>trusted event</a> with the name <a for=
                   "PresentationConnectionEvent">close</a>, that uses the
