@@ -2137,7 +2137,7 @@
             closed) while the <a>presentation connection state</a> of
             <var>S</var> is <a for="PresentationConnectionState">connecting</a>
             or <a for="PresentationConnectionState">connected</a>, the <a>user
-            agent</a> SHOULD <a>start closing the presentation connection</a>
+            agent</a> MUST <a>start closing the presentation connection</a>
             <var>S</var> with <a for=
             "PresentationConnectionCloseReason">wentaway</a> as
             <var>closeReason</var> and an empty <var>closeMessage</var>.
@@ -2145,7 +2145,7 @@
           <p>
             If the <a>user agent</a> receives a signal from the <a>destination
             browsing context</a> that a <a>PresentationConnection</a>
-            <var>S</var> is to be closed, it SHOULD <a>close the presentation
+            <var>S</var> is to be closed, it MUST <a>close the presentation
             connection</a> <var>S</var> with <a for=
             "PresentationConnectionCloseReason">closed</a> or <a for=
             "PresentationConnectionCloseReason">wentaway</a> as
@@ -2377,11 +2377,11 @@
           <p>
             If the <a>user agent</a> encounters an unrecoverable error while
             <a data-lt="receive-algorithm">receiving a message</a> through
-            <var>presentationConnection</var>, it SHOULD abruptly <a>close the
+            <var>presentationConnection</var>, it MUST abruptly <a>close the
             presentation connection</a> <var>presentationConnection</var> with
             <a for="PresentationConnectionCloseReason">error</a> as
-            <var>closeReason</var>, and a human readable description of the
-            error encountered as <var>closeMessage</var>.
+            <var>closeReason</var>. It SHOULD use a human readable description
+            of the error encountered as <var>closeMessage</var>.
           </p>
         </section>
         <section>
@@ -2692,7 +2692,7 @@
             When a <a>receiving user agent</a> is to <dfn>send a termination
             confirmation</dfn> for a presentation <var>P</var>, and that
             confirmation was received by a <a>controlling user agent</a>, the
-            <a>controlling user agent</a> SHOULD run the following steps:
+            <a>controlling user agent</a> MUST run the following steps:
           </p>
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
