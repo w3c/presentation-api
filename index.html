@@ -192,41 +192,40 @@
         At its core, the Presentation API enables a <a>controller</a> page to
         show a <a href="#dfn-receiving-browsing-context">presentation</a> page
         on a <a>presentation display</a> and exchange messages with it. How the
-        presentation page is shown on the display and how messages are
-        transmitted between it and the controller page are left to the
-        implementation to allow the use of a wide variety of display
+        presentation page is transmitted to the display and how messages are
+        exchanged between it and the controller page are left to the
+        implementation; this allows the use of a wide variety of display
         technologies.
       </p>
       <p>
-        For example, if the <a>presentation display</a> uses HDMI or Miracast,
-        the user agent (UA) hosting the <a>controller</a> will also render the
-        <a href="#dfn-receiving-browsing-context">presentation</a>. It then
+        For example, if the <a>presentation display</a> is connected by HDMI
+        or Miracast, which only allow audio and video to be transmitted, the
+        user agent (UA) hosting the <a>controller</a> will also render the
+        <a href="#dfn-receiving-browsing-context">presentation</a>.  It then
         uses the operating system to send the resulting graphical and audio
         output to the presentation display. We refer to this situation as the
         <dfn data-lt="1-UA">1-UA mode</dfn> implementation of the Presentation
-        API. The only requirement is that the user agent is able to send
-        graphics and audio from rendering the <a href=
-        "#dfn-receiving-browsing-context">presentation</a> to the
-        <a>presentation display</a>, and transmit messages internally between
-        the <a>controller</a> and <a href=
-        "#dfn-receiving-browsing-context">presentation</a> pages.
+        API. The only requirements are that the user agent is able to send
+        graphics and audio from rendering the presentation to the
+        presentation display, and exchange messages internally between
+        the controller and presentation pages.
       </p>
       <p>
         If the <a>presentation display</a> is able to render HTML natively and
-        communicate with the user's device via a network, the user agent
-        hosting the <a>controller</a> does not need to render the <a href=
+        communicate with the <a>controller</a> via a network, the user agent
+        hosting the controller does not need to render the <a href=
         "#dfn-receiving-browsing-context">presentation</a>. Instead, the user
-        agent acts as a proxy that requests the <a>presentation display</a> to
-        load and render the <a href=
-        "#dfn-receiving-browsing-context">presentation</a> page itself. We
-        refer to this situation as the <dfn data-lt="2-UA">2-UA mode</dfn>
+        agent acts as a proxy that requests the presentation display to load and
+        render the presentation page itself.  Message exchange is done over a
+        network connection between the user agent and the presentation display.
+        We refer to this situation as the <dfn data-lt="2-UA">2-UA mode</dfn>
         implementation of the Presentation API.
       </p>
       <p>
         The Presentation API defined is intended to be used with user agents
         that attach to <a>presentation displays</a> in <a>1-UA mode</a>,
         <a>2-UA mode</a>, and possibly other means not listed above. To improve
-        interoperability between user agents and <a>presentation displays</a>,
+        interoperability between user agents and presentation displays,
         standardization of network communication between browsers and displays
         is being considered in the <a href=
         "https://www.w3.org/community/webscreens/">Second Screen Community
@@ -3152,32 +3151,35 @@
         <p>
           A <a href="#dfn-receiving-browsing-context">presentation</a> is
           allowed to be accessed across origins; the <a>presentation URL</a>
-          and <a>presentation identifier</a> used to create the presentation
-          are the only information needed to reconnect to a connection from any
-          origin in that user agent. In other words, a presentation is not tied
-          to a particular opening origin.
+          and <a>presentation identifier</a> used to create the presentation are
+          the only information needed to reconnect to a presentation from any
+          origin in the controlling user agent. In other words, a presentation
+          is not tied to a particular opening origin.
         </p>
         <p>
-          This design allows controlling contexts from different domains to
+          This design allows controlling contexts from different origins to
           connect to a shared presentation resource. The security of the
-          presentation identifier prevents arbitrary pages from connecting to
+          presentation identifier prevents arbitrary origins from connecting to
           an existing presentation.
         </p>
         <p>
-          This specification allows a <a>receiving user agent</a> to publish
-          information about its <a>set of controlled presentations</a>. If a
-          <a>controlling browsing context</a> obtains the <a>presentation
-          URL</a> and <a>presentation identifier</a> of the presentation from
-          the user, local storage, or a server, it can connect to a running
+          This specification also allows a <a>receiving user agent</a> to
+          publish information about its <a>set of controlled presentations</a>,
+          and a <a>controlling user agent</a> to reconnect to presentations
+          started from other devices.  This is possible when the <a>controlling
+          browsing context</a> obtains the <a>presentation URL</a>
+          and <a>presentation identifier</a> of a running presentation from the
+          user, local storage, or a server, and then connects to the
           presentation via <a for="PresentationRequest">reconnect</a>.
         </p>
         <p>
-          However, this specification makes no guarantee as to the identity of
-          the connecting party. Once connected, the receiving application may
+          This specification makes no guarantee as to the identity of any party
+          connecting to a presentation.  Once connected, the presentation may
           wish to further verify the identity of the connecting party through
-          application-specific means. For example, the controller could provide
-          a token via <a for="PresentationConnection">send</a> that the
-          presentation could verify corresponds an authorized entity.
+          application-specific means. For example, the presentation could
+          challenge the controller to provide a token
+          via <a for="PresentationConnection">send</a> that the presentation
+          uses to verify identity and authorization.
         </p>
       </section>
       <section>
