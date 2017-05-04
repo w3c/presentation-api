@@ -139,8 +139,7 @@
     <section id="abstract">
       <p>
         This specification defines an API to enable Web content to access
-        presentation displays and use them for presenting Web
-        content.
+        presentation displays and use them for presenting Web content.
       </p>
     </section>
     <section id="sotd">
@@ -178,36 +177,39 @@
       <p>
         The Presentation API aims to make <a>presentation displays</a> such as
         projectors, attached monitors, and network-connected TVs available to
-        the Web.  It takes into account displays that are attached using wired
-        (HDMI, DVI, or similar) and wireless technologies (Miracast, Chromecast,
-        DLNA, AirPlay, or similar).
+        the Web. It takes into account displays that are attached using wired
+        (HDMI, DVI, or similar) and wireless technologies (Miracast,
+        Chromecast, DLNA, AirPlay, or similar).
       </p>
       <p>
-        Devices with limited screen size lack the ability to show Web content to
-        a larger audience: a group of colleagues in a conference
-        room, or friends and family at home. Web content shown on a
-        larger <a>presentation display</a> has greater perceived quality, legibility, and
-        impact.
+        Devices with limited screen size lack the ability to show Web content
+        to a larger audience: a group of colleagues in a conference room, or
+        friends and family at home. Web content shown on a larger
+        <a>presentation display</a> has greater perceived quality, legibility,
+        and impact.
       </p>
       <p>
         At its core, the Presentation API enables a <a>controller</a> page to
         show a <a href="#dfn-receiving-browsing-context">presentation</a> page
-        on a <a>presentation display</a> and exchange messages with it.  How the
+        on a <a>presentation display</a> and exchange messages with it. How the
         presentation page is shown on the display and how messages are
-        transmitted between it and the controller page are left to the implementation
-        to allow the use of a wide variety of display technologies.
+        transmitted between it and the controller page are left to the
+        implementation to allow the use of a wide variety of display
+        technologies.
       </p>
       <p>
         For example, if the <a>presentation display</a> uses HDMI or Miracast,
         the user agent (UA) hosting the <a>controller</a> will also render the
-        <a href="#dfn-receiving-browsing-context">presentation</a>. It then uses
-        the operating system to send the resulting graphical and audio output to
-        the </a>presentation display</a>.  We refer to this situation as
-        the <dfn data-lt="1-UA">1-UA mode</dfn> implementation of the Presentation
-        API.  The only requirement is that the user agent be able to send
-        graphics and audio from rendering the <a href="#dfn-receiving-browsing-context">presentation</a> to
-        the <a>presentation display</a>, and transmit messages internally between
-        the <a>controller</a> and <a href="#dfn-receiving-browsing-context">presentation</a> pages.
+        <a href="#dfn-receiving-browsing-context">presentation</a>. It then
+        uses the operating system to send the resulting graphical and audio
+        output to the presentation display. We refer to this situation as the
+        <dfn data-lt="1-UA">1-UA mode</dfn> implementation of the Presentation
+        API. The only requirement is that the user agent be able to send
+        graphics and audio from rendering the <a href=
+        "#dfn-receiving-browsing-context">presentation</a> to the
+        <a>presentation display</a>, and transmit messages internally between
+        the <a>controller</a> and <a href=
+        "#dfn-receiving-browsing-context">presentation</a> pages.
       </p>
       <p>
         If the <a>presentation display</a> is able to render HTML natively and
@@ -215,18 +217,20 @@
         hosting the <a>controller</a> does not need to render the <a href=
         "#dfn-receiving-browsing-context">presentation</a>. Instead, the user
         agent acts as a proxy that requests the <a>presentation display</a> to
-        load and render the <a href="#dfn-receiving-browsing-context">presentation</a> page
-        itself. We refer to this situation as the <dfn data-lt="2-UA">2-UA
-        mode</dfn> implementation of the Presentation API.
+        load and render the <a href=
+        "#dfn-receiving-browsing-context">presentation</a> page itself. We
+        refer to this situation as the <dfn data-lt="2-UA">2-UA mode</dfn>
+        implementation of the Presentation API.
       </p>
       <p>
-        The Presentation API defined is intended to be used with user agents that attach to
-        <a>presentation displays</a> in <a>1-UA mode</a>, <a>2-UA mode</a>, and possibly
-        other means not listed above.  To improve interoperability between user
-        agents and <a>presentation displays</a>, standardization of network
-        communication between browsers and displays is being considered in
-        the <a href="https://www.w3.org/community/webscreens/">Second Screen
-        Community Group</a>.
+        The Presentation API defined is intended to be used with user agents
+        that attach to <a>presentation displays</a> in <a>1-UA mode</a>,
+        <a>2-UA mode</a>, and possibly other means not listed above. To improve
+        interoperability between user agents and <a>presentation displays</a>,
+        standardization of network communication between browsers and displays
+        is being considered in the <a href=
+        "https://www.w3.org/community/webscreens/">Second Screen Community
+        Group</a>.
       </p>
     </section>
     <section id="use-cases-and-requirements" class="informative">
@@ -904,14 +908,15 @@
           characters only and is at least 16 characters long.
         </p>
         <p>
-          Some <a>presentation displays</a> may only be able to display a subset
-          of Web content because of functional, security or hardware
+          Some <a>presentation displays</a> may only be able to display a
+          subset of Web content because of functional, security or hardware
           limitations. Examples are set-top boxes, smart TVs, or networked
           speakers capable of rendering only audio. We say that such a display
-          is an <dfn lt= "available presentation display|available presentation
-          displays">available presentation display</dfn> for a <a>presentation
-          URL</a> if the <a>controlling user agent</a> can reasonably guarantee
-          that presentation of the URL on that display will succeed.
+          is an <dfn lt=
+          "available presentation display|available presentation displays">available
+          presentation display</dfn> for a <a>presentation URL</a> if the
+          <a>controlling user agent</a> can reasonably guarantee that
+          presentation of the URL on that display will succeed.
         </p>
         <p>
           A <dfn lt=
@@ -2208,8 +2213,8 @@
             document is an implementation choice of the user agent. The
             connection must provide a two-way messaging abstraction capable of
             carrying <code>DOMString</code> and binary payloads in a reliable
-            and in-order fashion as described in the <a>Send a Message</a>
-            and <a>Receive a Message</a> steps below.
+            and in-order fashion as described in the <a>Send a Message</a> and
+            <a>Receive a Message</a> steps below.
           </div>
         </section>
         <section>
@@ -2646,7 +2651,8 @@
                 This could happen by an explicit user action, or as a policy of
                 the user agent. For example, the <a>receiving user agent</a>
                 could be configured to terminate presentations whose
-                <a>PresentationConnection</a> objects are all closed for 30 minutes.
+                <a>PresentationConnection</a> objects are all closed for 30
+                minutes.
               </p>
             </li>
             <li>A <a>controlling user agent</a> <a data-lt=
@@ -2932,8 +2938,8 @@
           <p class="note">
             This algorithm is intended to create a well defined environment to
             allow interoperable behavior for <a>1-UA</a> and <a>2-UA</a>
-            presentations, and to minimize the amount of state remaining on
-            a <a>presentation display</a> used for a <a>2-UA</a> presentation.
+            presentations, and to minimize the amount of state remaining on a
+            <a>presentation display</a> used for a <a>2-UA</a> presentation.
           </p>
           <p>
             The <a>receiving user agent</a> SHOULD fetch resources in a
@@ -2947,8 +2953,8 @@
           </p>
           <p class="note">
             Given the operating context of the <a>presentation display</a>,
-            some Web APIs will not work by design (for example, by requiring user
-            input) or will be obsolete (for example, by attempting window
+            some Web APIs will not work by design (for example, by requiring
+            user input) or will be obsolete (for example, by attempting window
             management); the <a>receiving user agent</a> should be aware of
             this. Furthermore, any modal user interface will need to be handled
             carefully. The <a>sandboxed modals flag</a> is set on the
@@ -3119,12 +3125,12 @@
         </h3>
         <p>
           The <a>change</a> event fired on the <a>PresentationAvailability</a>
-          object reveals one bit of information about the presence or absence of
-          a <a>presentation display</a>, often discovered through the browser's
-          local area network. This could be used in conjunction with other
-          information for fingerprinting the user. However, this information is
-          also dependent on the user's local network context, so the risk is
-          minimized.
+          object reveals one bit of information about the presence or absence
+          of a <a>presentation display</a>, often discovered through the
+          browser's local area network. This could be used in conjunction with
+          other information for fingerprinting the user. However, this
+          information is also dependent on the user's local network context, so
+          the risk is minimized.
         </p>
         <p>
           The API enables <a href=
@@ -3135,8 +3141,8 @@
           <a>controlling user agent</a> matches a <a>presentation request
           URL</a> to a <a>DIAL</a> application to determine its availability,
           this feature can be used to probe information about which <a>DIAL</a>
-          applications the user has installed on the <a>presentation display</a>
-          without user consent.
+          applications the user has installed on the <a>presentation
+          display</a> without user consent.
         </p>
       </section>
       <section>
@@ -3145,34 +3151,33 @@
         </h3>
         <p>
           A <a href="#dfn-receiving-browsing-context">presentation</a> is
-          allowed to be accessed across origins; the <a>presentation URL</a> and
-          <a>presentation identifier</a> used to create the presentation are the only
-          information needed to reconnect to a connection from any origin in
-          that user agent. In other words, a presentation is not tied to a
-          particular opening origin.
+          allowed to be accessed across origins; the <a>presentation URL</a>
+          and <a>presentation identifier</a> used to create the presentation
+          are the only information needed to reconnect to a connection from any
+          origin in that user agent. In other words, a presentation is not tied
+          to a particular opening origin.
         </p>
         <p>
           This design allows controlling contexts from different domains to
           connect to a shared presentation resource. The security of the
-          presentation identifier prevents arbitrary pages from connecting to an
-          existing presentation.
+          presentation identifier prevents arbitrary pages from connecting to
+          an existing presentation.
         </p>
         <p>
           This specification allows a <a>receiving user agent</a> to publish
-          information about its <a>set of controlled presentations</a>.  If
-          a <a>controlling browsing context</a> obtains the <a>presentation URL</a> and
-          <a>presentation identifier</a> of the presentation from the user, local storage, or a
-          server, it can connect to a running presentation
-          via <a for="PresentationRequest">reconnect</a>.
+          information about its <a>set of controlled presentations</a>. If a
+          <a>controlling browsing context</a> obtains the <a>presentation
+          URL</a> and <a>presentation identifier</a> of the presentation from
+          the user, local storage, or a server, it can connect to a running
+          presentation via <a for="PresentationRequest">reconnect</a>.
         </p>
         <p>
           However, this specification makes no guarantee as to the identity of
           the connecting party. Once connected, the receiving application may
           wish to further verify the identity of the connecting party through
-          application-specific means. For example, the controller
-          could provide a token via <a for="PresentationConnection">send</a>
-          that the presentation could verify corresponds an authorized
-          entity.
+          application-specific means. For example, the controller could provide
+          a token via <a for="PresentationConnection">send</a> that the
+          presentation could verify corresponds an authorized entity.
         </p>
       </section>
       <section>
@@ -3241,8 +3246,8 @@
           meaning that it exposes network-accessible displays as though they
           were directly attached to the user's device. The Presentation API
           requires user permission for a page to access any display to mitigate
-          issues that could arise, such as showing unwanted content on a display
-          viewable by others.
+          issues that could arise, such as showing unwanted content on a
+          display viewable by others.
         </p>
       </section>
       <section>
@@ -3308,8 +3313,8 @@
         for help with editing, reviews and feedback to this draft.
       </p>
       <p>
-        <em>AirPlay</em>, <em>HDMI</em>, <em>Chromecast</em>, <em>DLNA</em>
-        and <em>Miracast</em> are registered trademarks of Apple Inc., HDMI
+        <em>AirPlay</em>, <em>HDMI</em>, <em>Chromecast</em>, <em>DLNA</em> and
+        <em>Miracast</em> are registered trademarks of Apple Inc., HDMI
         Licensing LLC., Google Inc., the Digital Living Network Alliance, and
         the Wi-Fi Alliance, respectively.
       </p>
