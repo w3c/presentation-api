@@ -177,14 +177,14 @@
       </h2>
       <p>
         The Presentation API aims to make <a>presentation displays</a> such as
-        projectors, external monitors, and network-connected TVs available to
+        projectors, attached monitors, and network-connected TVs available to
         the Web.  It takes into account displays that are attached using wired
         (HDMI, DVI, or similar) and wireless technologies (Miracast, Chromecast,
         DLNA, AirPlay, or similar).
       </p>
       <p>
         Devices with limited screen size lack the ability to show Web content to
-        a larger audience, for example, a group of colleagues in a conference
+        a larger audience: a group of colleagues in a conference
         room, or friends and family at home. Web content shown on a
         larger <a>presentation display</a> has greater perceived quality, legibility, and
         impact.
@@ -192,9 +192,10 @@
       <p>
         At its core, the Presentation API enables a <a>controller</a> page to
         show a <a href="#dfn-receiving-browsing-context">presentation</a> page
-        on a <a>presentation display</a> and exchange messages with it.  How
-        messages are transmitted between them left to the implementation to allow the use
-        of a wide variety of <a>presentation display</a> technologies.
+        on a <a>presentation display</a> and exchange messages with it.  How the
+        presentation page is shown on the display and how messages are
+        transmitted between it and the controller page are left to the implementation
+        to allow the use of a wide variety of display technologies.
       </p>
       <p>
         For example, if the <a>presentation display</a> uses HDMI or Miracast,
@@ -205,22 +206,22 @@
         the <dfn data-lt="1-UA">1-UA mode</dfn> implementation of the Presentation
         API.  The only requirement is that the user agent be able to send
         graphics and audio from rendering the <a href="#dfn-receiving-browsing-context">presentation</a> to
-        the <a>presentation display</a>, and transmit messages between
+        the <a>presentation display</a>, and transmit messages internally between
         the <a>controller</a> and <a href="#dfn-receiving-browsing-context">presentation</a> pages.
       </p>
       <p>
         If the <a>presentation display</a> is able to render HTML natively and
-        communicate with the <a>controller</a>, the user agent hosting
-        the <a>controller</a> does not need to render the <a href=
+        communicate with the user's device via a network, the user agent
+        hosting the <a>controller</a> does not need to render the <a href=
         "#dfn-receiving-browsing-context">presentation</a>. Instead, the user
         agent acts as a proxy that requests the <a>presentation display</a> to
-        show the <a href="#dfn-receiving-browsing-context">presentation</a>
-        page itself. We refer to this situation as the <dfn data-lt="2-UA">2-UA
+        load and render the <a href="#dfn-receiving-browsing-context">presentation</a> page
+        itself. We refer to this situation as the <dfn data-lt="2-UA">2-UA
         mode</dfn> implementation of the Presentation API.
       </p>
       <p>
         The Presentation API defined is intended to be used with user agents that attach to
-        <a>presentation displays</a> in <a>1-UA mode</a>, <a>2-UA mode</a>, or
+        <a>presentation displays</a> in <a>1-UA mode</a>, <a>2-UA mode</a>, and possibly
         other means not listed above.  To improve interoperability between user
         agents and <a>presentation displays</a>, standardization of network
         communication between browsers and displays is being considered in
@@ -253,7 +254,7 @@
       </p>
       <section>
         <h3>
-          Conformance Classes
+          Conformance classes
         </h3>
         <p>
           This specification describes the conformance criteria for two classes
@@ -2645,7 +2646,7 @@
                 This could happen by an explicit user action, or as a policy of
                 the user agent. For example, the <a>receiving user agent</a>
                 could be configured to terminate presentations whose
-                <a>PresentationConnections</a> are all closed for 30 minutes.
+                <a>PresentationConnection</a> objects are all closed for 30 minutes.
               </p>
             </li>
             <li>A <a>controlling user agent</a> <a data-lt=
@@ -3145,7 +3146,7 @@
         <p>
           A <a href="#dfn-receiving-browsing-context">presentation</a> is
           allowed to be accessed across origins; the <a>presentation URL</a> and
-          <a>presentation ID</a> used to create the presentation are the only
+          <a>presentation identifier</a> used to create the presentation are the only
           information needed to reconnect to a connection from any origin in
           that user agent. In other words, a presentation is not tied to a
           particular opening origin.
@@ -3153,25 +3154,24 @@
         <p>
           This design allows controlling contexts from different domains to
           connect to a shared presentation resource. The security of the
-          presentation ID prevents arbitrary pages from connecting to an
+          presentation identifier prevents arbitrary pages from connecting to an
           existing presentation.
         </p>
         <p>
-          This specification allows a user agent to publish information about
-          its <a>set of controlled presentations</a>, and allows a browsing
-          context on another user agent to connect to a running presentation
-          via <a for="PresentationRequest">reconnect</a>. To connect, the
-          additional browsing context must discover the presentation URL and
-          presentation ID of the presentation, either provided by the user, or
-          via a shared service.
+          This specification allows a <a>receiving user agent</a> to publish
+          information about its <a>set of controlled presentations</a>.  If
+          a <a>controlling browsing context</a> obtains the <a>presentation URL</a> and
+          <a>presentation identifier</a> of the presentation from the user, local storage, or a
+          server, it can connect to a running presentation
+          via <a for="PresentationRequest">reconnect</a>.
         </p>
         <p>
           However, this specification makes no guarantee as to the identity of
           the connecting party. Once connected, the receiving application may
           wish to further verify the identity of the connecting party through
-          application-specific means. For example, the connecting application
+          application-specific means. For example, the controller
           could provide a token via <a for="PresentationConnection">send</a>
-          that the receiving application could verify corresponds an authorized
+          that the presentation could verify corresponds an authorized
           entity.
         </p>
       </section>
@@ -3239,9 +3239,10 @@
         <p>
           The presentation API abstracts away what "local" means for displays,
           meaning that it exposes network-accessible displays as though they
-          were local displays. The Presentation API requires user permission
-          for a page to access any display to mitigate issues that could arise,
-          such as showing unwanted content on a display viewable by others.
+          were directly attached to the user's device. The Presentation API
+          requires user permission for a page to access any display to mitigate
+          issues that could arise, such as showing unwanted content on a display
+          viewable by others.
         </p>
       </section>
       <section>
@@ -3249,14 +3250,15 @@
           Temporary identifiers and browser state
         </h3>
         <p>
-          The presentation URL and presentation ID can be used to connect to a
-          presentation from another browsing context. They can be intercepted
-          if an attacker can inject content into the controlling page.
+          The <a>presentation URL</a> and <a>presentation identifier</a> can be
+          used to connect to a presentation from another browsing context. They
+          can be intercepted if an attacker can inject content into the
+          controlling page.
         </p>
       </section>
       <section>
         <h3>
-          Incognito mode and clearing of browsing data
+          Private browsing mode and clearing of browsing data
         </h3>
         <p>
           The content displayed on the presentation is different from the
@@ -3314,7 +3316,7 @@
     </section>
     <section class="appendix">
       <h2>
-        CR exit criteria
+        Candidate Recommendation exit criteria
       </h2>
       <p>
         For this specification to be advanced to Proposed Recommendation, there
