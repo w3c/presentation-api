@@ -575,7 +575,7 @@
       </p>
       <p>
         The term <a href=
-        "http://w3c.github.io/webrtc-pc/#idl-def-RTCDataChannel"><dfn><code>RTCDataChannel</code></dfn></a>
+        "https://www.w3.org/TR/webrtc/#idl-def-rtcdatachannel"><dfn><code>RTCDataChannel</code></dfn></a>
         is defined in the WebRTC API specification [[WEBRTC]].
       </p>
       <p>
@@ -589,10 +589,10 @@
         4122 [[!rfc4122]].
       </p>
       <p>
-        The terms <dfn data-lt="permission|permissions"><a href=
-        "https://w3c.github.io/permissions/#idl-def-Permission">permission</a></dfn>
-        and <dfn><a href=
-        "https://w3c.github.io/permissions/#idl-def-PermissionState">permission
+        The terms <dfn data-lt="permission descriptor types"><a href=
+        "https://w3c.github.io/permissions/#permission-descriptor-type">permission
+        descriptor type</a></dfn> and <dfn><a href=
+        "https://w3c.github.io/permissions/#permission-state">permission
         state</a></dfn> are defined in [[!PERMISSIONS]].
       </p>
       <p>
@@ -1350,7 +1350,7 @@
             request presentation and choose the intended <a>presentation
             display</a> with the same user gesture. For example, the browser
             chrome could allow the user to pick a display from a menu, or allow
-            the user to tap on an <a href="https://nfc-forum.org/">Near Field
+            the user to tap on an <a href="http://nfc-forum.org/">Near Field
             Communications (NFC)</a> enabled display.
           </div>
         </section>
@@ -2872,8 +2872,8 @@
             auxiliary navigation browsing context flag</a> on <var>C</var>.
             </li>
             <li>If the <a>receiving user agent</a> implements [[!PERMISSIONS]],
-            set the <a>permission state</a> of all <a>Permissions</a> for <var>
-              C</var> to <code>"denied"</code>.
+            set the <a>permission state</a> of all <a>permission descriptor
+            types</a> for <var>C</var> to <code>"denied"</code>.
             </li>
             <li>Create a new empty <a>cookie store</a> for <var>C</var>.
             </li>
