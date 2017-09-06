@@ -1015,7 +1015,7 @@
             [SecureContext, SameObject] readonly attribute Presentation presentation;
           };
 
-          [SecureContext]           
+          [SecureContext, Exposed=Window]
           interface Presentation {
           };
         
@@ -1107,9 +1107,9 @@
           Interface <dfn>PresentationRequest</dfn>
         </h3>
         <pre class="idl">
-          [SecureContext,
-           Constructor(USVString url),
-           Constructor(sequence&lt;USVString&gt; urls)]
+          [Constructor(USVString url),
+           Constructor(sequence&lt;USVString&gt; urls),
+           SecureContext, Exposed=Window]
           interface PresentationRequest : EventTarget {
             Promise&lt;PresentationConnection&gt; start();
             Promise&lt;PresentationConnection&gt; reconnect(USVString presentationId);
@@ -1629,7 +1629,7 @@
           Interface <dfn>PresentationAvailability</dfn>
         </h3>
         <pre class="idl">
-          [SecureContext] 
+          [SecureContext, Exposed=Window]
           interface PresentationAvailability : EventTarget {
             readonly attribute boolean value;
 
@@ -1955,8 +1955,8 @@
             Interface <dfn>PresentationConnectionAvailableEvent</dfn>
           </h4>
           <pre class="idl">
-            [SecureContext,
-             Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict)]
+            [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict),
+             SecureContext, Exposed=Window]
             interface PresentationConnectionAvailableEvent : Event {
               [SameObject] readonly attribute PresentationConnection connection;
             };
@@ -2027,7 +2027,7 @@
           enum PresentationConnectionState { "connecting", "connected", "closed", "terminated" };
           enum BinaryType { "blob", "arraybuffer" };
 
-          [SecureContext]
+          [SecureContext, Exposed=Window]
           interface PresentationConnection : EventTarget {
             readonly attribute USVString id;
             readonly attribute USVString url;
@@ -2396,8 +2396,8 @@
           <pre class="idl">
             enum PresentationConnectionCloseReason { "error", "closed", "wentaway" };
 
-            [SecureContext,
-             Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict)]
+            [Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict),
+             SecureContext, Exposed=Window]
             interface PresentationConnectionCloseEvent : Event {
               readonly attribute PresentationConnectionCloseReason reason;
               readonly attribute DOMString message;
@@ -2802,7 +2802,7 @@
           Interface <dfn>PresentationReceiver</dfn>
         </h3>
         <pre class="idl">
-          [SecureContext]
+          [SecureContext, Exposed=Window]
           interface PresentationReceiver {
             readonly attribute Promise&lt;PresentationConnectionList&gt; connectionList;
           };
@@ -2968,7 +2968,7 @@
           Interface <dfn>PresentationConnectionList</dfn>
         </h3>
         <pre class="idl">
-          [SecureContext]
+          [SecureContext, Exposed=Window]
           interface PresentationConnectionList : EventTarget {
             readonly attribute FrozenArray&lt;PresentationConnection&gt; connections;
             attribute EventHandler onconnectionavailable;
