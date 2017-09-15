@@ -403,6 +403,11 @@
           "https://www.w3.org/TR/html51/browsers.html#navigated">navigate</a></dfn>
         </li>
         <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#navigating-to-a-fragment-identifier">
+          navigating to a fragment identifier</a></dfn>
+        </li>
+        <li>
           <a href=
           "https://www.w3.org/TR/html51/webappapis.html#navigator-navigator"><dfn>
           <code>Navigator</code></dfn></a>
@@ -2868,8 +2873,7 @@
             <li>Set the <a>session history</a> of <var>C</var> to be the empty
             list.
             </li>
-            <li>Set the <a>sandboxed top-level navigation browsing context
-            flag</a>, the <a>sandboxed modals flag</a>, and the <a>sandboxed
+            <li>Set the <a>sandboxed modals flag</a> and the <a>sandboxed
             auxiliary navigation browsing context flag</a> on <var>C</var>.
             </li>
             <li>If the <a>receiving user agent</a> implements [[!PERMISSIONS]],
@@ -2911,9 +2915,19 @@
             "creating a new browsing context">created</a> by the presented
             document, i.e. that have the <a>receiving browsing context</a> as
             their <a data-lt="top-level browsing context">top-level browsing
-            context</a>, MUST also have restrictions 2-4 above. All of these
-            <a>browsing contexts</a> MUST also share the same browsing state
-            (storage) for features 5-10 listed above.
+            context</a>, MUST also have restrictions 2-4 above. In addition,
+            they MUST have the <a>sandboxed top-level navigation browsing
+            context flag</a> set. All of these <a>browsing contexts</a> MUST
+            also share the same browsing state (storage) for features 5-10
+            listed above.
+          </p>
+          <p>
+            The <a>top-level browsing context</a> MUST NOT be allowed to
+            navigate itself, except by <a>navigating to a fragment
+            identifier</a>. This allows the user to grant permission based on
+            the presentation URL shown when <a data-lt=
+            "select a presentation display">selecting a presentation
+            display</a>.
           </p>
           <p>
             <a>Window clients</a> and <a>worker clients</a> associated with the
