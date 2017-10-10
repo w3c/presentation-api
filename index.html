@@ -892,18 +892,18 @@
           Common idioms
         </h3>
         <p>
-          A <dfn lt="presentation display|presentation displays">presentation
+          A <dfn data-lt="presentation display|presentation displays">presentation
           display</dfn> refers to a graphical and/or audio output device
           available to the user agent via an implementation specific connection
           technology.
         </p>
         <p>
-          A <dfn lt=
+          A <dfn data-lt=
           "presentation connection|presentation connections">presentation
           connection</dfn> is an object relating a <a>controlling browsing
           context</a> to its <a>receiving browsing context</a> and enables
           two-way-messaging between them. Each <a>presentation connection</a>
-          has a <dfn>presentation connection state</dfn>, a unique <dfn lt=
+          has a <dfn>presentation connection state</dfn>, a unique <dfn data-lt=
           "presentation identifier|presentation identifiers">presentation
           identifier</dfn> to distinguish it from other <a>presentations</a>,
           and a <dfn>presentation URL</dfn> that is a <a>URL</a> used to create
@@ -917,21 +917,21 @@
           subset of Web content because of functional, security or hardware
           limitations. Examples are set-top boxes, smart TVs, or networked
           speakers capable of rendering only audio. We say that such a display
-          is an <dfn lt=
+          is an <dfn data-lt=
           "available presentation display|available presentation displays">available
           presentation display</dfn> for a <a>presentation URL</a> if the
           <a>controlling user agent</a> can reasonably guarantee that
           presentation of the URL on that display will succeed.
         </p>
         <p>
-          A <dfn lt=
+          A <dfn data-lt=
           "controlling browsing context|controlling browsing contexts|controller">
           controlling browsing context</dfn> (or <strong>controller</strong>
           for short) is a <a>browsing context</a> that has connected to a
           <a href="#dfn-receiving-browsing-context">presentation</a> by calling
-          <a for="PresentationRequest">start</a> or <a for=
+          <a data-link-for="PresentationRequest">start</a> or <a data-link-for=
           "PresentationRequest">reconnect</a>, or received a <a>presentation
-          connection</a> via a <a for=
+          connection</a> via a <a data-link-for=
           "PresentationRequest">connectionavailable</a> event. In algorithms
           for <a><code>PresentationRequest</code></a>, the <a>controlling
           browsing context</a> is the <a>responsible browsing context</a> whose
@@ -1011,7 +1011,7 @@
           objects constructed by algorithm steps is the <a>current realm</a>.
         </p>
       </section>
-      <section>
+      <section data-dfn-for="Navigator" data-link-for="Navigator">
         <h3>
           Interface <dfn>Presentation</dfn>
         </h3>
@@ -1026,8 +1026,8 @@
         
 </pre>
         <p>
-          The <dfn for="Navigator"><code>presentation</code></dfn> attribute is
-          used to retrieve an instance of the <a><code>Presentation</code></a>
+          The <a data-link-for="Navigator"><code>presentation</code></a> attribute is
+          used to retrieve an instance of the <a data-link-for="Presentation">Presentation</a>
           interface. It MUST return the <a><code>Presentation</code></a>
           instance.
         </p>
@@ -1070,7 +1070,7 @@
           <div class="note">
             If a <a>controlling user agent</a> does not support <a>starting a
             presentation from a default presentation request</a>, that user
-            agent should ignore any value set for <a for=
+            agent should ignore any value set for <a data-link-for=
             "Presentation">defaultRequest</a>.
           </div>
         </section>
@@ -1212,7 +1212,7 @@
             </dt>
             <dd>
               <var>presentationRequest</var>, the <a>PresentationRequest</a>
-              object that received the call to <a for=
+              object that received the call to <a data-link-for=
               "PresentationRequest">start</a>
             </dd>
             <dt>
@@ -1231,7 +1231,7 @@
             context</a> of the <a>controlling browsing context</a>.
             </li>
             <li>If there is already an unsettled <a>Promise</a> from a previous
-            call to <a for="PresentationRequest">start</a> in
+            call to <a data-link-for="PresentationRequest">start</a> in
             <var>topContext</var> or any <a>browsing context</a> in the <a>list
             of descendant browsing contexts</a> of <var>topContext</var>,
             return a new <a>Promise</a> rejected with an <a>OperationError</a>
@@ -1406,7 +1406,7 @@
             <a>list of available presentation displays</a>.
             </li>
             <li>Set the <a>presentation connection state</a> of <var>S</var> to
-            <a for="PresentationConnectionState">connecting</a>.
+            <a data-link-for="PresentationConnectionState">connecting</a>.
             </li>
             <li>Add <var>S</var> to the <a>set of controlled presentations</a>.
             </li>
@@ -1415,9 +1415,9 @@
             </li>
             <li>
               <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a> with
-              the name <a for="PresentationRequest">connectionavailable</a>,
+              the name <a data-link-for="PresentationRequest">connectionavailable</a>,
               that uses the <a>PresentationConnectionAvailableEvent</a>
-              interface, with the <a for=
+              interface, with the <a data-link-for=
               "PresentationConnectionAvailableEvent">connection</a> attribute
               initialized to <var>S</var>, at <var>presentationRequest</var>.
               The event must not bubble, must not be cancelable, and has no
@@ -1426,7 +1426,7 @@
             <li>Let <var>U</var> be the user agent connected to D.
             </li>
             <li>If the next step fails, abort all remaining steps and <a>close
-            the presentation connection</a> <var>S</var> with <a for=
+            the presentation connection</a> <var>S</var> with <a data-link-for=
             "PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>, and a human readable message describing the
             failure as <var>closeMessage</var>.
@@ -1462,7 +1462,7 @@
             </dt>
             <dd>
               <var>presentationRequest</var>, the <a>PresentationRequest</a>
-              object that <a for="PresentationRequest">reconnect</a> was called
+              object that <a data-link-for="PresentationRequest">reconnect</a> was called
               on
             </dd>
             <dd>
@@ -1487,7 +1487,7 @@
                 <li>Its <a>controlling browsing context</a> is the current <a>
                   browsing context</a>
                 </li>
-                <li>Its <a>presentation connection state</a> is not <a for=
+                <li>Its <a>presentation connection state</a> is not <a data-link-for=
                 "PresentationConnectionState">terminated</a>
                 </li>
                 <li>Its <a>presentation URL</a> is equal to one of the
@@ -1510,13 +1510,13 @@
                   <var>existingConnection</var>.
                 </li>
                 <li>If the <a>presentation connection state</a> of
-                <var>existingConnection</var> is <a for=
-                "PresentationConnectionState">connecting</a> or <a for=
+                <var>existingConnection</var> is <a data-link-for=
+                "PresentationConnectionState">connecting</a> or <a data-link-for=
                 "PresentationConnectionState">connected</a>, then abort all
                 remaining steps.
                 </li>
                 <li>Set the <a>presentation connection state</a> of
-                <var>existingConnection</var> to <a for=
+                <var>existingConnection</var> to <a data-link-for=
                 "PresentationConnectionState">connecting</a>.
                 </li>
                 <li>
@@ -1533,7 +1533,7 @@
                 <li>Its <a>controlling browsing context</a> is not the current
                 <a>browsing context</a>
                 </li>
-                <li>Its <a>presentation connection state</a> is not <a for=
+                <li>Its <a>presentation connection state</a> is not <a data-link-for=
                 "PresentationConnectionState">terminated</a>
                 </li>
                 <li>Its <a>presentation URL</a> is equal to one of the
@@ -1562,7 +1562,7 @@
                 <var>existingConnection</var>.
                 </li>
                 <li>Set the <a>presentation connection state</a> of
-                <var>newConnection</var> to <a for=
+                <var>newConnection</var> to <a data-link-for=
                 "PresentationConnectionState">connecting</a>.
                 </li>
                 <li>Add <var>newConnection</var> to the <a>set of controlled
@@ -1573,10 +1573,10 @@
                 </li>
                 <li>
                   <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
-                  with the name <a for=
+                  with the name <a data-link-for=
                   "PresentationRequest">connectionavailable</a>, that uses the
                   <a>PresentationConnectionAvailableEvent</a> interface, with
-                  the <a for=
+                  the <a data-link-for=
                   "PresentationConnectionAvailableEvent">connection</a>
                   attribute initialized to <var>newConnection</var>, at
                   <var>presentationRequest</var>. The event must not bubble,
@@ -1658,7 +1658,7 @@
         <p>
           If the <a>controlling user agent</a> can <a>monitor the list of
           available presentation displays</a> in the background (without a
-          pending request to <a for="PresentationRequest">start</a>), the
+          pending request to <a data-link-for="PresentationRequest">start</a>), the
           <a><code>PresentationAvailability</code></a> object MUST be
           implemented in a <a>controlling browsing context</a>.
         </p>
@@ -1679,7 +1679,7 @@
           </h4>
           <p>
             The <a>user agent</a> MUST keep track of the <dfn>set of
-            presentation availability objects</dfn> created by the <a for=
+            presentation availability objects</dfn> created by the <a data-link-for=
             "PresentationRequest">getAvailability</a> method. The <a>set of
             presentation availability objects</a> is represented as a set of
             tuples <em>(<var>A</var>, <var>availabilityUrls</var>)</em>,
@@ -1691,7 +1691,7 @@
             </li>
             <li>
               <var>availabilityUrls</var> is the list of <a>presentation
-              request URLs</a> for the <a>PresentationRequest</a> when <a for=
+              request URLs</a> for the <a>PresentationRequest</a> when <a data-link-for=
               "PresentationRequest">getAvailability</a> was called on it to
               create <var>A</var>.
             </li>
@@ -1718,12 +1718,12 @@
             While the <a>set of presentation availability objects</a> is not
             empty, the <a>user agent</a> MAY <a>monitor the list of available
             presentation displays</a> continuously, so that pages can use the
-            <a for="PresentationAvailability">value</a> property of a
+            <a data-link-for="PresentationAvailability">value</a> property of a
             <a>PresentationAvailability</a> object to offer presentation only
             when there are available displays. However, the <a>user agent</a>
             may not support continuous availability monitoring in the
             background; for example, because of platform or power consumption
-            restrictions. In this case the <a>Promise</a> returned by <a for=
+            restrictions. In this case the <a>Promise</a> returned by <a data-link-for=
             "PresentationRequest">getAvailability</a> is <a data-lt=
             "reject">rejected</a>, and the algorithm to <a>monitor the list of
             available presentation displays</a> will only run as part of the
@@ -1756,7 +1756,7 @@
             </dt>
             <dd>
               <var>presentationRequest</var>, the <a>PresentationRequest</a>
-              object that received the call to <a for=
+              object that received the call to <a data-link-for=
               "PresentationRequest">getAvailability</a>
             </dd>
             <dt>
@@ -1768,7 +1768,7 @@
           </dl>
           <ol>
             <li>If there is an unsettled <a>Promise</a> from a previous call to
-            <a for="PresentationRequest">getAvailability</a> on
+            <a data-link-for="PresentationRequest">getAvailability</a> on
             <var>presentationRequest</var>, return that <a>Promise</a> and
             abort these steps.
             </li>
@@ -1831,7 +1831,7 @@
           </h4>
           <p>
             If the <a>set of presentation availability objects</a> is
-            non-empty, or there is a pending request to <a for=
+            non-empty, or there is a pending request to <a data-link-for=
             "PresentationRequest" data-lt="start">select a presentation
             display</a>, the <a>user agent</a> MUST <dfn>monitor the list of
             available presentation displays</dfn> by running the following
@@ -1841,7 +1841,7 @@
             <li>Let <var>availabilitySet</var> be a shallow copy of the <a>set
             of presentation availability objects</a>.
             </li>
-            <li>If there is a pending request to <a for="PresentationRequest"
+            <li>If there is a pending request to <a data-link-for="PresentationRequest"
             data-lt="start">select a presentation display</a> for a
             <a>PresentationRequest</a> and if the <a>PresentationRequest</a>'s
             <a>presentation display availability</a> is <code>null</code>, then
@@ -1873,7 +1873,7 @@
             <li>For each member <em>(<var>A</var>,
             <var>availabilityUrls</var>)</em> of <var>availabilitySet</var>,
             run the following steps:
-              <ol>
+              <ol data-link-for="PresentationAvailability">
                 <li>Set <var>previousAvailability</var> to the value of
                 <var>A</var>'s <a>value</a> property.
                 </li>
@@ -1922,8 +1922,8 @@
           <div class="note">
             The <a>controlling user agent</a> may choose how often to
             <a>monitor the list of available presentation displays</a>,
-            including grouping requests from <a for=
-            "PresentationRequest">start</a> and <a for=
+            including grouping requests from <a data-link-for=
+            "PresentationRequest">start</a> and <a data-link-for=
             "PresentationRequest">getAvailability</a>, and aggregating them
             across <a data-lt="browsing context">browsing contexts</a>.
           </div>
@@ -1941,7 +1941,7 @@
             availability objects</a>.
             </li>
             <li>If the <a>set of presentation availability objects</a> is now
-            empty and there is no pending request to <a for=
+            empty and there is no pending request to <a data-link-for=
             "PresentationRequest" data-lt="start">select a presentation
             display</a>, cancel any pending task to <a>monitor the list of
             available presentation displays</a> for power saving purposes, and
@@ -1974,27 +1974,27 @@
 </pre>
           <p>
             A <a>controlling user agent</a> <a>fires</a> a <a>trusted event</a>
-            named <a for="PresentationRequest">connectionavailable</a> on a
+            named <a data-link-for="PresentationRequest">connectionavailable</a> on a
             <a>PresentationRequest</a> when a connection associated with the
             object is created. It is fired at the <a>PresentationRequest</a>
             instance, using the <a>PresentationConnectionAvailableEvent</a>
-            interface, with the <a for=
+            interface, with the <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for each connection that is created for
             the <a>controller</a>, either by the <a>controller</a> calling
-            <a for="PresentationRequest">start</a> or <a for=
+            <a data-link-for="PresentationRequest">start</a> or <a data-link-for=
             "PresentationRequest">reconnect</a>, or by the <a>controlling user
             agent</a> creating a connection on the controller's behalf via
-            <a for="Presentation"><code>defaultRequest</code></a>.
+            <a data-link-for="Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
             A <a>receiving user agent</a> <a>fires</a> a <a>trusted event</a>
-            named <a for="PresentationConnectionList">connectionavailable</a>
+            named <a data-link-for="PresentationConnectionList">connectionavailable</a>
             on a <a>PresentationReceiver</a> when an incoming connection is
             created. It is fired at the <a>presentation controllers
             monitor</a>, using the <a>PresentationConnectionAvailableEvent</a>
-            interface, with the <a for=
+            interface, with the <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
             to the <a><code>PresentationConnection</code></a> object that was
             created. The event is fired for all connections that are created
@@ -2009,7 +2009,7 @@
           <p>
             When the <a>PresentationConnectionAvailableEvent</a> constructor is
             called, the <a>user agent</a> MUST construct a new
-            <a>PresentationConnectionAvailableEvent</a> object with its <a for=
+            <a>PresentationConnectionAvailableEvent</a> object with its <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
             to the <dfn for=
             "PresentationConnectionAvailableEventInit">connection</dfn> member
@@ -2083,7 +2083,7 @@
             <li>
               <dfn>closed</dfn> means that the <a>presentation connection</a>
               has been closed, or could not be opened. It may be re-opened
-              through a call to <a for="PresentationRequest">reconnect</a>. No
+              through a call to <a data-link-for="PresentationRequest">reconnect</a>. No
               communication is possible.
             </li>
             <li>
@@ -2098,7 +2098,7 @@
             When the <dfn>close</dfn> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
             MUST <a>start closing the presentation connection</a> <var>S</var>
-            with <a for="PresentationConnectionCloseReason">closed</a> as
+            with <a data-link-for="PresentationConnectionCloseReason">closed</a> as
             <var>closeReason</var> and an empty message as
             <var>closeMessage</var>.
           </p>
@@ -2145,10 +2145,10 @@
             When a <a>PresentationConnection</a> object <var>S</var> is
             discarded (because the document owning it is navigating or is
             closed) while the <a>presentation connection state</a> of
-            <var>S</var> is <a for="PresentationConnectionState">connecting</a>
-            or <a for="PresentationConnectionState">connected</a>, the <a>user
+            <var>S</var> is <a data-link-for="PresentationConnectionState">connecting</a>
+            or <a data-link-for="PresentationConnectionState">connected</a>, the <a>user
             agent</a> MUST <a>start closing the presentation connection</a>
-            <var>S</var> with <a for=
+            <var>S</var> with <a data-link-for=
             "PresentationConnectionCloseReason">wentaway</a> as
             <var>closeReason</var> and an empty <var>closeMessage</var>.
           </p>
@@ -2156,8 +2156,8 @@
             If the <a>user agent</a> receives a signal from the <a>destination
             browsing context</a> that a <a>PresentationConnection</a>
             <var>S</var> is to be closed, it MUST <a>close the presentation
-            connection</a> <var>S</var> with <a for=
-            "PresentationConnectionCloseReason">closed</a> or <a for=
+            connection</a> <var>S</var> with <a data-link-for=
+            "PresentationConnectionCloseReason">closed</a> or <a data-link-for=
             "PresentationConnectionCloseReason">wentaway</a> as
             <var>closeReason</var> and an empty <var>closeMessage</var>.
           </p>
@@ -2182,7 +2182,7 @@
           </dl>
           <ol>
             <li>If the <a>presentation connection state</a> of
-            <var>presentationConnection</var> is not <a for=
+            <var>presentationConnection</var> is not <a data-link-for=
             "PresentationConnectionState">connecting</a>, then abort all
             remaining steps.
             </li>
@@ -2195,7 +2195,7 @@
             run the following steps:
               <ol>
                 <li>Set the <a>presentation connection state</a> of
-                <var>presentationConnection</var> to <a for=
+                <var>presentationConnection</var> to <a data-link-for=
                 "PresentationConnectionState">connected</a>.
                 </li>
                 <li>
@@ -2206,7 +2206,7 @@
               </ol>
             </li>
             <li>If the connection cannot be completed, <a>close the
-            presentation connection</a> <var>S</var> with <a for=
+            presentation connection</a> <var>S</var> with <a data-link-for=
             "PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>, and a human readable message describing the
             failure as <var>closeMessage</var>.
@@ -2229,7 +2229,7 @@
           <div class="note">
             No specific transport for the connection between the <a>controlling
             browsing context</a> and the <a>receiving browsing context</a> is
-            mandated, except that for multiple calls to <a for=
+            mandated, except that for multiple calls to <a data-link-for=
             "PresentationConnection">send</a> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
             The transport should function equivalently to an
@@ -2259,9 +2259,9 @@
               send to the other browsing context
             </dd>
           </dl>
-          <ol link-for="PresentationConnection">
+          <ol data-link-for="PresentationConnection">
             <li>If the <a>state</a> property of
-            <var>presentationConnection</var> is not <a for=
+            <var>presentationConnection</var> is not <a data-link-for=
             "PresentationConnectionState">connected</a>, <a>throw</a> an <code>
               InvalidStateError</code> exception.
             </li>
@@ -2282,7 +2282,7 @@
             </li>
             <li>If the previous step encounters an unrecoverable error, then
             abruptly <a>close the presentation connection</a>
-            <var>presentationConnection</var> with <a for=
+            <var>presentationConnection</var> with <a data-link-for=
             "PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>, and a <var>closeMessage</var> describing
             the error encountered.
@@ -2348,9 +2348,9 @@
               the message
             </dd>
           </dl>
-          <ol link-for="PresentationConnection">
+          <ol data-link-for="PresentationConnection">
             <li>If the <a>state</a> property of
-            <var>presentationConnection</var> is not <a for=
+            <var>presentationConnection</var> is not <a data-link-for=
             "PresentationConnectionState">connected</a>, abort these steps.
             </li>
             <li>Let <var>event</var> be a newly created <a>trusted event</a>
@@ -2389,7 +2389,7 @@
             <a data-lt="receive-algorithm">receiving a message</a> through
             <var>presentationConnection</var>, it MUST abruptly <a>close the
             presentation connection</a> <var>presentationConnection</var> with
-            <a for="PresentationConnectionCloseReason">error</a> as
+            <a data-link-for="PresentationConnectionCloseReason">error</a> as
             <var>closeReason</var>. It SHOULD use a human readable description
             of the error encountered as <var>closeMessage</var>.
           </p>
@@ -2417,7 +2417,7 @@
 </pre>
           <p>
             A <a>PresentationConnectionCloseEvent</a> is fired when a
-            <a>presentation connection</a> enters a <a for=
+            <a>presentation connection</a> enters a <a data-link-for=
             "PresentationConnectionState">closed</a> state. The <dfn for=
             "PresentationConnectionCloseEvent">reason</dfn> attribute provides
             the reason why the connection was closed. It can take one of the
@@ -2431,7 +2431,7 @@
             <li>
               <dfn>closed</dfn> means that either the <a>controlling browsing
               context</a> or the <a>receiving browsing context</a> that were
-              connected by the <a>PresentationConnection</a> called <a for=
+              connected by the <a>PresentationConnection</a> called <a data-link-for=
               "PresentationConnection">close</a>.
             </li>
             <li>
@@ -2441,8 +2441,8 @@
             </li>
           </ul>
           <p>
-            When the <a for="PresentationConnectionCloseEvent">reason</a>
-            attribute is <a for="PresentationConnectionCloseReason">error</a>,
+            When the <a data-link-for="PresentationConnectionCloseEvent">reason</a>
+            attribute is <a data-link-for="PresentationConnectionCloseReason">error</a>,
             the user agent SHOULD set the <dfn for=
             "PresentationConnectionCloseEvent">message</dfn> attribute to a
             human readable description of how the communication channel
@@ -2451,11 +2451,11 @@
           <p>
             When the <a>PresentationConnectionCloseEvent</a> constructor is
             called, the <a>user agent</a> MUST construct a new
-            <a>PresentationConnectionCloseEvent</a> object, with its <a for=
+            <a>PresentationConnectionCloseEvent</a> object, with its <a data-link-for=
             "PresentationConnectionCloseEvent">reason</a> attribute set to the
             <dfn for="PresentationConnectionCloseEventInit">reason</dfn> member
             of the <dfn>PresentationConnectionCloseEventInit</dfn> object
-            passed to the constructor, and its <a for=
+            passed to the constructor, and its <a data-link-for=
             "PresentationConnectionCloseEvent">message</a> attribute set to the
             <dfn for="PresentationConnectionCloseEventInit">message</dfn>
             member of this <a>PresentationConnectionCloseEventInit</a> object
@@ -2491,13 +2491,13 @@
           </dl>
           <ol>
             <li>If the <a>presentation connection state</a> of
-            <var>presentationConnection</var> is not <a for=
-            "PresentationConnectionState">connecting</a> or <a for=
+            <var>presentationConnection</var> is not <a data-link-for=
+            "PresentationConnectionState">connecting</a> or <a data-link-for=
             "PresentationConnectionState">connected</a> then abort the
             remaining steps.
             </li>
             <li>Set the <a>presentation connection state</a> of
-            <var>presentationConnection</var> to <a for=
+            <var>presentationConnection</var> to <a data-link-for=
             "PresentationConnectionState">closed</a>.
             </li>
             <li>Start to signal to the <a>destination browsing context</a> the
@@ -2507,7 +2507,7 @@
             <a>PresentationConnection</a> was actually closed before proceeding
             to the next step.
             </li>
-            <li>If <var>closeReason</var> is not <a for=
+            <li>If <var>closeReason</var> is not <a data-link-for=
             "PresentationConnectionCloseReason">wentaway</a>, then locally run
             the steps to <a>close the presentation connection</a> with
             <var>presentationConnection</var>, <var>closeReason</var>, and
@@ -2547,15 +2547,15 @@
               <a>Queue a task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
-                <var>presentationConnection</var> is not <a for=
-                "PresentationConnectionState">connecting</a>, <a for=
-                "PresentationConnectionState">connected</a>, or <a for=
+                <var>presentationConnection</var> is not <a data-link-for=
+                "PresentationConnectionState">connecting</a>, <a data-link-for=
+                "PresentationConnectionState">connected</a>, or <a data-link-for=
                 "PresentationConnectionState">closed</a>, then abort the
                 remaining steps.
                 </li>
                 <li>If the <a>presentation connection state</a> of
-                <var>presentationConnection</var> is not <a for=
-                "PresentationConnectionState">closed</a>, set it to <a for=
+                <var>presentationConnection</var> is not <a data-link-for=
+                "PresentationConnectionState">closed</a>, set it to <a data-link-for=
                 "PresentationConnectionState">closed</a>.
                 </li>
                 <li>If the <var>presentationConnection</var> was created as a
@@ -2572,12 +2572,12 @@
                   </ol>
                 </li>
                 <li>
-                  <a>Fire</a> a <a>trusted event</a> with the name <a for=
+                  <a>Fire</a> a <a>trusted event</a> with the name <a data-link-for=
                   "PresentationConnectionEvent">close</a>, that uses the
                   <a>PresentationConnectionCloseEvent</a> interface, with the
-                  <a for="PresentationConnectionCloseEvent">reason</a>
+                  <a data-link-for="PresentationConnectionCloseEvent">reason</a>
                   attribute initialized to <var>closeReason</var> and the
-                  <a for="PresentationConnectionCloseEvent">message</a>
+                  <a data-link-for="PresentationConnectionCloseEvent">message</a>
                   attribute initialized to <var>closeMessage</var>, at
                   <var>presentationConnection</var>. The event must not bubble,
                   must not be cancelable, and has no default action.
@@ -2598,8 +2598,8 @@
           </p>
           <ol>
             <li>If the <a>presentation connection state</a> of
-            <var>connection</var> is not <a for="PresentationConnectionState">
-              connected</a> or <a for=
+            <var>connection</var> is not <a data-link-for="PresentationConnectionState">
+              connected</a> or <a data-link-for=
               "PresentationConnectionState">connecting</a>, then abort these
               steps.
             </li>
@@ -2610,17 +2610,17 @@
                 <li>If the <a>presentation identifier</a> of <var>known
                 connection</var> and <var>connection</var> are equal, and the
                 <a>presentation connection state</a> of <var>known
-                connection</var> is <a for=
-                "PresentationConnectionState">connected</a> or <a for=
+                connection</var> is <a data-link-for=
+                "PresentationConnectionState">connected</a> or <a data-link-for=
                 "PresentationConnectionState">connecting</a>, then <a>queue a
                 task</a> to run the following steps:
                   <ol>
                     <li>Set the <a>presentation connection state</a> of
-                    <var>known connection</var> to <a for=
+                    <var>known connection</var> to <a data-link-for=
                     "PresentationConnectionState">terminated</a>.
                     </li>
                     <li>
-                      <a>Fire a simple event</a> named <a for=
+                      <a>Fire a simple event</a> named <a data-link-for=
                       "PresentationConnectionEvent">terminate</a> at <var>known
                       connection</var>.
                     </li>
@@ -2680,12 +2680,12 @@
             run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
-                <var>connection</var> is <a for="PresentationConnectionState">
+                <var>connection</var> is <a data-link-for="PresentationConnectionState">
                   connected</a>, then add <var>connection</var> to
                   <var>connectedControllers</var>.
                 </li>
                 <li>Set the <a>presentation connection state</a> of
-                <var>connection</var> to <a for="PresentationConnectionState">
+                <var>connection</var> to <a data-link-for="PresentationConnectionState">
                   terminated</a>.
                 </li>
               </ol>
@@ -2724,17 +2724,17 @@
             task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
-                <var>connection</var> is not <a for=
-                "PresentationConnectionState">connected</a> or <a for=
+                <var>connection</var> is not <a data-link-for=
+                "PresentationConnectionState">connected</a> or <a data-link-for=
                 "PresentationConnectionState">connecting</a>, then abort the
                 following steps.
                 </li>
                 <li>Set the <a>presentation connection state</a> of
-                <var>connection</var> to <a for="PresentationConnectionState">
+                <var>connection</var> to <a data-link-for="PresentationConnectionState">
                   terminated</a>.
                 </li>
                 <li>
-                  <a>Fire a simple event</a> named <a for=
+                  <a>Fire a simple event</a> named <a data-link-for=
                   "PresentationConnectionEvent">terminate</a> at
                   <var>connection</var>.
                 </li>
@@ -3046,9 +3046,9 @@
             mechanism.
             </li>
             <li>If connection establishment completes successfully, set the <a>
-              presentation connection state</a> of <var>S</var> to <a for=
+              presentation connection state</a> of <var>S</var> to <a data-link-for=
               "PresentationConnectionState">connected</a>. Otherwise, set the
-              <a>presentation connection state</a> of <var>S</var> to <a for=
+              <a>presentation connection state</a> of <var>S</var> to <a data-link-for=
               "PresentationConnectionState">closed</a> and abort all remaining
               steps.
             </li>
@@ -3081,10 +3081,10 @@
                 </li>
                 <li>
                   <a>Queue a task</a> to <a>fire</a> a <a>trusted event</a>
-                  with the name <a for=
+                  with the name <a data-link-for=
                   "PresentationConnectionList">connectionavailable</a>, that
                   uses the <a>PresentationConnectionAvailableEvent</a>
-                  interface, with the <a for=
+                  interface, with the <a data-link-for=
                   "PresentationConnectionAvailableEvent">connection</a>
                   attribute initialized to <var>S</var>, at the <a>presentation
                   controllers monitor</a>. The event must not bubble, must not
@@ -3185,14 +3185,14 @@
           browsing context</a> obtains the <a>presentation URL</a> and
           <a>presentation identifier</a> of a running presentation from the
           user, local storage, or a server, and then connects to the
-          presentation via <a for="PresentationRequest">reconnect</a>.
+          presentation via <a data-link-for="PresentationRequest">reconnect</a>.
         </p>
         <p>
           This specification makes no guarantee as to the identity of any party
           connecting to a presentation. Once connected, the presentation may
           wish to further verify the identity of the connecting party through
           application-specific means. For example, the presentation could
-          challenge the controller to provide a token via <a for=
+          challenge the controller to provide a token via <a data-link-for=
           "PresentationConnection">send</a> that the presentation uses to
           verify identity and authorization.
         </p>
