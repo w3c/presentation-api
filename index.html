@@ -1046,7 +1046,7 @@
           
 </pre>
           <p>
-            The <dfn for="Presentation"><code>defaultRequest</code></dfn>
+            The <dfn data-dfn-for="Presentation"><code>defaultRequest</code></dfn>
             attribute MUST return the <a>default presentation request</a> if
             any, <code>null</code> otherwise. On setting, the <a>default
             presentation request</a> MUST be set to the new value.
@@ -1089,7 +1089,7 @@
           
 </pre>
           <p>
-            The <dfn for="Presentation"><code>receiver</code></dfn> attribute
+            The <dfn data-dfn-for="Presentation"><code>receiver</code></dfn> attribute
             MUST return the <a><code>PresentationReceiver</code></a> instance
             associated with the <a>receiving browsing context</a> and created
             by the <a>receiving user agent</a> when the <a>receiving browsing
@@ -1202,7 +1202,7 @@
             Selecting a presentation display
           </h4>
           <p>
-            When the <code><dfn for="PresentationRequest">start</dfn></code>
+            When the <code><dfn data-dfn-for="PresentationRequest">start</dfn></code>
             method is called, the <a>user agent</a> MUST run the following
             steps to <dfn>select a presentation display</dfn>.
           </p>
@@ -1452,7 +1452,7 @@
             Reconnecting to a presentation
           </h4>
           <p>
-            When the <dfn for="PresentationRequest">reconnect</dfn> method is
+            When the <dfn data-dfn-for="PresentationRequest">reconnect</dfn> method is
             called, the <a>user agent</a> MUST run the following steps to
             <dfn>reconnect to a presentation</dfn>:
           </p>
@@ -1605,7 +1605,7 @@
             attributes, by objects implementing the <a>PresentationRequest</a>
             interface:
           </p>
-          <table dfn-for="PresentationRequest">
+          <table data-dfn-for="PresentationRequest">
             <thead>
               <tr>
                 <th>
@@ -1663,13 +1663,13 @@
           implemented in a <a>controlling browsing context</a>.
         </p>
         <p>
-          The <dfn for="PresentationAvailability">value</dfn> attribute MUST
+          The <dfn data-dfn-for="PresentationAvailability">value</dfn> attribute MUST
           return the last value it was set to. The value is initialized and
           updated by the <a>monitor the list of available presentation
           displays</a> algorithm.
         </p>
         <p>
-          The <dfn for="PresentationAvailability">onchange</dfn> attribute is
+          The <dfn data-dfn-for="PresentationAvailability">onchange</dfn> attribute is
           an <a>event handler</a> whose corresponding <a>event handler event
           type</a> is <dfn><code>change</code></dfn>.
         </p>
@@ -1747,7 +1747,7 @@
             Getting the <a>presentation displays</a> availability information
           </h4>
           <p>
-            When the <dfn for="PresentationRequest">getAvailability</dfn>
+            When the <dfn data-dfn-for="PresentationRequest">getAvailability</dfn>
             method is called, the user agent MUST run the following steps:
           </p>
           <dl>
@@ -2001,7 +2001,7 @@
             when <a>monitoring incoming presentation connections</a>.
           </p>
           <p>
-            The <dfn for=
+            The <dfn data-dfn-for=
             "PresentationConnectionAvailableEvent">connection</dfn> attribute
             MUST return the value it was set to when the
             <a>PresentationConnection</a> object was created.
@@ -2011,7 +2011,7 @@
             called, the <a>user agent</a> MUST construct a new
             <a>PresentationConnectionAvailableEvent</a> object with its <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
-            to the <dfn for=
+            to the <dfn data-dfn-for=
             "PresentationConnectionAvailableEventInit">connection</dfn> member
             of the <dfn>PresentationConnectionAvailableEventInit</dfn> object
             passed to the constructor.
@@ -2053,7 +2053,7 @@
           };
 
 </pre>
-        <div dfn-for="PresentationConnection" link-for=
+        <div data-dfn-for="PresentationConnection" link-for=
         "PresentationConnection">
           <p>
             The <dfn><code>id</code></dfn> attribute specifies the
@@ -2069,7 +2069,7 @@
             the values of <dfn>PresentationConnectionState</dfn> depending on
             the connection state:
           </p>
-          <ul dfn-for="PresentationConnectionState">
+          <ul data-dfn-for="PresentationConnectionState">
             <li>
               <dfn>connecting</dfn> means that the user agent is attempting to
               <a>establish a presentation connection</a> with the
@@ -2118,7 +2118,7 @@
           </p>
           <p>
             The <dfn>binaryType</dfn> attribute can take one of the values of
-            <dfn for="">BinaryType</dfn>. When a <a>PresentationConnection</a>
+            <dfn data-dfn-for="">BinaryType</dfn>. When a <a>PresentationConnection</a>
             object is created, its <a>binaryType</a> attribute MUST be set to
             the string "<a link-for="BinaryType">arraybuffer</a>". On getting,
             it MUST return the last value it was set to. On setting, the user
@@ -2127,8 +2127,8 @@
           <div class="note">
             The <a>binaryType</a> attribute allows authors to control how
             binary data is exposed to scripts. By setting the attribute to
-            "<dfn dfn-for="BinaryType">blob</dfn>", binary data is returned in
-            <a>Blob</a> form; by setting it to "<dfn dfn-for=
+            "<dfn data-dfn-for="BinaryType">blob</dfn>", binary data is returned in
+            <a>Blob</a> form; by setting it to "<dfn data-dfn-for=
             "BinaryType">arraybuffer</dfn>", it is returned in
             <a>ArrayBuffer</a> form. The attribute defaults to
             "<code>arraybuffer</code>". This attribute has no effect on data
@@ -2418,12 +2418,12 @@
           <p>
             A <a>PresentationConnectionCloseEvent</a> is fired when a
             <a>presentation connection</a> enters a <a data-link-for=
-            "PresentationConnectionState">closed</a> state. The <dfn for=
+            "PresentationConnectionState">closed</a> state. The <dfn data-dfn-for=
             "PresentationConnectionCloseEvent">reason</dfn> attribute provides
             the reason why the connection was closed. It can take one of the
             values of <dfn>PresentationConnectionCloseReason</dfn>:
           </p>
-          <ul dfn-for="PresentationConnectionCloseReason">
+          <ul data-dfn-for="PresentationConnectionCloseReason">
             <li>
               <dfn>error</dfn> means that the mechanism for connecting or
               communicating with a presentation entered an unrecoverable error.
@@ -2443,7 +2443,7 @@
           <p>
             When the <a data-link-for="PresentationConnectionCloseEvent">reason</a>
             attribute is <a data-link-for="PresentationConnectionCloseReason">error</a>,
-            the user agent SHOULD set the <dfn for=
+            the user agent SHOULD set the <dfn data-dfn-for=
             "PresentationConnectionCloseEvent">message</dfn> attribute to a
             human readable description of how the communication channel
             encountered an error.
@@ -2453,11 +2453,11 @@
             called, the <a>user agent</a> MUST construct a new
             <a>PresentationConnectionCloseEvent</a> object, with its <a data-link-for=
             "PresentationConnectionCloseEvent">reason</a> attribute set to the
-            <dfn for="PresentationConnectionCloseEventInit">reason</dfn> member
+            <dfn data-dfn-for="PresentationConnectionCloseEventInit">reason</dfn> member
             of the <dfn>PresentationConnectionCloseEventInit</dfn> object
             passed to the constructor, and its <a data-link-for=
             "PresentationConnectionCloseEvent">message</a> attribute set to the
-            <dfn for="PresentationConnectionCloseEventInit">message</dfn>
+            <dfn data-dfn-for="PresentationConnectionCloseEventInit">message</dfn>
             member of this <a>PresentationConnectionCloseEventInit</a> object
             if set, to an empty string otherwise.
           </p>
@@ -2752,7 +2752,7 @@
             attributes, by objects implementing the
             <a>PresentationConnection</a> interface:
           </p>
-          <table dfn-for="PresentationConnection">
+          <table data-dfn-for="PresentationConnection">
             <thead>
               <tr>
                 <th>
@@ -2785,7 +2785,7 @@
                   <dfn><code>onclose</code></dfn>
                 </td>
                 <td>
-                  <dfn for=
+                  <dfn data-dfn-for=
                   "PresentationConnectionEvent"><code>close</code></dfn>
                 </td>
               </tr>
@@ -2794,7 +2794,7 @@
                   <dfn><code>onterminate</code></dfn>
                 </td>
                 <td>
-                  <dfn for=
+                  <dfn data-dfn-for=
                   "PresentationConnectionEvent"><code>terminate</code></dfn>
                 </td>
               </tr>
@@ -2823,7 +2823,7 @@
           <a>receiving user agent</a>.
         </p>
         <p>
-          On getting, the <dfn for="PresentationReceiver">connectionList</dfn>
+          On getting, the <dfn data-dfn-for="PresentationReceiver">connectionList</dfn>
           attribute MUST return the result of running the following steps:
         </p>
         <ol>
@@ -2991,7 +2991,7 @@
 
 </pre>
         <p>
-          The <dfn for="PresentationConnectionList">connections</dfn> attribute
+          The <dfn data-dfn-for="PresentationConnectionList">connections</dfn> attribute
           MUST return the non-terminated set of <a>presentation connections</a>
           in the <a>set of presentation controllers</a>.
         </p>
@@ -3104,7 +3104,7 @@
             attributes, by objects implementing the
             <a>PresentationConnectionList</a> interface:
           </p>
-          <table dfn-for="PresentationConnectionList">
+          <table data-dfn-for="PresentationConnectionList">
             <thead>
               <tr>
                 <th>
