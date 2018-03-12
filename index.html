@@ -424,6 +424,11 @@
         </li>
         <li>
           <dfn><a href=
+          "https://www.w3.org/TR/html51/infrastructure.html#reparsed">parse a
+          URL</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
           "https://www.w3.org/TR/html51/webappapis.html#queuing">queue a
           task</a></dfn>
         </li>
@@ -1182,12 +1187,18 @@
               <ol>
                 <li>Resolve <var>U</var> relative to the API base URL specified
                 by the <a>current settings object</a>, and add the resulting
-                absolute URL (if any) to <var>presentationUrls</var>.
+                absolute URL (if any, and if the resulting scheme is supported
+                by the <a>controlling user agent</a>) to
+                <var>presentationUrls</var>.
                 </li>
-                <li>If the resolve a URL algorithm failed, then <a>throw</a> a
-                <a>SyntaxError</a> exception and abort all remaining steps.
+                <li>If the <a>parse a URL</a> algorithm failed, then
+                <a>throw</a> a <a>SyntaxError</a> exception and abort all
+                remaining steps.
                 </li>
               </ol>
+            </li>
+            <li>If <var>presentationUrls</var> is an empty list, then throw a
+            <a>NotSupportedError</a> and abort all remaining steps.
             </li>
             <li>If any member of <var>presentationUrls</var> is not an <a>a
             priori authenticated URL</a>, then throw a <a>SecurityError</a> and
