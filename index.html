@@ -887,6 +887,32 @@
 &lt;/script&gt;
 </pre>
       </section>
+      <section>
+        <h3>
+          Creating a second presentation from the same controlling page
+        </h3>
+        <pre class="example">
+&lt;!-- controller.html --&gt;
+&lt;!-- The same controlling page can create and manage multiple presentations,
+  by calling start() multiple times. --&gt;
+&lt;button id="secondPresentBtn" style="display: none;"&gt;Present Again&lt;/button&gt;
+&lt;script&gt;
+  var secondPresentBtn = document.getElementById("secondPresentBtn");
+  var secondPresUrl = "https://example.com/second-presentation.html";
+  var secondRequest = new PresentationRequest(secondPresUrl);
+  // For simplicity, the logic to handle screen availability for secondRequest
+  // and update the status of secondPresentBtn is omitted.
+  secondPresentBtn.onclick = function () {
+  // Start new presentation, likely on a different screen than the original
+  // request.
+    secondRequest.start().then(setSecondConnection);
+  };
+  function setSecondConnection(newConnection) {
+    // Logic to handle messages to/from second-presentation.html.
+  };
+&lt;/script&gt;
+</pre>
+      </section>
     </section>
     <section>
       <h2>
