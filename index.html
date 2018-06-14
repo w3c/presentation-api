@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>
       Presentation API
     </title>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" async
-    class="remove">
-    </script>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" async=
+    "async" class="remove"></script>
     <script class="remove">
     var respecConfig = {
         specStatus: 'ED',
@@ -441,6 +440,11 @@
           <dfn><a href=
           "https://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">
           responsible browsing context</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#dom-location-reload">reload
+          a document</a></dfn>
         </li>
         <li>
           <dfn><a href=
@@ -1194,7 +1198,8 @@
                 remaining steps.
                 </li>
                 <li>If <var>A</var>'s scheme is supported by the <a>controlling
-                user agent</a>, add <var>A</var> to <var>presentationUrls</var>.
+                user agent</a>, add <var>A</var> to
+                <var>presentationUrls</var>.
                 </li>
               </ol>
             </li>
@@ -1311,13 +1316,12 @@
           </div>
           <div class="note">
             Receiving user agents are encouraged to advertise a user friendly
-            name for the presentation display, e.g. &quot;Living Room TV&quot;,
-            to assist the user in selecting the intended display. Implementers
-            of receiving user agents are also encouraged to advertise the
-            locale and intended text direction of the user friendly name.
-            Implementers of controlling user agents are encouraged to render a
-            user friendly name using its locale and text direction when they
-            are known.
+            name for the presentation display, e.g. "Living Room TV", to assist
+            the user in selecting the intended display. Implementers of
+            receiving user agents are also encouraged to advertise the locale
+            and intended text direction of the user friendly name. Implementers
+            of controlling user agents are encouraged to render a user friendly
+            name using its locale and text direction when they are known.
           </div>
         </section>
         <section>
@@ -2957,8 +2961,9 @@
           <p>
             The <a>top-level browsing context</a> MUST NOT be allowed to
             navigate itself, except by <a>navigating to a fragment
-            identifier</a>. This allows the user to grant permission based on
-            the presentation URL shown when <a data-lt=
+            identifier</a> or by <a data-lt="reload a document">reloading its
+            document</a>. This allows the user to grant permission based on the
+            presentation URL shown when <a data-lt=
             "select a presentation display">selecting a presentation
             display</a>.
           </p>
