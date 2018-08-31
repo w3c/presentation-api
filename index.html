@@ -2078,6 +2078,7 @@
         </p>
         <pre class="idl">
           enum PresentationConnectionState { "connecting", "connected", "closed", "terminated" };
+          enum BinaryType { "blob", "arraybuffer" };
 
           [SecureContext, Exposed=Window]
           interface PresentationConnection : EventTarget {
