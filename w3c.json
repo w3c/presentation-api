@@ -1,5 +1,10 @@
- {
-    "group":      ["74168"]
-,   "contacts":   ["tidoust"]
-,   "shortName":  "presentation-api"
+{
+  "group": [
+    "74168"
+  ],
+  "contacts": [
+    "tidoust"
+  ],
+  "shortName": "presentation-api",
+  "repo-type": "rec-track"
 }
