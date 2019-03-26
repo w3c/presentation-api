@@ -720,18 +720,19 @@
           Starting a new presentation example
         </h3>
         <p>
-          This code requests presentation of one of the URLs in
-          the <a>PresentationRequest</a>.
+          When the user clicks <code>presentBtn</code>, this code requests
+          presentation of one of the URLs in the <a>PresentationRequest</a>.
           When <a data-link-for="PresentationRequest">start</a> is called, the
-          browser will typically show a dialog allowing the user to choose a
-          compatible display.  The first URL in the request that is compatible
-          with the chosen display will be presented on that display.
+          browser typically shows a dialog listing compatible displays and
+          allows the user to pick one.  The first URL in
+          the <a>PresentationRequest</a> that is compatible with the chosen
+          display will be presented on that display.
         </p>
         <p>
           The <a data-link-for="PresentationRequest">start</a> method resolves
           with a <a>PresentationConnection</a> object that is used to track the
           state of the presentation, and exchange messages with the presentation
-          page.
+          page once it's loaded on the display.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -753,14 +754,13 @@
           Reconnect to a presentation example
         </h3>
         <p>
-          If the original page that started the presentation closes
-          its <a>PresentationConnection</a>, navigates or is closed, then the
-          presentation continues to run.
-          The <a data-link-for="PresentationConnection">id</a> on
-          the <a>PresentationConnection</a> can be used to reconnect to an
-          existing presentation from a different page and resume control.  This
-          is only guaranteed to work from the same browser that started the
-          presentation.
+          The presentation continues to run even after the original page that
+          started the presentation closes its <a>PresentationConnection</a>,
+          navigates, or is closed.  Another page can use
+          the <a data-link-for="PresentationConnection">id</a> on
+          the <a>PresentationConnection</a> to reconnect to an existing
+          presentation and resume control of it.  This is only guaranteed to
+          work from the same browser that started the presentation.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -791,12 +791,15 @@
           Presentation initiation by the controlling UA example
         </h3>
         <p>
-          Some browsers may have a way for users to start presentation without
-          the interacting directly with the page.  Pages can opt into this
-          behavior by setting the <a data-link-for="Presentation">defaultRequest</a>
-          property and listening for a <a>connectionavailable</a> event when a
-          presentation is started this way.  The <a>PresentationConnection</a>
-          behaves the same as if the page had called <data-link-for="PresentationRequest">start</a>.
+          Some browsers have a way for users to start a presentation without the
+          interacting directly with the controlling page.  Controlling pages can
+          opt into this behavior by setting
+          the <a data-link-for="Presentation">defaultRequest</a> property
+          on <code>navigator.presentation</code>, and listening for
+          a <a>connectionavailable</a> event that is fired when a presentation
+          is started this way.  The <a>PresentationConnection</a> passed with
+          the event behaves the same as if the page had
+          called <a data-link-for="PresentationRequest">start</a>.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -817,17 +820,18 @@
           Monitor connection's state and exchange data example
         </h3>
         <p>
-          Once a presentation has started, the <a>PresentationConnection</a> is
-          used to monitor its state and exchange messages.  Typically the user
-          will be given the choice to disconnect from or terminate the
-          presentation.
+          Once a presentation has started, the
+          returned <a>PresentationConnection</a> is used to monitor its state
+          and exchange messages with it.  Typically the user will be given the
+          choice to disconnect from or terminate the presentation from the
+          controlling page.
         </p>
         <p>
-          Since the same page may connect to and disconnect from multiple
+          Since the the controlling page may connect to and disconnect from multiple
           presentations during its lifetime, it's helpful to keep track of the
           current <a>PresentationConnection</a> and its state.  Messages can
           only be sent and received on connections in
-          a <a data-link-for="PresentationConnectionState">connected</a>, state.
+          a <a data-link-for="PresentationConnectionState">connected</a> state.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -907,7 +911,7 @@
         <p>
           This code runs on the presented page
           (<code>https://example.org/presentation.html</code>).  Presentations
-          may be connected to by multiple controlling pages, so it's important
+          may be connected to from multiple controlling pages, so it's important
           that the presented page listen for incoming connections on
           the <a data-link-for="PresentationReceiver">connectionList</a> object.
         </p>
@@ -964,8 +968,8 @@
         <p>
           It's possible for a controlling page to start and control two
           independent presentations on two different presentation displays.
-          This code shows how a second presentation can be started in addition
-          to the first one as shown above.
+          This code shows how a second presentation can be added to the first
+          one in the examples above.
           </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
