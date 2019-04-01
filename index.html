@@ -667,8 +667,22 @@
       </p>
       <section>
         <h3>
-          Monitor availability of presentation displays example
+          Monitoring availability of presentation displays
         </h3>
+
+        <p>
+          This code renders a button that is visible when there is at least one
+          compatible <a>presentation display</a> that can
+          present <code>https://example.com/presentation.html</code> <em>or</em>
+          <code>https://example.net/alternate.html</code>.
+        </p>
+        <p>
+          Monitoring of display availability is done by first creating
+          a <a>PresentationRequest</a> with the URLs you want to present, then
+          calling <a data-link-for="PresentationRequest">getAvailability</a> to
+          obtain a <a>PresentationAvailability</a> object whose <a>change</a>
+          event will fire when presentation availability changes state.
+        </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;button id="presentBtn" style="display: none;"&gt;Present&lt;/button&gt;
@@ -703,8 +717,23 @@
       </section>
       <section>
         <h3>
-          Starting a new presentation example
+          Starting a new presentation
         </h3>
+        <p>
+          When the user clicks <code>presentBtn</code>, this code requests
+          presentation of one of the URLs in the <a>PresentationRequest</a>.
+          When <a data-link-for="PresentationRequest">start</a> is called, the
+          browser typically shows a dialog that allows the user to select one of
+          the compatible displays that are available.  The first URL in
+          the <a>PresentationRequest</a> that is compatible with the chosen
+          display will be presented on that display.
+        </p>
+        <p>
+          The <a data-link-for="PresentationRequest">start</a> method resolves
+          with a <a>PresentationConnection</a> object that is used to track the
+          state of the presentation, and exchange messages with the presentation
+          page once it's loaded on the display.
+        </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;script&gt;
@@ -722,8 +751,17 @@
       </section>
       <section>
         <h3>
-          Reconnect to a presentation example
+          Reconnecting to an existing presentation
         </h3>
+        <p>
+          The presentation continues to run even after the original page that
+          started the presentation closes its <a>PresentationConnection</a>,
+          navigates, or is closed.  Another page can use
+          the <a data-link-for="PresentationConnection">id</a> on
+          the <a>PresentationConnection</a> to reconnect to an existing
+          presentation and resume control of it.  This is only guaranteed to
+          work from the same browser that started the presentation.
+        </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;button id="reconnectBtn" style="display: none;"&gt;Reconnect&lt;/button&gt;
@@ -750,8 +788,19 @@
       </section>
       <section>
         <h3>
-          Presentation initiation by the controlling UA example
+          Starting a presentation by the controlling user agent
         </h3>
+        <p>
+          Some browsers have a way for users to start a presentation without
+          interacting directly with the controlling page.  Controlling pages can
+          opt into this behavior by setting
+          the <a data-link-for="Presentation">defaultRequest</a> property
+          on <code>navigator.presentation</code>, and listening for
+          a <a>connectionavailable</a> event that is fired when a presentation
+          is started this way.  The <a>PresentationConnection</a> passed with
+          the event behaves the same as if the page had
+          called <a data-link-for="PresentationRequest">start</a>.
+        </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;!-- Setting presentation.defaultRequest allows the page to specify the
@@ -768,8 +817,22 @@
       </section>
       <section>
         <h3>
-          Monitor connection's state and exchange data example
+          Monitoring the connection state and exchanging data
         </h3>
+        <p>
+          Once a presentation has started, the
+          returned <a>PresentationConnection</a> is used to monitor its state
+          and exchange messages with it.  Typically the user will be given the
+          choice to disconnect from or terminate the presentation from the
+          controlling page.
+        </p>
+        <p>
+          Since the the controlling page may connect to and disconnect from multiple
+          presentations during its lifetime, it's helpful to keep track of the
+          current <a>PresentationConnection</a> and its state.  Messages can
+          only be sent and received on connections in
+          a <a data-link-for="PresentationConnectionState">connected</a> state.
+        </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;button id="disconnectBtn" style="display: none;"&gt;Disconnect&lt;/button&gt;
@@ -843,8 +906,15 @@
       </section>
       <section>
         <h3>
-          Monitor available connection(s) and say hello
+          Listening for incoming presentation connections
         </h3>
+        <p>
+          This code runs on the presented page
+          (<code>https://example.org/presentation.html</code>).  Presentations
+          may be connected to from multiple controlling pages, so it's important
+          that the presented page listen for incoming connections on
+          the <a data-link-for="PresentationReceiver">connectionList</a> object.
+        </p>
         <pre class="example">
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
@@ -895,6 +965,12 @@
         <h3>
           Creating a second presentation from the same controlling page
         </h3>
+        <p>
+          It's possible for a controlling page to start and control two
+          independent presentations on two different presentation displays.
+          This code shows how a second presentation can be added to the first
+          one in the examples above.
+          </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;!-- The same controlling page can create and manage multiple presentations,
@@ -2163,7 +2239,8 @@
             context</a> using <var>S</var>.
           </p>
           <p>
-            When the <a>terminate</a> method is called on a
+            When the <a data-link-for="PresentationConnection">terminate</a>
+            method is called on a
             <a>PresentationConnection</a> <var>S</var> in a <a>receiving
             browsing context</a>, the <a>user agent</a> MUST run the algorithm
             to <a>terminate a presentation in a receiving browsing context</a>
@@ -2410,7 +2487,7 @@
             </li>
             <li>Let <var>event</var> be a newly created <a>trusted event</a>
             that uses the <a>MessageEvent</a> interface, with the event type
-            <a>message</a>, which does not bubble, is not cancelable, and has
+            <code>message</code>, which does not bubble, is not cancelable, and has
             no default action.
             </li>
             <li>Initialize the <var>event</var>'s data attribute as follows:
@@ -2488,7 +2565,7 @@
               <dfn>closed</dfn> means that either the <a>controlling browsing
               context</a> or the <a>receiving browsing context</a> that were
               connected by the <a>PresentationConnection</a> called
-              <a data-link-for="PresentationConnection">close</a>.
+              <a data-link-for="PresentationConnection">close()</a>.
             </li>
             <li>
               <dfn>wentaway</dfn> means that the browser closed the connection,
@@ -2632,7 +2709,7 @@
                 </li>
                 <li>
                   <a>Fire</a> a <a>trusted event</a> with the name
-                  <a data-link-for="PresentationConnectionEvent">close</a>,
+                  <code>close</code>,
                   that uses the <a>PresentationConnectionCloseEvent</a>
                   interface, with the <a data-link-for=
                   "PresentationConnectionCloseEvent">reason</a> attribute
@@ -2681,8 +2758,7 @@
                     "PresentationConnectionState">terminated</a>.
                     </li>
                     <li>
-                      <a>Fire a simple event</a> named <a data-link-for=
-                      "PresentationConnectionEvent">terminate</a> at <var>known
+                      <a>Fire a simple event</a> named <code>terminate</code> at <var>known
                       connection</var>.
                     </li>
                   </ol>
@@ -2795,8 +2871,7 @@
                 "PresentationConnectionState">terminated</a>.
                 </li>
                 <li>
-                  <a>Fire a simple event</a> named <a data-link-for=
-                  "PresentationConnectionEvent">terminate</a> at
+                  <a>Fire a simple event</a> named <code>terminate</code> at
                   <var>connection</var>.
                 </li>
               </ol>
@@ -2830,7 +2905,7 @@
                   <dfn><code>onmessage</code></dfn>
                 </td>
                 <td>
-                  <dfn><code>message</code></dfn>
+                  <code>message</code>
                 </td>
               </tr>
               <tr>
@@ -2846,8 +2921,7 @@
                   <dfn><code>onclose</code></dfn>
                 </td>
                 <td>
-                  <dfn data-dfn-for=
-                  "PresentationConnectionEvent"><code>close</code></dfn>
+                  <code>close</code>
                 </td>
               </tr>
               <tr>
@@ -2855,8 +2929,7 @@
                   <dfn><code>onterminate</code></dfn>
                 </td>
                 <td>
-                  <dfn data-dfn-for=
-                  "PresentationConnectionEvent"><code>terminate</code></dfn>
+                  <code>terminate</code>
                 </td>
               </tr>
             </tbody>
