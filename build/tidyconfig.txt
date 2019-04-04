@@ -2,6 +2,6 @@ char-encoding: utf8
 drop-proprietary-attributes: no
 indent: yes
 preserve-entities: yes
-wrap: 82
+wrap: 80
 tidy-mark: no
 quiet: yes
