@@ -329,6 +329,11 @@
         </li>
         <li>
           <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#allowed-to-navigate">allowed
+          to navigate</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
           "https://www.w3.org/TR/html51/browsers.html#allowed-to-show-a-popup">allowed
           to show a popup</a></dfn>
         </li>
@@ -398,7 +403,7 @@
           list of descendant browsing contexts</a></dfn>
         </li>
         <li>
-          <dfn><a href=
+          <dfn data-lt="steps to navigate"><a href=
           "https://www.w3.org/TR/html51/browsers.html#navigated">navigate</a></dfn>
         </li>
         <li>
@@ -3057,13 +3062,25 @@
             listed above.
           </p>
           <p>
-            The <a>top-level browsing context</a> MUST NOT be allowed to
-            navigate itself, except by <a>navigating to a fragment
-            identifier</a> or by <a data-lt="reload a document">reloading its
-            document</a>. This allows the user to grant permission based on the
+            When the <a>top-level browsing context</a> attempts to navigate to
+            a new resource and runs the <a>steps to navigate</a>, it MUST
+            follow step 1 to determine if it is <a>allowed to navigate</a>. In
+            addition, it MUST NOT be allowed to navigate itself to a new
+            resource, except by <a>navigating to a fragment identifier</a> or
+            by <a data-lt="reload a document">reloading its document</a>.
+          </p>
+          <p class="note">
+            This allows the user to grant permission based on the origin of the
             presentation URL shown when <a data-lt=
             "select a presentation display">selecting a presentation
             display</a>.
+          </p>
+          <p>
+            If the top-level-browsing context was not <a>allowed to
+            navigate</a>, it SHOULD NOT offer to open the resource in a new
+            <a>top-level browsing context</a>, but instead SHOULD abort the
+            navigation and possibly throw a <a>SecurityError</a> (consistent
+            with the <a>steps to navigate</a>).
           </p>
           <p>
             <a>Window clients</a> and <a>worker clients</a> associated with the
