@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <title>
@@ -8,6 +8,7 @@
     <script src="https://www.w3.org/Tools/respec/respec-w3c-common" async=
     "async" class="remove"></script>
     <script class="remove">
+    <![CDATA[
     var respecConfig = {
         specStatus: 'ED',
         edDraftURI: 'https://w3c.github.io/presentation-api/',
@@ -102,8 +103,10 @@
         crEnd: '2016-09-12',
         implementationReportURI: 'https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests'
       };
+    ]]>
     </script>
     <style>
+    <![CDATA[
     /* Note formatting taken from HTML5 spec */
     .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
     .note em, .warning em, .note i, .warning i { font-style: normal; }
@@ -132,6 +135,7 @@
     var { hyphens: none; }
     .copyright { font-size: small; }
     .issue[id^='issue-'] > *:not([role='heading']) { display: none; }
+    ]]>
     </style>
   </head>
   <body>
@@ -329,6 +333,11 @@
         </li>
         <li>
           <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#allowed-to-navigate">allowed
+          to navigate</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
           "https://www.w3.org/TR/html51/browsers.html#allowed-to-show-a-popup">allowed
           to show a popup</a></dfn>
         </li>
@@ -476,6 +485,11 @@
           <dfn><a href=
           "https://www.w3.org/TR/html51/browsers.html#session-history">session
           history</a></dfn>
+        </li>
+        <li>
+          <dfn><a href=
+          "https://www.w3.org/TR/html51/browsers.html#navigated">steps to
+          navigate</a></dfn>
         </li>
         <li>
           <dfn><a href=
@@ -669,16 +683,15 @@
         <h3>
           Monitoring availability of presentation displays
         </h3>
-
         <p>
           This code renders a button that is visible when there is at least one
-          compatible <a>presentation display</a> that can
-          present <code>https://example.com/presentation.html</code> <em>or</em>
+          compatible <a>presentation display</a> that can present
+          <code>https://example.com/presentation.html</code> <em>or</em>
           <code>https://example.net/alternate.html</code>.
         </p>
         <p>
-          Monitoring of display availability is done by first creating
-          a <a>PresentationRequest</a> with the URLs you want to present, then
+          Monitoring of display availability is done by first creating a
+          <a>PresentationRequest</a> with the URLs you want to present, then
           calling <a data-link-for="PresentationRequest">getAvailability</a> to
           obtain a <a>PresentationAvailability</a> object whose <a>change</a>
           event will fire when presentation availability changes state.
@@ -723,16 +736,16 @@
           When the user clicks <code>presentBtn</code>, this code requests
           presentation of one of the URLs in the <a>PresentationRequest</a>.
           When <a data-link-for="PresentationRequest">start</a> is called, the
-          browser typically shows a dialog that allows the user to select one of
-          the compatible displays that are available.  The first URL in
-          the <a>PresentationRequest</a> that is compatible with the chosen
-          display will be presented on that display.
+          browser typically shows a dialog that allows the user to select one
+          of the compatible displays that are available. The first URL in the
+          <a>PresentationRequest</a> that is compatible with the chosen display
+          will be presented on that display.
         </p>
         <p>
           The <a data-link-for="PresentationRequest">start</a> method resolves
           with a <a>PresentationConnection</a> object that is used to track the
-          state of the presentation, and exchange messages with the presentation
-          page once it's loaded on the display.
+          state of the presentation, and exchange messages with the
+          presentation page once it's loaded on the display.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -756,11 +769,11 @@
         <p>
           The presentation continues to run even after the original page that
           started the presentation closes its <a>PresentationConnection</a>,
-          navigates, or is closed.  Another page can use
-          the <a data-link-for="PresentationConnection">id</a> on
-          the <a>PresentationConnection</a> to reconnect to an existing
-          presentation and resume control of it.  This is only guaranteed to
-          work from the same browser that started the presentation.
+          navigates, or is closed. Another page can use the <a data-link-for=
+          "PresentationConnection">id</a> on the <a>PresentationConnection</a>
+          to reconnect to an existing presentation and resume control of it.
+          This is only guaranteed to work from the same browser that started
+          the presentation.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -792,14 +805,14 @@
         </h3>
         <p>
           Some browsers have a way for users to start a presentation without
-          interacting directly with the controlling page.  Controlling pages can
-          opt into this behavior by setting
-          the <a data-link-for="Presentation">defaultRequest</a> property
-          on <code>navigator.presentation</code>, and listening for
-          a <a>connectionavailable</a> event that is fired when a presentation
-          is started this way.  The <a>PresentationConnection</a> passed with
-          the event behaves the same as if the page had
-          called <a data-link-for="PresentationRequest">start</a>.
+          interacting directly with the controlling page. Controlling pages can
+          opt into this behavior by setting the <a data-link-for=
+          "Presentation">defaultRequest</a> property on
+          <code>navigator.presentation</code>, and listening for a
+          <a>connectionavailable</a> event that is fired when a presentation is
+          started this way. The <a>PresentationConnection</a> passed with the
+          event behaves the same as if the page had called <a data-link-for=
+          "PresentationRequest">start</a>.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -820,18 +833,18 @@
           Monitoring the connection state and exchanging data
         </h3>
         <p>
-          Once a presentation has started, the
-          returned <a>PresentationConnection</a> is used to monitor its state
-          and exchange messages with it.  Typically the user will be given the
+          Once a presentation has started, the returned
+          <a>PresentationConnection</a> is used to monitor its state and
+          exchange messages with it. Typically the user will be given the
           choice to disconnect from or terminate the presentation from the
           controlling page.
         </p>
         <p>
-          Since the the controlling page may connect to and disconnect from multiple
-          presentations during its lifetime, it's helpful to keep track of the
-          current <a>PresentationConnection</a> and its state.  Messages can
-          only be sent and received on connections in
-          a <a data-link-for="PresentationConnectionState">connected</a> state.
+          Since the the controlling page may connect to and disconnect from
+          multiple presentations during its lifetime, it's helpful to keep
+          track of the current <a>PresentationConnection</a> and its state.
+          Messages can only be sent and received on connections in a
+          <a data-link-for="PresentationConnectionState">connected</a> state.
         </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
@@ -910,10 +923,11 @@
         </h3>
         <p>
           This code runs on the presented page
-          (<code>https://example.org/presentation.html</code>).  Presentations
-          may be connected to from multiple controlling pages, so it's important
-          that the presented page listen for incoming connections on
-          the <a data-link-for="PresentationReceiver">connectionList</a> object.
+          (<code>https://example.org/presentation.html</code>). Presentations
+          may be connected to from multiple controlling pages, so it's
+          important that the presented page listen for incoming connections on
+          the <a data-link-for="PresentationReceiver">connectionList</a>
+          object.
         </p>
         <pre class="example">
 &lt;!-- presentation.html --&gt;
@@ -970,7 +984,7 @@
           independent presentations on two different presentation displays.
           This code shows how a second presentation can be added to the first
           one in the examples above.
-          </p>
+        </p>
         <pre class="example">
 &lt;!-- controller.html --&gt;
 &lt;!-- The same controlling page can create and manage multiple presentations,
@@ -2212,7 +2226,8 @@
               <dfn>closed</dfn> means that the <a>presentation connection</a>
               has been closed, or could not be opened. It may be re-opened
               through a call to <a data-link-for=
-              "PresentationRequest">reconnect</a>. No communication is possible.
+              "PresentationRequest">reconnect</a>. No communication is
+              possible.
             </li>
             <li>
               <dfn>terminated</dfn> means that the <a>receiving browsing
@@ -2240,11 +2255,10 @@
           </p>
           <p>
             When the <a data-link-for="PresentationConnection">terminate</a>
-            method is called on a
-            <a>PresentationConnection</a> <var>S</var> in a <a>receiving
-            browsing context</a>, the <a>user agent</a> MUST run the algorithm
-            to <a>terminate a presentation in a receiving browsing context</a>
-            using <var>S</var>.
+            method is called on a <a>PresentationConnection</a> <var>S</var> in
+            a <a>receiving browsing context</a>, the <a>user agent</a> MUST run
+            the algorithm to <a>terminate a presentation in a receiving
+            browsing context</a> using <var>S</var>.
           </p>
           <p>
             The <dfn>binaryType</dfn> attribute can take one of the values of
@@ -2487,8 +2501,8 @@
             </li>
             <li>Let <var>event</var> be a newly created <a>trusted event</a>
             that uses the <a>MessageEvent</a> interface, with the event type
-            <code>message</code>, which does not bubble, is not cancelable, and has
-            no default action.
+            <code>message</code>, which does not bubble, is not cancelable, and
+            has no default action.
             </li>
             <li>Initialize the <var>event</var>'s data attribute as follows:
               <ol>
@@ -2709,9 +2723,9 @@
                 </li>
                 <li>
                   <a>Fire</a> a <a>trusted event</a> with the name
-                  <code>close</code>,
-                  that uses the <a>PresentationConnectionCloseEvent</a>
-                  interface, with the <a data-link-for=
+                  <code>close</code>, that uses the
+                  <a>PresentationConnectionCloseEvent</a> interface, with the
+                  <a data-link-for=
                   "PresentationConnectionCloseEvent">reason</a> attribute
                   initialized to <var>closeReason</var> and the
                   <a data-link-for=
@@ -2758,8 +2772,8 @@
                     "PresentationConnectionState">terminated</a>.
                     </li>
                     <li>
-                      <a>Fire a simple event</a> named <code>terminate</code> at <var>known
-                      connection</var>.
+                      <a>Fire a simple event</a> named <code>terminate</code>
+                      at <var>known connection</var>.
                     </li>
                   </ol>
                 </li>
@@ -3057,13 +3071,25 @@
             listed above.
           </p>
           <p>
-            The <a>top-level browsing context</a> MUST NOT be allowed to
-            navigate itself, except by <a>navigating to a fragment
-            identifier</a> or by <a data-lt="reload a document">reloading its
-            document</a>. This allows the user to grant permission based on the
+            When the <a>top-level browsing context</a> attempts to navigate to
+            a new resource and runs the <a>steps to navigate</a>, it MUST
+            follow step 1 to determine if it is <a>allowed to navigate</a>. In
+            addition, it MUST NOT be allowed to navigate itself to a new
+            resource, except by <a>navigating to a fragment identifier</a> or
+            by <a data-lt="reload a document">reloading its document</a>.
+          </p>
+          <p class="note">
+            This allows the user to grant permission based on the origin of the
             presentation URL shown when <a data-lt=
             "select a presentation display">selecting a presentation
             display</a>.
+          </p>
+          <p>
+            If the top-level-browsing context was not <a>allowed to
+            navigate</a>, it SHOULD NOT offer to open the resource in a new
+            <a>top-level browsing context</a>, but instead SHOULD abort the
+            navigation and possibly throw a <a>SecurityError</a> (consistent
+            with the <a>steps to navigate</a>).
           </p>
           <p>
             <a>Window clients</a> and <a>worker clients</a> associated with the
@@ -3489,11 +3515,11 @@
         requirement that all features be implemented by a single product.
         Additionally, implementations of the <a>controlling user agent</a>
         conformance class must include at least one implementation of the
-        <a>1-UA mode</a>, and one implementation of the <a>2-UA
-        mode</a>. <a>2-UA mode</a> implementations may only support non
-        http/https presentation URLs. Implementations of the <a>receiving user
-        agent</a> conformance class may not include implementations of
-        the <a>2-UA mode</a>.
+        <a>1-UA mode</a>, and one implementation of the <a>2-UA mode</a>.
+        <a>2-UA mode</a> implementations may only support non http/https
+        presentation URLs. Implementations of the <a>receiving user agent</a>
+        conformance class may not include implementations of the <a>2-UA
+        mode</a>.
       </p>
       <p>
         The API was recently restricted to secure contexts. Deprecation of the
