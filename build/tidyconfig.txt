@@ -1,6 +1,8 @@
 char-encoding: utf8
+doctype: html5
 drop-proprietary-attributes: no
 indent: yes
+indent-spaces: 2
 preserve-entities: yes
 wrap: 80
 tidy-mark: no
