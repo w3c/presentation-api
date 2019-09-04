@@ -1129,7 +1129,7 @@
           [SecureContext, Exposed=Window]
           interface Presentation {
           };
-        
+
 </pre>
         <p>
           The <a data-link-for="Navigator"><code>presentation</code></a>
@@ -1149,7 +1149,7 @@
             partial interface Presentation {
               attribute PresentationRequest? defaultRequest;
             };
-          
+
 </pre>
           <p>
             The <dfn data-dfn-for=
@@ -1193,7 +1193,7 @@
             partial interface Presentation {
               readonly attribute PresentationReceiver? receiver;
             };
-          
+
 </pre>
           <p>
             The <dfn data-dfn-for="Presentation"><code>receiver</code></dfn>
@@ -2939,6 +2939,7 @@
           [SecureContext, Exposed=Window]
           interface PresentationReceiver {
             readonly attribute Promise&lt;PresentationConnectionList&gt; connectionList;
+            readonly attribute USVString friendlyName;
           };
 
 
@@ -2972,6 +2973,11 @@
           promise</a> with the <a>presentation controllers monitor</a>.
           </li>
         </ol>
+        <p>
+          The <dfn data-dfn-for="PresentationReceiver">friendlyName</dfn>
+          attribute represents the user friendly name of the <a>presentation
+          display</a>.
+        </p>
         <section>
           <h4>
             Creating a receiving browsing context
