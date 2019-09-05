@@ -403,8 +403,8 @@
         </li>
         <li>
           <a href=
-          "https://html.spec.whatwg.org/multipage/system-state.html#navigator"><dfn>
-          <code>Navigator</code></dfn></a>
+          "https://html.spec.whatwg.org/multipage/system-state.html#navigator">
+          <dfn><code>Navigator</code></dfn></a>
         </li>
         <li>
           <dfn><a href=
@@ -1219,19 +1219,17 @@
           Interface <dfn>PresentationRequest</dfn>
         </h3>
         <pre class="idl">
-          [Constructor(USVString url),
-           Constructor(sequence&lt;USVString&gt; urls),
-           SecureContext, Exposed=Window]
+          [SecureContext, Exposed=Window]
           interface PresentationRequest : EventTarget {
+            constructor(USVString url);
+            constructor(sequence&lt;USVString&gt; urls);
             Promise&lt;PresentationConnection&gt; start();
             Promise&lt;PresentationConnection&gt; reconnect(USVString presentationId);
             Promise&lt;PresentationAvailability&gt; getAvailability();
 
             attribute EventHandler onconnectionavailable;
           };
-
-
-</pre>
+        </pre>
         <p>
           A <a><code>PresentationRequest</code></a> object is associated with a
           request to initiate or reconnect to a presentation made by a
@@ -2078,18 +2076,16 @@
             Interface <dfn>PresentationConnectionAvailableEvent</dfn>
           </h4>
           <pre class="idl">
-            [Constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict),
-             SecureContext, Exposed=Window]
+            [SecureContext, Exposed=Window]
             interface PresentationConnectionAvailableEvent : Event {
+              constructor(DOMString type, PresentationConnectionAvailableEventInit eventInitDict);
               [SameObject] readonly attribute PresentationConnection connection;
             };
 
             dictionary PresentationConnectionAvailableEventInit : EventInit {
               required PresentationConnection connection;
             };
-
-
-</pre>
+          </pre>
           <p>
             A <a>controlling user agent</a> <a>fires</a> a <a>trusted event</a>
             named <a data-link-for=
@@ -2527,9 +2523,9 @@
           <pre class="idl">
             enum PresentationConnectionCloseReason { "error", "closed", "wentaway" };
 
-            [Constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict),
-             SecureContext, Exposed=Window]
+            [SecureContext, Exposed=Window]
             interface PresentationConnectionCloseEvent : Event {
+              constructor(DOMString type, PresentationConnectionCloseEventInit eventInitDict);
               readonly attribute PresentationConnectionCloseReason reason;
               readonly attribute DOMString message;
             };
@@ -2538,9 +2534,7 @@
               required PresentationConnectionCloseReason reason;
               DOMString message = "";
             };
-
-
-</pre>
+          </pre>
           <p>
             A <a>PresentationConnectionCloseEvent</a> is fired when a
             <a>presentation connection</a> enters a <a data-link-for=
