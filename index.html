@@ -2175,8 +2175,7 @@
           };
 
 </pre>
-        <div data-dfn-for="PresentationConnection" data-link-for=
-        "PresentationConnection">
+        <div data-dfn-for="PresentationConnection">
           <p>
             The <dfn><code>id</code></dfn> attribute specifies the
             <a>presentation connection</a>'s <a>presentation identifier</a>.
@@ -2242,21 +2241,21 @@
           </p>
           <p>
             The <dfn>binaryType</dfn> attribute can take one of the values of
-            <a data-link-for="">BinaryType</a>. When a
-            <a>PresentationConnection</a> object is created, its
-            <a>binaryType</a> attribute MUST be set to the string
-            "<code>arraybuffer</code>". On getting, it MUST return the last
-            value it was set to. On setting, the user agent MUST set the
-            attribute to the new value.
+            <a>BinaryType</a>. When a <a>PresentationConnection</a> object is
+            created, its
+            <a data-link-for="PresentationConnection">binaryType</a> attribute
+            MUST be set to the string "<code>arraybuffer</code>". On getting,
+            it MUST return the last value it was set to. On setting, the user
+            agent MUST set the attribute to the new value.
           </p>
           <div class="note">
-            The <a>binaryType</a> attribute allows authors to control how
-            binary data is exposed to scripts. By setting the attribute to
-            "<code>blob</code>", binary data is returned in <a>Blob</a> form;
-            by setting it to "<code>arraybuffer</code>", it is returned in
-            <a>ArrayBuffer</a> form. The attribute defaults to
-            "<code>arraybuffer</code>". This attribute has no effect on data
-            sent in a string form.
+            The <a data-link-for="PresentationConnection">binaryType</a>
+            attribute allows authors to control how binary data is exposed to
+            scripts. By setting the attribute to "<code>blob</code>", binary
+            data is returned in <a>Blob</a> form; by setting it to
+            "<code>arraybuffer</code>", it is returned in <a>ArrayBuffer</a>
+            form. The attribute defaults to "<code>arraybuffer</code>". This
+            attribute has no effect on data sent in a string form.
           </div>
           <p>
             When the <dfn data-lt=
