@@ -343,6 +343,11 @@
           application cache</a></dfn>
         </li>
         <li>
+          <a href=
+          "https://html.spec.whatwg.org/multipage/web-sockets.html#binarytype">
+          <dfn><code>BinaryType</code></dfn></a>
+        </li>
+        <li>
           <dfn data-lt="browsing context|browsing contexts"><a href=
           "https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing
           context</a></dfn>
@@ -2148,7 +2153,6 @@
         </p>
         <pre class="idl">
           enum PresentationConnectionState { "connecting", "connected", "closed", "terminated" };
-          enum BinaryType { "blob", "arraybuffer" };
 
           [SecureContext, Exposed=Window]
           interface PresentationConnection : EventTarget {
@@ -2171,8 +2175,7 @@
           };
 
 </pre>
-        <div data-dfn-for="PresentationConnection" link-for=
-        "PresentationConnection">
+        <div data-dfn-for="PresentationConnection">
           <p>
             The <dfn><code>id</code></dfn> attribute specifies the
             <a>presentation connection</a>'s <a>presentation identifier</a>.
@@ -2238,22 +2241,21 @@
           </p>
           <p>
             The <dfn>binaryType</dfn> attribute can take one of the values of
-            <dfn data-dfn-for="">BinaryType</dfn>. When a
-            <a>PresentationConnection</a> object is created, its
-            <a>binaryType</a> attribute MUST be set to the string "<a link-for=
-            "BinaryType">arraybuffer</a>". On getting, it MUST return the last
-            value it was set to. On setting, the user agent MUST set the
-            attribute to the new value.
+            <a>BinaryType</a>. When a <a>PresentationConnection</a> object is
+            created, its
+            <a data-link-for="PresentationConnection">binaryType</a> attribute
+            MUST be set to the string "<code>arraybuffer</code>". On getting,
+            it MUST return the last value it was set to. On setting, the user
+            agent MUST set the attribute to the new value.
           </p>
           <div class="note">
-            The <a>binaryType</a> attribute allows authors to control how
-            binary data is exposed to scripts. By setting the attribute to
-            "<dfn data-dfn-for="BinaryType">blob</dfn>", binary data is
-            returned in <a>Blob</a> form; by setting it to "<dfn data-dfn-for=
-            "BinaryType">arraybuffer</dfn>", it is returned in
-            <a>ArrayBuffer</a> form. The attribute defaults to
-            "<code>arraybuffer</code>". This attribute has no effect on data
-            sent in a string form.
+            The <a data-link-for="PresentationConnection">binaryType</a>
+            attribute allows authors to control how binary data is exposed to
+            scripts. By setting the attribute to "<code>blob</code>", binary
+            data is returned in <a>Blob</a> form; by setting it to
+            "<code>arraybuffer</code>", it is returned in <a>ArrayBuffer</a>
+            form. The attribute defaults to "<code>arraybuffer</code>". This
+            attribute has no effect on data sent in a string form.
           </div>
           <p>
             When the <dfn data-lt=
@@ -2487,17 +2489,16 @@
                 <var>messageData</var> with type <code>DOMString</code>.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> attribute is set to "<a link-for=
-                "BinaryType">blob</a>", then initialize <var>event</var>'s
-                <code>data</code> attribute to a new <a>Blob</a> object with
-                <var>messageData</var> as its raw data.
+                <a>binaryType</a> attribute is set to "<code>blob</code>", then
+                initialize <var>event</var>'s <code>data</code> attribute to a
+                new <a>Blob</a> object with <var>messageData</var> as its raw
+                data.
                 </li>
                 <li>If <var>messageType</var> is <code>binary</code>, and
-                <a>binaryType</a> attribute is set to "<a link-for=
-                "BinaryType">arraybuffer</a>", then initialize
-                <var>event</var>'s <code>data</code> attribute to a new
-                <a>ArrayBuffer</a> object whose contents are
-                <var>messageData</var>.
+                <a>binaryType</a> attribute is set to
+                "<code>arraybuffer</code>", then initialize <var>event</var>'s
+                <code>data</code> attribute to a new <a>ArrayBuffer</a> object
+                whose contents are <var>messageData</var>.
                 </li>
               </ol>
             </li>
