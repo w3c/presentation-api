@@ -1224,11 +1224,15 @@
           Interface <dfn>PresentationRequest</dfn>
         </h3>
         <pre class="idl">
+          dictionary PresentationRequestStartOptions {
+            boolean allowSameScreen = false;
+          };
+
           [SecureContext, Exposed=Window]
           interface PresentationRequest : EventTarget {
             constructor(USVString url);
             constructor(sequence&lt;USVString&gt; urls);
-            Promise&lt;PresentationConnection&gt; start();
+            Promise&lt;PresentationConnection&gt; start(optional PresentationRequestStartOptions options = {} );
             Promise&lt;PresentationConnection&gt; reconnect(USVString presentationId);
             Promise&lt;PresentationAvailability&gt; getAvailability();
 
@@ -1334,6 +1338,11 @@
               object that received the call to <a data-link-for=
               "PresentationRequest">start</a>
             </dd>
+            <dd>
+              <var>options</var>, the <a>PresentationRequestStartOptions</a>
+              dictionary passed to <a data-link-for=
+              "PresentationRequest">start</a>
+            </dd>
             <dt>
               Output
             </dt>
@@ -1367,11 +1376,20 @@
             <a>monitor the list of available presentation displays</a> <a>in
             parallel</a>.
             </li>
+            <li>Let <var>allowSameScreen</var> be false.
+            </li>
+            <li>If <var>options</var> is a dictionary, then set
+            <var>allowSameScreen</var> to <var>option</var>'s
+            <a data-link-for="PresentationRequestStartOptions">
+            allowSameScreen</a>.
+            </li>
             <li>Let <var>presentationUrls</var> be the <a>presentation request
             URLs</a> of <var>presentationRequest</var>.
             </li>
             <li>Request user permission for the use of a <a>presentation
-            display</a> and selection of one presentation display.
+            display</a> and selection of one presentation display. If 
+            <var>allowSameScreen</var> is true, the current display must be
+            listed as an available <a>presentation display</a>.
             </li>
             <li>If either of the following is true:
               <ol>
