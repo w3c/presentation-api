@@ -2157,8 +2157,8 @@
             readonly attribute USVString id;
             readonly attribute USVString url;
             readonly attribute PresentationConnectionState state;
-            void close();
-            void terminate();
+            undefined close();
+            undefined terminate();
             attribute EventHandler onconnect;
             attribute EventHandler onclose;
             attribute EventHandler onterminate;
@@ -2166,13 +2166,12 @@
             // Communication
             attribute BinaryType binaryType;
             attribute EventHandler onmessage;
-            void send (DOMString message);
-            void send (Blob data);
-            void send (ArrayBuffer data);
-            void send (ArrayBufferView data);
+            undefined send (DOMString message);
+            undefined send (Blob data);
+            undefined send (ArrayBuffer data);
+            undefined send (ArrayBufferView data);
           };
-
-</pre>
+        </pre>
         <div data-dfn-for="PresentationConnection">
           <p>
             The <dfn><code>id</code></dfn> attribute specifies the
