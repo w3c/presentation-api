@@ -2343,6 +2343,19 @@
             and in-order fashion as described in the <a>Send a Message</a> and
             <a>Receive a Message</a> steps below.
           </div>
+          <p class="note">
+            In some cases, the <a>receiving user agent</a> may not support
+            communication with the <a>controlling user agent</a> through the
+            Presentation API. For example, the <a>controlling browsing
+            context</a> and <a>receiving browsing context</a> could use WebRTC
+            or a cloud service to communicate independently of
+            a <a>PresentationConnection</a>. In these cases, after step 3 above,
+            user agents can immediately close the connection with
+            a <a data-link-for= "PresentationConnectionCloseEvent">reason</a>
+            of <a data-link-for="PresentationConnectionCloseReason">error</a>
+            and a <dfn data-link-for="PresentationConnectionCloseEvent">message
+            </dfn> indicating that connections are not supported.
+          </p>
         </section>
         <section>
           <h4>
