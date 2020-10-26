@@ -3111,11 +3111,13 @@
             operations.
           </p>
           <p class="note">
-            As noted in <a href="#conformance>Conformance</a>, a user agent that
+            As noted in <a href="#conformance">Conformance</a>, a user agent that
             is both a <a>controlling user agent</a> and <a>receiving user
             agent</a> may allow a <a>receiving browsing context</a> to create
             additional presentations (thus becoming a <a>controlling browsing
-            context</a> as well).
+            context</a> as well).  Web developers can use <a data-lt=
+            "Presentation.receiver">navigator.presentation.receiver</a> to
+            detect when a document is loaded as a receiving browsing context.
           </p>
         </section>
       </section>
