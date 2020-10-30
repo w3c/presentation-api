@@ -5,8 +5,8 @@
     <title>
       Presentation API
     </title>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c" async=
-    "async" class="remove"></script>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c" async="async"
+    class="remove"></script>
     <script class="remove">
     var respecConfig = {
         specStatus: 'ED',
@@ -309,45 +309,48 @@
       </h2>
       <p>
         The term <dfn>JavaScript realm</dfn> is used as <a href=
-        "https://tc39.github.io/ecma262/#sec-code-realms" title="Definition of
-        JavaScript realm in ECMAScript">defined in ECMAScript</a>
-        [[!ECMASCRIPT]].
+        "https://tc39.github.io/ecma262/#sec-code-realms" title=
+        "Definition of JavaScript realm in ECMAScript">defined in
+        ECMAScript</a> [[!ECMASCRIPT]].
       </p>
       <p>
         The term <dfn>current realm</dfn> is used as <a href=
-        "https://tc39.github.io/ecma262/#current-realm" title="Definition of
-        current realm in ECMAScript">defined in ECMAScript</a> [[!ECMASCRIPT]].
+        "https://tc39.github.io/ecma262/#current-realm" title=
+        "Definition of current realm in ECMAScript">defined in ECMAScript</a>
+        [[!ECMASCRIPT]].
       </p>
       <p>
-        The terms <dfn data-lt="resolve">resolved</dfn> and <dfn
-        data-lt="reject">rejected</dfn> in the context of {{Promise}} objects
-        are used as defined in [[!ECMASCRIPT]].
+        The terms <dfn data-lt="resolve">resolved</dfn> and <dfn data-lt=
+        "reject">rejected</dfn> in the context of {{Promise}} objects are used
+        as defined in [[!ECMASCRIPT]].
       </p>
       <p>
         The header <dfn>Accept-Language</dfn> is used as <a href=
-        "https://tools.ietf.org/html/rfc7231#section-5.3.5" title="Definition of
-        Accept-Language in HTTP/1.1">defined in HTTP/1.1</a> [[!rfc7231]].
+        "https://tools.ietf.org/html/rfc7231#section-5.3.5" title=
+        "Definition of Accept-Language in HTTP/1.1">defined in HTTP/1.1</a>
+        [[!rfc7231]].
       </p>
       <p>
         <dfn>HTTP authentication</dfn> is used as <a href=
-        "https://tools.ietf.org/html/rfc7235#section-2" title="Definition of
-        HTTP authentication in HTTP/1.1: Authentication">defined in HTTP/1.1:
-        Authentication</a> [[!rfc7235]].
+        "https://tools.ietf.org/html/rfc7235#section-2" title=
+        "Definition of HTTP authentication in HTTP/1.1: Authentication">defined
+        in HTTP/1.1: Authentication</a> [[!rfc7235]].
       </p>
       <p>
         The term <dfn>cookie store</dfn> is used as <a href=
-        "http://tools.ietf.org/html/rfc6265#section-4.2" title="Definition of
-        cookie store in RFC 6265">defined in RFC 6265</a> [[!COOKIES]].
+        "http://tools.ietf.org/html/rfc6265#section-4.2" title=
+        "Definition of cookie store in RFC 6265">defined in RFC 6265</a>
+        [[!COOKIES]].
       </p>
       <p>
         The term <dfn>UUID</dfn> is used as <a href=
-        "https://tools.ietf.org/html/rfc4122" title="Definition of UUID in RFC
-        4122">defined in RFC 4122</a> [[!rfc4122]].
+        "https://tools.ietf.org/html/rfc4122" title=
+        "Definition of UUID in RFC 4122">defined in RFC 4122</a> [[!rfc4122]].
       </p>
       <p>
         The term <dfn>DIAL</dfn> is used as <a href=
-        "http://www.dial-multiscreen.org/" title="Overview of the DIAL
-        protocol">defined in DIAL</a> [[DIAL]].
+        "http://www.dial-multiscreen.org/" title=
+        "Overview of the DIAL protocol">defined in DIAL</a> [[DIAL]].
       </p>
       <p>
         The term <dfn>trusted event</dfn> refers to an {{Event}} whose
@@ -360,8 +363,9 @@
       <p>
         The term <dfn>local storage area</dfn> refers to the storage areas
         exposed by the {{WindowLocalStorage/localStorage}} attribute, and the
-        term <dfn>session storage area</dfn> refers to the storage areas exposed
-        by the {{WindowSessionStorage/sessionStorage}} attribute in [[!HTML]].
+        term <dfn>session storage area</dfn> refers to the storage areas
+        exposed by the {{WindowSessionStorage/sessionStorage}} attribute in
+        [[!HTML]].
       </p>
       <p>
         This specification references terms exported by other specifications,
@@ -369,34 +373,50 @@
         following internal concepts from other specifications:
       </p>
       <ul>
-        <li><dfn>parse a url</dfn>, <a href=
+        <li>
+          <dfn>parse a url</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/urls-and-fetching.html#parse-a-url"
-          title="Definition of 'parse a url' in HTML">defined
-          in HTML</a> [[!HTML]]</li>
-        <li><dfn>list of descendant browsing contexts</dfn>, <a href=
+          title="Definition of 'parse a url' in HTML">defined in HTML</a>
+          [[!HTML]]
+        </li>
+        <li>
+          <dfn>list of descendant browsing contexts</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/browsers.html#list-of-the-descendant-browsing-contexts"
-          title="Definition of 'list of descendant browsing contexts' in HTML">defined
-          in HTML</a> [[!HTML]]</li>
-        <li><dfn>creating a new browsing context</dfn>, <a href=
+          title=
+          "Definition of 'list of descendant browsing contexts' in HTML">defined
+          in HTML</a> [[!HTML]]
+        </li>
+        <li>
+          <dfn>creating a new browsing context</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/browsers.html#creating-a-new-browsing-context"
-          title="Definition of 'creating a new browsing context' in HTML">defined
-          in HTML</a> [[!HTML]]</li>
-        <li><dfn>session history</dfn>, <a href=
+          title=
+          "Definition of 'creating a new browsing context' in HTML">defined in
+          HTML</a> [[!HTML]]
+        </li>
+        <li>
+          <dfn>session history</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/history.html#session-history"
           title="Definition of 'session history' in HTML">defined in HTML</a>
-          [[!HTML]]</li>
-        <li><dfn>allowed to navigate</dfn>, <a href=
+          [[!HTML]]
+        </li>
+        <li>
+          <dfn>allowed to navigate</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/browsers.html#allowed-to-navigate"
           title="Definition of 'allowed to navigate' in HTML">defined in
-          HTML</a> [[!HTML]]</li>
-        <li><dfn>navigating to a fragment identifier</dfn>, <a href=
+          HTML</a> [[!HTML]]
+        </li>
+        <li>
+          <dfn>navigating to a fragment identifier</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate-fragid"
           title="Definition of 'navigate to a fragment' in HTML">defined in
-          HTML</a> [[!HTML]]</li>
-        <li><dfn>database</dfn>, <a href=
-          "https://www.w3.org/TR/IndexedDB/#database" title="Definition of
-          'database' in Indexed Database API">defined in Indexed Database
-          API</a> [[!INDEXEDDB]]</li>
+          HTML</a> [[!HTML]]
+        </li>
+        <li>
+          <dfn>database</dfn>, <a href=
+          "https://www.w3.org/TR/IndexedDB/#database" title=
+          "Definition of 'database' in Indexed Database API">defined in Indexed
+          Database API</a> [[!INDEXEDDB]]
+        </li>
       </ul>
     </section>
     <section class="informative">
@@ -795,10 +815,9 @@
           "PresentationRequest">reconnect</a>, or received a <a>presentation
           connection</a> via a <a data-link-for=
           "PresentationRequest">connectionavailable</a> event. In algorithms
-          for <a>PresentationRequest</a>, the <a>controlling
-          browsing context</a> is the <a>browsing context</a> whose
-          <a>JavaScript realm</a> was used to construct the
-          <a>PresentationRequest</a>.
+          for <a>PresentationRequest</a>, the <a>controlling browsing
+          context</a> is the <a>browsing context</a> whose <a>JavaScript
+          realm</a> was used to construct the <a>PresentationRequest</a>.
         </p>
         <p>
           The <dfn data-lt=
@@ -855,8 +874,8 @@
           <code>null</code>, provides the <a>presentation controllers
           monitor</a> once the initial <a>presentation connection</a> is
           established. The <a>presentation controllers promise</a> is
-          represented by a {{Promise}} that resolves with the
-          <a>presentation controllers monitor</a>.
+          represented by a {{Promise}} that resolves with the <a>presentation
+          controllers monitor</a>.
         </p>
         <p>
           In a <a>controlling browsing context</a>, the <dfn>default
@@ -888,9 +907,9 @@
         
 </pre>
         <p>
-          The <dfn data-dfn-for="Navigator">presentation</dfn>
-          attribute is used to retrieve an instance of the <a>Presentation</a>
-          interface. It MUST return the <a>Presentation</a> instance.
+          The <dfn data-dfn-for="Navigator">presentation</dfn> attribute is
+          used to retrieve an instance of the <a>Presentation</a> interface. It
+          MUST return the <a>Presentation</a> instance.
         </p>
         <section>
           <h4>
@@ -952,10 +971,10 @@
 </pre>
           <p>
             The <dfn data-dfn-for="Presentation"><code>receiver</code></dfn>
-            attribute MUST return the <a>PresentationReceiver</a>
-            instance associated with the <a>receiving browsing context</a> and
-            created by the <a>receiving user agent</a> when the <a>receiving
-            browsing context</a> is <a data-lt=
+            attribute MUST return the <a>PresentationReceiver</a> instance
+            associated with the <a>receiving browsing context</a> and created
+            by the <a>receiving user agent</a> when the <a>receiving browsing
+            context</a> is <a data-lt=
             "create a receiving browsing context">created</a>. In any other
             <a>browsing context</a> (including <a data-lt=
             "nested browsing context">nested browsing contexts</a> of the
@@ -986,16 +1005,15 @@
           };
         </pre>
         <p>
-          A <a>PresentationRequest</a> object is associated with a
-          request to initiate or reconnect to a presentation made by a
-          <a>controlling browsing context</a>. The
-          <a>PresentationRequest</a> object MUST be implemented in
-          a <a>controlling browsing context</a> provided by a <a>controlling
-          user agent</a>.
+          A <a>PresentationRequest</a> object is associated with a request to
+          initiate or reconnect to a presentation made by a <a>controlling
+          browsing context</a>. The <a>PresentationRequest</a> object MUST be
+          implemented in a <a>controlling browsing context</a> provided by a
+          <a>controlling user agent</a>.
         </p>
         <p>
-          When a <a>PresentationRequest</a> is constructed, the
-          given <code>urls</code> MUST be used as the list of <dfn data-lt=
+          When a <a>PresentationRequest</a> is constructed, the given
+          <code>urls</code> MUST be used as the list of <dfn data-lt=
           "presentation request URL">presentation request URLs</dfn> which are
           each a possible <a>presentation URL</a> for the
           <a>PresentationRequest</a> instance.
@@ -1024,12 +1042,13 @@
             </dd>
           </dl>
           <ol>
-            <li>If the document object's [=Document/active sandboxing flag set=] has
-            the <a>sandboxed presentation browsing context flag</a> set, then
-            throw a {{SecurityError}} and abort these steps.
+            <li>If the document object's [=Document/active sandboxing flag
+            set=] has the <a>sandboxed presentation browsing context flag</a>
+            set, then throw a {{SecurityError}} and abort these steps.
             </li>
-            <li>If <var>urls</var> is an empty sequence, then [=exception/throw=] a
-            {{NotSupportedError}} and abort all remaining steps.
+            <li>If <var>urls</var> is an empty sequence, then
+            [=exception/throw=] a {{NotSupportedError}} and abort all remaining
+            steps.
             </li>
             <li>If a single <var>url</var> was provided, let <var>urls</var> be
             a one item array containing <var>url</var>.
@@ -1093,8 +1112,8 @@
           </dl>
           <ol>
             <li>If the document's [=browsing context/active window=] does not
-            have [=transient activation=], return a {{Promise}} rejected with an
-            {{InvalidAccessError}} exception and abort these steps.
+            have [=transient activation=], return a {{Promise}} rejected with
+            an {{InvalidAccessError}} exception and abort these steps.
             </li>
             <li>Let <var>topContext</var> be the <a>top-level browsing
             context</a> of the <a>controlling browsing context</a>.
@@ -1144,8 +1163,8 @@
               </ol>
             </li>
             <li>If the user <em>denies permission</em> to use a display, reject
-            <var>P</var> with an {{NotAllowedError}} exception, and abort
-            all remaining steps.
+            <var>P</var> with an {{NotAllowedError}} exception, and abort all
+            remaining steps.
             </li>
             <li>Otherwise, the user <em>grants permission</em> to use a
             display; let <var>D</var> be that display.
@@ -1248,8 +1267,8 @@
               <var>D</var>, the selected <a>presentation display</a>
             </dd>
             <dd>
-              <var>P</var>, an optional {{Promise}} that will be resolved
-              with a new <a>presentation connection</a>
+              <var>P</var>, an optional {{Promise}} that will be resolved with
+              a new <a>presentation connection</a>
             </dd>
           </dl>
           <ol>
@@ -1512,9 +1531,9 @@
 
 </pre>
         <p>
-          A <a>PresentationAvailability</a> object exposes the
-          <a>presentation display availability</a> for a presentation request.
-          The <dfn>presentation display availability</dfn> for a
+          A <a>PresentationAvailability</a> object exposes the <a>presentation
+          display availability</a> for a presentation request. The
+          <dfn>presentation display availability</dfn> for a
           <a>PresentationRequest</a> stores whether there is currently any
           <a>available presentation display</a> for at least one of the
           <a>presentation request URLs</a> of the request.
@@ -1528,8 +1547,8 @@
           If the <a>controlling user agent</a> can <a>monitor the list of
           available presentation displays</a> in the background (without a
           pending request to <a data-link-for="PresentationRequest">start</a>),
-          the <a>PresentationAvailability</a> object MUST be
-          implemented in a <a>controlling browsing context</a>.
+          the <a>PresentationAvailability</a> object MUST be implemented in a
+          <a>controlling browsing context</a>.
         </p>
         <p>
           The <dfn data-dfn-for="PresentationAvailability">value</dfn>
@@ -1642,8 +1661,8 @@
               presentationRequest</var>, return that {{Promise}} and abort
               these steps.
             </li>
-            <li>Otherwise, let <var>P</var> be a new {{Promise}} constructed
-            in the <a>JavaScript realm</a> of <var>presentationRequest</var>.
+            <li>Otherwise, let <var>P</var> be a new {{Promise}} constructed in
+            the <a>JavaScript realm</a> of <var>presentationRequest</var>.
             </li>
             <li>Return <var>P</var>, but continue running these steps <a>in
             parallel</a>.
@@ -1781,9 +1800,8 @@
                     <li>Set <var>A</var>'s <a>value</a> property to
                     <var>newAvailability</var>.
                     </li>
-                    <li>
-                      [=Fire an event=] named <a>change</a> whose
-                      {{Event/isTrusted}} attribute is true at <var>A</var>.
+                    <li>[=Fire an event=] named <a>change</a> whose
+                    {{Event/isTrusted}} attribute is true at <var>A</var>.
                     </li>
                   </ol>
                 </li>
@@ -1842,17 +1860,17 @@
             };
           </pre>
           <p>
-            A <a>controlling user agent</a> [=fire an event|fires=] a <a>trusted
-            event</a> named <a data-link-for=
+            A <a>controlling user agent</a> [=fire an event|fires=] a
+            <a>trusted event</a> named <a data-link-for=
             "PresentationRequest">connectionavailable</a> on a
             <a>PresentationRequest</a> when a connection associated with the
             object is created. It is fired at the <a>PresentationRequest</a>
             instance, using the <a>PresentationConnectionAvailableEvent</a>
             interface, with the <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
-            to the <a>PresentationConnection</a> object that was
-            created. The event is fired for each connection that is created for
-            the <a>controller</a>, either by the <a>controller</a> calling
+            to the <a>PresentationConnection</a> object that was created. The
+            event is fired for each connection that is created for the
+            <a>controller</a>, either by the <a>controller</a> calling
             <a data-link-for="PresentationRequest">start</a> or
             <a data-link-for="PresentationRequest">reconnect</a>, or by the
             <a>controlling user agent</a> creating a connection on the
@@ -1868,9 +1886,9 @@
             the <a>PresentationConnectionAvailableEvent</a> interface, with the
             <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
-            to the <a>PresentationConnection</a> object that was
-            created. The event is fired for all connections that are created
-            when <a>monitoring incoming presentation connections</a>.
+            to the <a>PresentationConnection</a> object that was created. The
+            event is fired for all connections that are created when
+            <a>monitoring incoming presentation connections</a>.
           </p>
           <p>
             The <dfn data-dfn-for=
@@ -2002,8 +2020,8 @@
             attribute allows authors to control how binary data is exposed to
             scripts. By setting the attribute to "<code>blob</code>", binary
             data is returned in {{Blob}} form; by setting it to
-            "<code>arraybuffer</code>", it is returned in {{ArrayBuffer}}
-            form. The attribute defaults to "<code>arraybuffer</code>". This
+            "<code>arraybuffer</code>", it is returned in {{ArrayBuffer}} form.
+            The attribute defaults to "<code>arraybuffer</code>". This
             attribute has no effect on data sent in a string form.
           </div>
           <p>
@@ -2071,11 +2089,10 @@
                 <var>presentationConnection</var> to <a data-link-for=
                 "PresentationConnectionState">connected</a>.
                 </li>
-                <li>
-                  [=Fire an event=] named <a class=
-                  "PresentationConnectionEvent">connect</a> whose
-                  {{Event/isTrusted}} attribute is true at
-                  <var>presentationConnection</var>.
+                <li>[=Fire an event=] named <a class=
+                "PresentationConnectionEvent">connect</a> whose
+                {{Event/isTrusted}} attribute is true at
+                <var>presentationConnection</var>.
                 </li>
               </ol>
             </li>
@@ -2106,8 +2123,8 @@
             mandated, except that for multiple calls to <a data-link-for=
             "PresentationConnection">send</a> it has to be ensured that
             messages are delivered to the other end reliably and in sequence.
-            The transport should function equivalently to an
-            {{RTCDataChannel}} in reliable mode.
+            The transport should function equivalently to an {{RTCDataChannel}}
+            in reliable mode.
           </div>
           <p>
             Let <dfn>presentation message data</dfn> be the payload data to be
@@ -2137,7 +2154,7 @@
             <li>If the <a>state</a> property of
             <var>presentationConnection</var> is not <a data-link-for=
             "PresentationConnectionState">connected</a>, [=exception/throw=] an
-             {{InvalidStateError}} exception.
+            {{InvalidStateError}} exception.
             </li>
             <li>If the <a>closing procedure</a> of
             <var>presentationConnection</var> has started, then abort these
@@ -2180,8 +2197,7 @@
               </li>
               <li>
                 <code>Unable to send binary message (invalid_message)</code>
-                for {{ArrayBuffer}}, {{ArrayBufferView}} and {{Blob}}
-                messages.
+                for {{ArrayBuffer}}, {{ArrayBufferView}} and {{Blob}} messages.
               </li>
             </ul>
           </div>
@@ -2446,18 +2462,15 @@
                     </li>
                   </ol>
                 </li>
-                <li>
-                  [=fire an event|Fire=] a <a>trusted event</a> with the name
-                  <code>close</code>, that uses the
-                  <a>PresentationConnectionCloseEvent</a> interface, with the
-                  <a data-link-for=
-                  "PresentationConnectionCloseEvent">reason</a> attribute
-                  initialized to <var>closeReason</var> and the
-                  <a data-link-for=
-                  "PresentationConnectionCloseEvent">message</a> attribute
-                  initialized to <var>closeMessage</var>, at
-                  <var>presentationConnection</var>. The event must not bubble,
-                  must not be cancelable, and has no default action.
+                <li>[=fire an event|Fire=] a <a>trusted event</a> with the name
+                <code>close</code>, that uses the
+                <a>PresentationConnectionCloseEvent</a> interface, with the
+                <a data-link-for="PresentationConnectionCloseEvent">reason</a>
+                attribute initialized to <var>closeReason</var> and the
+                <a data-link-for="PresentationConnectionCloseEvent">message</a>
+                attribute initialized to <var>closeMessage</var>, at
+                <var>presentationConnection</var>. The event must not bubble,
+                must not be cancelable, and has no default action.
                 </li>
               </ol>
             </li>
@@ -2496,10 +2509,9 @@
                     <var>known connection</var> to <a data-link-for=
                     "PresentationConnectionState">terminated</a>.
                     </li>
-                    <li>
-                      [=Fire an event=] named <code>terminate</code> whose
-                      {{Event/isTrusted}} attribute is true at <var>known
-                      connection</var>.
+                    <li>[=Fire an event=] named <code>terminate</code> whose
+                    {{Event/isTrusted}} attribute is true at <var>known
+                    connection</var>.
                     </li>
                   </ol>
                 </li>
@@ -2610,9 +2622,8 @@
                 <var>connection</var> to <a data-link-for=
                 "PresentationConnectionState">terminated</a>.
                 </li>
-                <li>
-                  [=Fire an event=] named <code>terminate</code> whose
-                  {{Event/isTrusted}} attribute is true at <var>connection</var>.
+                <li>[=Fire an event=] named <code>terminate</code> whose
+                {{Event/isTrusted}} attribute is true at <var>connection</var>.
                 </li>
               </ol>
             </li>
@@ -2764,7 +2775,7 @@
             <var>C</var>.
             </li>
             <li>Create a new empty storage for <a>session storage areas</a> and
-              <a>local storage areas</a> for <var>C</var>.
+            <a>local storage areas</a> for <var>C</var>.
             </li>
             <li>If the <a>receiving user agent</a> implements [[!INDEXEDDB]],
             create a new empty storage for IndexedDB <a>databases</a> for <var>
@@ -2772,8 +2783,8 @@
             </li>
             <li>If the <a>receiving user agent</a> implements
             [[!SERVICE-WORKERS]], create a new empty list of registered
-            <a>service worker registrations</a> and a new empty set of {{Cache}}
-            objects for <var>C</var>.
+            <a>service worker registrations</a> and a new empty set of
+            {{Cache}} objects for <var>C</var>.
             </li>
             <li>
               <a>Navigate</a> <var>C</var> to <var>presentationUrl</var>.
@@ -2816,11 +2827,11 @@
             consistent with the [=navigate|steps to navigate=].
           </p>
           <p>
-            [=service worker client/window client|Window clients=] and [=service
-            worker client/worker client|worker clients=] associated with the
-            <a>receiving browsing context</a> and its <a>list of descendant
-            browsing contexts</a> must not be exposed to <a>service workers</a>
-            associated with each other.
+            [=service worker client/window client|Window clients=] and
+            [=service worker client/worker client|worker clients=] associated
+            with the <a>receiving browsing context</a> and its <a>list of
+            descendant browsing contexts</a> must not be exposed to <a>service
+            workers</a> associated with each other.
           </p>
           <p>
             When the <a>receiving browsing context</a> is terminated, any
@@ -2863,11 +2874,11 @@
             operations.
           </p>
           <p class="note">
-            As noted in <a href="#conformance">Conformance</a>, a user agent that
-            is both a <a>controlling user agent</a> and <a>receiving user
+            As noted in <a href="#conformance">Conformance</a>, a user agent
+            that is both a <a>controlling user agent</a> and <a>receiving user
             agent</a> may allow a <a>receiving browsing context</a> to create
             additional presentations (thus becoming a <a>controlling browsing
-            context</a> as well).  Web developers can use <a data-lt=
+            context</a> as well). Web developers can use <a data-lt=
             "Presentation.receiver">navigator.presentation.receiver</a> to
             detect when a document is loaded as a receiving browsing context.
           </p>
