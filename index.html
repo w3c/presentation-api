@@ -76,7 +76,7 @@
         ],
         sotdAfterWGinfo: true,
         group: 'secondscreen',
-        xref: ['dom', 'fileapi', 'mixed-content', 'html', 'url', 'webidl', 'webrtc'],
+        xref: ['dom', 'fileapi', 'secure-contexts', 'html', 'url', 'webidl', 'webrtc'],
         localBiblio: {
           DIAL: {
             title: 'DIscovery And Launch Protocol Specification',
@@ -1075,9 +1075,9 @@
             <li>If <var>presentationUrls</var> is an empty list, then throw a
             {{NotSupportedError}} and abort all remaining steps.
             </li>
-            <li>If any member of <var>presentationUrls</var> is not an <a>a
-            priori authenticated URL</a>, then throw a {{SecurityError}} and
-            abort these steps.
+            <li>If any member of <var>presentationUrls</var> is not a
+            <a>potentially trustworthy URL</a>, then throw a {{SecurityError}}
+            and abort these steps.
             </li>
             <li>Construct a new <a>PresentationRequest</a> object with
             <var>presentationUrls</var> as its <a>presentation request URLs</a>
@@ -2772,9 +2772,6 @@
             <li>Create a new empty store for <var>C</var> to hold <a>HTTP
             authentication</a> states.
             </li>
-            <li>Create a new empty <a>application cache</a> storage for
-            <var>C</var>.
-            </li>
             <li>Create a new empty storage for <a>session storage areas</a> and
             <a>local storage areas</a> for <var>C</var>.
             </li>
@@ -2842,11 +2839,11 @@
             with the <a>receiving browsing context</a> and the <a>browsing
             contexts</a> in its <a>list of descendant browsing contexts</a>,
             including <a>session history</a>, the <a>cookie store</a>, any
-            <a>HTTP authentication</a> state, the <a>application cache</a>, any
-            <a>databases</a>, the <a>session storage areas</a>, the <a>local
-            storage areas</a>, the list of registered <a>service worker
-            registrations</a> and the {{Cache}} objects MUST be discarded and
-            not used for any other <a>browsing context</a>.
+            <a>HTTP authentication</a> state, any <a>databases</a>, the
+            <a>session storage areas</a>, the <a>local storage areas</a>, the
+            list of registered <a>service worker registrations</a> and the
+            {{Cache}} objects MUST be discarded and not used for any other
+            <a>browsing context</a>.
           </p>
           <p class="note">
             This algorithm is intended to create a well defined environment to
