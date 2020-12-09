@@ -354,10 +354,6 @@
         "Overview of the DIAL protocol">defined in DIAL</a> [[DIAL]].
       </p>
       <p>
-        The term <dfn>trusted event</dfn> refers to an {{Event}} whose
-        {{Event/isTrusted}} attribute is <code>true</code> in [[!DOM]].
-      </p>
-      <p>
         The term <dfn>reload a document</dfn> refers to steps run when the
         {{Location/reload()}} method gets called in [[!HTML]].
       </p>
@@ -1302,15 +1298,13 @@
             <var>S</var>.
             </li>
             <li>
-              <a>Queue a task</a> to [=fire an event|fire=] a <a>trusted
-              event</a> with the name <a data-link-for=
+              <a>Queue a task</a> to [=fire an event=] named <a data-link-for=
               "PresentationRequest">connectionavailable</a>, that uses the
               <a>PresentationConnectionAvailableEvent</a> interface, with the
               <a data-link-for=
               "PresentationConnectionAvailableEvent">connection</a> attribute
               initialized to <var>S</var>, at <var>presentationRequest</var>.
-              The event must not bubble, must not be cancelable, and has no
-              default action.
+              The event must not bubble and must not be cancelable.
             </li>
             <li>Let <var>U</var> be the user agent connected to D.
             </li>
@@ -1461,15 +1455,14 @@
                   <a>Resolve</a> <var>P</var> with <var>newConnection</var>.
                 </li>
                 <li>
-                  <a>Queue a task</a> to [=fire an event|fire=] a <a>trusted
-                  event</a> with the name <a data-link-for=
+                  <a>Queue a task</a> to [=fire an event=] named <a data-link-for=
                   "PresentationRequest">connectionavailable</a>, that uses the
                   <a>PresentationConnectionAvailableEvent</a> interface, with
                   the <a data-link-for=
                   "PresentationConnectionAvailableEvent">connection</a>
                   attribute initialized to <var>newConnection</var>, at
-                  <var>presentationRequest</var>. The event must not bubble,
-                  must not be cancelable, and has no default action.
+                  <var>presentationRequest</var>. The event must not bubble and
+                  must not be cancelable.
                 </li>
                 <li>
                   <a>Establish a presentation connection</a> with
@@ -1801,8 +1794,7 @@
                     <li>Set <var>A</var>'s <a>value</a> property to
                     <var>newAvailability</var>.
                     </li>
-                    <li>[=Fire an event=] named <a>change</a> whose
-                    {{Event/isTrusted}} attribute is true at <var>A</var>.
+                    <li>[=Fire an event=] named <a>change</a> at <var>A</var>.
                     </li>
                   </ol>
                 </li>
@@ -1861,11 +1853,10 @@
             };
           </pre>
           <p>
-            A <a>controlling user agent</a> [=fire an event|fires=] a
-            <a>trusted event</a> named <a data-link-for=
-            "PresentationRequest">connectionavailable</a> on a
-            <a>PresentationRequest</a> when a connection associated with the
-            object is created. It is fired at the <a>PresentationRequest</a>
+            A <a>controlling user agent</a> [=fire an event|fires an event=]
+            named <a data-link-for="PresentationRequest">connectionavailable</a>
+            on a <a>PresentationRequest</a> when a connection associated with
+            the object is created. It is fired at the <a>PresentationRequest</a>
             instance, using the <a>PresentationConnectionAvailableEvent</a>
             interface, with the <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
@@ -1879,8 +1870,8 @@
             "Presentation"><code>defaultRequest</code></a>.
           </p>
           <p>
-            A <a>receiving user agent</a> [=fire an event|fires=] a <a>trusted
-            event</a> named <a data-link-for=
+            A <a>receiving user agent</a> [=fire an event|fires an event=]
+            named <a data-link-for=
             "PresentationConnectionList">connectionavailable</a> on a
             <a>PresentationReceiver</a> when an incoming connection is created.
             It is fired at the <a>presentation controllers monitor</a>, using
@@ -2091,8 +2082,7 @@
                 "PresentationConnectionState">connected</a>.
                 </li>
                 <li>[=Fire an event=] named <a class=
-                "PresentationConnectionEvent">connect</a> whose
-                {{Event/isTrusted}} attribute is true at
+                "PresentationConnectionEvent">connect</a> at
                 <var>presentationConnection</var>.
                 </li>
               </ol>
@@ -2244,10 +2234,9 @@
             <var>presentationConnection</var> is not <a data-link-for=
             "PresentationConnectionState">connected</a>, abort these steps.
             </li>
-            <li>Let <var>event</var> be a newly created <a>trusted event</a>
-            that uses the {{MessageEvent}} interface, with the event type
-            <code>message</code>, which does not bubble, is not cancelable, and
-            has no default action.
+            <li>Let <var>event</var> be the result of [=creating an event=]
+            using the {{MessageEvent}} interface, with the event type
+            <code>message</code>, which does not bubble and is not cancelable.
             </li>
             <li>Initialize the <var>event</var>'s data attribute as follows:
               <ol>
@@ -2463,15 +2452,14 @@
                     </li>
                   </ol>
                 </li>
-                <li>[=fire an event|Fire=] a <a>trusted event</a> with the name
-                <code>close</code>, that uses the
+                <li>[=Fire an event=] named <code>close</code>, that uses the
                 <a>PresentationConnectionCloseEvent</a> interface, with the
                 <a data-link-for="PresentationConnectionCloseEvent">reason</a>
                 attribute initialized to <var>closeReason</var> and the
                 <a data-link-for="PresentationConnectionCloseEvent">message</a>
                 attribute initialized to <var>closeMessage</var>, at
-                <var>presentationConnection</var>. The event must not bubble,
-                must not be cancelable, and has no default action.
+                <var>presentationConnection</var>. The event must not bubble and
+                must not be cancelable.
                 </li>
               </ol>
             </li>
@@ -2510,9 +2498,8 @@
                     <var>known connection</var> to <a data-link-for=
                     "PresentationConnectionState">terminated</a>.
                     </li>
-                    <li>[=Fire an event=] named <code>terminate</code> whose
-                    {{Event/isTrusted}} attribute is true at <var>known
-                    connection</var>.
+                    <li>[=Fire an event=] named <code>terminate</code> at
+                    <var>known connection</var>.
                     </li>
                   </ol>
                 </li>
@@ -2623,8 +2610,8 @@
                 <var>connection</var> to <a data-link-for=
                 "PresentationConnectionState">terminated</a>.
                 </li>
-                <li>[=Fire an event=] named <code>terminate</code> whose
-                {{Event/isTrusted}} attribute is true at <var>connection</var>.
+                <li>[=Fire an event=] named <code>terminate</code> at
+                <var>connection</var>.
                 </li>
               </ol>
             </li>
@@ -2986,15 +2973,15 @@
                 the <a>set of presentation controllers</a>.
                 </li>
                 <li>
-                  <a>Queue a task</a> to [=fire an event|fire=] a <a>trusted
-                  event</a> with the name <a data-link-for=
+                  <a>Queue a task</a> to [=fire an event=] named
+                  <a data-link-for=
                   "PresentationConnectionList">connectionavailable</a>, that
                   uses the <a>PresentationConnectionAvailableEvent</a>
                   interface, with the <a data-link-for=
                   "PresentationConnectionAvailableEvent">connection</a>
                   attribute initialized to <var>S</var>, at the <a>presentation
-                  controllers monitor</a>. The event must not bubble, must not
-                  be cancelable, and has no default action.
+                  controllers monitor</a>. The event must not bubble and must
+                  not be cancelable.
                 </li>
               </ol>
             </li>
