@@ -1975,6 +1975,13 @@
               terminated and cannot be re-opened. No communication is possible.
             </li>
           </ul>
+          <div class="note">
+            A <a data-link-for="PresentationConnectionState">connected</a> state
+            does not mean that sending/receiving messages will always succeed as
+            the communication channel may be abruptly closed at any time.
+            Applications that wish to detect such situations as soon as possible
+            should implement their own keep-alive mechanism.
+          </div>
           <p>
             When the <dfn>close</dfn> method is called on a
             <a>PresentationConnection</a> <var>S</var>, the <a>user agent</a>
