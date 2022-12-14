@@ -944,8 +944,8 @@
             by the <a>receiving user agent</a> when the <a>receiving browsing
             context</a> is <a data-lt=
             "create a receiving browsing context">created</a>. In any other
-            <a>browsing context</a> (including <a data-lt=
-            "nested browsing context">nested browsing contexts</a> of the
+            <a>browsing context</a> or <a>navigable</a>(including <a data-lt=
+            "child navigable">child navigables</a> of the
             <a>receiving browsing context</a>) it MUST return
             <code>null</code>.
           </p>
@@ -2758,9 +2758,8 @@
             </li>
           </ol>
           <p>
-            All <a data-lt="nested browsing context">nested browsing
-            contexts</a> <a data-lt=
-            "creating a new browsing context">created</a> by the presented
+            All <a data-lt="child navigables">child navigables</a> <a data-lt=
+            "creating a new navigable">created</a> by the presented
             document, i.e. that have the <a>receiving browsing context</a> as
             their <a data-lt="top-level browsing context">top-level browsing
             context</a>, MUST also have restrictions 2-4 above. In addition,
@@ -3088,7 +3087,7 @@
             <p>
               Display of the origin requesting presentation will help the user
               understand what content is making the request, especially when
-              the request is initiated from a <a>nested browsing context</a>.
+              the request is initiated from a <a>child navigable</a>.
               For example, embedded content may try to convince the user to
               click to trigger a request to start an unwanted presentation.
             </p>
