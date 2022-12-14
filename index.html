@@ -592,7 +592,7 @@
   function setConnection(newConnection) {
     // Disconnect from existing presentation, if not attempting to reconnect
     if (connection &amp;&amp; connection != newConnection &amp;&amp; connection.state != 'closed') {
-      connection.onclosed = undefined;
+      connection.onclose = undefined;
       connection.close();
     }
 
