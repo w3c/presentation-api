@@ -872,7 +872,7 @@
           [SecureContext, Exposed=Window]
           interface Presentation {
           };
-        
+
 </pre>
         <p>
           The <dfn data-dfn-for="Navigator">presentation</dfn> attribute is
@@ -891,7 +891,7 @@
             partial interface Presentation {
               attribute PresentationRequest? defaultRequest;
             };
-          
+
 </pre>
           <p>
             The <dfn data-dfn-for=
@@ -935,7 +935,7 @@
             partial interface Presentation {
               readonly attribute PresentationReceiver? receiver;
             };
-          
+
 </pre>
           <p>
             The <dfn data-dfn-for="Presentation"><code>receiver</code></dfn>
@@ -2594,6 +2594,26 @@
               </ol>
             </li>
           </ol>
+        </section>
+        <section>
+          <h4>
+            Controlling user agent
+          </h4>
+          <p>
+            <a data-lt="controlling user agent">Controlling user agents</a>
+            MUST implement the following partial interface:
+          </p>
+          <pre class="idl idl-controlling-ua">
+            partial interface PresentationConnection {
+              readonly attribute USVString receiverName;
+            };
+
+</pre>
+          <p>
+            The <dfn><code>receiverName</code></dfn> attribute represents the
+            user friendly name for the <a>presentation display</a> associated
+            with the <a>presentation connection</a>.
+          </p>
         </section>
         <section>
           <h4>
