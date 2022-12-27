@@ -657,9 +657,9 @@
 &lt;!-- presentation.html --&gt;
 &lt;script&gt;
   var addConnection = function(connection) {
-    this.onmessage = function (message) {
+    connection.onmessage = function (message) {
       if (message.data == "say hello")
-        this.send("hello");
+        connection.send("hello");
     };
   };
 
