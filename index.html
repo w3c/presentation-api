@@ -348,13 +348,6 @@
           [[!HTML]]
         </li>
         <li>
-          <dfn>list of descendant browsing contexts</dfn>, <a href=
-          "https://html.spec.whatwg.org/multipage/browsers.html#list-of-the-descendant-browsing-contexts"
-          title=
-          "Definition of 'list of descendant browsing contexts' in HTML">defined
-          in HTML</a> [[!HTML]]
-        </li>
-        <li>
           <dfn>creating a new browsing context</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/browsers.html#creating-a-new-browsing-context"
           title=
@@ -378,6 +371,12 @@
           "https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate-fragid"
           title="Definition of 'navigate to a fragment' in HTML">defined in
           HTML</a> [[!HTML]]
+        </li>
+        <li>
+          <dfn>unload a document</dfn>, <a href=
+          "https://html.spec.whatwg.org/multipage/document-lifecycle.html#unload-a-document"
+          title="Definition of 'unload a document' in HTML">defined in HTML</a>
+          [[!HTML]]
         </li>
         <li>
           <dfn>database</dfn>, <a href=
@@ -853,7 +852,7 @@
         </p>
         <p>
           The <a>task source</a> for the tasks mentioned in this specification
-          is the <dfn>presentation task source</dfn>.
+          is the <var>presentation task source</var>.
         </p>
         <p>
           Unless otherwise specified, the <a>JavaScript realm</a> for script
@@ -936,7 +935,7 @@
               readonly attribute PresentationReceiver? receiver;
             };
           
-</pre>
+          </pre>
           <p>
             The <dfn data-dfn-for="Presentation"><code>receiver</code></dfn>
             attribute MUST return the <a>PresentationReceiver</a> instance
@@ -945,9 +944,8 @@
             context</a> is <a data-lt=
             "create a receiving browsing context">created</a>. In any other
             <a>browsing context</a> (including <a data-lt=
-            "nested browsing context">nested browsing contexts</a> of the
-            <a>receiving browsing context</a>) it MUST return
-            <code>null</code>.
+            "child navigable">child navigables</a> of the <a>receiving browsing
+            context</a>) it MUST return <code>null</code>.
           </p>
           <p class="note">
             Web developers can use <a data-lt=
@@ -1079,17 +1077,17 @@
             </dd>
           </dl>
           <ol>
-            <li>If the document's [=browsing context/active window=] does not
-            have [=transient activation=], return a {{Promise}} rejected with
-            an {{InvalidAccessError}} exception and abort these steps.
+            <li>If the document's [=navigable/active window=] does not have
+            [=transient activation=], return a {{Promise}} rejected with an
+            {{InvalidAccessError}} exception and abort these steps.
             </li>
             <li>Let <var>topContext</var> be the <a>top-level browsing
             context</a> of the <a>controlling browsing context</a>.
             </li>
             <li>If there is already an unsettled {{Promise}} from a previous
             call to <a data-link-for="PresentationRequest">start</a> in
-            <var>topContext</var> or any <a>browsing context</a> in the <a>list
-            of descendant browsing contexts</a> of <var>topContext</var>,
+            <var>topContext</var> or any <a>browsing context</a> in the
+            [=Document/descendant navigables=] of <var>topContext</var>,
             return a new {{Promise}} rejected with an {{OperationError}}
             exception and abort all remaining steps.
             </li>
@@ -1308,7 +1306,7 @@
           <p>
             When the <dfn data-dfn-for="PresentationRequest">reconnect</dfn>
             method is called, the <a>user agent</a> MUST run the following
-            steps to <dfn>reconnect to a presentation</dfn>:
+            steps to reconnect to a presentation:
           </p>
           <dl>
             <dt>
@@ -1426,7 +1424,8 @@
                   <a>Resolve</a> <var>P</var> with <var>newConnection</var>.
                 </li>
                 <li>
-                  <a>Queue a task</a> to [=fire an event=] named <a data-link-for=
+                  <a>Queue a task</a> to [=fire an event=] named
+                  <a data-link-for=
                   "PresentationRequest">connectionavailable</a>, that uses the
                   <a>PresentationConnectionAvailableEvent</a> interface, with
                   the <a data-link-for=
@@ -1825,9 +1824,10 @@
           </pre>
           <p>
             A <a>controlling user agent</a> [=fire an event|fires an event=]
-            named <a data-link-for="PresentationRequest">connectionavailable</a>
-            on a <a>PresentationRequest</a> when a connection associated with
-            the object is created. It is fired at the <a>PresentationRequest</a>
+            named <a data-link-for=
+            "PresentationRequest">connectionavailable</a> on a
+            <a>PresentationRequest</a> when a connection associated with the
+            object is created. It is fired at the <a>PresentationRequest</a>
             instance, using the <a>PresentationConnectionAvailableEvent</a>
             interface, with the <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
@@ -1947,11 +1947,11 @@
             </li>
           </ul>
           <div class="note">
-            A <a data-link-for="PresentationConnectionState">connected</a> state
-            does not mean that sending or receiving messages will succeed, as
-            the communication channel may be abruptly closed at any time.
-            Applications that wish to detect such situations as soon as possible
-            should implement their own keep-alive mechanism.
+            A <a data-link-for="PresentationConnectionState">connected</a>
+            state does not mean that sending or receiving messages will
+            succeed, as the communication channel may be abruptly closed at any
+            time. Applications that wish to detect such situations as soon as
+            possible should implement their own keep-alive mechanism.
           </div>
           <p>
             When the <dfn>close</dfn> method is called on a
@@ -2436,8 +2436,8 @@
                 attribute initialized to <var>closeReason</var> and the
                 <a data-link-for="PresentationConnectionCloseEvent">message</a>
                 attribute initialized to <var>closeMessage</var>, at
-                <var>presentationConnection</var>. The event must not bubble and
-                must not be cancelable.
+                <var>presentationConnection</var>. The event must not bubble
+                and must not be cancelable.
                 </li>
               </ol>
             </li>
@@ -2476,8 +2476,8 @@
                     <var>known connection</var> to <a data-link-for=
                     "PresentationConnectionState">terminated</a>.
                     </li>
-                    <li>[=Fire an event=] named <code>terminate</code> at
-                    <var>known connection</var>.
+                    <li>[=Fire an event=] named <code>terminate</code> at <var>
+                      known connection</var>.
                     </li>
                   </ol>
                 </li>
@@ -2547,9 +2547,9 @@
             </li>
             <li>If there is a <a>receiving browsing context</a> for
             <var>P</var>, and it has a document for <var>P</var> that is not
-            unloaded, <a>unload a document</a> corresponding to that
-            <a>browsing context</a>, remove that <a>browsing context</a> from
-            the user interface and <a>discard</a> it.
+            unloaded, <a>unload a document</a> corresponding to that <a>browsing
+            context</a>, remove that <a>browsing context</a> from the user
+            interface and discard it.
             </li>
             <li>For each <var>connection</var> in
             <var>connectedControllers</var>, <a>queue a task</a> to send a
@@ -2568,10 +2568,10 @@
             Handling a termination confirmation in a controlling user agent
           </h4>
           <p>
-            When a <a>receiving user agent</a> is to <dfn>send a termination
-            confirmation</dfn> for a presentation <var>P</var>, and that
-            confirmation was received by a <a>controlling user agent</a>, the
-            <a>controlling user agent</a> MUST run the following steps:
+            When a <a>receiving user agent</a> is to send a termination
+            confirmation for a presentation <var>P</var>, and that confirmation
+            was received by a <a>controlling user agent</a>, the <a>controlling
+            user agent</a> MUST run the following steps:
           </p>
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
@@ -2729,8 +2729,9 @@
             auxiliary navigation browsing context flag</a> on <var>C</var>.
             </li>
             <li>If the <a>receiving user agent</a> implements [[!PERMISSIONS]],
-            set the <a>permission state</a> of all [=powerful feature/permission
-            descriptor types=] for <var>C</var> to <code>"denied"</code>.
+            set the <a>permission state</a> of all [=powerful
+            feature/permission descriptor types=] for <var>C</var> to
+            <code>"denied"</code>.
             </li>
             <li>Create a new empty <a>cookie store</a> for <var>C</var>.
             </li>
@@ -2758,8 +2759,7 @@
             </li>
           </ol>
           <p>
-            All <a data-lt="nested browsing context">nested browsing
-            contexts</a> <a data-lt=
+            All <a data-lt="child navigable">child navigables</a> <a data-lt=
             "creating a new browsing context">created</a> by the presented
             document, i.e. that have the <a>receiving browsing context</a> as
             their <a data-lt="top-level browsing context">top-level browsing
@@ -2792,17 +2792,17 @@
           <p>
             [=service worker client/window client|Window clients=] and
             [=service worker client/worker client|worker clients=] associated
-            with the <a>receiving browsing context</a> and its <a>list of
-            descendant browsing contexts</a> must not be exposed to <a>service
+            with the <a>receiving browsing context</a> and its
+            [=Document/descendant navigables=] must not be exposed to <a>service
             workers</a> associated with each other.
           </p>
           <p>
             When the <a>receiving browsing context</a> is terminated, any
             <a>service workers</a> associated with it and the <a>browsing
-            contexts</a> in its <a>list of descendant browsing contexts</a>
+            contexts</a> in its [=Document/descendant navigables=]
             MUST be unregistered and terminated. Any browsing state associated
             with the <a>receiving browsing context</a> and the <a>browsing
-            contexts</a> in its <a>list of descendant browsing contexts</a>,
+            contexts</a> in its [=Document/descendant navigables=],
             including <a>session history</a>, the <a>cookie store</a>, any
             <a>HTTP authentication</a> state, any <a>databases</a>, the
             <a>session storage areas</a>, the <a>local storage areas</a>, the
@@ -3088,9 +3088,9 @@
             <p>
               Display of the origin requesting presentation will help the user
               understand what content is making the request, especially when
-              the request is initiated from a <a>nested browsing context</a>.
-              For example, embedded content may try to convince the user to
-              click to trigger a request to start an unwanted presentation.
+              the request is initiated from a <a>child navigable</a>. For
+              example, embedded content may try to convince the user to click
+              to trigger a request to start an unwanted presentation.
             </p>
             <p>
               The <a>sandboxed top-level navigation without user activation
