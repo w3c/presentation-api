@@ -1022,9 +1022,9 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- presentation.html --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
   <span class="hljs-keyword">var</span> addConnection = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">connection</span>) </span>{
-    <span class="hljs-built_in">this</span>.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">message</span>) </span>{
+    connection.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">message</span>) </span>{
       <span class="hljs-keyword">if</span> (message.data == <span class="hljs-string">"say hello"</span>)
-        <span class="hljs-built_in">this</span>.send(<span class="hljs-string">"hello"</span>);
+        connection.send(<span class="hljs-string">"hello"</span>);
     };
   };
 
