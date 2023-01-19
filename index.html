@@ -1048,10 +1048,10 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <a class="self-link" href="#example-7">Example<bdi> 7</bdi></a>
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- controller.html --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  connection.send(<span class="hljs-string">"{string: '你好，世界!', lang: 'zh-CN'}"</span>);
-  connection.send(<span class="hljs-string">"{string: 'こんにちは、世界!', lang: 'ja'}"</span>);
-  connection.send(<span class="hljs-string">"{string: '안녕하세요, 세계!', lang: 'ko'}"</span>);
-  connection.send(<span class="hljs-string">"{string: 'Hello, world!', lang: 'en-US'}"</span>);
+  connection.send(<span class="hljs-string">'{"string": "你好，世界!", "lang": "zh-CN"}'</span>);
+  connection.send(<span class="hljs-string">'{"string": "こんにちは、世界!", "lang": "ja"}'</span>);
+  connection.send(<span class="hljs-string">'{"string": "안녕하세요, 세계!", "lang": "ko"}'</span>);
+  connection.send(<span class="hljs-string">'{"string": "Hello, world!", "lang": "en-US"}'</span>);
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
 <span class="hljs-comment">&lt;!-- presentation.html --&gt;</span>
@@ -1061,7 +1061,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <span class="hljs-keyword">var</span> spanElt = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"SPAN"</span>);
     spanElt.lang = messageObj.lang;
     spanElt.textContent = messageObj.string;
-    <span class="hljs-built_in">document</span>.appendChild(spanElt);
+    <span class="hljs-built_in">document</span>.body.appendChild(spanElt);
   };
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
       </div>
