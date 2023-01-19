@@ -348,13 +348,6 @@
           [[!HTML]]
         </li>
         <li>
-          <dfn>list of descendant browsing contexts</dfn>, <a href=
-          "https://html.spec.whatwg.org/multipage/browsers.html#list-of-the-descendant-browsing-contexts"
-          title=
-          "Definition of 'list of descendant browsing contexts' in HTML">defined
-          in HTML</a> [[!HTML]]
-        </li>
-        <li>
           <dfn>creating a new browsing context</dfn>, <a href=
           "https://html.spec.whatwg.org/multipage/browsers.html#creating-a-new-browsing-context"
           title=
@@ -378,6 +371,12 @@
           "https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate-fragid"
           title="Definition of 'navigate to a fragment' in HTML">defined in
           HTML</a> [[!HTML]]
+        </li>
+        <li>
+          <dfn>unload a document</dfn>, <a href=
+          "https://html.spec.whatwg.org/multipage/document-lifecycle.html#unload-a-document"
+          title="Definition of 'unload a document' in HTML">defined in HTML</a>
+          [[!HTML]]
         </li>
         <li>
           <dfn>database</dfn>, <a href=
@@ -1087,8 +1086,8 @@
             </li>
             <li>If there is already an unsettled {{Promise}} from a previous
             call to <a data-link-for="PresentationRequest">start</a> in
-            <var>topContext</var> or any <a>browsing context</a> in the <a>list
-            of descendant browsing contexts</a> of <var>topContext</var>,
+            <var>topContext</var> or any <a>browsing context</a> in the
+            [=Document/descendant navigables=] of <var>topContext</var>,
             return a new {{Promise}} rejected with an {{OperationError}}
             exception and abort all remaining steps.
             </li>
@@ -2501,7 +2500,7 @@
             context</a>:
           </p>
           <ol>
-            <li>The <a>receiving user agent</a> is to unload a document
+            <li>The <a>receiving user agent</a> is to <a>unload a document</a>
             corresponding to the <a>receiving browsing context</a>, e.g. in
             response to a request to <a>navigate</a> that context to a new
             resource.
@@ -2548,7 +2547,7 @@
             </li>
             <li>If there is a <a>receiving browsing context</a> for
             <var>P</var>, and it has a document for <var>P</var> that is not
-            unloaded, unload a document corresponding to that <a>browsing
+            unloaded, <a>unload a document</a> corresponding to that <a>browsing
             context</a>, remove that <a>browsing context</a> from the user
             interface and discard it.
             </li>
@@ -2793,17 +2792,17 @@
           <p>
             [=service worker client/window client|Window clients=] and
             [=service worker client/worker client|worker clients=] associated
-            with the <a>receiving browsing context</a> and its <a>list of
-            descendant browsing contexts</a> must not be exposed to <a>service
+            with the <a>receiving browsing context</a> and its
+            [=Document/descendant navigables=] must not be exposed to <a>service
             workers</a> associated with each other.
           </p>
           <p>
             When the <a>receiving browsing context</a> is terminated, any
             <a>service workers</a> associated with it and the <a>browsing
-            contexts</a> in its <a>list of descendant browsing contexts</a>
+            contexts</a> in its [=Document/descendant navigables=]
             MUST be unregistered and terminated. Any browsing state associated
             with the <a>receiving browsing context</a> and the <a>browsing
-            contexts</a> in its <a>list of descendant browsing contexts</a>,
+            contexts</a> in its [=Document/descendant navigables=],
             including <a>session history</a>, the <a>cookie store</a>, any
             <a>HTTP authentication</a> state, any <a>databases</a>, the
             <a>session storage areas</a>, the <a>local storage areas</a>, the
