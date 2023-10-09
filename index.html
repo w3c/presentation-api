@@ -298,15 +298,15 @@
       </p>
       <p>
         The header <dfn>Accept-Language</dfn> is used as <a href=
-        "https://tools.ietf.org/html/rfc7231#section-5.3.5" title=
-        "Definition of Accept-Language in HTTP/1.1">defined in HTTP/1.1</a>
-        [[!rfc7231]].
+        "https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" title=
+        "Definition of Accept-Language in HTTP Semantics">defined in
+        HTTPSemantics</a> [[!RFC9110]].
       </p>
       <p>
         <dfn>HTTP authentication</dfn> is used as <a href=
-        "https://tools.ietf.org/html/rfc7235#section-2" title=
-        "Definition of HTTP authentication in HTTP/1.1: Authentication">defined
-        in HTTP/1.1: Authentication</a> [[!rfc7235]].
+        "https://www.rfc-editor.org/rfc/rfc9110#section-11" title=
+        "Definition of HTTP authentication in HTTP Semantics">defined in HTTP
+        Semantics</a> [[!RFC9110]].
       </p>
       <p>
         The term <dfn>cookie store</dfn> is used as <a href=
@@ -1426,7 +1426,8 @@
                   <a>Resolve</a> <var>P</var> with <var>newConnection</var>.
                 </li>
                 <li>
-                  <a>Queue a task</a> to [=fire an event=] named <a data-link-for=
+                  <a>Queue a task</a> to [=fire an event=] named
+                  <a data-link-for=
                   "PresentationRequest">connectionavailable</a>, that uses the
                   <a>PresentationConnectionAvailableEvent</a> interface, with
                   the <a data-link-for=
@@ -1825,9 +1826,10 @@
           </pre>
           <p>
             A <a>controlling user agent</a> [=fire an event|fires an event=]
-            named <a data-link-for="PresentationRequest">connectionavailable</a>
-            on a <a>PresentationRequest</a> when a connection associated with
-            the object is created. It is fired at the <a>PresentationRequest</a>
+            named <a data-link-for=
+            "PresentationRequest">connectionavailable</a> on a
+            <a>PresentationRequest</a> when a connection associated with the
+            object is created. It is fired at the <a>PresentationRequest</a>
             instance, using the <a>PresentationConnectionAvailableEvent</a>
             interface, with the <a data-link-for=
             "PresentationConnectionAvailableEvent">connection</a> attribute set
@@ -1947,11 +1949,11 @@
             </li>
           </ul>
           <div class="note">
-            A <a data-link-for="PresentationConnectionState">connected</a> state
-            does not mean that sending or receiving messages will succeed, as
-            the communication channel may be abruptly closed at any time.
-            Applications that wish to detect such situations as soon as possible
-            should implement their own keep-alive mechanism.
+            A <a data-link-for="PresentationConnectionState">connected</a>
+            state does not mean that sending or receiving messages will
+            succeed, as the communication channel may be abruptly closed at any
+            time. Applications that wish to detect such situations as soon as
+            possible should implement their own keep-alive mechanism.
           </div>
           <p>
             When the <dfn>close</dfn> method is called on a
@@ -2436,8 +2438,8 @@
                 attribute initialized to <var>closeReason</var> and the
                 <a data-link-for="PresentationConnectionCloseEvent">message</a>
                 attribute initialized to <var>closeMessage</var>, at
-                <var>presentationConnection</var>. The event must not bubble and
-                must not be cancelable.
+                <var>presentationConnection</var>. The event must not bubble
+                and must not be cancelable.
                 </li>
               </ol>
             </li>
@@ -2476,8 +2478,8 @@
                     <var>known connection</var> to <a data-link-for=
                     "PresentationConnectionState">terminated</a>.
                     </li>
-                    <li>[=Fire an event=] named <code>terminate</code> at
-                    <var>known connection</var>.
+                    <li>[=Fire an event=] named <code>terminate</code> at <var>
+                      known connection</var>.
                     </li>
                   </ol>
                 </li>
@@ -2729,8 +2731,9 @@
             auxiliary navigation browsing context flag</a> on <var>C</var>.
             </li>
             <li>If the <a>receiving user agent</a> implements [[!PERMISSIONS]],
-            set the <a>permission state</a> of all [=powerful feature/permission
-            descriptor types=] for <var>C</var> to <code>"denied"</code>.
+            set the <a>permission state</a> of all [=powerful
+            feature/permission descriptor types=] for <var>C</var> to
+            <code>"denied"</code>.
             </li>
             <li>Create a new empty <a>cookie store</a> for <var>C</var>.
             </li>
