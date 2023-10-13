@@ -280,43 +280,30 @@
         Terminology
       </h2>
       <p>
-        The term <dfn>JavaScript realm</dfn> is used as <a href=
-        "https://tc39.es/ecma262/#sec-code-realms" title=
-        "Definition of JavaScript realm in ECMAScript">defined in
-        ECMAScript</a> [[!ECMASCRIPT]].
+        The terms <dfn data-cite="ecmascript/#sec-code-realms">JavaScript
+        realm</dfn> and <dfn data-cite="ecmascript/#sec-code-realms">current
+        realm</dfn> are used as defined in [[!ECMASCRIPT]]. The terms
+        <dfn data-cite="ecmascript/#sec-promise-resolve-functions" data-lt=
+        "resolve">resolved</dfn> and <dfn data-cite=
+        "ecmascript/#sec-rejectpromise" data-lt="reject">rejected</dfn> in the
+        context of {{Promise}} objects are used as defined in [[!ECMASCRIPT]].
       </p>
       <p>
-        The term <dfn>current realm</dfn> is used as <a href=
-        "https://tc39.es/ecma262/#current-realm" title=
-        "Definition of current realm in ECMAScript">defined in ECMAScript</a>
-        [[!ECMASCRIPT]].
+        The terms <dfn data-cite="rfc9110#section-12.5.4">Accept-Language</dfn>
+        and <dfn data-cite="rfc9110#section-11">HTTP authentication</dfn> are
+        used as defined in [[!RFC9110]].
       </p>
       <p>
-        The terms <dfn data-lt="resolve">resolved</dfn> and <dfn data-lt=
-        "reject">rejected</dfn> in the context of {{Promise}} objects are used
-        as defined in [[!ECMASCRIPT]].
+        The term <dfn data-cite="rfc6265#section-5.3">cookie store</dfn> is
+        used as defined in [[!RFC6265]].
       </p>
       <p>
-        The terms <dfn data-cite=
-        "rfc9110#section-12.5.4">Accept-Language</dfn> and <dfn data-cite=
-        "rfc9110#section-11">HTTP authentication</dfn> are used as defined in
-        [[!RFC9110]].
+        The term <dfn data-cite="rfc4122#section-1">UUID</dfn> is used as
+        defined in [[!RFC4122]].
       </p>
       <p>
-        The term <dfn>cookie store</dfn> is used as <a href=
-        "https://tools.ietf.org/html/rfc6265#section-4.2" title=
-        "Definition of cookie store in RFC 6265">defined in RFC 6265</a>
-        [[!COOKIES]].
-      </p>
-      <p>
-        The term <dfn>UUID</dfn> is used as <a href=
-        "https://tools.ietf.org/html/rfc4122" title=
-        "Definition of UUID in RFC 4122">defined in RFC 4122</a> [[!rfc4122]].
-      </p>
-      <p>
-        The term <dfn>DIAL</dfn> is used as <a href=
-        "http://www.dial-multiscreen.org/" title=
-        "Overview of the DIAL protocol">defined in DIAL</a> [[DIAL]].
+        The term <dfn data-cite="DIAL#">DIAL</dfn> is used as defined in
+        [[DIAL]].
       </p>
       <p>
         The term <dfn>reload a document</dfn> refers to steps run when the
@@ -1081,9 +1068,9 @@
             <li>If there is already an unsettled {{Promise}} from a previous
             call to <a data-link-for="PresentationRequest">start</a> in
             <var>topContext</var> or any <a>browsing context</a> in the
-            [=Document/descendant navigables=] of <var>topContext</var>,
-            return a new {{Promise}} rejected with an {{OperationError}}
-            exception and abort all remaining steps.
+            [=Document/descendant navigables=] of <var>topContext</var>, return
+            a new {{Promise}} rejected with an {{OperationError}} exception and
+            abort all remaining steps.
             </li>
             <li>Let <var>P</var> be a new {{Promise}}.
             </li>
@@ -2541,9 +2528,9 @@
             </li>
             <li>If there is a <a>receiving browsing context</a> for
             <var>P</var>, and it has a document for <var>P</var> that is not
-            unloaded, <a>unload a document</a> corresponding to that <a>browsing
-            context</a>, remove that <a>browsing context</a> from the user
-            interface and discard it.
+            unloaded, <a>unload a document</a> corresponding to that
+            <a>browsing context</a>, remove that <a>browsing context</a> from
+            the user interface and discard it.
             </li>
             <li>For each <var>connection</var> in
             <var>connectedControllers</var>, <a>queue a task</a> to send a
@@ -2787,22 +2774,22 @@
             [=service worker client/window client|Window clients=] and
             [=service worker client/worker client|worker clients=] associated
             with the <a>receiving browsing context</a> and its
-            [=Document/descendant navigables=] must not be exposed to <a>service
-            workers</a> associated with each other.
+            [=Document/descendant navigables=] must not be exposed to
+            <a>service workers</a> associated with each other.
           </p>
           <p>
             When the <a>receiving browsing context</a> is terminated, any
             <a>service workers</a> associated with it and the <a>browsing
-            contexts</a> in its [=Document/descendant navigables=]
-            MUST be unregistered and terminated. Any browsing state associated
-            with the <a>receiving browsing context</a> and the <a>browsing
-            contexts</a> in its [=Document/descendant navigables=],
-            including <a>session history</a>, the <a>cookie store</a>, any
-            <a>HTTP authentication</a> state, any <a>databases</a>, the
-            <a>session storage areas</a>, the <a>local storage areas</a>, the
-            list of registered <a>service worker registrations</a> and the
-            {{Cache}} objects MUST be discarded and not used for any other
-            <a>browsing context</a>.
+            contexts</a> in its [=Document/descendant navigables=] MUST be
+            unregistered and terminated. Any browsing state associated with the
+            <a>receiving browsing context</a> and the <a>browsing contexts</a>
+            in its [=Document/descendant navigables=], including <a>session
+            history</a>, the <a>cookie store</a>, any <a>HTTP
+            authentication</a> state, any <a>databases</a>, the <a>session
+            storage areas</a>, the <a>local storage areas</a>, the list of
+            registered <a>service worker registrations</a> and the {{Cache}}
+            objects MUST be discarded and not used for any other <a>browsing
+            context</a>.
           </p>
           <p class="note">
             This algorithm is intended to create a well defined environment to
