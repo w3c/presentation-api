@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8">
-<meta name="generator" content="ReSpec 34.1.8">
+<meta name="generator" content="ReSpec 34.2.0">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <style>
 span.example-title{text-transform:none}
@@ -180,6 +180,7 @@ ul.index code{color:inherit}
 #index-defined-here .print-only{display:initial}
 }
 </style>
+<meta name="revision" content="a128d1eae737312fd858e98bd67c8178ab8a1fa7">
 <meta name="description" content="This specification defines an API to enable Web content to access
         presentation displays and use them for presenting Web content.">
 <style>
@@ -267,15 +268,16 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   },
   "crEnd": "2016-09-12",
   "implementationReportURI": "https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests",
-  "publishISODate": "2023-10-12T00:00:00.000Z",
-  "generatedSubtitle": "W3C Editor's Draft 12 October 2023"
+  "gitRevision": "a128d1eae737312fd858e98bd67c8178ab8a1fa7",
+  "publishISODate": "2023-10-16T00:00:00.000Z",
+  "generatedSubtitle": "W3C Editor's Draft 16 October 2023"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED"></head>
   <body class="h-entry" data-cite="WEBIDL dom fileapi secure-contexts html url webidl webrtc websockets"><div class="head">
     <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
   </a></p>
     <h1 id="title" class="title">Presentation API</h1> 
-    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2023-10-12">12 October 2023</time></p>
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2023-10-16">16 October 2023</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -668,30 +670,28 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       </h2><a class="self-link" href="#terminology" aria-label="Permalink for Section 4."></a></div>
       
       <p>
-        The term <dfn id="dfn-javascript-realm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">JavaScript realm</dfn> is used as <a href="https://tc39.es/ecma262/#sec-code-realms" title="Definition of JavaScript realm in ECMAScript">defined in
-        ECMAScript</a> [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript" title="ECMAScript Language Specification">ECMASCRIPT</a></cite>].
+        The terms <dfn id="dfn-javascript-realm" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-1">JavaScript
+        realm</a></dfn> and <dfn id="dfn-current-realm" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-2">current
+        realm</a></dfn> are used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript" title="ECMAScript Language Specification">ECMASCRIPT</a></cite>]. The terms
+        <dfn data-lt="resolve|resolved" id="dfn-resolve" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-1">resolved</a></dfn> and <dfn data-lt="reject|rejected" id="dfn-reject" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-1">rejected</a></dfn> in the
+        context of <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-1"><code>Promise</code></a> objects are used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript" title="ECMAScript Language Specification">ECMASCRIPT</a></cite>].
       </p>
       <p>
-        The term <dfn id="dfn-current-realm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">current realm</dfn> is used as <a href="https://tc39.es/ecma262/#current-realm" title="Definition of current realm in ECMAScript">defined in ECMAScript</a>
-        [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript" title="ECMAScript Language Specification">ECMASCRIPT</a></cite>].
+        The terms <dfn id="dfn-accept-language" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" id="ref-for-index-term-accept-language-1">Accept-Language</a></dfn>
+        and <dfn id="dfn-http-authentication" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-1">HTTP authentication</a></dfn> are
+        used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc9110" title="HTTP Semantics">RFC9110</a></cite>].
       </p>
       <p>
-        The terms <dfn data-lt="resolve|resolved" id="dfn-resolve" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">resolved</dfn> and <dfn data-lt="reject|rejected" id="dfn-reject" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">rejected</dfn> in the context of <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-1"><code>Promise</code></a> objects are used
-        as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript" title="ECMAScript Language Specification">ECMASCRIPT</a></cite>].
+        The term <dfn id="dfn-cookie-store" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="ref-for-index-term-cookie-store-1">cookie store</a></dfn> is
+        used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc6265" title="HTTP State Management Mechanism">RFC6265</a></cite>].
       </p>
       <p>
-        The terms <dfn id="dfn-accept-language" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" id="ref-for-index-term-accept-language-1">Accept-Language</a></dfn> and <dfn id="dfn-http-authentication" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-1">HTTP authentication</a></dfn> are used as defined in
-        [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc9110" title="HTTP Semantics">RFC9110</a></cite>].
+        The term <dfn id="dfn-uuid" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.rfc-editor.org/rfc/rfc4122#section-1" id="ref-for-index-term-uuid-1">UUID</a></dfn> is used as
+        defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc4122" title="A Universally Unique IDentifier (UUID) URN Namespace">RFC4122</a></cite>].
       </p>
       <p>
-        The term <dfn id="dfn-cookie-store" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">cookie store</dfn> is used as <a href="https://tools.ietf.org/html/rfc6265#section-4.2" title="Definition of cookie store in RFC 6265">defined in RFC 6265</a>
-        [<cite><a class="bibref" data-link-type="biblio" href="#bib-cookies" title="HTTP State Management Mechanism">COOKIES</a></cite>].
-      </p>
-      <p>
-        The term <dfn id="dfn-uuid" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">UUID</dfn> is used as <a href="https://tools.ietf.org/html/rfc4122" title="Definition of UUID in RFC 4122">defined in RFC 4122</a> [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc4122" title="A Universally Unique IDentifier (UUID) URN Namespace">rfc4122</a></cite>].
-      </p>
-      <p>
-        The term <dfn id="dfn-dial" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DIAL</dfn> is used as <a href="http://www.dial-multiscreen.org/" title="Overview of the DIAL protocol">defined in DIAL</a> [<cite><a class="bibref" data-link-type="biblio" href="#bib-dial" title="DIscovery And Launch Protocol Specification">DIAL</a></cite>].
+        The term <dfn id="dfn-dial" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="http://www.dial-multiscreen.org/dial-protocol-specification#" id="ref-for-index-term-dial-1">DIAL</a></dfn> is used as defined in
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-dial" title="DIscovery And Launch Protocol Specification">DIAL</a></cite>].
       </p>
       <p>
         The term <dfn id="dfn-reload-a-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">reload a document</dfn> refers to steps run when the
@@ -1142,7 +1142,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
           <a href="#dom-presentationrequest-start" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-start-4"><code>start</code></a> or <a href="#dom-presentationrequest-reconnect" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-reconnect-1"><code>reconnect</code></a>, or received a <a href="#dfn-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-2">presentation
           connection</a> via a <a href="#dfn-connectionavailable" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-connectionavailable-2"><code>connectionavailable</code></a> event. In algorithms
           for <a href="#dom-presentationrequest" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-5"><code>PresentationRequest</code></a>, the <a href="#dfn-controlling-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-browsing-context-7">controlling browsing
-          context</a> is the <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-2">browsing context</a> whose <a href="#dfn-javascript-realm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-javascript-realm-1">JavaScript
+          context</a> is the <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-2">browsing context</a> whose <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-3">JavaScript
           realm</a> was used to construct the <a href="#dom-presentationrequest" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-6"><code>PresentationRequest</code></a>.
         </p>
         <p>
@@ -1213,8 +1213,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
           is the <var>presentation task source</var>.
         </p>
         <p>
-          Unless otherwise specified, the <a href="#dfn-javascript-realm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-javascript-realm-2">JavaScript realm</a> for script
-          objects constructed by algorithm steps is the <a href="#dfn-current-realm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-current-realm-1">current realm</a>.
+          Unless otherwise specified, the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-4">JavaScript realm</a> for script
+          objects constructed by algorithm steps is the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-5">current realm</a>.
         </p>
       </section>
       <section id="interface-presentation"><div class="header-wrapper"><h3 id="x6-2-interface-presentation"><bdi class="secno">6.2 </bdi>
@@ -1425,9 +1425,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <li>If there is already an unsettled <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-8"><code>Promise</code></a> from a previous
             call to <a href="#dom-presentationrequest-start" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-start-7"><code>start</code></a> in
             <var>topContext</var> or any <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-4">browsing context</a> in the
-            <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-1">descendant navigables</a> of <var>topContext</var>,
-            return a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-9"><code>Promise</code></a> rejected with an <a data-link-type="idl" data-lt="OperationError" data-type="exception" href="https://webidl.spec.whatwg.org/#operationerror" id="ref-for-index-term-operationerror-exception-1"><code>OperationError</code></a>
-            exception and abort all remaining steps.
+            <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-1">descendant navigables</a> of <var>topContext</var>, return
+            a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-9"><code>Promise</code></a> rejected with an <a data-link-type="idl" data-lt="OperationError" data-type="exception" href="https://webidl.spec.whatwg.org/#operationerror" id="ref-for-index-term-operationerror-exception-1"><code>OperationError</code></a> exception and
+            abort all remaining steps.
             </li>
             <li>Let <var>P</var> be a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-10"><code>Promise</code></a>.
             </li>
@@ -1458,7 +1458,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               </ol>Then run the following steps:
               <ol>
                 <li>
-                  <a href="#dfn-reject" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reject-1">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-1"><code>NotFoundError</code></a>
+                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-2">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-1"><code>NotFoundError</code></a>
                   exception.
                 </li>
                 <li>Abort all remaining steps.
@@ -1577,7 +1577,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             unique among all <a href="#dfn-presentation-identifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-identifier-4">presentation identifiers</a> for known
             <a href="#dfn-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-11">presentation connections</a> in the <a href="#dfn-set-of-controlled-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-controlled-presentations-2">set of controlled
             presentations</a>. To avoid fingerprinting, implementations <em class="rfc2119">SHOULD</em>
-            set the <a href="#dfn-presentation-identifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-identifier-5">presentation identifier</a> to a <a href="#dfn-uuid" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-uuid-1">UUID</a> generated
+            set the <a href="#dfn-presentation-identifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-identifier-5">presentation identifier</a> to a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc4122#section-1" id="ref-for-index-term-uuid-2">UUID</a> generated
             by following forms 4.4 or 4.5 of [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc4122" title="A Universally Unique IDentifier (UUID) URN Namespace">rfc4122</a></cite>].
             </li>
             <li>Create a new <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-15"><code>PresentationConnection</code></a> <var>S</var>.
@@ -1598,7 +1598,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </li>
             <li>Add <var>S</var> to the <a href="#dfn-set-of-controlled-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-controlled-presentations-3">set of controlled presentations</a>.
             </li>
-            <li>If <var>P</var> is provided, <a href="#dfn-resolve" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resolve-1">resolve</a> <var>P</var> with
+            <li>If <var>P</var> is provided, <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-2">resolve</a> <var>P</var> with
             <var>S</var>.
             </li>
             <li>
@@ -1691,7 +1691,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
                 <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-18"><code>PresentationConnection</code></a>.
                 </li>
                 <li>
-                  <a href="#dfn-resolve" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resolve-2">Resolve</a> <var>P</var> with
+                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-3">Resolve</a> <var>P</var> with
                   <var>existingConnection</var>.
                 </li>
                 <li>If the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-3">presentation connection state</a> of
@@ -1751,7 +1751,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
                 presentations</a>.
                 </li>
                 <li>
-                  <a href="#dfn-resolve" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resolve-3">Resolve</a> <var>P</var> with <var>newConnection</var>.
+                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-4">Resolve</a> <var>P</var> with <var>newConnection</var>.
                 </li>
                 <li>
                   <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-2">Queue a task</a> to <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-2">fire an event</a> named
@@ -1771,7 +1771,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               </ol>
             </li>
             <li>
-              <a href="#dfn-reject" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reject-2">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-2"><code>NotFoundError</code></a> exception.
+              <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-3">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-2"><code>NotFoundError</code></a> exception.
             </li>
           </ol>
         </section>
@@ -1902,7 +1902,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             background; for example, because of platform or power consumption
             restrictions. In this case the <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-14"><code>Promise</code></a> returned by
             <a href="#dom-presentationrequest-getavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-getavailability-5"><code>getAvailability</code></a> is
-            <a data-lt="reject" href="#dfn-reject" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reject-3">rejected</a>, and the algorithm to <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-7">monitor
+            <a data-lt="reject" data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-4">rejected</a>, and the algorithm to <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-7">monitor
             the list of available presentation displays</a> will only run as
             part of the <a href="#dfn-select-a-presentation-display" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-select-a-presentation-display-1">select a presentation display</a> algorithm.
           </p>
@@ -1948,7 +1948,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               these steps.
             </li>
             <li>Otherwise, let <var>P</var> be a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-18"><code>Promise</code></a> constructed in
-            the <a href="#dfn-javascript-realm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-javascript-realm-3">JavaScript realm</a> of <var>presentationRequest</var>.
+            the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-6">JavaScript realm</a> of <var>presentationRequest</var>.
             </li>
             <li>Return <var>P</var>, but continue running these steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-3">in
             parallel</a>.
@@ -1959,7 +1959,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             then:
               <ol>
                 <li>
-                  <a href="#dfn-reject" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reject-4">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotSupportedError" data-type="exception" href="https://webidl.spec.whatwg.org/#notsupportederror" id="ref-for-index-term-notsupportederror-exception-3"><code>NotSupportedError</code></a>
+                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-5">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotSupportedError" data-type="exception" href="https://webidl.spec.whatwg.org/#notsupportederror" id="ref-for-index-term-notsupportederror-exception-3"><code>NotSupportedError</code></a>
                   exception.
                 </li>
                 <li>Abort all the remaining steps.
@@ -1970,7 +1970,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <var>presentationRequest</var> is not <code>null</code>, then:
               <ol>
                 <li>
-                  <a href="#dfn-resolve" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resolve-4">Resolve</a> <var>P</var> with the request's
+                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-5">Resolve</a> <var>P</var> with the request's
                   <a href="#dfn-presentation-display-availability" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-availability-4">presentation display availability</a>.
                 </li>
                 <li>Abort all the remaining steps.
@@ -1980,7 +1980,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <li>Set the <a href="#dfn-presentation-display-availability" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-availability-5">presentation display availability</a> for
             <var>presentationRequest</var> to a newly created
             <a href="#dom-presentationavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationavailability-11"><code>PresentationAvailability</code></a> object constructed in the
-            <a href="#dfn-javascript-realm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-javascript-realm-4">JavaScript realm</a> of <var>presentationRequest</var>, and let
+            <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-7">JavaScript realm</a> of <var>presentationRequest</var>, and let
             <var>A</var> be that object.
             </li>
             <li>Create a tuple <em>(<var>A</var>,
@@ -1996,7 +1996,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               </div></div>
             </li>
             <li>
-              <a href="#dfn-resolve" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resolve-5">Resolve</a> <var>P</var> with <var>A</var>.
+              <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-6">Resolve</a> <var>P</var> with <var>A</var>.
             </li>
           </ol>
         </section>
@@ -2808,9 +2808,9 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
             </li>
             <li>If there is a <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-28">receiving browsing context</a> for
             <var>P</var>, and it has a document for <var>P</var> that is not
-            unloaded, <a href="#dfn-unload-a-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-unload-a-document-2">unload a document</a> corresponding to that <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-8">browsing
-            context</a>, remove that <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-9">browsing context</a> from the user
-            interface and discard it.
+            unloaded, <a href="#dfn-unload-a-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-unload-a-document-2">unload a document</a> corresponding to that
+            <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-8">browsing context</a>, remove that <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-9">browsing context</a> from
+            the user interface and discard it.
             </li>
             <li>For each <var>connection</var> in
             <var>connectedControllers</var>, <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-8">queue a task</a> to send a
@@ -2937,13 +2937,13 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           and abort all remaining steps.
           </li>
           <li>Otherwise, let the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-4">presentation controllers promise</a> be a
-          new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-20"><code>Promise</code></a> constructed in the <a href="#dfn-javascript-realm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-javascript-realm-5">JavaScript realm</a> of this
+          new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-20"><code>Promise</code></a> constructed in the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-8">JavaScript realm</a> of this
           <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-8"><code>PresentationReceiver</code></a> object.
           </li>
           <li>Return the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-5">presentation controllers promise</a>.
           </li>
           <li>If the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-6">presentation controllers monitor</a> is not
-          <code>null</code>, <a href="#dfn-resolve" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resolve-6">resolve</a> the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-6">presentation controllers
+          <code>null</code>, <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-7">resolve</a> the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-6">presentation controllers
           promise</a> with the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-7">presentation controllers monitor</a>.
           </li>
         </ol>
@@ -2985,7 +2985,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             set the <a data-type="dfn" href="https://www.w3.org/TR/permissions/#dfn-permission-state" id="ref-for-index-term-permission-state-1">permission state</a> of all <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://www.w3.org/TR/permissions/#dfn-permission-descriptor-type" id="ref-for-index-term-permission-descriptor-types-for-powerful-feature-1">permission descriptor types</a> for <var>C</var> to
             <code>"denied"</code>.
             </li>
-            <li>Create a new empty <a href="#dfn-cookie-store" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cookie-store-1">cookie store</a> for <var>C</var>.
+            <li>Create a new empty <a data-link-type="dfn" href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="ref-for-index-term-cookie-store-2">cookie store</a> for <var>C</var>.
             </li>
             <li>Create a new empty store for <var>C</var> to hold <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-2">HTTP
             authentication</a> states.
@@ -3043,22 +3043,22 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <a data-link-type="dfn|abstract-op" data-lt="window client" data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-window-client" id="ref-for-index-term-window-client-for-service-worker-client-1">Window clients</a> and
             <a data-link-type="dfn|abstract-op" data-lt="worker client" data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-worker-client" id="ref-for-index-term-worker-client-for-service-worker-client-1">worker clients</a> associated
             with the <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-32">receiving browsing context</a> and its
-            <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-2">descendant navigables</a> must not be exposed to <a data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-service-worker" id="ref-for-index-term-service-workers-1">service
-            workers</a> associated with each other.
+            <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-2">descendant navigables</a> must not be exposed to
+            <a data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-service-worker" id="ref-for-index-term-service-workers-1">service workers</a> associated with each other.
           </p>
           <p>
             When the <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-33">receiving browsing context</a> is terminated, any
             <a data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-service-worker" id="ref-for-index-term-service-workers-2">service workers</a> associated with it and the <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-11">browsing
-            contexts</a> in its <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-3">descendant navigables</a>
-            <em class="rfc2119">MUST</em> be unregistered and terminated. Any browsing state associated
-            with the <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-34">receiving browsing context</a> and the <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-12">browsing
-            contexts</a> in its <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-4">descendant navigables</a>,
-            including <a href="#dfn-session-history" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-session-history-2">session history</a>, the <a href="#dfn-cookie-store" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cookie-store-2">cookie store</a>, any
-            <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-3">HTTP authentication</a> state, any <a href="#dfn-database" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-database-2">databases</a>, the
-            <a href="#dfn-session-storage-area" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-session-storage-area-2">session storage areas</a>, the <a href="#dfn-local-storage-area" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-local-storage-area-2">local storage areas</a>, the
-            list of registered <a data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-service-worker-registration" id="ref-for-index-term-service-worker-registrations-2">service worker registrations</a> and the
-            <a data-link-type="idl" data-lt="Cache" data-type="interface" href="https://www.w3.org/TR/service-workers/#cache" id="ref-for-index-term-cache-interface-2"><code>Cache</code></a> objects <em class="rfc2119">MUST</em> be discarded and not used for any other
-            <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-13">browsing context</a>.
+            contexts</a> in its <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-3">descendant navigables</a> <em class="rfc2119">MUST</em> be
+            unregistered and terminated. Any browsing state associated with the
+            <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-34">receiving browsing context</a> and the <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-12">browsing contexts</a>
+            in its <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-4">descendant navigables</a>, including <a href="#dfn-session-history" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-session-history-2">session
+            history</a>, the <a data-link-type="dfn" href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="ref-for-index-term-cookie-store-3">cookie store</a>, any <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-3">HTTP
+            authentication</a> state, any <a href="#dfn-database" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-database-2">databases</a>, the <a href="#dfn-session-storage-area" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-session-storage-area-2">session
+            storage areas</a>, the <a href="#dfn-local-storage-area" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-local-storage-area-2">local storage areas</a>, the list of
+            registered <a data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-service-worker-registration" id="ref-for-index-term-service-worker-registrations-2">service worker registrations</a> and the <a data-link-type="idl" data-lt="Cache" data-type="interface" href="https://www.w3.org/TR/service-workers/#cache" id="ref-for-index-term-cache-interface-2"><code>Cache</code></a>
+            objects <em class="rfc2119">MUST</em> be discarded and not used for any other <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-13">browsing
+            context</a>.
           </p>
           <div class="note" role="note" id="issue-container-generatedID-17"><div role="heading" class="note-title marker" id="h-note-17" aria-level="5"><span>Note</span></div><p class="">
             This algorithm is intended to create a well defined environment to
@@ -3174,14 +3174,14 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               <ol>
                 <li>Let the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-9">presentation controllers monitor</a> be a new
                 <a href="#dom-presentationconnectionlist" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionlist-5"><code>PresentationConnectionList</code></a> constructed in the
-                <a href="#dfn-javascript-realm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-javascript-realm-6">JavaScript realm</a> of the <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-9"><code>PresentationReceiver</code></a>
+                <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-9">JavaScript realm</a> of the <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-9"><code>PresentationReceiver</code></a>
                 object of the <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-40">receiving browsing context</a>.
                 </li>
                 <li>Populate the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-10">presentation controllers monitor</a> with
                 the <a href="#dfn-set-of-presentation-controllers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-controllers-8">set of presentation controllers</a>.
                 </li>
                 <li>If the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-7">presentation controllers promise</a> is not
-                <code>null</code>, <a href="#dfn-resolve" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resolve-7">resolve</a> the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-8">presentation
+                <code>null</code>, <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-8">resolve</a> the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-8">presentation
                 controllers promise</a> with the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-11">presentation controllers
                 monitor</a>.
                 </li>
@@ -3265,8 +3265,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           determines the compatibility and availability of a <a href="#dfn-presentation-display" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-25">presentation
           display</a> with a given URL is an implementation detail. If a
           <a href="#dfn-controlling-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-user-agent-28">controlling user agent</a> matches a <a href="#dfn-presentation-request-url" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-request-url-14">presentation request
-          URL</a> to a <a href="#dfn-dial" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-dial-1">DIAL</a> application to determine its availability,
-          this feature can be used to probe information about which <a href="#dfn-dial" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-dial-2">DIAL</a>
+          URL</a> to a <a data-link-type="dfn" href="http://www.dial-multiscreen.org/dial-protocol-specification#" id="ref-for-index-term-dial-2">DIAL</a> application to determine its availability,
+          this feature can be used to probe information about which <a data-link-type="dfn" href="http://www.dial-multiscreen.org/dial-protocol-specification#" id="ref-for-index-term-dial-3">DIAL</a>
           applications the user has installed on the <a href="#dfn-presentation-display" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-26">presentation
           display</a> without user consent.
         </p>
@@ -3583,13 +3583,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§6.1</span></li><li>
       <a class="index-term" href="#dfn-controlling-user-agent">Controlling user agent</a> 
     <span class="print-only">§3.1</span></li><li>
-      <a class="index-term" href="#dfn-cookie-store">cookie store</a> 
-    <span class="print-only">§4.</span></li><li>
       <a class="index-term" href="#dfn-create-a-receiving-browsing-context">create a receiving browsing context</a> 
     <span class="print-only">§6.6.1</span></li><li>
       <a class="index-term" href="#dfn-creating-a-new-browsing-context">creating a new browsing context</a> 
-    <span class="print-only">§4.</span></li><li>
-      <a class="index-term" href="#dfn-current-realm">current realm</a> 
     <span class="print-only">§4.</span></li><li>
       <a class="index-term" href="#dfn-database">database</a> 
     <span class="print-only">§4.</span></li><li>
@@ -3599,8 +3595,6 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§6.2.1</span></li><li>
       <a class="index-term" href="#dfn-destination-browsing-context">destination browsing context</a> 
     <span class="print-only">§6.1</span></li><li>
-      <a class="index-term" href="#dfn-dial">DIAL</a> 
-    <span class="print-only">§4.</span></li><li>
       <a class="index-term" href="#dom-presentationconnectionclosereason-error"><code>"error"</code></a> enum value for <code>PresentationConnectionCloseReason</code>
     <span class="print-only">§6.5.4</span></li><li>
       <a class="index-term" href="#dfn-establish-a-presentation-connection">establish a presentation connection</a> 
@@ -3609,8 +3603,6 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§6.4.3</span></li><li>
       <a class="index-term" href="#dom-presentationconnection-id"><code>id</code></a> attribute for <code>PresentationConnection</code>
     <span class="print-only">§6.5</span></li><li>
-      <a class="index-term" href="#dfn-javascript-realm">JavaScript realm</a> 
-    <span class="print-only">§4.</span></li><li>
       <a class="index-term" href="#dfn-list-of-available-presentation-displays">list of available presentation displays</a> 
     <span class="print-only">§6.4.2</span></li><li>
       <a class="index-term" href="#dfn-local-storage-area">local storage area</a> 
@@ -3718,11 +3710,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§3.1</span></li><li>
       <a class="index-term" href="#dom-presentationrequest-reconnect"><code>reconnect</code></a> method for <code>PresentationRequest</code>
     <span class="print-only">§6.3.5</span></li><li>
-      <a class="index-term" href="#dfn-reject">rejected</a> 
-    <span class="print-only">§4.</span></li><li>
       <a class="index-term" href="#dfn-reload-a-document">reload a document</a> 
-    <span class="print-only">§4.</span></li><li>
-      <a class="index-term" href="#dfn-resolve">resolved</a> 
     <span class="print-only">§4.</span></li><li>
       <a class="index-term" href="#dfn-select-a-presentation-display">select a presentation display</a> 
     <span class="print-only">§6.3.2</span></li><li>
@@ -3766,8 +3754,6 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§6.5</span></li><li>
       <a class="index-term" href="#dfn-user-agent">user agents</a> 
     <span class="print-only">§3.1</span></li><li>
-      <a class="index-term" href="#dfn-uuid">UUID</a> 
-    <span class="print-only">§4.</span></li><li>
       <a class="index-term" href="#dfn-valid-presentation-identifier">valid presentation identifier</a> 
     <span class="print-only">§6.1</span></li><li>
       <a class="index-term" href="#dom-presentationavailability-value"><code>value</code></a> attribute for <code>PresentationAvailability</code>
@@ -3779,6 +3765,13 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     
     <ul class="index">
     <li>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-dial">DIAL</a></cite>] defines the following:
+        <ul>
+          <li>
+    <span class="index-term" data-href="http://www.dial-multiscreen.org/dial-protocol-specification#" id="index-term-dial" tabindex="0" aria-haspopup="dialog">DIAL</span>
+  </li>
+        </ul>
+      </li><li>
         [<cite><a class="bibref" data-link-type="biblio" href="#bib-dom">DOM</a></cite>] defines the following:
         <ul>
           <li>
@@ -3791,6 +3784,17 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="index-term" data-href="https://dom.spec.whatwg.org/#eventtarget" id="index-term-eventtarget-interface" tabindex="0" aria-haspopup="dialog"><code>EventTarget</code> interface</span>
   </li><li>
     <span class="index-term" data-href="https://dom.spec.whatwg.org/#concept-event-fire" id="index-term-fire-an-event" tabindex="0" aria-haspopup="dialog">fire an event</span>
+  </li>
+        </ul>
+      </li><li>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript">ECMASCRIPT</a></cite>] defines the following:
+        <ul>
+          <li>
+    <span class="index-term" data-href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="index-term-javascript-realm" tabindex="0" aria-haspopup="dialog">JavaScript realm</span>
+  </li><li>
+    <span class="index-term" data-href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="index-term-rejected" tabindex="0" aria-haspopup="dialog">rejected</span>
+  </li><li>
+    <span class="index-term" data-href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="index-term-resolved" tabindex="0" aria-haspopup="dialog">resolved</span>
   </li>
         </ul>
       </li><li>
@@ -3860,6 +3864,20 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="index-term" data-href="https://www.w3.org/TR/permissions/#dfn-permission-descriptor-type" id="index-term-permission-descriptor-types-for-powerful-feature" tabindex="0" aria-haspopup="dialog">permission descriptor types (for powerful feature)</span>
   </li><li>
     <span class="index-term" data-href="https://www.w3.org/TR/permissions/#dfn-permission-state" id="index-term-permission-state" tabindex="0" aria-haspopup="dialog">permission state</span>
+  </li>
+        </ul>
+      </li><li>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc4122">RFC4122</a></cite>] defines the following:
+        <ul>
+          <li>
+    <span class="index-term" data-href="https://www.rfc-editor.org/rfc/rfc4122#section-1" id="index-term-uuid" tabindex="0" aria-haspopup="dialog">UUID</span>
+  </li>
+        </ul>
+      </li><li>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc6265">RFC6265</a></cite>] defines the following:
+        <ul>
+          <li>
+    <span class="index-term" data-href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="index-term-cookie-store" tabindex="0" aria-haspopup="dialog">cookie store</span>
   </li>
         </ul>
       </li><li>
@@ -4216,9 +4234,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
 
 <section id="references" class="appendix"><div class="header-wrapper"><h2 id="f-references"><bdi class="secno">F. </bdi>References</h2><a class="self-link" href="#references" aria-label="Permalink for Appendix F."></a></div><section id="normative-references"><div class="header-wrapper"><h3 id="f-1-normative-references"><bdi class="secno">F.1 </bdi>Normative references</h3><a class="self-link" href="#normative-references" aria-label="Permalink for Appendix F.1"></a></div>
     
-    <dl class="bibliography"><dt id="bib-cookies">[COOKIES]</dt><dd>
-      <a href="https://httpwg.org/specs/rfc6265.html"><cite>HTTP State Management Mechanism</cite></a>. A. Barth.  IETF. April 2011. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc6265.html">https://httpwg.org/specs/rfc6265.html</a>
-    </dd><dt id="bib-dial">[DIAL]</dt><dd>
+    <dl class="bibliography"><dt id="bib-dial">[DIAL]</dt><dd>
       <a href="http://www.dial-multiscreen.org/dial-protocol-specification"><cite>DIscovery And Launch Protocol Specification</cite></a>. Netflix; YouTube.  Netflix. URL: <a href="http://www.dial-multiscreen.org/dial-protocol-specification">http://www.dial-multiscreen.org/dial-protocol-specification</a>
     </dd><dt id="bib-dom">[dom]</dt><dd>
       <a href="https://dom.spec.whatwg.org/"><cite>DOM Standard</cite></a>. Anne van Kesteren.  WHATWG. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
@@ -4234,8 +4250,10 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="https://www.w3.org/TR/permissions/"><cite>Permissions</cite></a>. Marcos Caceres; Mike Taylor.  W3C. 13 June 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/permissions/">https://www.w3.org/TR/permissions/</a>
     </dd><dt id="bib-rfc2119">[RFC2119]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. S. Bradner.  IETF. March 1997. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>
-    </dd><dt id="bib-rfc4122">[rfc4122]</dt><dd>
+    </dd><dt id="bib-rfc4122">[RFC4122]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc4122"><cite>A Universally Unique IDentifier (UUID) URN Namespace</cite></a>. P. Leach; M. Mealling; R. Salz.  IETF. July 2005. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc4122">https://www.rfc-editor.org/rfc/rfc4122</a>
+    </dd><dt id="bib-rfc6265">[RFC6265]</dt><dd>
+      <a href="https://httpwg.org/specs/rfc6265.html"><cite>HTTP State Management Mechanism</cite></a>. A. Barth.  IETF. April 2011. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc6265.html">https://httpwg.org/specs/rfc6265.html</a>
     </dd><dt id="bib-rfc8174">[RFC8174]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc8174"><cite>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</cite></a>. B. Leiba.  IETF. May 2017. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>
     </dd><dt id="bib-rfc9110">[RFC9110]</dt><dd>
@@ -4414,110 +4432,6 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="#ref-for-dfn-receiving-user-agent-28" title="§ 7.3 User interface guidelines">§ 7.3 User interface guidelines</a> <a href="#ref-for-dfn-receiving-user-agent-29" title="Reference 2">(2)</a> 
     </li><li>
       <a href="#ref-for-dfn-receiving-user-agent-30" title="§ D. Candidate Recommendation exit criteria">§ D. Candidate Recommendation exit criteria</a> <a href="#ref-for-dfn-receiving-user-agent-31" title="Reference 2">(2)</a> 
-    </li>
-  </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-javascript-realm" aria-label="Links in this document to definition: JavaScript realm">
-      <span class="caret"></span>
-      <div>
-        <a class="self-link" href="#dfn-javascript-realm" aria-label="Permalink for definition: JavaScript realm. Activate to close this dialog.">Permalink</a>
-         
-      </div>
-      <p><b>Referenced in:</b></p>
-      <ul>
-    <li>
-      <a href="#ref-for-dfn-javascript-realm-1" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> <a href="#ref-for-dfn-javascript-realm-2" title="Reference 2">(2)</a> 
-    </li><li>
-      <a href="#ref-for-dfn-javascript-realm-3" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-dfn-javascript-realm-4" title="Reference 2">(2)</a> 
-    </li><li>
-      <a href="#ref-for-dfn-javascript-realm-5" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> 
-    </li><li>
-      <a href="#ref-for-dfn-javascript-realm-6" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
-    </li>
-  </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-current-realm" aria-label="Links in this document to definition: current realm">
-      <span class="caret"></span>
-      <div>
-        <a class="self-link" href="#dfn-current-realm" aria-label="Permalink for definition: current realm. Activate to close this dialog.">Permalink</a>
-         
-      </div>
-      <p><b>Referenced in:</b></p>
-      <ul>
-    <li>
-      <a href="#ref-for-dfn-current-realm-1" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> 
-    </li>
-  </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-resolve" aria-label="Links in this document to definition: resolved">
-      <span class="caret"></span>
-      <div>
-        <a class="self-link" href="#dfn-resolve" aria-label="Permalink for definition: resolved. Activate to close this dialog.">Permalink</a>
-         
-      </div>
-      <p><b>Referenced in:</b></p>
-      <ul>
-    <li>
-      <a href="#ref-for-dfn-resolve-1" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
-    </li><li>
-      <a href="#ref-for-dfn-resolve-2" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> <a href="#ref-for-dfn-resolve-3" title="Reference 2">(2)</a> 
-    </li><li>
-      <a href="#ref-for-dfn-resolve-4" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-dfn-resolve-5" title="Reference 2">(2)</a> 
-    </li><li>
-      <a href="#ref-for-dfn-resolve-6" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> 
-    </li><li>
-      <a href="#ref-for-dfn-resolve-7" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
-    </li>
-  </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-reject" aria-label="Links in this document to definition: rejected">
-      <span class="caret"></span>
-      <div>
-        <a class="self-link" href="#dfn-reject" aria-label="Permalink for definition: rejected. Activate to close this dialog.">Permalink</a>
-         
-      </div>
-      <p><b>Referenced in:</b></p>
-      <ul>
-    <li>
-      <a href="#ref-for-dfn-reject-1" title="§ 6.3.2 Selecting a presentation display">§ 6.3.2 Selecting a presentation display</a> 
-    </li><li>
-      <a href="#ref-for-dfn-reject-2" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> 
-    </li><li>
-      <a href="#ref-for-dfn-reject-3" title="§ 6.4.2 The list of available presentation displays">§ 6.4.2 The list of available presentation displays</a> 
-    </li><li>
-      <a href="#ref-for-dfn-reject-4" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> 
-    </li>
-  </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-cookie-store" aria-label="Links in this document to definition: cookie store">
-      <span class="caret"></span>
-      <div>
-        <a class="self-link" href="#dfn-cookie-store" aria-label="Permalink for definition: cookie store. Activate to close this dialog.">Permalink</a>
-         
-      </div>
-      <p><b>Referenced in:</b></p>
-      <ul>
-    <li>
-      <a href="#ref-for-dfn-cookie-store-1" title="§ 6.6.1 Creating a receiving browsing context">§ 6.6.1 Creating a receiving browsing context</a> <a href="#ref-for-dfn-cookie-store-2" title="Reference 2">(2)</a> 
-    </li>
-  </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-uuid" aria-label="Links in this document to definition: UUID">
-      <span class="caret"></span>
-      <div>
-        <a class="self-link" href="#dfn-uuid" aria-label="Permalink for definition: UUID. Activate to close this dialog.">Permalink</a>
-         
-      </div>
-      <p><b>Referenced in:</b></p>
-      <ul>
-    <li>
-      <a href="#ref-for-dfn-uuid-1" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
-    </li>
-  </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-dial" aria-label="Links in this document to definition: DIAL">
-      <span class="caret"></span>
-      <div>
-        <a class="self-link" href="#dfn-dial" aria-label="Permalink for definition: DIAL. Activate to close this dialog.">Permalink</a>
-         
-      </div>
-      <p><b>Referenced in:</b></p>
-      <ul>
-    <li>
-      <a href="#ref-for-dfn-dial-1" title="§ 7.1 Personally identifiable information">§ 7.1 Personally identifiable information</a> <a href="#ref-for-dfn-dial-2" title="Reference 2">(2)</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-reload-a-document" aria-label="Links in this document to definition: reload a document">
@@ -6370,6 +6284,20 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="#ref-for-dom-presentationconnectionlist-onconnectionavailable-2" title="§ A. IDL Index">§ A. IDL Index</a> 
     </li>
   </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-dial" aria-label="Links in this document to definition: DIAL">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="http://www.dial-multiscreen.org/dial-protocol-specification#" aria-label="Permalink for definition: DIAL. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-dial-1" title="§ 4. Terminology">§ 4. Terminology</a> 
+    </li><li>
+      <a href="#ref-for-index-term-dial-2" title="§ 7.1 Personally identifiable information">§ 7.1 Personally identifiable information</a> <a href="#ref-for-index-term-dial-3" title="Reference 2">(2)</a> 
+    </li>
+  </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-creating-an-event" aria-label="Links in this document to definition: creating an event">
       <span class="caret"></span>
       <div>
@@ -6462,6 +6390,68 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="#ref-for-index-term-fire-an-event-10" title="§ 6.5.8 Handling a termination confirmation in a controlling user agent">§ 6.5.8 Handling a termination confirmation in a controlling user agent</a> 
     </li><li>
       <a href="#ref-for-index-term-fire-an-event-11" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-javascript-realm" aria-label="Links in this document to definition: JavaScript realm">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://tc39.es/ecma262/multipage/#sec-code-realms" aria-label="Permalink for definition: JavaScript realm. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-javascript-realm-1" title="§ 4. Terminology">§ 4. Terminology</a> <a href="#ref-for-index-term-javascript-realm-2" title="Reference 2">(2)</a> 
+    </li><li>
+      <a href="#ref-for-index-term-javascript-realm-3" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> <a href="#ref-for-index-term-javascript-realm-4" title="Reference 2">(2)</a> <a href="#ref-for-index-term-javascript-realm-5" title="Reference 3">(3)</a> 
+    </li><li>
+      <a href="#ref-for-index-term-javascript-realm-6" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-index-term-javascript-realm-7" title="Reference 2">(2)</a> 
+    </li><li>
+      <a href="#ref-for-index-term-javascript-realm-8" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> 
+    </li><li>
+      <a href="#ref-for-index-term-javascript-realm-9" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-rejected" aria-label="Links in this document to definition: rejected">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" aria-label="Permalink for definition: rejected. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-rejected-1" title="§ 4. Terminology">§ 4. Terminology</a> 
+    </li><li>
+      <a href="#ref-for-index-term-rejected-2" title="§ 6.3.2 Selecting a presentation display">§ 6.3.2 Selecting a presentation display</a> 
+    </li><li>
+      <a href="#ref-for-index-term-rejected-3" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> 
+    </li><li>
+      <a href="#ref-for-index-term-rejected-4" title="§ 6.4.2 The list of available presentation displays">§ 6.4.2 The list of available presentation displays</a> 
+    </li><li>
+      <a href="#ref-for-index-term-rejected-5" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-resolved" aria-label="Links in this document to definition: resolved">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" aria-label="Permalink for definition: resolved. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-resolved-1" title="§ 4. Terminology">§ 4. Terminology</a> 
+    </li><li>
+      <a href="#ref-for-index-term-resolved-2" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
+    </li><li>
+      <a href="#ref-for-index-term-resolved-3" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> <a href="#ref-for-index-term-resolved-4" title="Reference 2">(2)</a> 
+    </li><li>
+      <a href="#ref-for-index-term-resolved-5" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-index-term-resolved-6" title="Reference 2">(2)</a> 
+    </li><li>
+      <a href="#ref-for-index-term-resolved-7" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> 
+    </li><li>
+      <a href="#ref-for-index-term-resolved-8" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-blob-interface" aria-label="Links in this document to definition: Blob interface">
@@ -6848,6 +6838,34 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <ul>
     <li>
       <a href="#ref-for-index-term-permission-state-1" title="§ 6.6.1 Creating a receiving browsing context">§ 6.6.1 Creating a receiving browsing context</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-uuid" aria-label="Links in this document to definition: UUID">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://www.rfc-editor.org/rfc/rfc4122#section-1" aria-label="Permalink for definition: UUID. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-uuid-1" title="§ 4. Terminology">§ 4. Terminology</a> 
+    </li><li>
+      <a href="#ref-for-index-term-uuid-2" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-cookie-store" aria-label="Links in this document to definition: cookie store">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://httpwg.org/specs/rfc6265.html#section-5.3" aria-label="Permalink for definition: cookie store. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-cookie-store-1" title="§ 4. Terminology">§ 4. Terminology</a> 
+    </li><li>
+      <a href="#ref-for-index-term-cookie-store-2" title="§ 6.6.1 Creating a receiving browsing context">§ 6.6.1 Creating a receiving browsing context</a> <a href="#ref-for-index-term-cookie-store-3" title="Reference 2">(2)</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-accept-language" aria-label="Links in this document to definition: Accept-Language">
