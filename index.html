@@ -1,15 +1,13 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8">
-<meta name="generator" content="ReSpec 34.2.0">
+<meta name="generator" content="ReSpec 35.1.1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <style>
 span.example-title{text-transform:none}
 :is(aside,div).example,div.illegal-example{padding:.5em;margin:1em 0;position:relative;clear:both}
 div.illegal-example{color:red}
 div.illegal-example p{color:#000}
-:is(aside,div).example{border-left-width:.5em;border-left-style:solid;border-color:#e0cb52;background:#fcfaee}
 aside.example div.example{border-left-width:.1em;border-color:#999;background:#fff}
-.example pre{background-color:rgba(0,0,0,.03)}
 </style>
 <style>
 .issue-label{text-transform:initial}
@@ -18,7 +16,7 @@ aside.example div.example{border-left-width:.1em;border-color:#999;background:#f
 span.warning{padding:.1em .5em .15em}
 .issue.closed span.issue-number{text-decoration:line-through}
 .issue.closed span.issue-number::after{content:" (Closed)";font-size:smaller}
-.warning{border-color:#f11;border-width:.2em;border-style:solid;background:#fbe9e9}
+.warning{border-color:#f11;border-color:var(--warning-border,#f11);border-width:.2em;border-style:solid;background:#fbe9e9;background:var(--warning-bg,#fbe9e9);color:#000;color:var(--text,#000)}
 .warning-title:before{content:"⚠";font-size:1.3em;float:left;padding-right:.3em;margin-top:-.3em}
 li.task-list-item{list-style:none}
 input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}
@@ -26,12 +24,12 @@ input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}
 </style>
 <style>
 pre.idl{padding:1em;position:relative}
-pre.idl>code{color:#000}
+pre.idl>code{color:#000;color:var(--text,#000)}
 @media print{
 pre.idl{white-space:pre-wrap}
 }
-.idlHeader{display:block;width:150px;background:#8ccbf2;color:#fff;font-family:sans-serif;font-weight:700;margin:-1em 0 1em -1em;height:28px;line-height:28px}
-.idlHeader a.self-link{margin-left:.3cm;text-decoration:none;border-bottom:none}
+.idlHeader{display:block;width:150px;background:#8ccbf2;background:var(--def-border,#8ccbf2);color:#fff;color:var(--defrow-border,#fff);font-family:sans-serif;font-weight:700;margin:-1em 0 1em -1em;height:28px;line-height:28px}
+.idlHeader a.self-link{margin-left:.3cm;text-decoration:none;border-bottom:none;color:inherit}
 .idlID{font-weight:700;color:#005a9c}
 .idlType{color:#005a9c}
 .idlName{color:#ff4500}
@@ -54,13 +52,13 @@ a.idlEnumItem{color:#000;border-bottom:1px dotted #ccc;text-decoration:none}
 </style>
 <style>
 dfn{cursor:pointer}
-.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font-family:"Helvetica Neue",sans-serif;font-size:small;background:#fff;color:#000;box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);border-radius:2px}
+.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font-family:"Helvetica Neue",sans-serif;font-size:small;background:#fff;background:var(--indextable-hover-bg,#fff);color:#000;color:var(--text,#000);box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);box-shadow:0 1em 3em -.4em var(--tocsidebar-shadow,rgba(0,0,0,.3)),0 0 1px 1px var(--tocsidebar-shadow,rgba(0,0,0,.05));border-radius:2px}
 .dfn-panel:not(.docked)>.caret{position:absolute;top:-9px}
-.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;top:0}
-.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1}
+.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;border-bottom-color:var(--indextable-hover-bg,#fff);top:0}
+.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1;border-bottom-color:var(--indextable-hover-bg,#a2a9b1)}
 .dfn-panel *{margin:0}
-.dfn-panel b{display:block;color:#000;margin-top:.25em}
-.dfn-panel ul a[href]{color:#333}
+.dfn-panel b{display:block;color:#000;color:var(--text,#000);margin-top:.25em}
+.dfn-panel ul a[href]{color:#333;color:var(--text,#333)}
 .dfn-panel>div{display:flex}
 .dfn-panel a.self-link{font-weight:700;margin-right:auto}
 .dfn-panel .marker{padding:.1em;margin-left:.5em;border-radius:.2em;text-align:center;white-space:nowrap;font-size:90%;color:#040b1c}
@@ -117,8 +115,6 @@ dfn{cursor:pointer}
 25%{transform:scale(1.25,1.25);opacity:.75}
 100%{transform:scale(1,1)}
 }
-:is(h1,h2,h3,h4,h5,h6,a) abbr{border:none}
-dfn{font-weight:700}
 a.internalDFN{color:inherit;border-bottom:1px solid #99c;text-decoration:none}
 a.externalDFN{color:inherit;border-bottom:1px dotted #ccc;text-decoration:none}
 a.bibref{text-decoration:none}
@@ -132,20 +128,8 @@ a.bibref{text-decoration:none}
 cite .bibref{font-style:normal}
 a[href].orcid{padding-left:4px;padding-right:4px}
 a[href].orcid>svg{margin-bottom:-2px}
-.toc a,.tof a{text-decoration:none}
-a .figno,a .secno{color:#000}
 ol.tof,ul.tof{list-style:none outside none}
 .caption{margin-top:.5em;font-style:italic}
-table.simple{border-spacing:0;border-collapse:collapse;border-bottom:3px solid #005a9c}
-.simple th{background:#005a9c;color:#fff;padding:3px 5px;text-align:left}
-.simple th a{color:#fff;padding:3px 5px;text-align:left}
-.simple th[scope=row]{background:inherit;color:inherit;border-top:1px solid #ddd}
-.simple td{padding:3px 10px;border-top:1px solid #ddd}
-.simple tr:nth-child(even){background:#f0f6ff}
-.section dd>p:first-child{margin-top:0}
-.section dd>p:last-child{margin-bottom:0}
-.section dd{margin-bottom:1em}
-.section dl.attrs dd,.section dl.eldef dd{margin-bottom:0}
 #issue-summary>ul{column-count:2}
 #issue-summary li{list-style:none;display:inline-block}
 details.respec-tests-details{margin-left:1em;display:inline-block;vertical-align:top}
@@ -169,6 +153,7 @@ dd{margin-left:0}
 .removeOnSave{display:none}
 }
 </style>
+<meta name="color-scheme" content="light">
 <style>
 ul.index{columns:30ch;column-gap:1.5em}
 ul.index li{list-style:inherit}
@@ -180,19 +165,23 @@ ul.index code{color:inherit}
 #index-defined-here .print-only{display:initial}
 }
 </style>
-<meta name="revision" content="a128d1eae737312fd858e98bd67c8178ab8a1fa7">
+<meta name="revision" content="3a9454ffaa60cb202cdb2ce23e9a260fa90907b3">
 <meta name="description" content="This specification defines an API to enable Web content to access
         presentation displays and use them for presenting Web content.">
 <style>
-.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;background:#fafafa}
-.hljs-comment,.hljs-quote{color:#717277;font-style:italic}
-.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4}
-.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;font-weight:700}
-.hljs-literal{color:#0b76c5}
-.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c}
-.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01}
-.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801}
-.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3}
+.hljs{--base:#fafafa;--mono-1:#383a42;--mono-2:#686b77;--mono-3:#717277;--hue-1:#0b76c5;--hue-2:#336ae3;--hue-3:#a626a4;--hue-4:#42803c;--hue-5:#ca4706;--hue-5-2:#c91243;--hue-6:#986801;--hue-6-2:#9a6a01}
+@media (prefers-color-scheme:dark){
+.hljs{--base:#282c34;--mono-1:#abb2bf;--mono-2:#818896;--mono-3:#5c6370;--hue-1:#56b6c2;--hue-2:#61aeee;--hue-3:#c678dd;--hue-4:#98c379;--hue-5:#e06c75;--hue-5-2:#be5046;--hue-6:#d19a66;--hue-6-2:#e6c07b}
+}
+.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;color:var(--mono-1,#383a42);background:#fafafa;background:var(--base,#fafafa)}
+.hljs-comment,.hljs-quote{color:#717277;color:var(--mono-3,#717277);font-style:italic}
+.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4;color:var(--hue-3,#a626a4)}
+.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;color:var(--hue-5,#ca4706);font-weight:700}
+.hljs-literal{color:#0b76c5;color:var(--hue-1,#0b76c5)}
+.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c;color:var(--hue-4,#42803c)}
+.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01;color:var(--hue-6-2,#9a6a01)}
+.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801;color:var(--hue-6,#986801)}
+.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3;color:var(--hue-2,#336ae3)}
 .hljs-emphasis{font-style:italic}
 .hljs-strong{font-weight:700}
 .hljs-link{text-decoration:underline}
@@ -200,8 +189,8 @@ ul.index code{color:inherit}
 <style>
 var{position:relative;cursor:pointer}
 var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}
-var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#000}
-var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#000;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
+var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#222}
+var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#222;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
 var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </style>
 <script id="initialUserConfig" type="application/json">{
@@ -268,16 +257,16 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   },
   "crEnd": "2016-09-12",
   "implementationReportURI": "https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests",
-  "gitRevision": "a128d1eae737312fd858e98bd67c8178ab8a1fa7",
-  "publishISODate": "2023-10-16T00:00:00.000Z",
-  "generatedSubtitle": "W3C Editor's Draft 16 October 2023"
+  "gitRevision": "3a9454ffaa60cb202cdb2ce23e9a260fa90907b3",
+  "publishISODate": "2024-08-22T00:00:00.000Z",
+  "generatedSubtitle": "W3C Editor's Draft 22 August 2024"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED"></head>
   <body class="h-entry" data-cite="WEBIDL dom fileapi secure-contexts html url webidl webrtc websockets"><div class="head">
     <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
   </a></p>
     <h1 id="title" class="title">Presentation API</h1> 
-    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2023-10-16">16 October 2023</time></p>
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2024-08-22">22 August 2024</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -324,15 +313,15 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     
     
     <p class="copyright">
-    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+    <a href="https://www.w3.org/policies/#copyright">Copyright</a>
     ©
-    2023
+    2024
     
     <a href="https://www.w3.org/">World Wide Web Consortium</a>.
     <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup>
-    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
-    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
-    <a rel="license" href="https://www.w3.org/Consortium/Legal/2023/software-license" title="W3C Software and Document Notice and License">permissive document license</a> rules apply.
+    <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>,
+    <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and
+    <a rel="license" href="https://www.w3.org/copyright/software-license-2023/" title="W3C Software and Document Notice and License">permissive document license</a> rules apply.
   </p>
     <hr title="Separator for header">
   </div>
@@ -383,7 +372,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     
         This document was produced by a group
         operating under the
-        <a href="https://www.w3.org/Consortium/Patent-Policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent
+        <a href="https://www.w3.org/policies/patent-policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent
           Policy</a>.
       
     
@@ -393,14 +382,14 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
           the group; that page also includes
           instructions for disclosing a patent. An individual who has actual
           knowledge of a patent which the individual believes contains
-          <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a>
+          <a href="https://www.w3.org/policies/patent-policy/#def-essential">Essential Claim(s)</a>
           must disclose the information in accordance with
-          <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+          <a href="https://www.w3.org/policies/patent-policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
         
   </p><p>
-                  This document is governed by the
-                  <a id="w3c_process_revision" href="https://www.w3.org/2023/Process-20230612/">12 June 2023 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
-                </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>
+                      This document is governed by the
+                      <a id="w3c_process_revision" href="https://www.w3.org/policies/process/20231103/">03 November 2023 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+                    </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>
         Introduction
       </a></li><li class="tocline"><a class="tocxref" href="#use-cases-and-requirements"><bdi class="secno">2. </bdi>
         Use cases and requirements
@@ -677,12 +666,12 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         context of <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-1"><code>Promise</code></a> objects are used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript" title="ECMAScript Language Specification">ECMASCRIPT</a></cite>].
       </p>
       <p>
-        The terms <dfn id="dfn-accept-language" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" id="ref-for-index-term-accept-language-1">Accept-Language</a></dfn>
-        and <dfn id="dfn-http-authentication" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-1">HTTP authentication</a></dfn> are
+        The terms <dfn id="dfn-accept-language" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc9110.html#field.accept-language" id="ref-for-index-term-accept-language-1">Accept-Language</a></dfn>
+        and <dfn id="dfn-http-authentication" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc9110.html#authentication" id="ref-for-index-term-http-authentication-1">HTTP authentication</a></dfn> are
         used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc9110" title="HTTP Semantics">RFC9110</a></cite>].
       </p>
       <p>
-        The term <dfn id="dfn-cookie-store" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="ref-for-index-term-cookie-store-1">cookie store</a></dfn> is
+        The term <dfn id="dfn-cookie-store" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc6265.html#storage-model" id="ref-for-index-term-cookie-store-1">cookie store</a></dfn> is
         used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc6265" title="HTTP State Management Mechanism">RFC6265</a></cite>].
       </p>
       <p>
@@ -2985,9 +2974,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             set the <a data-type="dfn" href="https://www.w3.org/TR/permissions/#dfn-permission-state" id="ref-for-index-term-permission-state-1">permission state</a> of all <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://www.w3.org/TR/permissions/#dfn-permission-descriptor-type" id="ref-for-index-term-permission-descriptor-types-for-powerful-feature-1">permission descriptor types</a> for <var>C</var> to
             <code>"denied"</code>.
             </li>
-            <li>Create a new empty <a data-link-type="dfn" href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="ref-for-index-term-cookie-store-2">cookie store</a> for <var>C</var>.
+            <li>Create a new empty <a data-link-type="dfn" href="https://httpwg.org/specs/rfc6265.html#storage-model" id="ref-for-index-term-cookie-store-2">cookie store</a> for <var>C</var>.
             </li>
-            <li>Create a new empty store for <var>C</var> to hold <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-2">HTTP
+            <li>Create a new empty store for <var>C</var> to hold <a data-link-type="dfn" href="https://httpwg.org/specs/rfc9110.html#authentication" id="ref-for-index-term-http-authentication-2">HTTP
             authentication</a> states.
             </li>
             <li>Create a new empty storage for <a href="#dfn-session-storage-area" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-session-storage-area-1">session storage areas</a> and
@@ -3053,7 +3042,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             unregistered and terminated. Any browsing state associated with the
             <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-34">receiving browsing context</a> and the <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-12">browsing contexts</a>
             in its <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#descendant-navigables" id="ref-for-index-term-descendant-navigables-for-document-4">descendant navigables</a>, including <a href="#dfn-session-history" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-session-history-2">session
-            history</a>, the <a data-link-type="dfn" href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="ref-for-index-term-cookie-store-3">cookie store</a>, any <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="ref-for-index-term-http-authentication-3">HTTP
+            history</a>, the <a data-link-type="dfn" href="https://httpwg.org/specs/rfc6265.html#storage-model" id="ref-for-index-term-cookie-store-3">cookie store</a>, any <a data-link-type="dfn" href="https://httpwg.org/specs/rfc9110.html#authentication" id="ref-for-index-term-http-authentication-3">HTTP
             authentication</a> state, any <a href="#dfn-database" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-database-2">databases</a>, the <a href="#dfn-session-storage-area" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-session-storage-area-2">session
             storage areas</a>, the <a href="#dfn-local-storage-area" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-local-storage-area-2">local storage areas</a>, the list of
             registered <a data-type="dfn" href="https://www.w3.org/TR/service-workers/#dfn-service-worker-registration" id="ref-for-index-term-service-worker-registrations-2">service worker registrations</a> and the <a data-link-type="idl" data-lt="Cache" data-type="interface" href="https://www.w3.org/TR/service-workers/#cache" id="ref-for-index-term-cache-interface-2"><code>Cache</code></a>
@@ -3069,9 +3058,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           <p>
             The <a href="#dfn-receiving-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-user-agent-21">receiving user agent</a> <em class="rfc2119">SHOULD</em> fetch resources in a
             <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-35">receiving browsing context</a> with an HTTP
-            <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" id="ref-for-index-term-accept-language-2">Accept-Language</a> header that reflects the language
+            <a data-link-type="dfn" href="https://httpwg.org/specs/rfc9110.html#field.accept-language" id="ref-for-index-term-accept-language-2">Accept-Language</a> header that reflects the language
             preferences of the <a href="#dfn-controlling-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-user-agent-26">controlling user agent</a> (i.e., with the
-            same <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" id="ref-for-index-term-accept-language-3">Accept-Language</a> that the controlling user agent would
+            same <a data-link-type="dfn" href="https://httpwg.org/specs/rfc9110.html#field.accept-language" id="ref-for-index-term-accept-language-3">Accept-Language</a> that the controlling user agent would
             have sent). This will help the <a href="#dfn-receiving-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-user-agent-22">receiving user agent</a> render
             the presentation with fonts and locale-specific attributes that
             reflect the user's preferences.
@@ -3877,16 +3866,16 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
         [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc6265">RFC6265</a></cite>] defines the following:
         <ul>
           <li>
-    <span class="index-term" data-href="https://httpwg.org/specs/rfc6265.html#section-5.3" id="index-term-cookie-store" tabindex="0" aria-haspopup="dialog">cookie store</span>
+    <span class="index-term" data-href="https://httpwg.org/specs/rfc6265.html#storage-model" id="index-term-cookie-store" tabindex="0" aria-haspopup="dialog">cookie store</span>
   </li>
         </ul>
       </li><li>
         [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc9110">RFC9110</a></cite>] defines the following:
         <ul>
           <li>
-    <span class="index-term" data-href="https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" id="index-term-accept-language" tabindex="0" aria-haspopup="dialog">Accept-Language</span>
+    <span class="index-term" data-href="https://httpwg.org/specs/rfc9110.html#field.accept-language" id="index-term-accept-language" tabindex="0" aria-haspopup="dialog">Accept-Language</span>
   </li><li>
-    <span class="index-term" data-href="https://www.rfc-editor.org/rfc/rfc9110#section-11" id="index-term-http-authentication" tabindex="0" aria-haspopup="dialog">HTTP authentication</span>
+    <span class="index-term" data-href="https://httpwg.org/specs/rfc9110.html#authentication" id="index-term-http-authentication" tabindex="0" aria-haspopup="dialog">HTTP authentication</span>
   </li>
         </ul>
       </li><li>
@@ -4241,13 +4230,13 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </dd><dt id="bib-ecmascript">[ECMASCRIPT]</dt><dd>
       <a href="https://tc39.es/ecma262/multipage/"><cite>ECMAScript Language Specification</cite></a>.  Ecma International. URL: <a href="https://tc39.es/ecma262/multipage/">https://tc39.es/ecma262/multipage/</a>
     </dd><dt id="bib-fileapi">[fileapi]</dt><dd>
-      <a href="https://www.w3.org/TR/FileAPI/"><cite>File API</cite></a>. Marijn Kruisselbrink.  W3C. 6 February 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/FileAPI/">https://www.w3.org/TR/FileAPI/</a>
+      <a href="https://www.w3.org/TR/FileAPI/"><cite>File API</cite></a>. Marijn Kruisselbrink.  W3C. 24 May 2024. W3C Working Draft. URL: <a href="https://www.w3.org/TR/FileAPI/">https://www.w3.org/TR/FileAPI/</a>
     </dd><dt id="bib-html">[HTML]</dt><dd>
       <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Anne van Kesteren; Domenic Denicola; Ian Hickson; Philip Jägenstedt; Simon Pieters.  WHATWG. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
     </dd><dt id="bib-indexeddb">[INDEXEDDB]</dt><dd>
       <a href="https://www.w3.org/TR/IndexedDB/"><cite>Indexed Database API</cite></a>. Nikunj Mehta; Jonas Sicking; Eliot Graff; Andrei Popescu; Jeremy Orlow; Joshua Bell.  W3C. 8 January 2015. W3C Recommendation. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
     </dd><dt id="bib-permissions">[PERMISSIONS]</dt><dd>
-      <a href="https://www.w3.org/TR/permissions/"><cite>Permissions</cite></a>. Marcos Caceres; Mike Taylor.  W3C. 13 June 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/permissions/">https://www.w3.org/TR/permissions/</a>
+      <a href="https://www.w3.org/TR/permissions/"><cite>Permissions</cite></a>. Marcos Caceres; Mike Taylor.  W3C. 19 March 2024. W3C Working Draft. URL: <a href="https://www.w3.org/TR/permissions/">https://www.w3.org/TR/permissions/</a>
     </dd><dt id="bib-rfc2119">[RFC2119]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. S. Bradner.  IETF. March 1997. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>
     </dd><dt id="bib-rfc4122">[RFC4122]</dt><dd>
@@ -4257,9 +4246,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </dd><dt id="bib-rfc8174">[RFC8174]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc8174"><cite>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</cite></a>. B. Leiba.  IETF. May 2017. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>
     </dd><dt id="bib-rfc9110">[RFC9110]</dt><dd>
-      <a href="https://www.rfc-editor.org/rfc/rfc9110"><cite>HTTP Semantics</cite></a>. R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed..  IETF. June 2022. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>
+      <a href="https://httpwg.org/specs/rfc9110.html"><cite>HTTP Semantics</cite></a>. R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed..  IETF. June 2022. Internet Standard. URL: <a href="https://httpwg.org/specs/rfc9110.html">https://httpwg.org/specs/rfc9110.html</a>
     </dd><dt id="bib-secure-contexts">[secure-contexts]</dt><dd>
-      <a href="https://www.w3.org/TR/secure-contexts/"><cite>Secure Contexts</cite></a>. Mike West.  W3C. 18 September 2021. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
+      <a href="https://www.w3.org/TR/secure-contexts/"><cite>Secure Contexts</cite></a>. Mike West.  W3C. 10 November 2023. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
     </dd><dt id="bib-service-workers">[SERVICE-WORKERS]</dt><dd>
       <a href="https://www.w3.org/TR/service-workers/"><cite>Service Workers</cite></a>. Jake Archibald; Marijn Kruisselbrink.  W3C. 12 July 2022. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/service-workers/">https://www.w3.org/TR/service-workers/</a>
     </dd><dt id="bib-url">[url]</dt><dd>
@@ -6857,7 +6846,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-cookie-store" aria-label="Links in this document to definition: cookie store">
       <span class="caret"></span>
       <div>
-        <a class="self-link" href="https://httpwg.org/specs/rfc6265.html#section-5.3" aria-label="Permalink for definition: cookie store. Activate to close this dialog.">Permalink</a>
+        <a class="self-link" href="https://httpwg.org/specs/rfc6265.html#storage-model" aria-label="Permalink for definition: cookie store. Activate to close this dialog.">Permalink</a>
          
       </div>
       <p><b>Referenced in:</b></p>
@@ -6871,7 +6860,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-accept-language" aria-label="Links in this document to definition: Accept-Language">
       <span class="caret"></span>
       <div>
-        <a class="self-link" href="https://www.rfc-editor.org/rfc/rfc9110#section-12.5.4" aria-label="Permalink for definition: Accept-Language. Activate to close this dialog.">Permalink</a>
+        <a class="self-link" href="https://httpwg.org/specs/rfc9110.html#field.accept-language" aria-label="Permalink for definition: Accept-Language. Activate to close this dialog.">Permalink</a>
          
       </div>
       <p><b>Referenced in:</b></p>
@@ -6885,7 +6874,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-http-authentication" aria-label="Links in this document to definition: HTTP authentication">
       <span class="caret"></span>
       <div>
-        <a class="self-link" href="https://www.rfc-editor.org/rfc/rfc9110#section-11" aria-label="Permalink for definition: HTTP authentication. Activate to close this dialog.">Permalink</a>
+        <a class="self-link" href="https://httpwg.org/specs/rfc9110.html#authentication" aria-label="Permalink for definition: HTTP authentication. Activate to close this dialog.">Permalink</a>
          
       </div>
       <p><b>Referenced in:</b></p>
