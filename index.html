@@ -291,8 +291,9 @@
         context of {{Promise}} objects are used as defined in [[!ECMASCRIPT]].
       </p>
       <p>
-        The terms <dfn data-cite="rfc9110#field.accept-language">Accept-Language</dfn>
-        and <dfn data-cite="rfc9110#authentication">HTTP authentication</dfn> are
+        The terms <dfn data-cite=
+        "rfc9110#field.accept-language">Accept-Language</dfn> and
+        <dfn data-cite="rfc9110#authentication">HTTP authentication</dfn> are
         used as defined in [[!RFC9110]].
       </p>
       <p>
@@ -1599,15 +1600,10 @@
               Output
             </dt>
             <dd>
-              A {{Promise}}
+              A new {{Promise}}
             </dd>
           </dl>
           <ol>
-            <li>If there is an unsettled {{Promise}} from a previous call to
-            <a data-link-for="PresentationRequest">getAvailability</a> on <var>
-              presentationRequest</var>, return that {{Promise}} and abort
-              these steps.
-            </li>
             <li>Otherwise, let <var>P</var> be a new {{Promise}} constructed in
             the <a>JavaScript realm</a> of <var>presentationRequest</var>.
             </li>
