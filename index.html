@@ -1113,9 +1113,8 @@
               </ol>Then run the following steps:
               <ol>
                 <li>
-                  <a data-cite="!HTML#queue-a-global-task">Queue a global
-                  task</a> to <a>reject</a> <var>P</var> with a
-                  {{NotFoundError}} exception.
+                  <a>Queue a global task</a> to <a>reject</a> <var>P</var> with
+                  a {{NotFoundError}} exception.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
@@ -1754,8 +1753,8 @@
                 <var>newAvailability</var> and skip the following step.
                 </li>
                 <li>If <var>previousAvailability</var> is not equal to
-                <var>newAvailability</var>, then <a>queue a task</a> to run the
-                following steps:
+                <var>newAvailability</var>, then <a>queue a global task</a> to
+                run the following steps:
                   <ol>
                     <li>Set <var>A</var>'s <a>value</a> property to
                     <var>newAvailability</var>.
@@ -2048,8 +2047,8 @@
             identifier</a> of <var>presentationConnection</var> MUST be sent
             with this request.
             </li>
-            <li>If connection completes successfully, <a>queue a task</a> to
-            run the following steps:
+            <li>If connection completes successfully, <a>queue a global
+            task</a> to run the following steps:
               <ol>
                 <li>Set the <a>presentation connection state</a> of
                 <var>presentationConnection</var> to <a data-link-for=
@@ -2466,7 +2465,7 @@
                 connection</var> is <a data-link-for=
                 "PresentationConnectionState">connected</a> or
                   <a data-link-for="PresentationConnectionState">connecting</a>,
-                  then <a>queue a task</a> to run the following steps:
+                  then <a>queue a global task</a> to run the following steps:
                   <ol>
                     <li>Set the <a>presentation connection state</a> of
                     <var>known connection</var> to <a data-link-for=
@@ -2548,8 +2547,8 @@
             the user interface and discard it.
             </li>
             <li>For each <var>connection</var> in
-            <var>connectedControllers</var>, <a>queue a task</a> to send a
-            termination confirmation for <var>P</var> using an implementation
+            <var>connectedControllers</var>, <a>queue a global task</a> to send
+            a termination confirmation for <var>P</var> using an implementation
             specific mechanism to the <a>controlling user agent</a> that owns
             the <a>destination browsing context</a> for <var>connection</var>.
               <p class="note">
@@ -2572,7 +2571,7 @@
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
             presentations</a> that was connected to <var>P</var>, <a>queue a
-            task</a> to run the following steps:
+            global task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <var>connection</var> is not <a data-link-for=
