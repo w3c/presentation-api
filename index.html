@@ -49,7 +49,7 @@
         sotdAfterWGinfo: true,
         group: 'secondscreen',
         github: 'https://github.com/w3c/presentation-api',
-        xref: ['dom', 'fileapi', 'secure-contexts', 'html', 'url', 'webidl', 'webrtc', 'websockets'],
+        xref: ['dom', 'fileapi', 'secure-contexts', 'html', 'url', 'webidl', 'webrtc', 'websockets', 'infra'],
         localBiblio: {
           DIAL: {
             title: 'DIscovery And Launch Protocol Specification',
@@ -842,8 +842,8 @@
           When an algorithm <dfn data-lt="queue a Presentation API task">queues
           a Presentation API task</dfn> <var>T</var>, the <a>user agent</a>
           MUST <a>queue a global task</a> <var>T</var> on the <a>presentation
-          task source</a> using the <a data-cite="!HTML#global-object">global
-          object</a> of the <a>current realm</a>.
+          task source</a> using the <a>global object</a> of the <a>current
+          realm</a>.
         </p>
         <p>
           Unless otherwise specified, the <a>JavaScript realm</a> for script
@@ -1183,6 +1183,8 @@
             </dd>
           </dl>
           <ol>
+            <li>Run the following steps <a>in parallel</a>
+            </li>.
             <li>Let <var>presentationUrls</var> be the <a>presentation request
             URLs</a> of <var>presentationRequest</var>.
             </li>
@@ -1230,8 +1232,7 @@
           </dl>
           <ol>
             <li>
-              <a data-cite="!INFRA#assert">Assert</a>: this is running <a>in
-              parallel</a>.
+              <a>Assert</a>: this is running <a>in parallel</a>.
             </li>
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
@@ -1691,8 +1692,7 @@
           </p>
           <ol>
             <li>
-              <a data-cite="!INFRA#assert">Assert</a>: this is running <a>in
-              parallel</a>.
+              <a>Assert</a>: this is running <a>in parallel</a>.
             </li>
             <li>Let <var>availabilitySet</var> be a shallow copy of the <a>set
             of presentation availability objects</a>.
@@ -2046,8 +2046,7 @@
           </dl>
           <ol>
             <li>
-              <a data-cite="!INFRA#assert">Assert</a>: this is running <a>in
-              parallel</a>.
+              <a>Assert</a>: this is running <a>in parallel</a>.
             </li>
             <li>If the <a>presentation connection state</a> of
             <var>presentationConnection</var> is not <a data-link-for=
@@ -2059,8 +2058,8 @@
             identifier</a> of <var>presentationConnection</var> MUST be sent
             with this request.
             </li>
-            <li>If connection completes successfully, <a>queue a global
-            task</a> to run the following steps:
+            <li>If connection completes successfully, <a>queue a Presentation
+            API task</a> to run the following steps:
               <ol>
                 <li>Set the <a>presentation connection state</a> of
                 <var>presentationConnection</var> to <a data-link-for=
@@ -2216,8 +2215,7 @@
           </dl>
           <ol data-link-for="PresentationConnection">
             <li>
-              <a data-cite="!INFRA#assert">Assert</a>: this is running <a>in
-              parallel</a>.
+              <a>Assert</a>: this is running <a>in parallel</a>.
             </li>
             <li>If the <a>state</a> property of
             <var>presentationConnection</var> is not <a data-link-for=
@@ -2466,8 +2464,7 @@
           </p>
           <ol>
             <li>
-              <a data-cite="!INFRA#assert">Assert</a>: this is running <a>in
-              parallel</a>.
+              <a>Assert</a>: this is running <a>in parallel</a>.
             </li>
             <li>If the <a>presentation connection state</a> of
             <var>connection</var> is not <a data-link-for=
@@ -2500,9 +2497,9 @@
               </ol>
             </li>
             <li>
-              <dfn>Send a termination request</dfn> for the presentation to its
-              <a>receiving user agent</a> using an implementation specific
-              mechanism.
+              <a>In parallel</a>, <dfn>send a termination request</dfn> for the
+              presentation to its <a>receiving user agent</a> using an
+              implementation specific mechanism.
             </li>
           </ol>
         </section>
@@ -2917,8 +2914,7 @@
           </dl>
           <ol>
             <li>
-              <a data-cite="!INFRA#assert">Assert</a>: this is running <a>in
-              parallel</a>.
+              <a>Assert</a>: this is running <a>in parallel</a>.
             </li>
             <li>If <var>presentationId</var> and <var>I</var> are not equal,
             refuse the connection and abort all remaining steps.
@@ -2971,7 +2967,7 @@
                 the <a>set of presentation controllers</a>.
                 </li>
                 <li>
-                  <a>queue a Presentation API task</a> to [=fire an event=]
+                  <a>Queue a Presentation API task</a> to [=fire an event=]
                   named <a data-link-for=
                   "PresentationConnectionList">connectionavailable</a>, that
                   uses the <a>PresentationConnectionAvailableEvent</a>
