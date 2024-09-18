@@ -2463,9 +2463,6 @@
             MUST run the following steps:
           </p>
           <ol>
-            <li>
-              <a>Assert</a>: this is running <a>in parallel</a>.
-            </li>
             <li>If the <a>presentation connection state</a> of
             <var>connection</var> is not <a data-link-for=
             "PresentationConnectionState">connected</a> or <a data-link-for=
@@ -2482,8 +2479,9 @@
                 connection</var> is <a data-link-for=
                 "PresentationConnectionState">connected</a> or
                   <a data-link-for="PresentationConnectionState">connecting</a>,
-                  then <a>queue a Presentation API task</a> to run the
-                  following steps:
+                  then <a>queue a global task</a> on the <a>presentation task
+                  source</a> given <var>known connection</var>'s <a>relevant
+                  global object</a> to run the following steps:
                   <ol>
                     <li>Set the <a>presentation connection state</a> of
                     <var>known connection</var> to <a data-link-for=
