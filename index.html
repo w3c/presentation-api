@@ -2587,7 +2587,9 @@
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
             presentations</a> that was connected to <var>P</var>, <a>queue a
-            Presentation API task</a> to run the following steps:
+            global task</a> on the <a>presentation task source</a> given <var>
+              connection</var>'s <a>relevant global object</a> to run the
+              following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <var>connection</var> is not <a data-link-for=
