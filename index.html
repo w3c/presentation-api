@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8">
-<meta name="generator" content="ReSpec 35.1.1">
+<meta name="generator" content="ReSpec 35.1.2">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <style>
 span.example-title{text-transform:none}
@@ -165,7 +165,7 @@ ul.index code{color:inherit}
 #index-defined-here .print-only{display:initial}
 }
 </style>
-<meta name="revision" content="74d1a415389ac75c5f746969920257921ab84c29">
+<meta name="revision" content="214830c7600ef999d166c677b1993b0eedfeac2a">
 <meta name="description" content="This specification defines an API to enable Web content to access
         presentation displays and use them for presenting Web content.">
 <style>
@@ -243,7 +243,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     "url",
     "webidl",
     "webrtc",
-    "websockets"
+    "websockets",
+    "infra"
   ],
   "localBiblio": {
     "DIAL": {
@@ -259,16 +260,16 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   },
   "crEnd": "2016-09-12",
   "implementationReportURI": "https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests",
-  "gitRevision": "74d1a415389ac75c5f746969920257921ab84c29",
-  "publishISODate": "2024-08-23T00:00:00.000Z",
-  "generatedSubtitle": "W3C Editor's Draft 23 August 2024"
+  "gitRevision": "214830c7600ef999d166c677b1993b0eedfeac2a",
+  "publishISODate": "2024-09-20T00:00:00.000Z",
+  "generatedSubtitle": "W3C Editor's Draft 20 September 2024"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED"></head>
-  <body class="h-entry" data-cite="WEBIDL dom fileapi secure-contexts html url webidl webrtc websockets"><div class="head">
+  <body class="h-entry" data-cite="WEBIDL dom fileapi secure-contexts html url webidl webrtc websockets infra"><div class="head">
     <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
   </a></p>
     <h1 id="title" class="title">Presentation API</h1> 
-    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2024-08-23">23 August 2024</time></p>
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2024-09-20">20 September 2024</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -670,8 +671,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         context of <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-1"><code>Promise</code></a> objects are used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-ecmascript" title="ECMAScript Language Specification">ECMASCRIPT</a></cite>].
       </p>
       <p>
-        The terms <dfn id="dfn-accept-language" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc9110.html#field.accept-language" id="ref-for-index-term-accept-language-1">Accept-Language</a></dfn>
-        and <dfn id="dfn-http-authentication" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc9110.html#authentication" id="ref-for-index-term-http-authentication-1">HTTP authentication</a></dfn> are
+        The terms <dfn id="dfn-accept-language" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc9110.html#field.accept-language" id="ref-for-index-term-accept-language-1">Accept-Language</a></dfn> and
+        <dfn id="dfn-http-authentication" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://httpwg.org/specs/rfc9110.html#authentication" id="ref-for-index-term-http-authentication-1">HTTP authentication</a></dfn> are
         used as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc9110" title="HTTP Semantics">RFC9110</a></cite>].
       </p>
       <p>
@@ -771,31 +772,31 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <a class="self-link" href="#example-1">Example<bdi> 1</bdi></a>
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- controller.html --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"presentBtn"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"display: none;"</span>&gt;</span>Present<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   <span class="hljs-comment">// The Present button is visible if at least one presentation display is available</span>
-  <span class="hljs-keyword">var</span> presentBtn = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"presentBtn"</span>);
+  <span class="hljs-keyword">var</span> presentBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">"presentBtn"</span>);
   <span class="hljs-comment">// It is also possible to use relative presentation URL e.g. "presentation.html"</span>
   <span class="hljs-keyword">var</span> presUrls = [<span class="hljs-string">"https://example.com/presentation.html"</span>,
                   <span class="hljs-string">"https://example.net/alternate.html"</span>];
   <span class="hljs-comment">// show or hide present button depending on display availability</span>
-  <span class="hljs-keyword">var</span> handleAvailabilityChange = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">available</span>) </span>{
-    presentBtn.style.display = available ? <span class="hljs-string">"inline"</span> : <span class="hljs-string">"none"</span>;
+  <span class="hljs-keyword">var</span> handleAvailabilityChange = <span class="hljs-keyword">function</span>(<span class="hljs-params">available</span>) {
+    presentBtn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = available ? <span class="hljs-string">"inline"</span> : <span class="hljs-string">"none"</span>;
   };
   <span class="hljs-comment">// Promise is resolved as soon as the presentation display availability is</span>
   <span class="hljs-comment">// known.</span>
-  <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> PresentationRequest(presUrls);
-  request.getAvailability().then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">availability</span>) </span>{
+  <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PresentationRequest</span>(presUrls);
+  request.<span class="hljs-title function_">getAvailability</span>().<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">availability</span>) {
     <span class="hljs-comment">// availability.value may be kept up-to-date by the controlling UA as long</span>
     <span class="hljs-comment">// as the availability object is alive. It is advised for the Web developers</span>
     <span class="hljs-comment">// to discard the object as soon as it's not needed.</span>
-    handleAvailabilityChange(availability.value);
-    availability.onchange = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ handleAvailabilityChange(<span class="hljs-built_in">this</span>.value); };
-  }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-title function_">handleAvailabilityChange</span>(availability.<span class="hljs-property">value</span>);
+    availability.<span class="hljs-property">onchange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) { <span class="hljs-title function_">handleAvailabilityChange</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span>); };
+  }).<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
     <span class="hljs-comment">// Availability monitoring is not supported by the platform, so discovery of</span>
     <span class="hljs-comment">// presentation displays will happen only after request.start() is called.</span>
     <span class="hljs-comment">// Pretend the devices are available for simplicity; or, one could implement</span>
     <span class="hljs-comment">// a third state for the button.</span>
-    handleAvailabilityChange(<span class="hljs-literal">true</span>);
+    <span class="hljs-title function_">handleAvailabilityChange</span>(<span class="hljs-literal">true</span>);
   });
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
       </div>
@@ -823,13 +824,13 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         <div class="marker">
     <a class="self-link" href="#example-2">Example<bdi> 2</bdi></a>
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- controller.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  presentBtn.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  presentBtn.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
     <span class="hljs-comment">// Start new presentation.</span>
-    request.start()
+    request.<span class="hljs-title function_">start</span>()
       <span class="hljs-comment">// The connection to the presentation will be passed to setConnection on</span>
       <span class="hljs-comment">// success.</span>
-      .then(setConnection);
+      .<span class="hljs-title function_">then</span>(setConnection);
       <span class="hljs-comment">// Otherwise, the user canceled the selection dialog or no screens were</span>
       <span class="hljs-comment">// found.</span>
   };
@@ -853,24 +854,24 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <a class="self-link" href="#example-3">Example<bdi> 3</bdi></a>
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- controller.html --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"reconnectBtn"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"display: none;"</span>&gt;</span>Reconnect<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  <span class="hljs-keyword">var</span> reconnect = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">var</span> reconnect = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
     <span class="hljs-comment">// read presId from localStorage if exists</span>
-    <span class="hljs-keyword">var</span> presId = <span class="hljs-built_in">localStorage</span>[<span class="hljs-string">"presId"</span>];
+    <span class="hljs-keyword">var</span> presId = <span class="hljs-variable language_">localStorage</span>[<span class="hljs-string">"presId"</span>];
     <span class="hljs-comment">// presId is mandatory when reconnecting to a presentation.</span>
     <span class="hljs-keyword">if</span> (!!presId) {
-      request.reconnect(presId)
+      request.<span class="hljs-title function_">reconnect</span>(presId)
         <span class="hljs-comment">// The new connection to the presentation will be passed to</span>
         <span class="hljs-comment">// setConnection on success.</span>
-        .then(setConnection);
+        .<span class="hljs-title function_">then</span>(setConnection);
         <span class="hljs-comment">// No connection found for presUrl and presId, or an error occurred.</span>
     }
   };
   <span class="hljs-comment">// On navigation of the controller, reconnect automatically.</span>
-  <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"DOMContentLoaded"</span>, reconnect);
+  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">"DOMContentLoaded"</span>, reconnect);
   <span class="hljs-comment">// Or allow manual reconnection.</span>
-  <span class="hljs-keyword">const</span> reconnectBtn = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#reconnectBtn"</span>);
-  reconnectBtn.onclick = reconnect;
+  <span class="hljs-keyword">const</span> reconnectBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">"#reconnectBtn"</span>);
+  reconnectBtn.<span class="hljs-property">onclick</span> = reconnect;
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
       </div>
       </section>
@@ -894,10 +895,10 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 <span class="hljs-comment">&lt;!-- Setting presentation.defaultRequest allows the page to specify the
      PresentationRequest to use when the controlling UA initiates a
      presentation. --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  navigator.presentation.defaultRequest = <span class="hljs-keyword">new</span> PresentationRequest(presUrls);
-  navigator.presentation.defaultRequest.onconnectionavailable = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">evt</span>) </span>{
-    setConnection(evt.connection);
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  navigator.<span class="hljs-property">presentation</span>.<span class="hljs-property">defaultRequest</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PresentationRequest</span>(presUrls);
+  navigator.<span class="hljs-property">presentation</span>.<span class="hljs-property">defaultRequest</span>.<span class="hljs-property">onconnectionavailable</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">evt</span>) {
+    <span class="hljs-title function_">setConnection</span>(evt.<span class="hljs-property">connection</span>);
   };
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
       </div>
@@ -926,68 +927,68 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- controller.html --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"disconnectBtn"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"display: none;"</span>&gt;</span>Disconnect<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"stopBtn"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"display: none;"</span>&gt;</span>Stop<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   <span class="hljs-keyword">let</span> connection;
 
   <span class="hljs-comment">// The Disconnect and Stop buttons are visible if there is a connected presentation</span>
-  <span class="hljs-keyword">const</span> stopBtn = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#stopBtn"</span>);
-  <span class="hljs-keyword">const</span> disconnectBtn = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#disconnectBtn"</span>);
+  <span class="hljs-keyword">const</span> stopBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">"#stopBtn"</span>);
+  <span class="hljs-keyword">const</span> disconnectBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">"#disconnectBtn"</span>);
 
-  stopBtn.onclick = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
-    connection &amp;&amp; connection.terminate();
+  stopBtn.<span class="hljs-property">onclick</span> = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
+    connection &amp;&amp; connection.<span class="hljs-title function_">terminate</span>();
   };
 
-  disconnectBtn.onclick = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
-    connection &amp;&amp; connection.close();
+  disconnectBtn.<span class="hljs-property">onclick</span> = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
+    connection &amp;&amp; connection.<span class="hljs-title function_">close</span>();
   };
 
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setConnection</span>(<span class="hljs-params">newConnection</span>) </span>{
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">setConnection</span>(<span class="hljs-params">newConnection</span>) {
     <span class="hljs-comment">// Disconnect from existing presentation, if not attempting to reconnect</span>
-    <span class="hljs-keyword">if</span> (connection &amp;&amp; connection != newConnection &amp;&amp; connection.state != <span class="hljs-string">'closed'</span>) {
-      connection.onclose = <span class="hljs-literal">undefined</span>;
-      connection.close();
+    <span class="hljs-keyword">if</span> (connection &amp;&amp; connection != newConnection &amp;&amp; connection.<span class="hljs-property">state</span> != <span class="hljs-string">'closed'</span>) {
+      connection.<span class="hljs-property">onclose</span> = <span class="hljs-literal">undefined</span>;
+      connection.<span class="hljs-title function_">close</span>();
     }
 
     <span class="hljs-comment">// Set the new connection and save the presentation ID</span>
     connection = newConnection;
-    <span class="hljs-built_in">localStorage</span>[<span class="hljs-string">"presId"</span>] = connection.id;
+    <span class="hljs-variable language_">localStorage</span>[<span class="hljs-string">"presId"</span>] = connection.<span class="hljs-property">id</span>;
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showConnectedUI</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">showConnectedUI</span>(<span class="hljs-params"></span>) {
       <span class="hljs-comment">// Allow the user to disconnect from or terminate the presentation</span>
-      stopBtn.style.display = <span class="hljs-string">"inline"</span>;
-      disconnectBtn.style.display = <span class="hljs-string">"inline"</span>;
-      reconnectBtn.style.display = <span class="hljs-string">"none"</span>;
+      stopBtn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-string">"inline"</span>;
+      disconnectBtn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-string">"inline"</span>;
+      reconnectBtn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-string">"none"</span>;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showDisconnectedUI</span>(<span class="hljs-params"></span>) </span>{
-      disconnectBtn.style.display = <span class="hljs-string">"none"</span>;
-      stopBtn.style.display = <span class="hljs-string">"none"</span>;
-      reconnectBtn.style.display = <span class="hljs-built_in">localStorage</span>[<span class="hljs-string">"presId"</span>] ? <span class="hljs-string">"inline"</span> : <span class="hljs-string">"none"</span>;
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">showDisconnectedUI</span>(<span class="hljs-params"></span>) {
+      disconnectBtn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-string">"none"</span>;
+      stopBtn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-string">"none"</span>;
+      reconnectBtn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-variable language_">localStorage</span>[<span class="hljs-string">"presId"</span>] ? <span class="hljs-string">"inline"</span> : <span class="hljs-string">"none"</span>;
     }
 
     <span class="hljs-comment">// Monitor the connection state</span>
-    connection.onconnect = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
-      showConnectedUI();
+    connection.<span class="hljs-property">onconnect</span> = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
+      <span class="hljs-title function_">showConnectedUI</span>();
 
       <span class="hljs-comment">// Register message handler</span>
-      connection.onmessage = <span class="hljs-function"><span class="hljs-params">message</span> =&gt;</span> {
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Received message: <span class="hljs-subst">${message.data}</span>`</span>);
+      connection.<span class="hljs-property">onmessage</span> = <span class="hljs-function"><span class="hljs-params">message</span> =&gt;</span> {
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Received message: <span class="hljs-subst">${message.data}</span>`</span>);
       };
 
       <span class="hljs-comment">// Send initial message to presentation page</span>
-      connection.send(<span class="hljs-string">"Say hello"</span>);
+      connection.<span class="hljs-title function_">send</span>(<span class="hljs-string">"Say hello"</span>);
     };
 
-    connection.onclose = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
+    connection.<span class="hljs-property">onclose</span> = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
       connection = <span class="hljs-literal">null</span>;
-      showDisconnectedUI();
+      <span class="hljs-title function_">showDisconnectedUI</span>();
     };
 
-    connection.onterminate = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
+    connection.<span class="hljs-property">onterminate</span> = <span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
       <span class="hljs-comment">// Remove presId from localStorage if exists</span>
-      <span class="hljs-keyword">delete</span> <span class="hljs-built_in">localStorage</span>[<span class="hljs-string">"presId"</span>];
+      <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">localStorage</span>[<span class="hljs-string">"presId"</span>];
       connection = <span class="hljs-literal">null</span>;
-      showDisconnectedUI();
+      <span class="hljs-title function_">showDisconnectedUI</span>();
     };
   };
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
@@ -1009,20 +1010,20 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         <div class="marker">
     <a class="self-link" href="#example-6">Example<bdi> 6</bdi></a>
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- presentation.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  <span class="hljs-keyword">var</span> addConnection = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">connection</span>) </span>{
-    connection.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">message</span>) </span>{
-      <span class="hljs-keyword">if</span> (message.data == <span class="hljs-string">"Say hello"</span>)
-        connection.send(<span class="hljs-string">"hello"</span>);
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">var</span> addConnection = <span class="hljs-keyword">function</span>(<span class="hljs-params">connection</span>) {
+    connection.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">message</span>) {
+      <span class="hljs-keyword">if</span> (message.<span class="hljs-property">data</span> == <span class="hljs-string">"Say hello"</span>)
+        connection.<span class="hljs-title function_">send</span>(<span class="hljs-string">"hello"</span>);
     };
   };
 
-  navigator.presentation.receiver.connectionList.then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">list</span>) </span>{
-    list.connections.map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">connection</span>) </span>{
-      addConnection(connection);
+  navigator.<span class="hljs-property">presentation</span>.<span class="hljs-property">receiver</span>.<span class="hljs-property">connectionList</span>.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">list</span>) {
+    list.<span class="hljs-property">connections</span>.<span class="hljs-title function_">map</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">connection</span>) {
+      <span class="hljs-title function_">addConnection</span>(connection);
     });
-    list.onconnectionavailable = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) </span>{
-      addConnection(evt.connection);
+    list.<span class="hljs-property">onconnectionavailable</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) {
+      <span class="hljs-title function_">addConnection</span>(evt.<span class="hljs-property">connection</span>);
     };
   });
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
@@ -1036,21 +1037,21 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         <div class="marker">
     <a class="self-link" href="#example-7">Example<bdi> 7</bdi></a>
   </div> <pre aria-busy="false"><code class="hljs xml"><span class="hljs-comment">&lt;!-- controller.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  connection.send(<span class="hljs-string">'{"string": "你好，世界!", "lang": "zh-CN"}'</span>);
-  connection.send(<span class="hljs-string">'{"string": "こんにちは、世界!", "lang": "ja"}'</span>);
-  connection.send(<span class="hljs-string">'{"string": "안녕하세요, 세계!", "lang": "ko"}'</span>);
-  connection.send(<span class="hljs-string">'{"string": "Hello, world!", "lang": "en-US"}'</span>);
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  connection.<span class="hljs-title function_">send</span>(<span class="hljs-string">'{"string": "你好，世界!", "lang": "zh-CN"}'</span>);
+  connection.<span class="hljs-title function_">send</span>(<span class="hljs-string">'{"string": "こんにちは、世界!", "lang": "ja"}'</span>);
+  connection.<span class="hljs-title function_">send</span>(<span class="hljs-string">'{"string": "안녕하세요, 세계!", "lang": "ko"}'</span>);
+  connection.<span class="hljs-title function_">send</span>(<span class="hljs-string">'{"string": "Hello, world!", "lang": "en-US"}'</span>);
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
 <span class="hljs-comment">&lt;!-- presentation.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  connection.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">message</span>) </span>{
-    <span class="hljs-keyword">var</span> messageObj = <span class="hljs-built_in">JSON</span>.parse(message.data);
-    <span class="hljs-keyword">var</span> spanElt = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"SPAN"</span>);
-    spanElt.lang = messageObj.lang;
-    spanElt.textContent = messageObj.string;
-    <span class="hljs-built_in">document</span>.body.appendChild(spanElt);
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  connection.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">message</span>) {
+    <span class="hljs-keyword">var</span> messageObj = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(message.<span class="hljs-property">data</span>);
+    <span class="hljs-keyword">var</span> spanElt = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">"SPAN"</span>);
+    spanElt.<span class="hljs-property">lang</span> = messageObj.<span class="hljs-property">lang</span>;
+    spanElt.<span class="hljs-property">textContent</span> = messageObj.<span class="hljs-property">string</span>;
+    <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(spanElt);
   };
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
       </div>
@@ -1072,18 +1073,18 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 <span class="hljs-comment">&lt;!-- The same controlling page can create and manage multiple presentations,
   by calling start() multiple times. --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"secondPresentBtn"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"display: none;"</span>&gt;</span>Present Again<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  <span class="hljs-keyword">var</span> secondPresentBtn = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"secondPresentBtn"</span>);
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">var</span> secondPresentBtn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">"secondPresentBtn"</span>);
   <span class="hljs-keyword">var</span> secondPresUrl = <span class="hljs-string">"https://example.com/second-presentation.html"</span>;
-  <span class="hljs-keyword">var</span> secondRequest = <span class="hljs-keyword">new</span> PresentationRequest(secondPresUrl);
+  <span class="hljs-keyword">var</span> secondRequest = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PresentationRequest</span>(secondPresUrl);
   <span class="hljs-comment">// For simplicity, the logic to handle screen availability for secondRequest</span>
   <span class="hljs-comment">// and update the status of secondPresentBtn is omitted.</span>
-  secondPresentBtn.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  secondPresentBtn.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
   <span class="hljs-comment">// Start new presentation, likely on a different screen than the original</span>
   <span class="hljs-comment">// request.</span>
-    secondRequest.start().then(setSecondConnection);
+    secondRequest.<span class="hljs-title function_">start</span>().<span class="hljs-title function_">then</span>(setSecondConnection);
   };
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setSecondConnection</span>(<span class="hljs-params">newConnection</span>) </span>{
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">setSecondConnection</span>(<span class="hljs-params">newConnection</span>) {
     <span class="hljs-comment">// Logic to handle messages to/from second-presentation.html.</span>
   };
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
@@ -1203,11 +1204,18 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         </p>
         <p>
           The <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#task-source" id="ref-for-index-term-task-source-1">task source</a> for the tasks mentioned in this specification
-          is the <var>presentation task source</var>.
+          is the <dfn id="dfn-presentation-task-source" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">presentation task source</dfn>.
         </p>
         <p>
-          Unless otherwise specified, the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-4">JavaScript realm</a> for script
-          objects constructed by algorithm steps is the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-5">current realm</a>.
+          When an algorithm <dfn data-lt="queue a Presentation API task|queues a Presentation API task" id="dfn-queue-a-presentation-api-task" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">queues
+          a Presentation API task</dfn> <var>T</var>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-2">user agent</a>
+          <em class="rfc2119">MUST</em> <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-index-term-queue-a-global-task-1">queue a global task</a> <var>T</var> on the <a href="#dfn-presentation-task-source" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-task-source-1">presentation
+          task source</a> using the <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-index-term-global-object-1">global object</a> of the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-4">current
+          realm</a>.
+        </p>
+        <p>
+          Unless otherwise specified, the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-5">JavaScript realm</a> for script
+          objects constructed by algorithm steps is the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-6">current realm</a>.
         </p>
       </section>
       <section id="interface-presentation"><div class="header-wrapper"><h3 id="x6-2-interface-presentation"><bdi class="secno">6.2 </bdi>
@@ -1389,7 +1397,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           
           <p>
             When the <code><dfn data-dfn-for="PresentationRequest" data-export="" data-dfn-type="method" id="dom-presentationrequest-start" data-idl="operation" data-title="start" data-type="Promise" data-lt="start()" data-local-lt="PresentationRequest.start|PresentationRequest.start()|start" tabindex="0" aria-haspopup="dialog">start</dfn></code> method is called, the
-            <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-2">user agent</a> <em class="rfc2119">MUST</em> run the following steps to <dfn id="dfn-select-a-presentation-display" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">select a
+            <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-3">user agent</a> <em class="rfc2119">MUST</em> run the following steps to <dfn id="dfn-select-a-presentation-display" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">select a
             presentation display</dfn>.
           </p>
           <dl>
@@ -1427,7 +1435,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <li>Return <var>P</var>, but continue running these steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-1">in
             parallel</a>.
             </li>
-            <li>If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-3">user agent</a> is not <a data-lt="monitor the list of available presentation displays" href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-1">monitoring
+            <li>If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-4">user agent</a> is not <a data-lt="monitor the list of available presentation displays" href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-1">monitoring
             the list of available presentation displays</a>, run the steps to
             <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-2">monitor the list of available presentation displays</a> <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-2">in
             parallel</a>.
@@ -1451,16 +1459,16 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               </ol>Then run the following steps:
               <ol>
                 <li>
-                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-2">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-1"><code>NotFoundError</code></a>
-                  exception.
+                  <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-1">Queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-2">reject</a>
+                  <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-1"><code>NotFoundError</code></a> exception.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
               </ol>
             </li>
-            <li>If the user <em>denies permission</em> to use a display, reject
-            <var>P</var> with an <a data-link-type="idl" data-lt="NotAllowedError" data-type="exception" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-index-term-notallowederror-exception-1"><code>NotAllowedError</code></a> exception, and abort all
-            remaining steps.
+            <li>If the user <em>denies permission</em> to use a display,
+            <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-2">queue a Presentation API task</a> to reject <var>P</var> with an
+            <a data-link-type="idl" data-lt="NotAllowedError" data-type="exception" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-index-term-notallowederror-exception-1"><code>NotAllowedError</code></a> exception, and abort all remaining steps.
             </li>
             <li>Otherwise, the user <em>grants permission</em> to use a
             display; let <var>D</var> be that display.
@@ -1520,6 +1528,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </dd>
           </dl>
           <ol>
+            <li>Run the following steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-3">in parallel</a>.
+            </li>
             <li>Let <var>presentationUrls</var> be the <a href="#dfn-presentation-request-url" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-request-url-4">presentation request
             URLs</a> of <var>presentationRequest</var>.
             </li>
@@ -1546,7 +1556,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </h4><a class="self-link" href="#starting-a-presentation-connection" aria-label="Permalink for Section 6.3.4"></a></div>
           
           <p>
-            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-4">user agent</a> is to <dfn id="dfn-start-a-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">start a presentation
+            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-5">user agent</a> is to <dfn id="dfn-start-a-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">start a presentation
             connection</dfn>, it <em class="rfc2119">MUST</em> run the following steps:
           </p>
           <dl>
@@ -1566,6 +1576,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </dd>
           </dl>
           <ol>
+            <li>
+              <a data-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-index-term-assert-1">Assert</a>: this is running <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-4">in parallel</a>.
+            </li>
             <li>Let <var>I</var> be a new <a href="#dfn-valid-presentation-identifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-valid-presentation-identifier-1">valid presentation identifier</a>
             unique among all <a href="#dfn-presentation-identifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-identifier-4">presentation identifiers</a> for known
             <a href="#dfn-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-11">presentation connections</a> in the <a href="#dfn-set-of-controlled-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-controlled-presentations-2">set of controlled
@@ -1591,13 +1604,14 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </li>
             <li>Add <var>S</var> to the <a href="#dfn-set-of-controlled-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-controlled-presentations-3">set of controlled presentations</a>.
             </li>
-            <li>If <var>P</var> is provided, <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-2">resolve</a> <var>P</var> with
-            <var>S</var>.
+            <li>If <var>P</var> is provided, <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-3">queue a Presentation API
+            task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-2">resolve</a> <var>P</var> with <var>S</var>.
             </li>
             <li>
-              <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-1">Queue a task</a> to <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-1">fire an event</a> named <a href="#dfn-connectionavailable" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-connectionavailable-3"><code>connectionavailable</code></a>, that uses the
-              <a href="#dom-presentationconnectionavailableevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-3"><code>PresentationConnectionAvailableEvent</code></a> interface, with the
-              <a href="#dom-presentationconnectionavailableevent-connection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-connection-1"><code>connection</code></a> attribute
+              <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-4">Queue a Presentation API task</a> to <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-1">fire an event</a> named
+              <a href="#dfn-connectionavailable" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-connectionavailable-3"><code>connectionavailable</code></a>,
+              that uses the <a href="#dom-presentationconnectionavailableevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-3"><code>PresentationConnectionAvailableEvent</code></a>
+              interface, with the <a href="#dom-presentationconnectionavailableevent-connection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-connection-1"><code>connection</code></a> attribute
               initialized to <var>S</var>, at <var>presentationRequest</var>.
               The event must not bubble and must not be cancelable.
             </li>
@@ -1631,7 +1645,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           
           <p>
             When the <dfn data-dfn-for="PresentationRequest" data-export="" data-dfn-type="method" id="dom-presentationrequest-reconnect" data-idl="operation" data-title="reconnect" data-type="Promise" data-lt="reconnect()|reconnect(presentationId)" data-local-lt="PresentationRequest.reconnect|PresentationRequest.reconnect()|reconnect" tabindex="0" aria-haspopup="dialog"><code>reconnect</code></dfn>
-            method is called, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-5">user agent</a> <em class="rfc2119">MUST</em> run the following
+            method is called, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-6">user agent</a> <em class="rfc2119">MUST</em> run the following
             steps to reconnect to a presentation:
           </p>
           <dl>
@@ -1656,8 +1670,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           <ol>
             <li>Let <var>P</var> be a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-13"><code>Promise</code></a>.
             </li>
-            <li>Return <var>P</var>, but continue running these steps in
-            parallel.
+            <li>Return <var>P</var>, but continue running these steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-5">in
+            parallel</a>.
             </li>
             <li>Search the <a href="#dfn-set-of-controlled-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-controlled-presentations-4">set of controlled presentations</a> for a
             <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-16"><code>PresentationConnection</code></a> that meets the following criteria:
@@ -1684,8 +1698,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
                 <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-18"><code>PresentationConnection</code></a>.
                 </li>
                 <li>
-                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-3">Resolve</a> <var>P</var> with
-                  <var>existingConnection</var>.
+                  <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-5">Queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-3">resolve</a>
+                  <var>P</var> with <var>existingConnection</var>.
                 </li>
                 <li>If the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-3">presentation connection state</a> of
                 <var>existingConnection</var> is <a href="#dom-presentationconnectionstate-connecting" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connecting-2"><code>connecting</code></a> or
@@ -1744,11 +1758,12 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
                 presentations</a>.
                 </li>
                 <li>
-                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-4">Resolve</a> <var>P</var> with <var>newConnection</var>.
+                  <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-6">Queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-4">resolve</a>
+                  <var>P</var> with <var>newConnection</var>.
                 </li>
                 <li>
-                  <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-2">Queue a task</a> to <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-2">fire an event</a> named
-                  <a href="#dfn-connectionavailable" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-connectionavailable-4"><code>connectionavailable</code></a>, that uses the
+                  <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-7">Queue a Presentation API task</a> to <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-2">fire an event</a>
+                  named <a href="#dfn-connectionavailable" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-connectionavailable-4"><code>connectionavailable</code></a>, that uses the
                   <a href="#dom-presentationconnectionavailableevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-4"><code>PresentationConnectionAvailableEvent</code></a> interface, with
                   the <a href="#dom-presentationconnectionavailableevent-connection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-connection-2"><code>connection</code></a>
                   attribute initialized to <var>newConnection</var>, at
@@ -1764,7 +1779,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               </ol>
             </li>
             <li>
-              <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-3">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-2"><code>NotFoundError</code></a> exception.
+              <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-8">Queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-3">reject</a>
+              <var>P</var> with a <a data-link-type="idl" data-lt="NotFoundError" data-type="exception" href="https://webidl.spec.whatwg.org/#notfounderror" id="ref-for-index-term-notfounderror-exception-2"><code>NotFoundError</code></a> exception.
             </li>
           </ol>
         </section>
@@ -1848,7 +1864,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </h4><a class="self-link" href="#the-set-of-presentation-availability-objects" aria-label="Permalink for Section 6.4.1"></a></div>
           
           <p>
-            The <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-6">user agent</a> <em class="rfc2119">MUST</em> keep track of the <dfn id="dfn-set-of-presentation-availability-objects" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">set of
+            The <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-7">user agent</a> <em class="rfc2119">MUST</em> keep track of the <dfn id="dfn-set-of-presentation-availability-objects" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">set of
             presentation availability objects</dfn> created by the
             <a href="#dom-presentationrequest-getavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-getavailability-3"><code>getAvailability</code></a> method.
             The <a href="#dfn-set-of-presentation-availability-objects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-availability-objects-1">set of presentation availability objects</a> is represented
@@ -1872,7 +1888,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </h4><a class="self-link" href="#the-list-of-available-presentation-displays" aria-label="Permalink for Section 6.4.2"></a></div>
           
           <p>
-            The <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-7">user agent</a> <em class="rfc2119">MUST</em> keep a <dfn id="dfn-list-of-available-presentation-displays" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">list of available
+            The <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-8">user agent</a> <em class="rfc2119">MUST</em> keep a <dfn id="dfn-list-of-available-presentation-displays" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">list of available
             presentation displays</dfn>. The <a href="#dfn-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-list-of-available-presentation-displays-4">list of available presentation
             displays</a> is represented by a list of tuples
             <var>(availabilityUrl, display)</var>. An entry in this list means
@@ -1886,11 +1902,11 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </p>
           <p>
             While the <a href="#dfn-set-of-presentation-availability-objects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-availability-objects-2">set of presentation availability objects</a> is not
-            empty, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-8">user agent</a> <em class="rfc2119">MAY</em> <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-6">monitor the list of available
+            empty, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-9">user agent</a> <em class="rfc2119">MAY</em> <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-6">monitor the list of available
             presentation displays</a> continuously, so that pages can use the
             <a href="#dom-presentationavailability-value" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationavailability-value-2"><code>value</code></a> property of a
             <a href="#dom-presentationavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationavailability-9"><code>PresentationAvailability</code></a> object to offer presentation only
-            when there are available displays. However, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-9">user agent</a>
+            when there are available displays. However, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-10">user agent</a>
             may not support continuous availability monitoring in the
             background; for example, because of platform or power consumption
             restrictions. In this case the <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-14"><code>Promise</code></a> returned by
@@ -1905,7 +1921,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             monitored), user agents <em class="rfc2119">SHOULD NOT</em> <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-8">monitor the list of available
             presentation displays</a> to satisfy the <a href="https://github.com/w3c/presentation-api/blob/gh-pages/uc-req.md#nf-req01-power-saving-friendly">
             power saving non-functional requirement</a>. To further save power,
-            the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-10">user agent</a> <em class="rfc2119">MAY</em> also keep track of whether a page holding
+            the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-11">user agent</a> <em class="rfc2119">MAY</em> also keep track of whether a page holding
             a <a href="#dom-presentationavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationavailability-10"><code>PresentationAvailability</code></a> object is in the foreground.
             Using this information, implementation specific discovery of
             <a href="#dfn-presentation-display" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-15">presentation displays</a> can be resumed or suspended.
@@ -1941,9 +1957,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               these steps.
             </li>
             <li>Otherwise, let <var>P</var> be a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-18"><code>Promise</code></a> constructed in
-            the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-6">JavaScript realm</a> of <var>presentationRequest</var>.
+            the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-7">JavaScript realm</a> of <var>presentationRequest</var>.
             </li>
-            <li>Return <var>P</var>, but continue running these steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-3">in
+            <li>Return <var>P</var>, but continue running these steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-6">in
             parallel</a>.
             </li>
             <li>If the user agent is unable to continuously <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-9">monitor the list
@@ -1952,8 +1968,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             then:
               <ol>
                 <li>
-                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-5">Reject</a> <var>P</var> with a <a data-link-type="idl" data-lt="NotSupportedError" data-type="exception" href="https://webidl.spec.whatwg.org/#notsupportederror" id="ref-for-index-term-notsupportederror-exception-3"><code>NotSupportedError</code></a>
-                  exception.
+                  <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-9">Queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-rejectpromise" id="ref-for-index-term-rejected-5">reject</a>
+                  <var>P</var> with a <a data-link-type="idl" data-lt="NotSupportedError" data-type="exception" href="https://webidl.spec.whatwg.org/#notsupportederror" id="ref-for-index-term-notsupportederror-exception-3"><code>NotSupportedError</code></a> exception.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
@@ -1963,8 +1979,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <var>presentationRequest</var> is not <code>null</code>, then:
               <ol>
                 <li>
-                  <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-5">Resolve</a> <var>P</var> with the request's
-                  <a href="#dfn-presentation-display-availability" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-availability-4">presentation display availability</a>.
+                  <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-10">Queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-5">resolve</a>
+                  <var>P</var> with the request's <a href="#dfn-presentation-display-availability" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-availability-4">presentation display
+                  availability</a>.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
@@ -1973,7 +1990,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <li>Set the <a href="#dfn-presentation-display-availability" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-availability-5">presentation display availability</a> for
             <var>presentationRequest</var> to a newly created
             <a href="#dom-presentationavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationavailability-11"><code>PresentationAvailability</code></a> object constructed in the
-            <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-7">JavaScript realm</a> of <var>presentationRequest</var>, and let
+            <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-8">JavaScript realm</a> of <var>presentationRequest</var>, and let
             <var>A</var> be that object.
             </li>
             <li>Create a tuple <em>(<var>A</var>,
@@ -1989,7 +2006,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               </div></div>
             </li>
             <li>
-              <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-6">Resolve</a> <var>P</var> with <var>A</var>.
+              <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-11">Queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-6">resolve</a>
+              <var>P</var> with <var>A</var>.
             </li>
           </ol>
         </section>
@@ -2000,11 +2018,14 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           <p>
             If the <a href="#dfn-set-of-presentation-availability-objects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-availability-objects-6">set of presentation availability objects</a> is
             non-empty, or there is a pending request to <a data-lt="start" href="#dom-presentationrequest-start" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-start-9">select a presentation
-            display</a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-11">user agent</a> <em class="rfc2119">MUST</em> <dfn id="dfn-monitor-the-list-of-available-presentation-displays" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">monitor the list of
+            display</a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-12">user agent</a> <em class="rfc2119">MUST</em> <dfn id="dfn-monitor-the-list-of-available-presentation-displays" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">monitor the list of
             available presentation displays</dfn> by running the following
             steps:
           </p>
           <ol>
+            <li>
+              <a data-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-index-term-assert-2">Assert</a>: this is running <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-7">in parallel</a>.
+            </li>
             <li>Let <var>availabilitySet</var> be a shallow copy of the <a href="#dfn-set-of-presentation-availability-objects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-availability-objects-7">set
             of presentation availability objects</a>.
             </li>
@@ -2027,7 +2048,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </li>
             <li>Let <var>newDisplays</var> be an empty list.
             </li>
-            <li>If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-12">user agent</a> is unable to retrieve <a href="#dfn-presentation-display" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-17">presentation
+            <li>If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-13">user agent</a> is unable to retrieve <a href="#dfn-presentation-display" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-17">presentation
             displays</a> (e.g., because the user has disabled this capability),
             then skip the following step.
             </li>
@@ -2071,8 +2092,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
                 <var>newAvailability</var> and skip the following step.
                 </li>
                 <li>If <var>previousAvailability</var> is not equal to
-                <var>newAvailability</var>, then <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-3">queue a task</a> to run the
-                following steps:
+                <var>newAvailability</var>, then <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-12">queue a Presentation API
+                task</a> to run the following steps:
                   <ol>
                     <li>Set <var>A</var>'s <a href="#dom-presentationavailability-value" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationavailability-value-6"><code>value</code></a> property to
                     <var>newAvailability</var>.
@@ -2092,7 +2113,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </div></div>
           <p>
             When a <a href="#dfn-presentation-display-availability" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-display-availability-7">presentation display availability</a> object is eligible
-            for garbage collection, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-13">user agent</a> <em class="rfc2119">SHOULD</em> run the
+            for garbage collection, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-14">user agent</a> <em class="rfc2119">SHOULD</em> run the
             following steps:
           </p>
           <ol>
@@ -2163,7 +2184,7 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
           </p>
           <p>
             When the <a href="#dom-presentationconnectionavailableevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-8"><code>PresentationConnectionAvailableEvent</code></a> constructor is
-            called, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-14">user agent</a> <em class="rfc2119">MUST</em> construct a new
+            called, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-15">user agent</a> <em class="rfc2119">MUST</em> construct a new
             <a href="#dom-presentationconnectionavailableevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-9"><code>PresentationConnectionAvailableEvent</code></a> object with its
             <a href="#dom-presentationconnectionavailableevent-connection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-connection-6"><code>connection</code></a> attribute set
             to the <dfn data-dfn-for="PresentationConnectionAvailableEventInit" data-export="" data-dfn-type="dict-member" id="dom-presentationconnectionavailableeventinit-connection" data-idl="field" data-title="connection" data-type="PresentationConnection" tabindex="0" aria-haspopup="dialog"><code>connection</code></dfn> member
@@ -2251,7 +2272,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </div></div>
           <p>
             When the <dfn data-export="" data-dfn-type="method" id="dom-presentationconnection-close" data-idl="operation" data-title="close" data-dfn-for="PresentationConnection" data-type="undefined" data-lt="close()" data-local-lt="PresentationConnection.close|PresentationConnection.close()|close" tabindex="0" aria-haspopup="dialog"><code>close</code></dfn> method is called on a
-            <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-32"><code>PresentationConnection</code></a> <var>S</var>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-15">user agent</a>
+            <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-32"><code>PresentationConnection</code></a> <var>S</var>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-16">user agent</a>
             <em class="rfc2119">MUST</em> <a href="#dfn-start-closing-the-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-start-closing-the-presentation-connection-1">start closing the presentation connection</a> <var>S</var>
             with <a href="#dom-presentationconnectionclosereason-closed" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionclosereason-closed-1"><code>closed</code></a> as
             <var>closeReason</var> and an empty message as
@@ -2260,14 +2281,14 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           <p>
             When the <dfn data-export="" data-dfn-type="method" id="dom-presentationconnection-terminate" data-idl="operation" data-title="terminate" data-dfn-for="PresentationConnection" data-type="undefined" data-lt="terminate()" data-local-lt="PresentationConnection.terminate|PresentationConnection.terminate()|terminate" tabindex="0" aria-haspopup="dialog"><code>terminate</code></dfn> method is called on a
             <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-33"><code>PresentationConnection</code></a> <var>S</var> in a <a href="#dfn-controlling-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-browsing-context-22">controlling
-            browsing context</a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-16">user agent</a> <em class="rfc2119">MUST</em> run the algorithm
+            browsing context</a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-17">user agent</a> <em class="rfc2119">MUST</em> run the algorithm
             to <a href="#dfn-terminate-algorithm-controlling" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-terminate-algorithm-controlling-1">terminate a presentation in a controlling browsing
             context</a> using <var>S</var>.
           </p>
           <p>
             When the <a href="#dom-presentationconnection-terminate" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-terminate-2"><code>terminate</code></a>
             method is called on a <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-34"><code>PresentationConnection</code></a> <var>S</var> in
-            a <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-22">receiving browsing context</a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-17">user agent</a> <em class="rfc2119">MUST</em> run
+            a <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-22">receiving browsing context</a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-18">user agent</a> <em class="rfc2119">MUST</em> run
             the algorithm to <a href="#dfn-terminate-algorithm-receiving" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-terminate-algorithm-receiving-1">terminate a presentation in a receiving
             browsing context</a> using <var>S</var>.
           </p>
@@ -2291,20 +2312,20 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           <p>
             When the <dfn data-lt="send()|send(message)|send!overload-1()|send!overload-1(data)|send!overload-2()|send!overload-2(data)|send!overload-3()|send!overload-3(data)" data-export="" data-dfn-type="method" id="dom-presentationconnection-send" data-idl="operation" data-title="send" data-dfn-for="PresentationConnection" data-type="undefined" data-local-lt="PresentationConnection.send!overload-3|PresentationConnection.send!overload-3()|send!overload-3" tabindex="0" aria-haspopup="dialog"><code>send</code></dfn> method
             is called on a <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-36"><code>PresentationConnection</code></a> <var>S</var>, the
-            <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-18">user agent</a> <em class="rfc2119">MUST</em> run the algorithm to <a href="#dfn-send-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-send-algorithm-1">send a message</a>
+            <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-19">user agent</a> <em class="rfc2119">MUST</em> run the algorithm to <a href="#dfn-send-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-send-algorithm-1">send a message</a>
             through <var>S</var>.
           </p>
           <p>
             When a <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-37"><code>PresentationConnection</code></a> object <var>S</var> is
             discarded (because the document owning it is navigating or is
             closed) while the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-7">presentation connection state</a> of
-            <var>S</var> is <a href="#dom-presentationconnectionstate-connecting" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connecting-6"><code>connecting</code></a> or <a href="#dom-presentationconnectionstate-connected" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connected-5"><code>connected</code></a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-19">user agent</a>
+            <var>S</var> is <a href="#dom-presentationconnectionstate-connecting" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connecting-6"><code>connecting</code></a> or <a href="#dom-presentationconnectionstate-connected" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connected-5"><code>connected</code></a>, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-20">user agent</a>
             <em class="rfc2119">MUST</em> <a href="#dfn-start-closing-the-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-start-closing-the-presentation-connection-2">start closing the presentation connection</a> <var>S</var>
             with <a href="#dom-presentationconnectionclosereason-wentaway" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionclosereason-wentaway-1"><code>wentaway</code></a> as
             <var>closeReason</var> and an empty <var>closeMessage</var>.
           </p>
           <p>
-            If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-20">user agent</a> receives a signal from the <a href="#dfn-destination-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-destination-browsing-context-2">destination
+            If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-21">user agent</a> receives a signal from the <a href="#dfn-destination-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-destination-browsing-context-2">destination
             browsing context</a> that a <a href="#dom-presentationconnection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-38"><code>PresentationConnection</code></a>
             <var>S</var> is to be closed, it <em class="rfc2119">MUST</em> <a href="#dfn-close-the-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-close-the-presentation-connection-2">close the presentation
             connection</a> <var>S</var> with <a href="#dom-presentationconnectionclosereason-closed" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionclosereason-closed-2"><code>closed</code></a> or <a href="#dom-presentationconnectionclosereason-wentaway" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionclosereason-wentaway-2"><code>wentaway</code></a> as
@@ -2316,7 +2337,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </h4><a class="self-link" href="#establishing-a-presentation-connection" aria-label="Permalink for Section 6.5.1"></a></div>
           
           <p>
-            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-21">user agent</a> is to <dfn id="dfn-establish-a-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">establish a presentation
+            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-22">user agent</a> is to <dfn id="dfn-establish-a-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">establish a presentation
             connection</dfn> using a <a href="#dfn-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-19">presentation connection</a>, it <em class="rfc2119">MUST</em>
             run the following steps:
           </p>
@@ -2330,6 +2351,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </dd>
           </dl>
           <ol>
+            <li>
+              <a data-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-index-term-assert-3">Assert</a>: this is running <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-8">in parallel</a>.
+            </li>
             <li>If the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-8">presentation connection state</a> of
             <var>presentationConnection</var> is not <a href="#dom-presentationconnectionstate-connecting" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connecting-7"><code>connecting</code></a>, then abort all
             remaining steps.
@@ -2339,8 +2363,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             identifier</a> of <var>presentationConnection</var> <em class="rfc2119">MUST</em> be sent
             with this request.
             </li>
-            <li>If connection completes successfully, <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-4">queue a task</a> to
-            run the following steps:
+            <li>If connection completes successfully, <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-13">queue a Presentation
+            API task</a> to run the following steps:
               <ol>
                 <li>Set the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-9">presentation connection state</a> of
                 <var>presentationConnection</var> to <a href="#dom-presentationconnectionstate-connected" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connected-6"><code>connected</code></a>.
@@ -2385,7 +2409,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <code>text</code> or <code>binary</code>.
           </p>
           <p>
-            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-22">user agent</a> is to <dfn data-lt="send-algorithm|send a message" id="dfn-send-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">send
+            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-23">user agent</a> is to <dfn data-lt="send-algorithm|send a message" id="dfn-send-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">send
             a message</dfn> through a <a href="#dfn-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-20">presentation connection</a>, it <em class="rfc2119">MUST</em>
             run the following steps:
           </p>
@@ -2464,7 +2488,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </h4><a class="self-link" href="#receiving-a-message-through-presentationconnection" aria-label="Permalink for Section 6.5.3"></a></div>
           
           <p>
-            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-23">user agent</a> has received a transmission from the
+            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-24">user agent</a> has received a transmission from the
             remote side consisting of <a href="#dfn-presentation-message-data" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-message-data-3">presentation message data</a> and
             <a href="#dfn-presentation-message-type" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-message-type-3">presentation message type</a>, it <em class="rfc2119">MUST</em> run the following steps
             to <dfn data-lt="receive-algorithm|receive a message" id="dfn-receive-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">receive a message</dfn> through
@@ -2488,6 +2512,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </dd>
           </dl>
           <ol data-link-for="PresentationConnection">
+            <li>
+              <a data-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-index-term-assert-4">Assert</a>: this is running <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-9">in parallel</a>.
+            </li>
             <li>If the <a href="#dom-presentationconnection-state" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnection-state-3"><code>state</code></a> property of
             <var>presentationConnection</var> is not <a href="#dom-presentationconnectionstate-connected" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connected-8"><code>connected</code></a>, abort these steps.
             </li>
@@ -2516,12 +2543,12 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               </ol>
             </li>
             <li>
-              <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-5">Queue a task</a> to <a data-link-type="dfn|abstract-op" data-lt="fire an event" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-7">fire</a> <var>event</var> at
-              <var>presentationConnection</var>.
+              <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-14">Queue a Presentation API task</a> to <a data-link-type="dfn|abstract-op" data-lt="fire an event" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-7">fire</a>
+              <var>event</var> at <var>presentationConnection</var>.
             </li>
           </ol>
           <p>
-            If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-24">user agent</a> encounters an unrecoverable error while
+            If the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-25">user agent</a> encounters an unrecoverable error while
             <a data-lt="receive-algorithm" href="#dfn-receive-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receive-algorithm-2">receiving a message</a> through
             <var>presentationConnection</var>, it <em class="rfc2119">MUST</em> abruptly <a href="#dfn-close-the-presentation-connection" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-close-the-presentation-connection-5">close the
             presentation connection</a> <var>presentationConnection</var> with
@@ -2581,7 +2608,7 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
           </p>
           <p>
             When the <a href="#dom-presentationconnectioncloseevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectioncloseevent-5"><code>PresentationConnectionCloseEvent</code></a> constructor is
-            called, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-25">user agent</a> <em class="rfc2119">MUST</em> construct a new
+            called, the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-26">user agent</a> <em class="rfc2119">MUST</em> construct a new
             <a href="#dom-presentationconnectioncloseevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectioncloseevent-6"><code>PresentationConnectionCloseEvent</code></a> object, with its
             <a href="#dom-presentationconnectioncloseevent-reason" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectioncloseevent-reason-3"><code>reason</code></a>
             attribute set to the <dfn data-dfn-for="PresentationConnectionCloseEventInit" data-export="" data-dfn-type="dict-member" id="dom-presentationconnectioncloseeventinit-reason" data-idl="field" data-title="reason" data-type="PresentationConnectionCloseReason" tabindex="0" aria-haspopup="dialog"><code>reason</code></dfn> member of the
@@ -2597,7 +2624,7 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
           </h4><a class="self-link" href="#closing-a-presentationconnection" aria-label="Permalink for Section 6.5.5"></a></div>
           
           <p>
-            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-26">user agent</a> is to <dfn data-lt="start closing the presentation connection|closing procedure|start closing a presentation connection" id="dfn-start-closing-the-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">start
+            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-27">user agent</a> is to <dfn data-lt="start closing the presentation connection|closing procedure|start closing a presentation connection" id="dfn-start-closing-the-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">start
             closing a presentation connection</dfn>, it <em class="rfc2119">MUST</em> do the following:
           </p>
           <dl>
@@ -2640,7 +2667,7 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
             </li>
           </ol>
           <p>
-            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-27">user agent</a> is to <dfn data-lt="close the presentation connection|close a presentation connection" id="dfn-close-the-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">close a presentation
+            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-28">user agent</a> is to <dfn data-lt="close the presentation connection|close a presentation connection" id="dfn-close-the-presentation-connection" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">close a presentation
             connection</dfn>, it <em class="rfc2119">MUST</em> do the following:
           </p>
           <dl>
@@ -2668,7 +2695,7 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
             <var>presentationConnection</var>, then abort the remaining steps.
             </li>
             <li>
-              <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-6">Queue a task</a> to run the following steps:
+              <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-15">Queue a Presentation API task</a> to run the following steps:
               <ol>
                 <li>If the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-12">presentation connection state</a> of
                 <var>presentationConnection</var> is not <a href="#dom-presentationconnectionstate-connecting" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connecting-9"><code>connecting</code></a>,
@@ -2729,7 +2756,9 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
                 <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-15">presentation connection state</a> of <var>known
                 connection</var> is <a href="#dom-presentationconnectionstate-connected" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connected-12"><code>connected</code></a> or
                   <a href="#dom-presentationconnectionstate-connecting" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connecting-11"><code>connecting</code></a>,
-                  then <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-7">queue a task</a> to run the following steps:
+                  then <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-index-term-queue-a-global-task-2">queue a global task</a> on the <a href="#dfn-presentation-task-source" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-task-source-2">presentation task
+                  source</a> given <var>known connection</var>'s <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-index-term-relevant-global-object-1">relevant
+                  global object</a> to run the following steps:
                   <ol>
                     <li>Set the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-16">presentation connection state</a> of
                     <var>known connection</var> to <a href="#dom-presentationconnectionstate-terminated" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-terminated-4"><code>terminated</code></a>.
@@ -2742,9 +2771,9 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
               </ol>
             </li>
             <li>
-              <dfn id="dfn-send-a-termination-request" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">Send a termination request</dfn> for the presentation to its
-              <a href="#dfn-receiving-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-user-agent-9">receiving user agent</a> using an implementation specific
-              mechanism.
+              <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-10">In parallel</a>, <dfn id="dfn-send-a-termination-request" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">send a termination request</dfn> for the
+              presentation to its <a href="#dfn-receiving-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-user-agent-9">receiving user agent</a> using an
+              implementation specific mechanism.
             </li>
           </ol>
         </section>
@@ -2806,10 +2835,10 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
             the user interface and discard it.
             </li>
             <li>For each <var>connection</var> in
-            <var>connectedControllers</var>, <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-8">queue a task</a> to send a
-            termination confirmation for <var>P</var> using an implementation
-            specific mechanism to the <a href="#dfn-controlling-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-user-agent-22">controlling user agent</a> that owns
-            the <a href="#dfn-destination-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-destination-browsing-context-5">destination browsing context</a> for <var>connection</var>.
+            <var>connectedControllers</var>, send a termination confirmation
+            for <var>P</var> using an implementation specific mechanism to the
+            <a href="#dfn-controlling-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-user-agent-22">controlling user agent</a> that owns the <a href="#dfn-destination-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-destination-browsing-context-5">destination browsing
+            context</a> for <var>connection</var>.
               <div class="note" role="note" id="issue-container-generatedID-15"><div role="heading" class="note-title marker" id="h-note-15" aria-level="5"><span>Note</span></div><p class="">
                 Only one termination confirmation needs to be sent per
                 <a href="#dfn-controlling-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-user-agent-23">controlling user agent</a>.
@@ -2829,8 +2858,10 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
           </p>
           <ol>
             <li>For each <var>connection</var> in the <a href="#dfn-set-of-controlled-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-controlled-presentations-8">set of controlled
-            presentations</a> that was connected to <var>P</var>, <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-9">queue a
-            task</a> to run the following steps:
+            presentations</a> that was connected to <var>P</var>, <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-index-term-queue-a-global-task-3">queue a
+            global task</a> on the <a href="#dfn-presentation-task-source" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-task-source-3">presentation task source</a> given <var>
+              connection</var>'s <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-index-term-relevant-global-object-2">relevant global object</a> to run the
+              following steps:
               <ol>
                 <li>If the <a href="#dfn-presentation-connection-state" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-connection-state-19">presentation connection state</a> of
                 <var>connection</var> is not <a href="#dom-presentationconnectionstate-connected" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionstate-connected-14"><code>connected</code></a> or
@@ -2930,7 +2961,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           and abort all remaining steps.
           </li>
           <li>Otherwise, let the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-4">presentation controllers promise</a> be a
-          new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-20"><code>Promise</code></a> constructed in the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-8">JavaScript realm</a> of this
+          new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-20"><code>Promise</code></a> constructed in the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-9">JavaScript realm</a> of this
           <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-8"><code>PresentationReceiver</code></a> object.
           </li>
           <li>Return the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-5">presentation controllers promise</a>.
@@ -2945,7 +2976,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           </h4><a class="self-link" href="#creating-a-receiving-browsing-context" aria-label="Permalink for Section 6.6.1"></a></div>
           
           <p>
-            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-28">user agent</a> is to <dfn id="dfn-create-a-receiving-browsing-context" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">create a receiving browsing
+            When the <a href="#dfn-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-user-agent-29">user agent</a> is to <dfn id="dfn-create-a-receiving-browsing-context" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">create a receiving browsing
             context</dfn>, it <em class="rfc2119">MUST</em> run the following steps:
           </p>
           <dl>
@@ -3138,6 +3169,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             </dd>
           </dl>
           <ol>
+            <li>
+              <a data-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-index-term-assert-5">Assert</a>: this is running <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-11">in parallel</a>.
+            </li>
             <li>If <var>presentationId</var> and <var>I</var> are not equal,
             refuse the connection and abort all remaining steps.
             </li>
@@ -3163,33 +3197,33 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
             <li>Add <var>S</var> to the <a href="#dfn-set-of-presentation-controllers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-controllers-7">set of presentation controllers</a>.
             </li>
             <li>If the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-8">presentation controllers monitor</a> is
-            <code>null</code>, run the following steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-4">in parallel</a>.
+            <code>null</code>, run the following steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-12">in parallel</a>.
               <ol>
                 <li>Let the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-9">presentation controllers monitor</a> be a new
                 <a href="#dom-presentationconnectionlist" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionlist-5"><code>PresentationConnectionList</code></a> constructed in the
-                <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-9">JavaScript realm</a> of the <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-9"><code>PresentationReceiver</code></a>
+                <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-10">JavaScript realm</a> of the <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-9"><code>PresentationReceiver</code></a>
                 object of the <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-40">receiving browsing context</a>.
                 </li>
                 <li>Populate the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-10">presentation controllers monitor</a> with
                 the <a href="#dfn-set-of-presentation-controllers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-controllers-8">set of presentation controllers</a>.
                 </li>
                 <li>If the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-7">presentation controllers promise</a> is not
-                <code>null</code>, <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-8">resolve</a> the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-8">presentation
-                controllers promise</a> with the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-11">presentation controllers
-                monitor</a>.
+                <code>null</code>, <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-16">queue a Presentation API task</a> to <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-promise-resolve-functions" id="ref-for-index-term-resolved-8">
+                  resolve</a> the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-8">presentation controllers promise</a> with
+                  the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-11">presentation controllers monitor</a>.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
               </ol>
             </li>
-            <li>Otherwise, run the following steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-5">in parallel</a>.
+            <li>Otherwise, run the following steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-13">in parallel</a>.
               <ol>
                 <li>Populate the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-12">presentation controllers monitor</a> with
                 the <a href="#dfn-set-of-presentation-controllers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-set-of-presentation-controllers-9">set of presentation controllers</a>.
                 </li>
                 <li>
-                  <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-index-term-queue-a-task-10">Queue a task</a> to <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-11">fire an event</a> named
-                  <a href="#dfn-connectionavailable" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-connectionavailable-7"><code>connectionavailable</code></a>, that
+                  <a href="#dfn-queue-a-presentation-api-task" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-queue-a-presentation-api-task-17">Queue a Presentation API task</a> to <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-index-term-fire-an-event-11">fire an event</a>
+                  named <a href="#dfn-connectionavailable" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-connectionavailable-7"><code>connectionavailable</code></a>, that
                   uses the <a href="#dom-presentationconnectionavailableevent" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-10"><code>PresentationConnectionAvailableEvent</code></a>
                   interface, with the <a href="#dom-presentationconnectionavailableevent-connection" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationconnectionavailableevent-connection-7"><code>connection</code></a>
                   attribute initialized to <var>S</var>, at the <a href="#dfn-presentation-controllers-monitor" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-monitor-13">presentation
@@ -3660,6 +3694,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§6.5.2</span></li><li>
       <a class="index-term" href="#dfn-presentation-request-url">presentation request URLs</a> 
     <span class="print-only">§6.3</span></li><li>
+      <a class="index-term" href="#dfn-presentation-task-source">presentation task source</a> 
+    <span class="print-only">§6.1</span></li><li>
       <a class="index-term" href="#dfn-presentation-url">presentation URL</a> 
     <span class="print-only">§6.1</span></li><li>
       <a class="index-term" href="#dom-presentationavailability"><code>PresentationAvailability</code></a> interface
@@ -3684,6 +3720,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§6.6</span></li><li>
       <a class="index-term" href="#dom-presentationrequest"><code>PresentationRequest</code></a> interface
     <span class="print-only">§6.3</span></li><li>
+      <a class="index-term" href="#dfn-queue-a-presentation-api-task">queues a Presentation API task</a> 
+    <span class="print-only">§6.1</span></li><li>
     reason
     <ul>
       <li>
@@ -3711,7 +3749,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="print-only">§6.5</span></li><li>
       <a class="index-term" href="#dfn-send-algorithm">send a message</a> 
     <span class="print-only">§6.5.2</span></li><li>
-      <a class="index-term" href="#dfn-send-a-termination-request">Send a termination request</a> 
+      <a class="index-term" href="#dfn-send-a-termination-request">send a termination request</a> 
     <span class="print-only">§6.5.6</span></li><li>
       <a class="index-term" href="#dfn-session-history">session history</a> 
     <span class="print-only">§4.</span></li><li>
@@ -3819,6 +3857,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
   </li><li>
     <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="index-term-eventhandler" tabindex="0" aria-haspopup="dialog"><code>EventHandler</code></span>
   </li><li>
+    <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="index-term-global-object" tabindex="0" aria-haspopup="dialog">global object</span>
+  </li><li>
     <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="index-term-in-parallel" tabindex="0" aria-haspopup="dialog">in parallel</span>
   </li><li>
     <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="index-term-localstorage-attribute-for-windowlocalstorage" tabindex="0" aria-haspopup="dialog"><code>localStorage</code> attribute (for <code>WindowLocalStorage</code>)</span>
@@ -3829,7 +3869,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
   </li><li>
     <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="index-term-navigator-interface" tabindex="0" aria-haspopup="dialog"><code>Navigator</code> interface</span>
   </li><li>
-    <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="index-term-queue-a-task" tabindex="0" aria-haspopup="dialog">Queue a task</span>
+    <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="index-term-queue-a-global-task" tabindex="0" aria-haspopup="dialog">queue a global task</span>
+  </li><li>
+    <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="index-term-relevant-global-object" tabindex="0" aria-haspopup="dialog">relevant global object</span>
   </li><li>
     <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload" id="index-term-reload-for-location" tabindex="0" aria-haspopup="dialog"><code>reload()</code> (for <code>Location</code>)</span>
   </li><li>
@@ -3848,6 +3890,13 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="index-term-top-level-browsing-context" tabindex="0" aria-haspopup="dialog">top-level browsing context</span>
   </li><li>
     <span class="index-term" data-href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="index-term-transient-activation" tabindex="0" aria-haspopup="dialog">transient activation</span>
+  </li>
+        </ul>
+      </li><li>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-infra">INFRA</a></cite>] defines the following:
+        <ul>
+          <li>
+    <span class="index-term" data-href="https://infra.spec.whatwg.org/#assert" id="index-term-assert" tabindex="0" aria-haspopup="dialog">Assert</span>
   </li>
         </ul>
       </li><li>
@@ -4239,6 +4288,8 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Anne van Kesteren; Domenic Denicola; Ian Hickson; Philip Jägenstedt; Simon Pieters.  WHATWG. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
     </dd><dt id="bib-indexeddb">[INDEXEDDB]</dt><dd>
       <a href="https://www.w3.org/TR/IndexedDB/"><cite>Indexed Database API</cite></a>. Nikunj Mehta; Jonas Sicking; Eliot Graff; Andrei Popescu; Jeremy Orlow; Joshua Bell.  W3C. 8 January 2015. W3C Recommendation. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
+    </dd><dt id="bib-infra">[infra]</dt><dd>
+      <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Anne van Kesteren; Domenic Denicola.  WHATWG. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
     </dd><dt id="bib-permissions">[PERMISSIONS]</dt><dd>
       <a href="https://www.w3.org/TR/permissions/"><cite>Permissions</cite></a>. Marcos Caceres; Mike Taylor.  W3C. 19 March 2024. W3C Working Draft. URL: <a href="https://www.w3.org/TR/permissions/">https://www.w3.org/TR/permissions/</a>
     </dd><dt id="bib-rfc2119">[RFC2119]</dt><dd>
@@ -4314,33 +4365,35 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <li>
       <a href="#ref-for-dfn-user-agent-1" title="§ 3.1 Conformance classes">§ 3.1 Conformance classes</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-2" title="§ 6.3.2 Selecting a presentation display">§ 6.3.2 Selecting a presentation display</a> <a href="#ref-for-dfn-user-agent-3" title="Reference 2">(2)</a> 
+      <a href="#ref-for-dfn-user-agent-2" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-4" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
+      <a href="#ref-for-dfn-user-agent-3" title="§ 6.3.2 Selecting a presentation display">§ 6.3.2 Selecting a presentation display</a> <a href="#ref-for-dfn-user-agent-4" title="Reference 2">(2)</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-5" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> 
+      <a href="#ref-for-dfn-user-agent-5" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-6" title="§ 6.4.1 The set of presentation availability objects">§ 6.4.1 The set of presentation availability objects</a> 
+      <a href="#ref-for-dfn-user-agent-6" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-7" title="§ 6.4.2 The list of available presentation displays">§ 6.4.2 The list of available presentation displays</a> <a href="#ref-for-dfn-user-agent-8" title="Reference 2">(2)</a> <a href="#ref-for-dfn-user-agent-9" title="Reference 3">(3)</a> <a href="#ref-for-dfn-user-agent-10" title="Reference 4">(4)</a> 
+      <a href="#ref-for-dfn-user-agent-7" title="§ 6.4.1 The set of presentation availability objects">§ 6.4.1 The set of presentation availability objects</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-11" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> <a href="#ref-for-dfn-user-agent-12" title="Reference 2">(2)</a> <a href="#ref-for-dfn-user-agent-13" title="Reference 3">(3)</a> 
+      <a href="#ref-for-dfn-user-agent-8" title="§ 6.4.2 The list of available presentation displays">§ 6.4.2 The list of available presentation displays</a> <a href="#ref-for-dfn-user-agent-9" title="Reference 2">(2)</a> <a href="#ref-for-dfn-user-agent-10" title="Reference 3">(3)</a> <a href="#ref-for-dfn-user-agent-11" title="Reference 4">(4)</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-14" title="§ 6.4.5 Interface PresentationConnectionAvailableEvent">§ 6.4.5 Interface PresentationConnectionAvailableEvent</a> 
+      <a href="#ref-for-dfn-user-agent-12" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> <a href="#ref-for-dfn-user-agent-13" title="Reference 2">(2)</a> <a href="#ref-for-dfn-user-agent-14" title="Reference 3">(3)</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-15" title="§ 6.5 Interface PresentationConnection">§ 6.5 Interface PresentationConnection</a> <a href="#ref-for-dfn-user-agent-16" title="Reference 2">(2)</a> <a href="#ref-for-dfn-user-agent-17" title="Reference 3">(3)</a> <a href="#ref-for-dfn-user-agent-18" title="Reference 4">(4)</a> <a href="#ref-for-dfn-user-agent-19" title="Reference 5">(5)</a> <a href="#ref-for-dfn-user-agent-20" title="Reference 6">(6)</a> 
+      <a href="#ref-for-dfn-user-agent-15" title="§ 6.4.5 Interface PresentationConnectionAvailableEvent">§ 6.4.5 Interface PresentationConnectionAvailableEvent</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-21" title="§ 6.5.1 Establishing a presentation connection">§ 6.5.1 Establishing a presentation connection</a> 
+      <a href="#ref-for-dfn-user-agent-16" title="§ 6.5 Interface PresentationConnection">§ 6.5 Interface PresentationConnection</a> <a href="#ref-for-dfn-user-agent-17" title="Reference 2">(2)</a> <a href="#ref-for-dfn-user-agent-18" title="Reference 3">(3)</a> <a href="#ref-for-dfn-user-agent-19" title="Reference 4">(4)</a> <a href="#ref-for-dfn-user-agent-20" title="Reference 5">(5)</a> <a href="#ref-for-dfn-user-agent-21" title="Reference 6">(6)</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-22" title="§ 6.5.2 Sending a message through PresentationConnection">§ 6.5.2 Sending a message through PresentationConnection</a> 
+      <a href="#ref-for-dfn-user-agent-22" title="§ 6.5.1 Establishing a presentation connection">§ 6.5.1 Establishing a presentation connection</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-23" title="§ 6.5.3 Receiving a message through PresentationConnection">§ 6.5.3 Receiving a message through PresentationConnection</a> <a href="#ref-for-dfn-user-agent-24" title="Reference 2">(2)</a> 
+      <a href="#ref-for-dfn-user-agent-23" title="§ 6.5.2 Sending a message through PresentationConnection">§ 6.5.2 Sending a message through PresentationConnection</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-25" title="§ 6.5.4 Interface PresentationConnectionCloseEvent">§ 6.5.4 Interface PresentationConnectionCloseEvent</a> 
+      <a href="#ref-for-dfn-user-agent-24" title="§ 6.5.3 Receiving a message through PresentationConnection">§ 6.5.3 Receiving a message through PresentationConnection</a> <a href="#ref-for-dfn-user-agent-25" title="Reference 2">(2)</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-26" title="§ 6.5.5 Closing a PresentationConnection">§ 6.5.5 Closing a PresentationConnection</a> <a href="#ref-for-dfn-user-agent-27" title="Reference 2">(2)</a> 
+      <a href="#ref-for-dfn-user-agent-26" title="§ 6.5.4 Interface PresentationConnectionCloseEvent">§ 6.5.4 Interface PresentationConnectionCloseEvent</a> 
     </li><li>
-      <a href="#ref-for-dfn-user-agent-28" title="§ 6.6.1 Creating a receiving browsing context">§ 6.6.1 Creating a receiving browsing context</a> 
+      <a href="#ref-for-dfn-user-agent-27" title="§ 6.5.5 Closing a PresentationConnection">§ 6.5.5 Closing a PresentationConnection</a> <a href="#ref-for-dfn-user-agent-28" title="Reference 2">(2)</a> 
+    </li><li>
+      <a href="#ref-for-dfn-user-agent-29" title="§ 6.6.1 Creating a receiving browsing context">§ 6.6.1 Creating a receiving browsing context</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-controlling-user-agent" aria-label="Links in this document to definition: Controlling user agent">
@@ -4929,6 +4982,50 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="#ref-for-dfn-default-presentation-request-1" title="§ 6.2.1 Controlling user agent">§ 6.2.1 Controlling user agent</a> <a href="#ref-for-dfn-default-presentation-request-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-default-presentation-request-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-default-presentation-request-4" title="Reference 4">(4)</a> <a href="#ref-for-dfn-default-presentation-request-5" title="Reference 5">(5)</a> 
     </li><li>
       <a href="#ref-for-dfn-default-presentation-request-6" title="§ 6.3.3 Starting a presentation from a default presentation request">§ 6.3.3 Starting a presentation from a default presentation request</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-presentation-task-source" aria-label="Links in this document to definition: presentation task source">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-presentation-task-source" aria-label="Permalink for definition: presentation task source. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-dfn-presentation-task-source-1" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> 
+    </li><li>
+      <a href="#ref-for-dfn-presentation-task-source-2" title="§ 6.5.6 Terminating a presentation in a controlling browsing context">§ 6.5.6 Terminating a presentation in a controlling browsing context</a> 
+    </li><li>
+      <a href="#ref-for-dfn-presentation-task-source-3" title="§ 6.5.8 Handling a termination confirmation in a controlling user agent">§ 6.5.8 Handling a termination confirmation in a controlling user agent</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-queue-a-presentation-api-task" aria-label="Links in this document to definition: queues a Presentation API task">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-queue-a-presentation-api-task" aria-label="Permalink for definition: queues a Presentation API task. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-1" title="§ 6.3.2 Selecting a presentation display">§ 6.3.2 Selecting a presentation display</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-2" title="Reference 2">(2)</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-3" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-4" title="Reference 2">(2)</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-5" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-6" title="Reference 2">(2)</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-7" title="Reference 3">(3)</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-8" title="Reference 4">(4)</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-9" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-10" title="Reference 2">(2)</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-11" title="Reference 3">(3)</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-12" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-13" title="§ 6.5.1 Establishing a presentation connection">§ 6.5.1 Establishing a presentation connection</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-14" title="§ 6.5.3 Receiving a message through PresentationConnection">§ 6.5.3 Receiving a message through PresentationConnection</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-15" title="§ 6.5.5 Closing a PresentationConnection">§ 6.5.5 Closing a PresentationConnection</a> 
+    </li><li>
+      <a href="#ref-for-dfn-queue-a-presentation-api-task-16" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> <a href="#ref-for-dfn-queue-a-presentation-api-task-17" title="Reference 2">(2)</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dom-presentation" aria-label="Links in this document to definition: Presentation">
@@ -6059,10 +6156,10 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="#ref-for-dfn-terminate-algorithm-controlling-1" title="§ 6.5 Interface PresentationConnection">§ 6.5 Interface PresentationConnection</a> 
     </li>
   </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-send-a-termination-request" aria-label="Links in this document to definition: Send a termination request">
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-send-a-termination-request" aria-label="Links in this document to definition: send a termination request">
       <span class="caret"></span>
       <div>
-        <a class="self-link" href="#dfn-send-a-termination-request" aria-label="Permalink for definition: Send a termination request. Activate to close this dialog.">Permalink</a>
+        <a class="self-link" href="#dfn-send-a-termination-request" aria-label="Permalink for definition: send a termination request. Activate to close this dialog.">Permalink</a>
          
       </div>
       <p><b>Referenced in:</b></p>
@@ -6396,13 +6493,13 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <li>
       <a href="#ref-for-index-term-javascript-realm-1" title="§ 4. Terminology">§ 4. Terminology</a> <a href="#ref-for-index-term-javascript-realm-2" title="Reference 2">(2)</a> 
     </li><li>
-      <a href="#ref-for-index-term-javascript-realm-3" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> <a href="#ref-for-index-term-javascript-realm-4" title="Reference 2">(2)</a> <a href="#ref-for-index-term-javascript-realm-5" title="Reference 3">(3)</a> 
+      <a href="#ref-for-index-term-javascript-realm-3" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> <a href="#ref-for-index-term-javascript-realm-4" title="Reference 2">(2)</a> <a href="#ref-for-index-term-javascript-realm-5" title="Reference 3">(3)</a> <a href="#ref-for-index-term-javascript-realm-6" title="Reference 4">(4)</a> 
     </li><li>
-      <a href="#ref-for-index-term-javascript-realm-6" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-index-term-javascript-realm-7" title="Reference 2">(2)</a> 
+      <a href="#ref-for-index-term-javascript-realm-7" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-index-term-javascript-realm-8" title="Reference 2">(2)</a> 
     </li><li>
-      <a href="#ref-for-index-term-javascript-realm-8" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> 
+      <a href="#ref-for-index-term-javascript-realm-9" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> 
     </li><li>
-      <a href="#ref-for-index-term-javascript-realm-9" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
+      <a href="#ref-for-index-term-javascript-realm-10" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-rejected" aria-label="Links in this document to definition: rejected">
@@ -6599,6 +6696,18 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="#ref-for-index-term-eventhandler-8" title="§ A. IDL Index">§ A. IDL Index</a> <a href="#ref-for-index-term-eventhandler-9" title="Reference 2">(2)</a> <a href="#ref-for-index-term-eventhandler-10" title="Reference 3">(3)</a> <a href="#ref-for-index-term-eventhandler-11" title="Reference 4">(4)</a> <a href="#ref-for-index-term-eventhandler-12" title="Reference 5">(5)</a> <a href="#ref-for-index-term-eventhandler-13" title="Reference 6">(6)</a> <a href="#ref-for-index-term-eventhandler-14" title="Reference 7">(7)</a> 
     </li>
   </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-global-object" aria-label="Links in this document to definition: global object">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" aria-label="Permalink for definition: global object. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-global-object-1" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> 
+    </li>
+  </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-in-parallel" aria-label="Links in this document to definition: in parallel">
       <span class="caret"></span>
       <div>
@@ -6610,9 +6719,23 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     <li>
       <a href="#ref-for-index-term-in-parallel-1" title="§ 6.3.2 Selecting a presentation display">§ 6.3.2 Selecting a presentation display</a> <a href="#ref-for-index-term-in-parallel-2" title="Reference 2">(2)</a> 
     </li><li>
-      <a href="#ref-for-index-term-in-parallel-3" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> 
+      <a href="#ref-for-index-term-in-parallel-3" title="§ 6.3.3 Starting a presentation from a default presentation request">§ 6.3.3 Starting a presentation from a default presentation request</a> 
     </li><li>
-      <a href="#ref-for-index-term-in-parallel-4" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> <a href="#ref-for-index-term-in-parallel-5" title="Reference 2">(2)</a> 
+      <a href="#ref-for-index-term-in-parallel-4" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
+    </li><li>
+      <a href="#ref-for-index-term-in-parallel-5" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> 
+    </li><li>
+      <a href="#ref-for-index-term-in-parallel-6" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> 
+    </li><li>
+      <a href="#ref-for-index-term-in-parallel-7" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> 
+    </li><li>
+      <a href="#ref-for-index-term-in-parallel-8" title="§ 6.5.1 Establishing a presentation connection">§ 6.5.1 Establishing a presentation connection</a> 
+    </li><li>
+      <a href="#ref-for-index-term-in-parallel-9" title="§ 6.5.3 Receiving a message through PresentationConnection">§ 6.5.3 Receiving a message through PresentationConnection</a> 
+    </li><li>
+      <a href="#ref-for-index-term-in-parallel-10" title="§ 6.5.6 Terminating a presentation in a controlling browsing context">§ 6.5.6 Terminating a presentation in a controlling browsing context</a> 
+    </li><li>
+      <a href="#ref-for-index-term-in-parallel-11" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> <a href="#ref-for-index-term-in-parallel-12" title="Reference 2">(2)</a> <a href="#ref-for-index-term-in-parallel-13" title="Reference 3">(3)</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-localstorage-attribute-for-windowlocalstorage" aria-label="Links in this document to definition: localStorage attribute (for WindowLocalStorage)">
@@ -6667,34 +6790,34 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <a href="#ref-for-index-term-navigator-interface-2" title="§ A. IDL Index">§ A. IDL Index</a> 
     </li>
   </ul>
-    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-queue-a-task" aria-label="Links in this document to definition: Queue a task">
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-queue-a-global-task" aria-label="Links in this document to definition: queue a global task">
       <span class="caret"></span>
       <div>
-        <a class="self-link" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" aria-label="Permalink for definition: Queue a task. Activate to close this dialog.">Permalink</a>
+        <a class="self-link" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" aria-label="Permalink for definition: queue a global task. Activate to close this dialog.">Permalink</a>
          
       </div>
       <p><b>Referenced in:</b></p>
       <ul>
     <li>
-      <a href="#ref-for-index-term-queue-a-task-1" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
+      <a href="#ref-for-index-term-queue-a-global-task-1" title="§ 6.1 Common idioms">§ 6.1 Common idioms</a> 
     </li><li>
-      <a href="#ref-for-index-term-queue-a-task-2" title="§ 6.3.5 Reconnecting to a presentation">§ 6.3.5 Reconnecting to a presentation</a> 
+      <a href="#ref-for-index-term-queue-a-global-task-2" title="§ 6.5.6 Terminating a presentation in a controlling browsing context">§ 6.5.6 Terminating a presentation in a controlling browsing context</a> 
     </li><li>
-      <a href="#ref-for-index-term-queue-a-task-3" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> 
+      <a href="#ref-for-index-term-queue-a-global-task-3" title="§ 6.5.8 Handling a termination confirmation in a controlling user agent">§ 6.5.8 Handling a termination confirmation in a controlling user agent</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-relevant-global-object" aria-label="Links in this document to definition: relevant global object">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" aria-label="Permalink for definition: relevant global object. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-relevant-global-object-1" title="§ 6.5.6 Terminating a presentation in a controlling browsing context">§ 6.5.6 Terminating a presentation in a controlling browsing context</a> 
     </li><li>
-      <a href="#ref-for-index-term-queue-a-task-4" title="§ 6.5.1 Establishing a presentation connection">§ 6.5.1 Establishing a presentation connection</a> 
-    </li><li>
-      <a href="#ref-for-index-term-queue-a-task-5" title="§ 6.5.3 Receiving a message through PresentationConnection">§ 6.5.3 Receiving a message through PresentationConnection</a> 
-    </li><li>
-      <a href="#ref-for-index-term-queue-a-task-6" title="§ 6.5.5 Closing a PresentationConnection">§ 6.5.5 Closing a PresentationConnection</a> 
-    </li><li>
-      <a href="#ref-for-index-term-queue-a-task-7" title="§ 6.5.6 Terminating a presentation in a controlling browsing context">§ 6.5.6 Terminating a presentation in a controlling browsing context</a> 
-    </li><li>
-      <a href="#ref-for-index-term-queue-a-task-8" title="§ 6.5.7 Terminating a presentation in a receiving browsing context">§ 6.5.7 Terminating a presentation in a receiving browsing context</a> 
-    </li><li>
-      <a href="#ref-for-index-term-queue-a-task-9" title="§ 6.5.8 Handling a termination confirmation in a controlling user agent">§ 6.5.8 Handling a termination confirmation in a controlling user agent</a> 
-    </li><li>
-      <a href="#ref-for-index-term-queue-a-task-10" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
+      <a href="#ref-for-index-term-relevant-global-object-2" title="§ 6.5.8 Handling a termination confirmation in a controlling user agent">§ 6.5.8 Handling a termination confirmation in a controlling user agent</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-reload-for-location" aria-label="Links in this document to definition: reload() (for Location)">
@@ -6807,6 +6930,26 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
       <ul>
     <li>
       <a href="#ref-for-index-term-transient-activation-1" title="§ 6.3.2 Selecting a presentation display">§ 6.3.2 Selecting a presentation display</a> 
+    </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-assert" aria-label="Links in this document to definition: Assert">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="https://infra.spec.whatwg.org/#assert" aria-label="Permalink for definition: Assert. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      <a href="#ref-for-index-term-assert-1" title="§ 6.3.4 Starting a presentation connection">§ 6.3.4 Starting a presentation connection</a> 
+    </li><li>
+      <a href="#ref-for-index-term-assert-2" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> 
+    </li><li>
+      <a href="#ref-for-index-term-assert-3" title="§ 6.5.1 Establishing a presentation connection">§ 6.5.1 Establishing a presentation connection</a> 
+    </li><li>
+      <a href="#ref-for-index-term-assert-4" title="§ 6.5.3 Receiving a message through PresentationConnection">§ 6.5.3 Receiving a message through PresentationConnection</a> 
+    </li><li>
+      <a href="#ref-for-index-term-assert-5" title="§ 6.7.1 Monitoring incoming presentation connections">§ 6.7.1 Monitoring incoming presentation connections</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-permission-descriptor-types-for-powerful-feature" aria-label="Links in this document to definition: permission descriptor types (for powerful feature)">
