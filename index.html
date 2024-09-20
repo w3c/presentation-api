@@ -49,7 +49,7 @@
         sotdAfterWGinfo: true,
         group: 'secondscreen',
         github: 'https://github.com/w3c/presentation-api',
-        xref: ['dom', 'fileapi', 'secure-contexts', 'html', 'url', 'webidl', 'webrtc', 'websockets'],
+        xref: ['dom', 'fileapi', 'secure-contexts', 'html', 'url', 'webidl', 'webrtc', 'websockets', 'infra'],
         localBiblio: {
           DIAL: {
             title: 'DIscovery And Launch Protocol Specification',
@@ -291,8 +291,9 @@
         context of {{Promise}} objects are used as defined in [[!ECMASCRIPT]].
       </p>
       <p>
-        The terms <dfn data-cite="rfc9110#field.accept-language">Accept-Language</dfn>
-        and <dfn data-cite="rfc9110#authentication">HTTP authentication</dfn> are
+        The terms <dfn data-cite=
+        "rfc9110#field.accept-language">Accept-Language</dfn> and
+        <dfn data-cite="rfc9110#authentication">HTTP authentication</dfn> are
         used as defined in [[!RFC9110]].
       </p>
       <p>
@@ -835,7 +836,14 @@
         </p>
         <p>
           The <a>task source</a> for the tasks mentioned in this specification
-          is the <var>presentation task source</var>.
+          is the <dfn>presentation task source</dfn>.
+        </p>
+        <p>
+          When an algorithm <dfn data-lt="queue a Presentation API task">queues
+          a Presentation API task</dfn> <var>T</var>, the <a>user agent</a>
+          MUST <a>queue a global task</a> <var>T</var> on the <a>presentation
+          task source</a> using the <a>global object</a> of the <a>current
+          realm</a>.
         </p>
         <p>
           Unless otherwise specified, the <a>JavaScript realm</a> for script
@@ -1104,16 +1112,16 @@
               </ol>Then run the following steps:
               <ol>
                 <li>
-                  <a>Reject</a> <var>P</var> with a {{NotFoundError}}
-                  exception.
+                  <a>Queue a Presentation API task</a> to <a>reject</a>
+                  <var>P</var> with a {{NotFoundError}} exception.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
               </ol>
             </li>
-            <li>If the user <em>denies permission</em> to use a display, reject
-            <var>P</var> with an {{NotAllowedError}} exception, and abort all
-            remaining steps.
+            <li>If the user <em>denies permission</em> to use a display,
+            <a>queue a Presentation API task</a> to reject <var>P</var> with an
+            {{NotAllowedError}} exception, and abort all remaining steps.
             </li>
             <li>Otherwise, the user <em>grants permission</em> to use a
             display; let <var>D</var> be that display.
@@ -1175,6 +1183,8 @@
             </dd>
           </dl>
           <ol>
+            <li>Run the following steps <a>in parallel</a>.
+            </li>
             <li>Let <var>presentationUrls</var> be the <a>presentation request
             URLs</a> of <var>presentationRequest</var>.
             </li>
@@ -1221,6 +1231,9 @@
             </dd>
           </dl>
           <ol>
+            <li>
+              <a>Assert</a>: this is running <a>in parallel</a>.
+            </li>
             <li>Let <var>I</var> be a new <a>valid presentation identifier</a>
             unique among all <a>presentation identifiers</a> for known
             <a>presentation connections</a> in the <a>set of controlled
@@ -1246,14 +1259,14 @@
             </li>
             <li>Add <var>S</var> to the <a>set of controlled presentations</a>.
             </li>
-            <li>If <var>P</var> is provided, <a>resolve</a> <var>P</var> with
-            <var>S</var>.
+            <li>If <var>P</var> is provided, <a>queue a Presentation API
+            task</a> to <a>resolve</a> <var>P</var> with <var>S</var>.
             </li>
             <li>
-              <a>Queue a task</a> to [=fire an event=] named <a data-link-for=
-              "PresentationRequest">connectionavailable</a>, that uses the
-              <a>PresentationConnectionAvailableEvent</a> interface, with the
-              <a data-link-for=
+              <a>Queue a Presentation API task</a> to [=fire an event=] named
+              <a data-link-for="PresentationRequest">connectionavailable</a>,
+              that uses the <a>PresentationConnectionAvailableEvent</a>
+              interface, with the <a data-link-for=
               "PresentationConnectionAvailableEvent">connection</a> attribute
               initialized to <var>S</var>, at <var>presentationRequest</var>.
               The event must not bubble and must not be cancelable.
@@ -1313,8 +1326,8 @@
           <ol>
             <li>Let <var>P</var> be a new {{Promise}}.
             </li>
-            <li>Return <var>P</var>, but continue running these steps in
-            parallel.
+            <li>Return <var>P</var>, but continue running these steps <a>in
+            parallel</a>.
             </li>
             <li>Search the <a>set of controlled presentations</a> for a
             <a>PresentationConnection</a> that meets the following criteria:
@@ -1341,8 +1354,8 @@
                 <a>PresentationConnection</a>.
                 </li>
                 <li>
-                  <a>Resolve</a> <var>P</var> with
-                  <var>existingConnection</var>.
+                  <a>Queue a Presentation API task</a> to <a>resolve</a>
+                  <var>P</var> with <var>existingConnection</var>.
                 </li>
                 <li>If the <a>presentation connection state</a> of
                 <var>existingConnection</var> is <a data-link-for=
@@ -1404,11 +1417,12 @@
                 presentations</a>.
                 </li>
                 <li>
-                  <a>Resolve</a> <var>P</var> with <var>newConnection</var>.
+                  <a>Queue a Presentation API task</a> to <a>resolve</a>
+                  <var>P</var> with <var>newConnection</var>.
                 </li>
                 <li>
-                  <a>Queue a task</a> to [=fire an event=] named
-                  <a data-link-for=
+                  <a>Queue a Presentation API task</a> to [=fire an event=]
+                  named <a data-link-for=
                   "PresentationRequest">connectionavailable</a>, that uses the
                   <a>PresentationConnectionAvailableEvent</a> interface, with
                   the <a data-link-for=
@@ -1426,7 +1440,8 @@
               </ol>
             </li>
             <li>
-              <a>Reject</a> <var>P</var> with a {{NotFoundError}} exception.
+              <a>Queue a Presentation API task</a> to <a>reject</a>
+              <var>P</var> with a {{NotFoundError}} exception.
             </li>
           </ol>
         </section>
@@ -1620,8 +1635,8 @@
             then:
               <ol>
                 <li>
-                  <a>Reject</a> <var>P</var> with a {{NotSupportedError}}
-                  exception.
+                  <a>Queue a Presentation API task</a> to <a>reject</a>
+                  <var>P</var> with a {{NotSupportedError}} exception.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
@@ -1631,8 +1646,9 @@
             <var>presentationRequest</var> is not <code>null</code>, then:
               <ol>
                 <li>
-                  <a>Resolve</a> <var>P</var> with the request's
-                  <a>presentation display availability</a>.
+                  <a>Queue a Presentation API task</a> to <a>resolve</a>
+                  <var>P</var> with the request's <a>presentation display
+                  availability</a>.
                 </li>
                 <li>Abort all the remaining steps.
                 </li>
@@ -1657,7 +1673,8 @@
               </div>
             </li>
             <li>
-              <a>Resolve</a> <var>P</var> with <var>A</var>.
+              <a>Queue a Presentation API task</a> to <a>resolve</a>
+              <var>P</var> with <var>A</var>.
             </li>
           </ol>
         </section>
@@ -1674,6 +1691,9 @@
             steps:
           </p>
           <ol>
+            <li>
+              <a>Assert</a>: this is running <a>in parallel</a>.
+            </li>
             <li>Let <var>availabilitySet</var> be a shallow copy of the <a>set
             of presentation availability objects</a>.
             </li>
@@ -1741,8 +1761,8 @@
                 <var>newAvailability</var> and skip the following step.
                 </li>
                 <li>If <var>previousAvailability</var> is not equal to
-                <var>newAvailability</var>, then <a>queue a task</a> to run the
-                following steps:
+                <var>newAvailability</var>, then <a>queue a Presentation API
+                task</a> to run the following steps:
                   <ol>
                     <li>Set <var>A</var>'s <a>value</a> property to
                     <var>newAvailability</var>.
@@ -2025,6 +2045,9 @@
             </dd>
           </dl>
           <ol>
+            <li>
+              <a>Assert</a>: this is running <a>in parallel</a>.
+            </li>
             <li>If the <a>presentation connection state</a> of
             <var>presentationConnection</var> is not <a data-link-for=
             "PresentationConnectionState">connecting</a>, then abort all
@@ -2035,8 +2058,8 @@
             identifier</a> of <var>presentationConnection</var> MUST be sent
             with this request.
             </li>
-            <li>If connection completes successfully, <a>queue a task</a> to
-            run the following steps:
+            <li>If connection completes successfully, <a>queue a Presentation
+            API task</a> to run the following steps:
               <ol>
                 <li>Set the <a>presentation connection state</a> of
                 <var>presentationConnection</var> to <a data-link-for=
@@ -2191,6 +2214,9 @@
             </dd>
           </dl>
           <ol data-link-for="PresentationConnection">
+            <li>
+              <a>Assert</a>: this is running <a>in parallel</a>.
+            </li>
             <li>If the <a>state</a> property of
             <var>presentationConnection</var> is not <a data-link-for=
             "PresentationConnectionState">connected</a>, abort these steps.
@@ -2220,8 +2246,8 @@
               </ol>
             </li>
             <li>
-              <a>Queue a task</a> to [=fire an event|fire=] <var>event</var> at
-              <var>presentationConnection</var>.
+              <a>Queue a Presentation API task</a> to [=fire an event|fire=]
+              <var>event</var> at <var>presentationConnection</var>.
             </li>
           </ol>
           <p>
@@ -2386,7 +2412,7 @@
             <var>presentationConnection</var>, then abort the remaining steps.
             </li>
             <li>
-              <a>Queue a task</a> to run the following steps:
+              <a>Queue a Presentation API task</a> to run the following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <var>presentationConnection</var> is not <a data-link-for=
@@ -2453,7 +2479,9 @@
                 connection</var> is <a data-link-for=
                 "PresentationConnectionState">connected</a> or
                   <a data-link-for="PresentationConnectionState">connecting</a>,
-                  then <a>queue a task</a> to run the following steps:
+                  then <a>queue a global task</a> on the <a>presentation task
+                  source</a> given <var>known connection</var>'s <a>relevant
+                  global object</a> to run the following steps:
                   <ol>
                     <li>Set the <a>presentation connection state</a> of
                     <var>known connection</var> to <a data-link-for=
@@ -2467,9 +2495,9 @@
               </ol>
             </li>
             <li>
-              <dfn>Send a termination request</dfn> for the presentation to its
-              <a>receiving user agent</a> using an implementation specific
-              mechanism.
+              <a>In parallel</a>, <dfn>send a termination request</dfn> for the
+              presentation to its <a>receiving user agent</a> using an
+              implementation specific mechanism.
             </li>
           </ol>
         </section>
@@ -2535,10 +2563,10 @@
             the user interface and discard it.
             </li>
             <li>For each <var>connection</var> in
-            <var>connectedControllers</var>, <a>queue a task</a> to send a
-            termination confirmation for <var>P</var> using an implementation
-            specific mechanism to the <a>controlling user agent</a> that owns
-            the <a>destination browsing context</a> for <var>connection</var>.
+            <var>connectedControllers</var>, send a termination confirmation
+            for <var>P</var> using an implementation specific mechanism to the
+            <a>controlling user agent</a> that owns the <a>destination browsing
+            context</a> for <var>connection</var>.
               <p class="note">
                 Only one termination confirmation needs to be sent per
                 <a>controlling user agent</a>.
@@ -2559,7 +2587,9 @@
           <ol>
             <li>For each <var>connection</var> in the <a>set of controlled
             presentations</a> that was connected to <var>P</var>, <a>queue a
-            task</a> to run the following steps:
+            global task</a> on the <a>presentation task source</a> given <var>
+              connection</var>'s <a>relevant global object</a> to run the
+              following steps:
               <ol>
                 <li>If the <a>presentation connection state</a> of
                 <var>connection</var> is not <a data-link-for=
@@ -2883,6 +2913,9 @@
             </dd>
           </dl>
           <ol>
+            <li>
+              <a>Assert</a>: this is running <a>in parallel</a>.
+            </li>
             <li>If <var>presentationId</var> and <var>I</var> are not equal,
             refuse the connection and abort all remaining steps.
             </li>
@@ -2920,9 +2953,9 @@
                 the <a>set of presentation controllers</a>.
                 </li>
                 <li>If the <a>presentation controllers promise</a> is not
-                <code>null</code>, <a>resolve</a> the <a>presentation
-                controllers promise</a> with the <a>presentation controllers
-                monitor</a>.
+                <code>null</code>, <a>queue a Presentation API task</a> to <a>
+                  resolve</a> the <a>presentation controllers promise</a> with
+                  the <a>presentation controllers monitor</a>.
                 </li>
                 <li>Abort all remaining steps.
                 </li>
@@ -2934,8 +2967,8 @@
                 the <a>set of presentation controllers</a>.
                 </li>
                 <li>
-                  <a>Queue a task</a> to [=fire an event=] named
-                  <a data-link-for=
+                  <a>Queue a Presentation API task</a> to [=fire an event=]
+                  named <a data-link-for=
                   "PresentationConnectionList">connectionavailable</a>, that
                   uses the <a>PresentationConnectionAvailableEvent</a>
                   interface, with the <a data-link-for=
