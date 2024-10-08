@@ -165,7 +165,7 @@ ul.index code{color:inherit}
 #index-defined-here .print-only{display:initial}
 }
 </style>
-<meta name="revision" content="214830c7600ef999d166c677b1993b0eedfeac2a">
+<meta name="revision" content="b9a3e3dc266b9122af1f990e1257d7a3e60f9be3">
 <meta name="description" content="This specification defines an API to enable Web content to access
         presentation displays and use them for presenting Web content.">
 <style>
@@ -260,16 +260,16 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   },
   "crEnd": "2016-09-12",
   "implementationReportURI": "https://www.w3.org/wiki/Second_Screen/Implementation_Status#Tests",
-  "gitRevision": "214830c7600ef999d166c677b1993b0eedfeac2a",
-  "publishISODate": "2024-09-20T00:00:00.000Z",
-  "generatedSubtitle": "W3C Editor's Draft 20 September 2024"
+  "gitRevision": "b9a3e3dc266b9122af1f990e1257d7a3e60f9be3",
+  "publishISODate": "2024-10-08T00:00:00.000Z",
+  "generatedSubtitle": "W3C Editor's Draft 08 October 2024"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED"></head>
   <body class="h-entry" data-cite="WEBIDL dom fileapi secure-contexts html url webidl webrtc websockets infra"><div class="head">
     <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
   </a></p>
     <h1 id="title" class="title">Presentation API</h1> 
-    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2024-09-20">20 September 2024</time></p>
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2024-10-08">08 October 2024</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -1346,7 +1346,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               Output
             </dt>
             <dd>
-              A <a href="#dom-presentationrequest" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-15"><code>PresentationRequest</code></a> object
+              A new <a href="#dom-presentationrequest" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-15"><code>PresentationRequest</code></a> object
             </dd>
           </dl>
           <ol>
@@ -1412,7 +1412,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               Output
             </dt>
             <dd>
-              A <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-6"><code>Promise</code></a>
+              A new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-6"><code>Promise</code></a>
             </dd>
           </dl>
           <ol>
@@ -1664,7 +1664,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               Output
             </dt>
             <dd>
-              <var>P</var>, a <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-12"><code>Promise</code></a>
+              <var>P</var>, a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-12"><code>Promise</code></a>
             </dd>
           </dl>
           <ol>
@@ -1947,17 +1947,12 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
               Output
             </dt>
             <dd>
-              A <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-15"><code>Promise</code></a>
+              A new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-15"><code>Promise</code></a>
             </dd>
           </dl>
           <ol>
-            <li>If there is an unsettled <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-16"><code>Promise</code></a> from a previous call to
-            <a href="#dom-presentationrequest-getavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-getavailability-7"><code>getAvailability</code></a> on <var>
-              presentationRequest</var>, return that <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-17"><code>Promise</code></a> and abort
-              these steps.
-            </li>
-            <li>Otherwise, let <var>P</var> be a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-18"><code>Promise</code></a> constructed in
-            the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-7">JavaScript realm</a> of <var>presentationRequest</var>.
+            <li>Let <var>P</var> be a new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-16"><code>Promise</code></a> constructed in the
+            <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-7">JavaScript realm</a> of <var>presentationRequest</var>.
             </li>
             <li>Return <var>P</var>, but continue running these steps <a data-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-index-term-in-parallel-6">in
             parallel</a>.
@@ -2108,7 +2103,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           <div class="note" role="note" id="issue-container-generatedID-6"><div role="heading" class="note-title marker" id="h-note-6" aria-level="5"><span>Note</span></div><div class="">
             The <a href="#dfn-controlling-user-agent" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controlling-user-agent-15">controlling user agent</a> may choose how often to
             <a href="#dfn-monitor-the-list-of-available-presentation-displays" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-monitor-the-list-of-available-presentation-displays-11">monitor the list of available presentation displays</a>,
-            including grouping requests from <a href="#dom-presentationrequest-start" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-start-11"><code>start</code></a> and <a href="#dom-presentationrequest-getavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-getavailability-8"><code>getAvailability</code></a>, and aggregating them
+            including grouping requests from <a href="#dom-presentationrequest-start" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-start-11"><code>start</code></a> and <a href="#dom-presentationrequest-getavailability" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationrequest-getavailability-7"><code>getAvailability</code></a>, and aggregating them
             across <a data-lt="browsing context" data-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-index-term-browsing-context-7">browsing contexts</a>.
           </div></div>
           <p>
@@ -2942,7 +2937,7 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
         
         <pre class="idl def" id="webidl-298895398"><span class="idlHeader"><a class="self-link" href="#webidl-298895398">WebIDL</a></span><code><span data-idl="" class="idlInterface" id="idl-def-presentationreceiver" data-title="PresentationReceiver">[<span class="extAttr"><a data-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-index-term-securecontext-extended-attribute-8">SecureContext</a></span>, <span class="extAttr"><a data-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-index-term-exposed-extended-attribute-7">Exposed</a>=Window</span>]
 interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-presentationreceiver" id="ref-for-dom-presentationreceiver-5"><code>PresentationReceiver</code></a> {<span data-idl="" class="idlAttribute" id="idl-def-presentationreceiver-connectionlist" data-title="connectionList" data-dfn-for="PresentationReceiver">
-  readonly attribute<span class="idlType"> <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-19">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnectionlist" class="internalDFN" id="ref-for-dom-presentationconnectionlist-3"><code>PresentationConnectionList</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="attribute" href="#dom-presentationreceiver-connectionlist" id="ref-for-dom-presentationreceiver-connectionlist-2"><code>connectionList</code></a>;</span>
+  readonly attribute<span class="idlType"> <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-17">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnectionlist" class="internalDFN" id="ref-for-dom-presentationconnectionlist-3"><code>PresentationConnectionList</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="attribute" href="#dom-presentationreceiver-connectionlist" id="ref-for-dom-presentationreceiver-connectionlist-2"><code>connectionList</code></a>;</span>
 };</span></code></pre>
         <p>
           The <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-6"><code>PresentationReceiver</code></a> interface allows a <a href="#dfn-receiving-browsing-context" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-receiving-browsing-context-29">receiving
@@ -2961,7 +2956,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
           and abort all remaining steps.
           </li>
           <li>Otherwise, let the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-4">presentation controllers promise</a> be a
-          new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-20"><code>Promise</code></a> constructed in the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-9">JavaScript realm</a> of this
+          new <a data-link-type="idl" data-lt="Promise" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-18"><code>Promise</code></a> constructed in the <a data-link-type="dfn" href="https://tc39.es/ecma262/multipage/#sec-code-realms" id="ref-for-index-term-javascript-realm-9">JavaScript realm</a> of this
           <a href="#dom-presentationreceiver" class="internalDFN" data-link-type="idl" id="ref-for-dom-presentationreceiver-8"><code>PresentationReceiver</code></a> object.
           </li>
           <li>Return the <a href="#dfn-presentation-controllers-promise" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-presentation-controllers-promise-5">presentation controllers promise</a>.
@@ -3473,9 +3468,9 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
 interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-presentationrequest" id="ref-for-dom-presentationrequest-30"><code>PresentationRequest</code></a> : <span class="idlSuperclass"><a data-link-type="idl" data-type="interface" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-index-term-eventtarget-interface-5">EventTarget</a></span> {<span data-idl="" class="idlConstructor" data-title="constructor" data-dfn-for="PresentationRequest">
   <dfn data-export="" data-dfn-type="constructor" data-idl="constructor" data-title="constructor" data-dfn-for="PresentationRequest" data-lt="constructor()|constructor(url)" data-local-lt="PresentationRequest.constructor|PresentationRequest.constructor()|constructor"><code>constructor</code></dfn>(<span class="idlType"><a data-link-type="idl" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-USVString" id="ref-for-index-term-usvstring-interface-6">USVString</a></span> <span class="idlParamName">url</span>);</span><span data-idl="" class="idlConstructor" data-title="constructor!overload-1" data-dfn-for="PresentationRequest">
   <dfn data-export="" data-dfn-type="constructor" data-idl="constructor" data-title="constructor" data-dfn-for="PresentationRequest" data-lt="constructor!overload-1()|constructor!overload-1(urls)" data-local-lt="PresentationRequest.constructor!overload-1|PresentationRequest.constructor!overload-1()|constructor!overload-1"><code>constructor</code></dfn>(<span class="idlType"><a data-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-index-term-sequence-2">sequence</a>&lt;<a data-link-type="idl" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-USVString" id="ref-for-index-term-usvstring-interface-7">USVString</a>&gt;</span> <span class="idlParamName">urls</span>);</span><span data-idl="" class="idlMethod" data-title="start" data-dfn-for="PresentationRequest"><span class="idlType">
-  <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-21">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnection" class="internalDFN" id="ref-for-dom-presentationconnection-51"><code>PresentationConnection</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="method" href="#dom-presentationrequest-start" id="ref-for-dom-presentationrequest-start-14"><code>start</code></a>();</span><span data-idl="" class="idlMethod" data-title="reconnect" data-dfn-for="PresentationRequest"><span class="idlType">
-  <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-22">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnection" class="internalDFN" id="ref-for-dom-presentationconnection-52"><code>PresentationConnection</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="method" href="#dom-presentationrequest-reconnect" id="ref-for-dom-presentationrequest-reconnect-7"><code>reconnect</code></a>(<span class="idlType"><a data-link-type="idl" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-USVString" id="ref-for-index-term-usvstring-interface-8">USVString</a></span> <span class="idlParamName">presentationId</span>);</span><span data-idl="" class="idlMethod" data-title="getAvailability" data-dfn-for="PresentationRequest"><span class="idlType">
-  <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-23">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationavailability" class="internalDFN" id="ref-for-dom-presentationavailability-15"><code>PresentationAvailability</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="method" href="#dom-presentationrequest-getavailability" id="ref-for-dom-presentationrequest-getavailability-9"><code>getAvailability</code></a>();</span><span data-idl="" class="idlAttribute" data-title="onconnectionavailable" data-dfn-for="PresentationRequest">
+  <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-19">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnection" class="internalDFN" id="ref-for-dom-presentationconnection-51"><code>PresentationConnection</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="method" href="#dom-presentationrequest-start" id="ref-for-dom-presentationrequest-start-14"><code>start</code></a>();</span><span data-idl="" class="idlMethod" data-title="reconnect" data-dfn-for="PresentationRequest"><span class="idlType">
+  <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-20">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnection" class="internalDFN" id="ref-for-dom-presentationconnection-52"><code>PresentationConnection</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="method" href="#dom-presentationrequest-reconnect" id="ref-for-dom-presentationrequest-reconnect-7"><code>reconnect</code></a>(<span class="idlType"><a data-link-type="idl" data-type="interface" href="https://webidl.spec.whatwg.org/#idl-USVString" id="ref-for-index-term-usvstring-interface-8">USVString</a></span> <span class="idlParamName">presentationId</span>);</span><span data-idl="" class="idlMethod" data-title="getAvailability" data-dfn-for="PresentationRequest"><span class="idlType">
+  <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-21">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationavailability" class="internalDFN" id="ref-for-dom-presentationavailability-15"><code>PresentationAvailability</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="method" href="#dom-presentationrequest-getavailability" id="ref-for-dom-presentationrequest-getavailability-8"><code>getAvailability</code></a>();</span><span data-idl="" class="idlAttribute" data-title="onconnectionavailable" data-dfn-for="PresentationRequest">
 
   attribute<span class="idlType"> <a data-link-type="idl" data-type="typedef" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-index-term-eventhandler-8">EventHandler</a></span> <a class="internalDFN idlName" data-link-type="attribute" href="#dom-presentationrequest-onconnectionavailable" id="ref-for-dom-presentationrequest-onconnectionavailable-2"><code>onconnectionavailable</code></a>;</span>
 };</span>
@@ -3535,7 +3530,7 @@ dictionary <a class="internalDFN idlID" data-link-type="dictionary" href="#dom-p
 
 <span data-idl="" class="idlInterface" data-title="PresentationReceiver">[<span class="extAttr"><a data-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-index-term-securecontext-extended-attribute-17">SecureContext</a></span>, <span class="extAttr"><a data-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-index-term-exposed-extended-attribute-15">Exposed</a>=Window</span>]
 interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-presentationreceiver" id="ref-for-dom-presentationreceiver-11"><code>PresentationReceiver</code></a> {<span data-idl="" class="idlAttribute" data-title="connectionList" data-dfn-for="PresentationReceiver">
-  readonly attribute<span class="idlType"> <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-24">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnectionlist" class="internalDFN" id="ref-for-dom-presentationconnectionlist-7"><code>PresentationConnectionList</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="attribute" href="#dom-presentationreceiver-connectionlist" id="ref-for-dom-presentationreceiver-connectionlist-3"><code>connectionList</code></a>;</span>
+  readonly attribute<span class="idlType"> <a data-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-index-term-promise-interface-22">Promise</a>&lt;<a data-link-type="idl" href="#dom-presentationconnectionlist" class="internalDFN" id="ref-for-dom-presentationconnectionlist-7"><code>PresentationConnectionList</code></a>&gt;</span> <a class="internalDFN idlName" data-link-type="attribute" href="#dom-presentationreceiver-connectionlist" id="ref-for-dom-presentationreceiver-connectionlist-3"><code>connectionList</code></a>;</span>
 };</span>
 
 <span data-idl="" class="idlInterface" data-title="PresentationConnectionList">[<span class="extAttr"><a data-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-index-term-securecontext-extended-attribute-18">SecureContext</a></span>, <span class="extAttr"><a data-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-index-term-exposed-extended-attribute-16">Exposed</a>=Window</span>]
@@ -4285,7 +4280,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </dd><dt id="bib-fileapi">[fileapi]</dt><dd>
       <a href="https://www.w3.org/TR/FileAPI/"><cite>File API</cite></a>. Marijn Kruisselbrink.  W3C. 24 May 2024. W3C Working Draft. URL: <a href="https://www.w3.org/TR/FileAPI/">https://www.w3.org/TR/FileAPI/</a>
     </dd><dt id="bib-html">[HTML]</dt><dd>
-      <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Anne van Kesteren; Domenic Denicola; Ian Hickson; Philip Jägenstedt; Simon Pieters.  WHATWG. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+      <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Anne van Kesteren; Domenic Denicola; Dominic Farolino; Ian Hickson; Philip Jägenstedt; Simon Pieters.  WHATWG. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
     </dd><dt id="bib-indexeddb">[INDEXEDDB]</dt><dd>
       <a href="https://www.w3.org/TR/IndexedDB/"><cite>Indexed Database API</cite></a>. Nikunj Mehta; Jonas Sicking; Eliot Graff; Andrei Popescu; Jeremy Orlow; Joshua Bell.  W3C. 8 January 2015. W3C Recommendation. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
     </dd><dt id="bib-infra">[infra]</dt><dd>
@@ -4316,7 +4311,7 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
   </section><section id="informative-references"><div class="header-wrapper"><h3 id="f-2-informative-references"><bdi class="secno">F.2 </bdi>Informative references</h3><a class="self-link" href="#informative-references" aria-label="Permalink for Appendix F.2"></a></div>
     
     <dl class="bibliography"><dt id="bib-webrtc">[webrtc]</dt><dd>
-      <a href="https://www.w3.org/TR/webrtc/"><cite>WebRTC: Real-Time Communication in Browsers</cite></a>. Cullen Jennings; Florent Castelli; Henrik Boström; Jan-Ivar Bruaroey.  W3C. 6 March 2023. W3C Recommendation. URL: <a href="https://www.w3.org/TR/webrtc/">https://www.w3.org/TR/webrtc/</a>
+      <a href="https://www.w3.org/TR/webrtc/"><cite>WebRTC: Real-Time Communication in Browsers</cite></a>. Cullen Jennings; Jan-Ivar Bruaroey; Henrik Boström; Florent Castelli.  W3C. 8 October 2024. W3C Recommendation. URL: <a href="https://www.w3.org/TR/webrtc/">https://www.w3.org/TR/webrtc/</a>
     </dd></dl>
   </section></section><p role="navigation" id="back-to-top">
     <a href="#title"><abbr title="Back to Top">↑</abbr></a>
@@ -5475,11 +5470,11 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </li><li>
       <a href="#ref-for-dom-presentationrequest-getavailability-5" title="§ 6.4.2 The list of available presentation displays">§ 6.4.2 The list of available presentation displays</a> 
     </li><li>
-      <a href="#ref-for-dom-presentationrequest-getavailability-6" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-dom-presentationrequest-getavailability-7" title="Reference 2">(2)</a> 
+      <a href="#ref-for-dom-presentationrequest-getavailability-6" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> 
     </li><li>
-      <a href="#ref-for-dom-presentationrequest-getavailability-8" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> 
+      <a href="#ref-for-dom-presentationrequest-getavailability-7" title="§ 6.4.4 Monitoring the list of available presentation displays">§ 6.4.4 Monitoring the list of available presentation displays</a> 
     </li><li>
-      <a href="#ref-for-dom-presentationrequest-getavailability-9" title="§ A. IDL Index">§ A. IDL Index</a> 
+      <a href="#ref-for-dom-presentationrequest-getavailability-8" title="§ A. IDL Index">§ A. IDL Index</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-monitor-the-list-of-available-presentation-displays" aria-label="Links in this document to definition: monitor the list of available presentation displays">
@@ -7323,11 +7318,11 @@ interface <a class="internalDFN idlID" data-link-type="interface" href="#dom-pre
     </li><li>
       <a href="#ref-for-index-term-promise-interface-14" title="§ 6.4.2 The list of available presentation displays">§ 6.4.2 The list of available presentation displays</a> 
     </li><li>
-      <a href="#ref-for-index-term-promise-interface-15" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-index-term-promise-interface-16" title="Reference 2">(2)</a> <a href="#ref-for-index-term-promise-interface-17" title="Reference 3">(3)</a> <a href="#ref-for-index-term-promise-interface-18" title="Reference 4">(4)</a> 
+      <a href="#ref-for-index-term-promise-interface-15" title="§ 6.4.3 Getting the presentation displays availability information">§ 6.4.3 Getting the presentation displays availability information</a> <a href="#ref-for-index-term-promise-interface-16" title="Reference 2">(2)</a> 
     </li><li>
-      <a href="#ref-for-index-term-promise-interface-19" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> <a href="#ref-for-index-term-promise-interface-20" title="Reference 2">(2)</a> 
+      <a href="#ref-for-index-term-promise-interface-17" title="§ 6.6 Interface PresentationReceiver">§ 6.6 Interface PresentationReceiver</a> <a href="#ref-for-index-term-promise-interface-18" title="Reference 2">(2)</a> 
     </li><li>
-      <a href="#ref-for-index-term-promise-interface-21" title="§ A. IDL Index">§ A. IDL Index</a> <a href="#ref-for-index-term-promise-interface-22" title="Reference 2">(2)</a> <a href="#ref-for-index-term-promise-interface-23" title="Reference 3">(3)</a> <a href="#ref-for-index-term-promise-interface-24" title="Reference 4">(4)</a> 
+      <a href="#ref-for-index-term-promise-interface-19" title="§ A. IDL Index">§ A. IDL Index</a> <a href="#ref-for-index-term-promise-interface-20" title="Reference 2">(2)</a> <a href="#ref-for-index-term-promise-interface-21" title="Reference 3">(3)</a> <a href="#ref-for-index-term-promise-interface-22" title="Reference 4">(4)</a> 
     </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-index-term-sameobject-extended-attribute" aria-label="Links in this document to definition: [SameObject] extended attribute">
